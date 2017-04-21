@@ -13,8 +13,8 @@ public class HUDStage extends Stage{
         this.game = mygame;
         this.setViewport(
                 new FitViewport(
-                        GameScreen.VIEWPORT_WIDTH / GameScreen.PIXEL_TO_METER
-                        ,GameScreen.VIEWPORT_WIDTH / GameScreen.PIXEL_TO_METER *  GameScreen.SCREEN_RATIO)
+                        (int)GameScreen.VIEWPORT_WIDTH / GameScreen.PIXEL_TO_METER
+                        ,(int)GameScreen.VIEWPORT_WIDTH / GameScreen.PIXEL_TO_METER *  GameScreen.SCREEN_RATIO)
         );
     }
 }

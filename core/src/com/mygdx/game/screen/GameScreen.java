@@ -1,13 +1,18 @@
 package com.mygdx.game.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.controller.HUD.HUDStage;
-import com.mygdx.game.controller.World.WorldStage;
+import com.mygdx.game.controller.gameWorld.WorldStage;
+import com.mygdx.game.controller.gameWorld.controlEntities.worldEntities.MainCharacterControl;
 
 
 public class GameScreen extends ScreenAdapter{
@@ -23,13 +28,19 @@ public class GameScreen extends ScreenAdapter{
 
     private Stage gameHUD;
 
-    private Stage gameWorld;
+    private WorldStage gameWorld;
 
     private MyGame game;
 
     public GameScreen(MyGame myGame){
         this.game = myGame;
+
         loadAssets();
+        loadStages();
+        inputHandler();
+    }
+
+    private void loadStages(){
         gameHUD = new HUDStage(this.game);
         gameWorld = new WorldStage(this.game);
     }
@@ -40,15 +51,62 @@ public class GameScreen extends ScreenAdapter{
         Gdx.gl.glClearColor( 103/255f, 69/255f, 117/255f, 1 );
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 
-        gameWorld.act(delta);
-        gameHUD.act(delta);
+
+        update(delta);
+        draw();
+    }
+
+    private void inputHandler(){
+        Gdx.input.setInputProcessor(new InputAdapter(){
+            @Override
+            public boolean keyDown (int keycode) {
+                switch (keycode){
+                    case Input.Keys.UP://up
+                        gameWorld.getMainCharacter().jump();
+                        break;
+                    case Input.Keys.LEFT://left
+                        gameWorld.getMainCharacter().walkLeft(false);
+                        break;
+                    case Input.Keys.RIGHT://right
+                        gameWorld.getMainCharacter().walkRight(false);
+                        break;
+                }
+                return true;
+            }
+
+            @Override
+            public boolean keyUp (int keycode) {
+                switch (keycode){
+                    case Input.Keys.LEFT://left
+                        gameWorld.getMainCharacter().walkLeft(true);
+                        break;
+                    case Input.Keys.RIGHT://right
+                        gameWorld.getMainCharacter().walkRight(true);
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
+    private void draw(){
         gameWorld.draw();
         gameHUD.draw();
     }
 
+    private void update(float delta){
+        gameWorld.act(delta);
+        gameHUD.act(delta);
+    }
+
     private void loadAssets() {
-        this.game.getAssetManager().load( "person.png" , Texture.class);
-        this.game.getAssetManager().load( "badlogic.jpg" , Texture.class);
+        this.game.getAssetManager().load(  "person.png" , Texture.class);
         this.game.getAssetManager().finishLoading();
     }
+
+    /*@Override
+    public void resize(int width, int height) {
+        gameHUD.getViewport().update(width, height, true);
+        gameWorld.getViewport().update(width, height, true);
+    }*/
 }
