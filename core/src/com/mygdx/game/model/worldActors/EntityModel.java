@@ -7,6 +7,8 @@ import com.mygdx.game.screen.EntityVisual;
 
 
 public class EntityModel extends Actor{
+    //actor já tem esta cena toda
+
     private Body body;
 
     private EntityVisual visual;
