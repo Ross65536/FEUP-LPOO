@@ -22,6 +22,9 @@ public class WorldStage extends Stage{
 
     private MyGame game;
 
+
+    //LEVEL BUILDER GOES HERE
+
     public WorldStage(MyGame mygame){
         this.game = mygame;
         this.setViewport(
