@@ -8,17 +8,24 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 public class MyGame extends Game {
     private GameScreen gameScreen;
 
+
     @Override
 	public void create ()
     {
+
+        GameSettings gameSettings = new GameSettings();
+        gameScreen = new GameScreen(this, gameSettings);
+
+
+        //screen decisions
         startGameTest();
 	}
 
 
 	private void startGameTest()
 	{
-        gameScreen = new GameScreen(this);
-        gameScreen.createTestLevel();
+        TestLevel testLevel = new TestLevel();
+        gameScreen.LoadLevel(testLevel);
 
         setScreen(gameScreen);
 	}

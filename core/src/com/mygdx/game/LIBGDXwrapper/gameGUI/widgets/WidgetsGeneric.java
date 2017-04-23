@@ -1,4 +1,4 @@
-package com.mygdx.game.gameGUI.widgets;
+package com.mygdx.game.LIBGDXwrapper.gameGUI.widgets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

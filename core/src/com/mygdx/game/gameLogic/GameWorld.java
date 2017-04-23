@@ -1,30 +1,20 @@
 package com.mygdx.game.gameLogic;
 
-                       //added
-public class GameWorld extends  GameSettings
+//added
+public class GameWorld
 {
     private Vector2D worldDimensions;
     private Hero hero;
 
-    //added
-   // GameMode gameMode;
 
     public GameWorld(double dimX, double dimY, Hero hero)
     {
         worldDimensions = new Vector2D(dimX, dimY);
         this.hero = hero;
-        //added
-   //     this.gameMode = null;
+
 
     }
 
-    //added
-    void startGame(){
-        switch (this.mode){
-            case SURVIVAL:
- //               gameMode = new SurvivalGame(hero, worldDimensions, batch);
-        }
-    }
 
 
     public Hero getHero()
