@@ -1,4 +1,4 @@
-package com.mygdx.game.gameGUI;
+package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.LIBGDXwrapper.GameScreen;
-import com.mygdx.game.gameGUI.widgets.MainMenuWidgets;
 
 public class MainMenu extends Stage{
 
@@ -34,9 +33,9 @@ public class MainMenu extends Stage{
 
     private void loadWidgets(){
 
-        skin.add("playButton", MainMenuWidgets.loadPlayButton(table));
+        skin.add("playButton", com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainMenuWidgets.loadPlayButton(table));
         table.row();
-        skin.add("hightScoreButton", MainMenuWidgets.loadHighScoreButton(table));
+        skin.add("hightScoreButton", com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainMenuWidgets.loadHighScoreButton(table));
         //table.row();
     }
 }

@@ -1,4 +1,4 @@
-package com.mygdx.game.gameGUI.widgets;
+package com.mygdx.game.LIBGDXwrapper.gameGUI.widgets;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;

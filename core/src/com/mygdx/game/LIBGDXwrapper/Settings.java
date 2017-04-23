@@ -1,4 +1,4 @@
-package com.mygdx.game.gameLogic;
+package com.mygdx.game.LIBGDXwrapper;
 
 public interface Settings {
     public static enum GameModeID {SURVIVAL, MUSHROOM, SHOTGUNSEARCH};

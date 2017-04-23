@@ -1,10 +1,9 @@
-package com.mygdx.game.gameLogic;
+package com.mygdx.game.LIBGDXwrapper;
+
+import com.mygdx.game.gameLogic.GameWorld;
 
 public class GameSettings implements Settings {
     private boolean isSensorControlled;
-    private GameWorld game;
-
-
     float volume;
 
     GameModeID mode;
