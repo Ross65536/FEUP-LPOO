@@ -2,7 +2,7 @@ package com.mygdx.game.LIBGDXwrapper.gameGUI.widgets;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.mygdx.game.LIBGDXwrapper.GameScreen;
+import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 
 
 public class MainMenuWidgets extends WidgetsGeneric {
@@ -11,16 +11,16 @@ public class MainMenuWidgets extends WidgetsGeneric {
 
     public static Button loadPlayButton(Table table) {
 
-        float screenWidth = GameScreen.MENU_VIEWPORT;
-        float screenHeight = (float)GameScreen.SCREEN_RATIO * GameScreen.MENU_VIEWPORT;
+        float screenWidth = DeviceConstants.MENU_VIEWPORT;
+        float screenHeight = (float) DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
         return loadButton(table
                 //names
                 ,"playButtonUpImage"
                 ,"playButtonDownImage"
                 //images
-                ,"android\\assets\\playButtonUp.png"
-                ,"android\\assets\\playButtonDown.png")
+                ,"playButtonUp.png"
+                ,"playButtonDown.png")
                 //pos. and location
                 .prefWidth(screenWidth / 4)
                 .padBottom(50)
@@ -35,16 +35,16 @@ public class MainMenuWidgets extends WidgetsGeneric {
 
     public static Button loadHighScoreButton(Table table) {
 
-        float screenWidth = GameScreen.MENU_VIEWPORT;
-        float screenHeight = (float)GameScreen.SCREEN_RATIO * GameScreen.MENU_VIEWPORT;
+        float screenWidth = DeviceConstants.MENU_VIEWPORT;
+        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
         return loadButton(table
                 //names
                 ,"highScoreButtonUpImage"
                 ,"highScoreButtonDownImage"
                 //images
-                ,"android\\assets\\highScoreButtonUp.png"
-                ,"android\\assets\\highScoreButtonDown.png")
+                ,"highScoreButtonUp.png"
+                ,"highScoreButtonDown.png")
                 //pos. and location
                 .prefWidth(screenWidth / 4)
                 .padBottom(50)

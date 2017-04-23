@@ -2,24 +2,19 @@ package com.mygdx.game.LIBGDXwrapper;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.Input.KeyboardInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.MainMenu;
 
 import java.util.HashMap;
 
 public class GameScreen extends ScreenAdapter {
-    public final static float MENU_VIEWPORT = 1250;
-
-    private OrthographicCamera gameCamera;
     private MyGame game;
-    private LevelI currentLevel;
+    private OrthographicCamera gameCamera;
+    private com.mygdx.game.LIBGDXwrapper.LevelAdapters.LevelI currentLevel;
     private GameSettings gameSettings;
-    private AssetManager gameAssetManager;
-    public final static double SCREEN_RATIO = ((float) Gdx.graphics.getHeight() / (float) Gdx.graphics.getWidth());
 
     private static enum GameHUDID {MENU("Menu"), INGAME("InGame"), PAUSE("Pause"), SETTINGS("Settings"), HIGH_SCORES("HighScore"), PLAY_MENU("PlayMenu");
         private String string;
@@ -31,31 +26,26 @@ public class GameScreen extends ScreenAdapter {
     };
 
     private GameHUDID gameHUDID;
-
     HashMap<String,Stage> menuDisplays;
 
     public GameScreen(MyGame myGame, GameSettings gameSettings) {
         this.game = myGame;
-        gameAssetManager = new AssetManager(new InternalFileHandleResolver());
+
         gameCamera = new OrthographicCamera();
         this.gameSettings = gameSettings;
         this.currentLevel = null;
 
+
         gameHUDID = GameHUDID.MENU;
         menuDisplays = new HashMap<String, Stage>();
         loadGUIs();
-        inputHandler();
+        registerInputHandler();
     }
 
-    public void LoadLevel(LevelI currentLevel)
+    public void LoadLevel(com.mygdx.game.LIBGDXwrapper.LevelAdapters.LevelI currentLevel)
     {
-        if(this.currentLevel != null) //destroys textures od previous level
-            this.currentLevel.unloadLevelAssets(gameAssetManager);
-
-        currentLevel.loadLevelAssets(gameAssetManager);
         this.currentLevel = currentLevel;
         currentLevel.setupCamera(gameCamera);
-        currentLevel.finishLoadingAssets(gameAssetManager);
     }
 
     private void loadGUIs() {
@@ -71,6 +61,10 @@ public class GameScreen extends ScreenAdapter {
         return null;
     }
 
+    public void sendHeroXMovement (double d) {
+        if (currentLevel != null)
+            currentLevel.setHeroXMovement(d); }
+
     /**
      * Start of Periodic function.
      *
@@ -85,12 +79,18 @@ public class GameScreen extends ScreenAdapter {
         currentLevel.update(deltaT, gameCamera);
     }
 
+    private void registerInputHandler() {
+        if (gameSettings.isKeyboardControlled()) //use keyboard if on desktop
+        {
+            KeyboardInput keyboardInput = new KeyboardInput(this);
+            Gdx.input.setInputProcessor(keyboardInput);
+        }
+        else //gyroscope input
+        {
 
-    private void inputHandler() {
+        }
 
     }
-
-
 
     @Override
     public void resize(int width, int height){
@@ -99,4 +99,6 @@ public class GameScreen extends ScreenAdapter {
         if((stage=getMenuStage())!= null)
             stage.getViewport().update(width, height, true);
     }
+
+
 }

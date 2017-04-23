@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.game.LIBGDXwrapper.GameScreen;
+import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 
 public class MainMenu extends Stage{
 
@@ -20,11 +20,11 @@ public class MainMenu extends Stage{
         this.addActor(table);
         this.setViewport(
                 new FitViewport(
-                        (int)(GameScreen.MENU_VIEWPORT)
-                        ,(int)(GameScreen.MENU_VIEWPORT*  GameScreen.SCREEN_RATIO)
+                        (int)(DeviceConstants.MENU_VIEWPORT)
+                        ,(int)(DeviceConstants.MENU_VIEWPORT*  DeviceConstants.INVERTED_SCREEN_RATIO)
                 )
         );
-        ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)(GameScreen.MENU_VIEWPORT), (int)(GameScreen.MENU_VIEWPORT *  GameScreen.SCREEN_RATIO));
+        ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)(DeviceConstants.MENU_VIEWPORT), (int)(DeviceConstants.MENU_VIEWPORT *  DeviceConstants.INVERTED_SCREEN_RATIO));
         loadWidgets();
 
 

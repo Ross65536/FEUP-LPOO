@@ -1,12 +1,12 @@
 package com.mygdx.game.LIBGDXwrapper;
 
-import com.mygdx.game.gameLogic.GameWorld;
+import com.badlogic.gdx.Application;
 
 public class GameSettings implements Settings {
     private boolean isSensorControlled;
     float volume;
-
     GameModeID mode;
+    private Application.ApplicationType applicationPlatform;
 
     GameSettings(GameModeID mode, float volume, boolean isSensorControlled){
         this.mode = mode;
@@ -32,4 +32,11 @@ public class GameSettings implements Settings {
         return isSensorControlled;
     }
 
+    public void setApplicationPlatform(Application.ApplicationType applicationPlatform) {
+        this.applicationPlatform = applicationPlatform;
+    }
+
+    public boolean isKeyboardControlled() {
+        return applicationPlatform == Application.ApplicationType.Desktop || applicationPlatform == Application.ApplicationType.Applet || applicationPlatform == Application.ApplicationType.WebGL;
+    }
 }
