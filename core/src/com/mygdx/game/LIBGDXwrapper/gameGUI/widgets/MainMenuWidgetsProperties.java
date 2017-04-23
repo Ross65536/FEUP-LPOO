@@ -2,7 +2,7 @@ package com.mygdx.game.LIBGDXwrapper.gameGUI.widgets;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.mygdx.game.LIBGDXwrapper.GameScreen;
+import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 
 
 public class MainMenuWidgetsProperties extends WidgetsGeneric {
@@ -11,8 +11,8 @@ public class MainMenuWidgetsProperties extends WidgetsGeneric {
 
     public static Button loadPropertiesPlayButton(Table table) {
 
-        float screenWidth = GameScreen.MENU_VIEWPORT;
-        float screenHeight = (float)GameScreen.SCREEN_RATIO * GameScreen.MENU_VIEWPORT;
+        float screenWidth = DeviceConstants.MENU_VIEWPORT;
+        float screenHeight = (float) DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
         return loadButton(table
                 //names
@@ -35,8 +35,8 @@ public class MainMenuWidgetsProperties extends WidgetsGeneric {
 
     public static Button loadPropertiesHighScoreButton(Table table) {
 
-        float screenWidth = GameScreen.MENU_VIEWPORT;
-        float screenHeight = (float)GameScreen.SCREEN_RATIO * GameScreen.MENU_VIEWPORT;
+        float screenWidth = DeviceConstants.MENU_VIEWPORT;
+        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
         return loadButton(table
                 //names

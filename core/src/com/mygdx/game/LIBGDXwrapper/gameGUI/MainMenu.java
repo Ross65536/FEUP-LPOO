@@ -5,9 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.game.LIBGDXwrapper.GameScreen;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainMenuWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainMenuWidgetsProperties;
+import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 
 public class MainMenu extends AbstractGameMenu {
 
@@ -24,14 +24,13 @@ public class MainMenu extends AbstractGameMenu {
         this.addActor(table);
         this.setViewport(
                 new FitViewport(
-                        (int)(GameScreen.MENU_VIEWPORT)
-                        ,(int)(GameScreen.MENU_VIEWPORT*  GameScreen.SCREEN_RATIO)
+                        (int)(DeviceConstants.MENU_VIEWPORT)
+                        ,(int)(DeviceConstants.MENU_VIEWPORT*  DeviceConstants.INVERTED_SCREEN_RATIO)
                 )
         );
-        ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)(GameScreen.MENU_VIEWPORT), (int)(GameScreen.MENU_VIEWPORT *  GameScreen.SCREEN_RATIO));
+        ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)(DeviceConstants.MENU_VIEWPORT), (int)(DeviceConstants.MENU_VIEWPORT *  DeviceConstants.INVERTED_SCREEN_RATIO));
 
         loadWidgets();
-        loadInputlisteners();
 
         table.setDebug(true);
     }
@@ -41,7 +40,8 @@ public class MainMenu extends AbstractGameMenu {
         skin.add("playButton", MainMenuWidgetsProperties.loadPropertiesPlayButton(table));
         table.row();
         skin.add("hightScoreButton", MainMenuWidgetsProperties.loadPropertiesHighScoreButton(table));
-        //table.row();
+
+        loadInputlisteners();
     }
 
     protected void loadInputlisteners(){
