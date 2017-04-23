@@ -81,7 +81,7 @@ public class GameScreen extends ScreenAdapter {
             this.getMenuStage().draw();
 
         }
-        //else 
+        //else
         {
             gameLogicWorld.update(deltaT); //updates all world characters
 
