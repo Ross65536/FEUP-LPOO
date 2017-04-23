@@ -5,11 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.LIBGDXwrapper.GameScreen;
 
 
-public class MainMenuWidgets extends WidgetsGeneric {
+public class MainMenuWidgetsProperties extends WidgetsGeneric {
 
 
 
-    public static Button loadPlayButton(Table table) {
+    public static Button loadPropertiesPlayButton(Table table) {
 
         float screenWidth = GameScreen.MENU_VIEWPORT;
         float screenHeight = (float)GameScreen.SCREEN_RATIO * GameScreen.MENU_VIEWPORT;
@@ -19,8 +19,8 @@ public class MainMenuWidgets extends WidgetsGeneric {
                 ,"playButtonUpImage"
                 ,"playButtonDownImage"
                 //images
-                ,"android\\assets\\playButtonUp.png"
-                ,"android\\assets\\playButtonDown.png")
+                ,"playButtonUp.png"
+                ,"playButtonDown.png")
                 //pos. and location
                 .prefWidth(screenWidth / 4)
                 .padBottom(50)
@@ -33,7 +33,7 @@ public class MainMenuWidgets extends WidgetsGeneric {
                 .getActor();
     }
 
-    public static Button loadHighScoreButton(Table table) {
+    public static Button loadPropertiesHighScoreButton(Table table) {
 
         float screenWidth = GameScreen.MENU_VIEWPORT;
         float screenHeight = (float)GameScreen.SCREEN_RATIO * GameScreen.MENU_VIEWPORT;
@@ -43,8 +43,8 @@ public class MainMenuWidgets extends WidgetsGeneric {
                 ,"highScoreButtonUpImage"
                 ,"highScoreButtonDownImage"
                 //images
-                ,"android\\assets\\highScoreButtonUp.png"
-                ,"android\\assets\\highScoreButtonDown.png")
+                ,"highScoreButtonUp.png"
+                ,"highScoreButtonDown.png")
                 //pos. and location
                 .prefWidth(screenWidth / 4)
                 .padBottom(50)
