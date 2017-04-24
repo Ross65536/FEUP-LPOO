@@ -1,0 +1,52 @@
+package com.mygdx.game.LIBGDXwrapper.gameGUI;
+
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PlayGUIWidgetsProperties;
+
+import java.util.HashMap;
+
+public class PlayGUIComponent2 extends AbstractSingleStageGUI {
+
+    Table table;
+
+    HashMap<String, Object> elements;
+
+    public PlayGUIComponent2(MenuManager menuManager){
+        super(menuManager);
+
+        elements = new  HashMap<String, Object>();
+        table = new Table();
+        table.setFillParent(true);
+        this.addActor(table);
+        this.setViewport(
+                new FitViewport(
+                        (int)(DeviceConstants.MENU_VIEWPORT) * DeviceConstants.NUMBER_OF_GAMEMODES
+                        ,(int)(DeviceConstants.MENU_VIEWPORT*  DeviceConstants.INVERTED_SCREEN_RATIO)
+                )
+        );
+        ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)(DeviceConstants.MENU_VIEWPORT), (int)(DeviceConstants.MENU_VIEWPORT *  DeviceConstants.INVERTED_SCREEN_RATIO));
+
+        loadWidgets();
+        loadInputlisteners();
+        table.setDebug(true);
+    }
+
+    protected void loadWidgets(){
+
+        elements.put("topLabel", PlayGUIWidgetsProperties.loadTopLabel(table));
+
+
+    }
+
+    protected void loadInputlisteners(){
+
+    }
+
+    @Override
+    public String toString(){
+        return "PlayMenu";
+    }
+}
