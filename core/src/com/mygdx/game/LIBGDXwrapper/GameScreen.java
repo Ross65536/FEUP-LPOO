@@ -4,11 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.Input.KeyboardInput;
-import com.mygdx.game.LIBGDXwrapper.gameGUI.MainMenu;
-
-import java.util.HashMap;
 
 public class GameScreen extends ScreenAdapter {
     private MyGame game;
@@ -67,6 +63,7 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height){
+
         super.resize(width, height);
     }
 

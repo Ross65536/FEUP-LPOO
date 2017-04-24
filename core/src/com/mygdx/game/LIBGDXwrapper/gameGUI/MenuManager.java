@@ -7,35 +7,36 @@ public class MenuManager {
 
     private MyGame game;
 
-    private static enum GameMenus {MainMenu(MainMenu.class),/*TODO*/;
-        private Class<? extends AbstractGameMenu> menuType;
-        GameMenus(Class<? extends AbstractGameMenu> menuType){
+    public static enum GameMenus {MainMenu(MainGUI.class),PlayGUI(PlayGUI.class),/*TODO*/;
+        private Class<? extends AbstractGUI> menuType;
+        GameMenus(Class<? extends AbstractGUI> menuType){
             this.menuType = menuType;
         }
-        public Class<? extends AbstractGameMenu> getType(){
+        public Class<? extends AbstractGUI> getType(){
             return menuType;
         }
 
-        public AbstractGameMenu createInstance(MenuManager menuManager){
-            menuType = MainMenu.class;
-            AbstractGameMenu newgui;
+        public AbstractGUI createInstance(MenuManager menuManager){
+            AbstractGUI newgui;
             try {
                 newgui = menuType.getDeclaredConstructor(MenuManager.class).newInstance(menuManager);
             }catch (Exception e){
-                System.out.println("No constructor with settings as only argument in class.");
+                System.out.println(e.toString());
+                System.out.println("No constructor with MenuManager as only argument in class.");
                 return null;
             }
             return newgui;
         }
     };
 
-    private AbstractGameMenu currentMenu;
+    private AbstractGUI currentMenu;
 
-    private void setMenu(GameMenus menuTypeEnum){
+    public void setMenu(GameMenus menuTypeEnum){
         currentMenu = null;
         System.gc();
         currentMenu = menuTypeEnum.createInstance(this);
         this.setInputProcessor();
+        resize(Gdx.graphics.getWidth() ,Gdx.graphics.getHeight());
     }
 
     public void pauseGame(){
@@ -73,6 +74,6 @@ public class MenuManager {
     }
 
     public void resize(int width, int height){
-        currentMenu.getViewport().update(width, height,true);
+        currentMenu.updateViewPorts(width, height,true);
     }
 }

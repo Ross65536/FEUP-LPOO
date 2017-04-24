@@ -2,23 +2,24 @@ package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainMenuWidgetsInput;
-import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainMenuWidgetsProperties;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PlayGUIWidgetsInput;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PlayGUIWidgetsProperties;
 
-public class MainMenu extends AbstractGameMenu {
+import java.util.HashMap;
+
+public class PlayGUIComponent1 extends AbstractSingleStageGUI {
 
     Table table;
 
-    Skin skin;
+    HashMap<String, Object> elements;
 
-    public MainMenu(MenuManager menuManager){
+    public PlayGUIComponent1(MenuManager menuManager){
         super(menuManager);
 
-        skin = new Skin();
+        elements = new HashMap<String, Object>();
         table = new Table();
         table.setFillParent(true);
         this.addActor(table);
@@ -29,31 +30,32 @@ public class MainMenu extends AbstractGameMenu {
                 )
         );
         ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)(DeviceConstants.MENU_VIEWPORT), (int)(DeviceConstants.MENU_VIEWPORT *  DeviceConstants.INVERTED_SCREEN_RATIO));
-
         loadWidgets();
+
 
         table.setDebug(true);
     }
 
     protected void loadWidgets(){
 
-        skin.add("playButton", MainMenuWidgetsProperties.loadPropertiesPlayButton(table));
-        table.row();
-        skin.add("hightScoreButton", MainMenuWidgetsProperties.loadPropertiesHighScoreButton(table));
+        elements.put("backToMenu", PlayGUIWidgetsProperties.loadBackToMenuButton(table));
+        elements.put("settings", PlayGUIWidgetsProperties.loadSettingsButton(table));
 
         loadInputlisteners();
     }
 
     protected void loadInputlisteners(){
-        MainMenuWidgetsInput.loadInputPlayButton(
-                skin.get("playButton", Button.class),
-                menuManager
+
+        PlayGUIWidgetsInput.loadSettingsButton(
+            (Button)elements.get("settings"),
+            menuManager
         );
 
-        MainMenuWidgetsInput.loadInputHighScoreButton(
-                skin.get("hightScoreButton", Button.class),
-                menuManager
+        PlayGUIWidgetsInput.loadBackToMenuButton(
+            (Button)elements.get("backToMenu"),
+            menuManager
         );
+
     }
 
     @Override
