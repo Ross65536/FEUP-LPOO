@@ -52,13 +52,13 @@ public class PlayGUIWidgetsProperties {
                 .getActor();
     }
 
-    public static Label loadTopLabel(Table table){
+    public static Label loadTopLabel(Table table, String modeName){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
         return loadLabel(table
                 //images
-                ,"Survival"
+                ,modeName
                 ,"gameFont")
                 //pos. and location
                 .prefWidth(screenWidth / 3)
@@ -72,5 +72,7 @@ public class PlayGUIWidgetsProperties {
                 .padTop(20)
                 .getActor();
     }
+
+
 
 }

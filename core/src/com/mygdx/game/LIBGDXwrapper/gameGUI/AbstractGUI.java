@@ -1,5 +1,6 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -9,14 +10,14 @@ import java.util.ArrayList;
 
 public abstract class AbstractGUI extends InputMultiplexer{
 
-    ArrayList<AbstractSingleStageGUI> menuComponets;
+    ArrayList<InputProcessor> menuComponets;
 
     protected MenuManager menuManager;
 
     protected abstract void addComponents();
 
     public AbstractGUI(MenuManager menuManager){
-        menuComponets = new ArrayList<AbstractSingleStageGUI>();
+        menuComponets = new ArrayList<InputProcessor>();
         this.menuManager = menuManager;
     }
 
@@ -25,18 +26,27 @@ public abstract class AbstractGUI extends InputMultiplexer{
             this.addProcessor(input);
     }
 
+
+
+    //************************************************************//
+    //*****************STAGE RELATED FUCNTIONS********************//
+    //************************************************************//
     void act(float delta){
-        for(Stage stage: menuComponets)
-            stage.act(delta);
+        for(InputProcessor stage: menuComponets) {
+            if(stage instanceof Stage)
+                ((Stage)stage).act(delta);
+        }
     }
 
     void draw(){
-        for(Stage stage: menuComponets)
-            stage.draw();
+        for(InputProcessor stage: menuComponets)
+            if(stage instanceof Stage)
+                ((Stage)stage).draw();
     }
 
     public void updateViewPorts(int width,int height, boolean centerCamera){
-        for(Stage stage: menuComponets)
-            stage.getViewport().update(width,height,centerCamera);
+        for(InputProcessor stage: menuComponets)
+            if(stage instanceof Stage)
+                ((Stage)stage).getViewport().update(width,height,centerCamera);
     }
 }
