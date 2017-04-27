@@ -49,44 +49,61 @@ public class PlayGUIWidgetsInput{
                 @Override
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button){
 
-                    //x = x0 + vi*t + a*t*t
-                    //v = vi + a*t
+                    final double maxMov = DeviceConstants.MENU_VIEWPORT/4;
+                    double maxTime = 2;
+                    final double maxAccelaration = 4000;
 
-                    double maxMov = DeviceConstants.MENU_VIEWPORT/2;
-                    double maxTime = 1;
-                    final double maxAccelaration = -10;
 
-                    double movement = movementMade % (maxMov*2);
+                    double movement = (movementMade % DeviceConstants.MENU_VIEWPORT);
+
+                    System.out.println(movement);
+
+                    if(Math.abs(movement) > (DeviceConstants.MENU_VIEWPORT/4)){
+
+                        movement = -DeviceConstants.MENU_VIEWPORT + movement;
+
+                    }else {
+                        int numAux = (int) (movement / (DeviceConstants.MENU_VIEWPORT / 8));
+
+                        if(numAux == 1){
+                            numAux*=-1;
+                        }else
+                            numAux=1;
+
+                        movement = (movement % (DeviceConstants.MENU_VIEWPORT / 8)) * numAux;
+                    }
 
                     if(movement > maxMov){
                         movement = 2*maxMov - movement;
                     }else
                         movement*=1;
 
-
-                    double maxVelocity = (-maxMov - maxAccelaration*maxTime*maxTime)/maxTime;
-
-                    double movDiff = maxMov - movement;
-
-                    //(b+-sqrt(b*b - 4*a*c))/2*a
-                    double extraTime = (-maxVelocity+Math.sqrt(maxVelocity*maxVelocity-4*maxAccelaration*movDiff))/2*maxAccelaration;
-
-                    final double startingVelocity = maxVelocity + maxAccelaration*extraTime;
+                    final double startingVelocity = -Math.sqrt(0-(2*maxAccelaration*movement));
 
                     final double finalMovement = movement;
+
                     table.addAction(new Action() {
                         private double velocity = startingVelocity;
                         private double accelaration = maxAccelaration;
                         private double movementLeft = finalMovement;
+
                         @Override
                         public boolean act(float delta) {
-                            double movementInterval =  velocity * delta + accelaration * delta * delta;
+                            double prevVel = velocity;
                             velocity = velocity + accelaration * delta;
-                            movementLeft -= movementInterval;
-                            if(movementLeft <= 0){
+                            if(prevVel<0 &&  velocity>0 || prevVel>0 &&  velocity<0 )
                                 return true;
-                            }
-                            camera.translate((float)movementInterval, 0);
+                            double movementInterval = velocity * delta;
+                            movementLeft -= movementInterval;
+                            /*
+                            if(movementLeft >= 0){
+                                float remainder = (float)Math.abs(movementLeft+movementInterval);
+                                camera.translate(remainder,0);
+                                movementMade+=remainder;
+                                return true;
+                            }*/
+                            movementMade-=movementInterval;
+                            camera.translate(-(float)movementInterval, 0);
                             return false;
                         }
                     });
@@ -106,6 +123,7 @@ public class PlayGUIWidgetsInput{
                 @Override
                 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
                     currentXCoor = getScreenX(x);
+                    table.clearActions();
                     return true;
                 }
 
