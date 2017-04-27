@@ -1,5 +1,6 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI.widgets;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -35,9 +36,6 @@ public class PlayGUIWidgetsInput{
         });
     }
 
-    static float xPos = -1;
-    static float yPos = -1;
-
     static public void loadSlideFunction(final Table table, final MenuManager menuManager, final OrthographicCamera camera){
         table.addListener(
             new ClickListener(){
@@ -49,59 +47,55 @@ public class PlayGUIWidgetsInput{
                 @Override
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button){
 
-                    final double maxMov = DeviceConstants.MENU_VIEWPORT/4;
-                    double maxTime = 2;
-                    final double maxAccelaration = 4000;
-
+                    double maxAccelaration = 5000;
+                    double sign = 1;
 
                     double movement = (movementMade % DeviceConstants.MENU_VIEWPORT);
 
-                    System.out.println(movement);
-
                     if(Math.abs(movement) > (DeviceConstants.MENU_VIEWPORT/4)){
 
-                        movement = -DeviceConstants.MENU_VIEWPORT + movement;
+                        if(movement<0) {
+                            movement = (DeviceConstants.MENU_VIEWPORT + movement);
+                            maxAccelaration*=-1;
+                            sign*=-1;
+                        }
+                        else {
+                            movement = movement - DeviceConstants.MENU_VIEWPORT;
+                        }
 
+                        movementMade = (float)movement;
                     }else {
-                        int numAux = (int) (movement / (DeviceConstants.MENU_VIEWPORT / 8));
 
-                        if(numAux == 1){
-                            numAux*=-1;
-                        }else
-                            numAux=1;
+                        movement = (movement % (DeviceConstants.MENU_VIEWPORT / 4));
 
-                        movement = (movement % (DeviceConstants.MENU_VIEWPORT / 8)) * numAux;
+                        if(movement>0) {
+                            sign *= -1;
+                            maxAccelaration*=-1;
+                        }
                     }
+                    final double finalMaxAccelaration = maxAccelaration;
 
-                    if(movement > maxMov){
-                        movement = 2*maxMov - movement;
-                    }else
-                        movement*=1;
-
-                    final double startingVelocity = -Math.sqrt(0-(2*maxAccelaration*movement));
+                    final double startingVelocity = -sign*Math.sqrt(0-(2*maxAccelaration*movement))-sign*Math.sqrt(0-(2*maxAccelaration*movement))*Gdx.graphics.getDeltaTime();;
 
                     final double finalMovement = movement;
 
                     table.addAction(new Action() {
                         private double velocity = startingVelocity;
-                        private double accelaration = maxAccelaration;
+                        private double accelaration = finalMaxAccelaration;
                         private double movementLeft = finalMovement;
 
                         @Override
                         public boolean act(float delta) {
                             double prevVel = velocity;
                             velocity = velocity + accelaration * delta;
-                            if(prevVel<0 &&  velocity>0 || prevVel>0 &&  velocity<0 )
+                            if(prevVel<0 &&  velocity>0 || prevVel>0 &&  velocity<0 ){
+                                camera.translate(-(float)movementMade, 0);
+                                movementMade = 0;
                                 return true;
+                            }
+
                             double movementInterval = velocity * delta;
                             movementLeft -= movementInterval;
-                            /*
-                            if(movementLeft >= 0){
-                                float remainder = (float)Math.abs(movementLeft+movementInterval);
-                                camera.translate(remainder,0);
-                                movementMade+=remainder;
-                                return true;
-                            }*/
                             movementMade-=movementInterval;
                             camera.translate(-(float)movementInterval, 0);
                             return false;
