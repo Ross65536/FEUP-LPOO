@@ -10,11 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.CommonConstants;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.MyGame;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.MenuManager;
 
 import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.table;
+import static com.mygdx.game.CommonConstants.NUMBER_OF_GAMEMODES;
 
 public class PlayGUIWidgetsInput{
 
@@ -37,26 +39,35 @@ public class PlayGUIWidgetsInput{
     }
 
     static public void loadSlideFunction(final Table table, final MenuManager menuManager, final OrthographicCamera camera){
+
         table.addListener(
             new ClickListener(){
 
                 private float movementMade = 0;
 
+                private float xSlided = 0;
+
                 private float currentXCoor;
+
+                private Action action;
 
                 @Override
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button){
 
-                    double maxAccelaration = 5000;
+                    if(movementMade == 0)
+                        return;
+
+                    double maxAcceleration = 5000;
                     double sign = 1;
 
                     double movement = (movementMade % DeviceConstants.MENU_VIEWPORT);
+
 
                     if(Math.abs(movement) > (DeviceConstants.MENU_VIEWPORT/4)){
 
                         if(movement<0) {
                             movement = (DeviceConstants.MENU_VIEWPORT + movement);
-                            maxAccelaration*=-1;
+                            maxAcceleration*=-1;
                             sign*=-1;
                         }
                         else {
@@ -70,45 +81,53 @@ public class PlayGUIWidgetsInput{
 
                         if(movement>0) {
                             sign *= -1;
-                            maxAccelaration*=-1;
+                            maxAcceleration*=-1;
                         }
                     }
-                    final double finalMaxAccelaration = maxAccelaration;
 
-                    final double startingVelocity = -sign*Math.sqrt(0-(2*maxAccelaration*movement))-sign*Math.sqrt(0-(2*maxAccelaration*movement))*Gdx.graphics.getDeltaTime();;
+                    double startingVelocity = -sign*Math.sqrt(0-(2*maxAcceleration*movement))*1.01;
 
-                    final double finalMovement = movement;
+                    table.addAction(action = getTableAction(startingVelocity, maxAcceleration));
 
-                    table.addAction(new Action() {
-                        private double velocity = startingVelocity;
-                        private double accelaration = finalMaxAccelaration;
-                        private double movementLeft = finalMovement;
+                }
 
+                private Action getTableAction(final double initialVelocity,final double acceleration){
+                    return new Action() {
+                        private double velocity = initialVelocity;
                         @Override
                         public boolean act(float delta) {
                             double prevVel = velocity;
-                            velocity = velocity + accelaration * delta;
-                            if(prevVel<0 &&  velocity>0 || prevVel>0 &&  velocity<0 ){
+                            velocity = velocity + acceleration * delta;
+
+                            if((prevVel<0 &&  velocity>=0) || (prevVel>0 &&  velocity<=0)){
+
                                 camera.translate(-(float)movementMade, 0);
+                                xSlided-=movementMade;
                                 movementMade = 0;
                                 return true;
                             }
 
                             double movementInterval = velocity * delta;
-                            movementLeft -= movementInterval;
                             movementMade-=movementInterval;
+                            xSlided-=movementInterval;
                             camera.translate(-(float)movementInterval, 0);
                             return false;
                         }
-                    });
-
+                    };
                 }
-
 
                 @Override
                 public void touchDragged(InputEvent event, float x, float y, int pointer){
                     x = getScreenX(x);
                     float diffMovement = currentXCoor - x;
+
+                    //check if out of bounds
+                    xSlided+=diffMovement;
+                    if((xSlided<0) || (xSlided>=(CommonConstants.NUMBER_OF_GAMEMODES-1)*DeviceConstants.MENU_VIEWPORT)) {
+                        xSlided-=diffMovement;
+                        return;
+                    }
+
                     currentXCoor = x;
                     camera.translate(diffMovement,0);
                     movementMade += diffMovement;
@@ -117,7 +136,7 @@ public class PlayGUIWidgetsInput{
                 @Override
                 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
                     currentXCoor = getScreenX(x);
-                    table.clearActions();
+                    table.removeAction(action);
                     return true;
                 }
 

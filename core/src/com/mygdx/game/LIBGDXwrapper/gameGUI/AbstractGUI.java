@@ -14,7 +14,9 @@ public abstract class AbstractGUI extends InputMultiplexer{
 
     protected MenuManager menuManager;
 
-    protected abstract void addComponents();
+    protected void addComponent(AbstractSingleStageGUI component){
+        menuComponets.add(component);
+    }
 
     public AbstractGUI(MenuManager menuManager){
         menuComponets = new ArrayList<InputProcessor>();

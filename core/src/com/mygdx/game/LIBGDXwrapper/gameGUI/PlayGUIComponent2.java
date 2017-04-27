@@ -1,5 +1,7 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Event;
@@ -15,6 +17,7 @@ import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PlayGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PlayGUIWidgetsProperties;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 
 public class PlayGUIComponent2 extends AbstractSingleStageGUI {
@@ -51,11 +54,32 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
 
     protected void loadWidgets(){
 
-        elements.put("topLabel", PlayGUIWidgetsProperties.loadTopLabel(table, "Survival"));
+        table.center().top();
+        elements.put("topLabelS", PlayGUIWidgetsProperties.loadTopLabel(table, "Survival"));
+        elements.put("topLabelW", PlayGUIWidgetsProperties.loadTopLabel(table, "Weapons"));
+        elements.put("topLabelE", PlayGUIWidgetsProperties.loadTopLabel(table, "Exemplo"));
 
-        //mode 2
-        elements.put("topLabel", PlayGUIWidgetsProperties.loadTopLabel(table, "Weapons"));
+        table.row();
+        elements.put("playButtonS", PlayGUIWidgetsProperties.loadPlayButton(table));
+        elements.put("playButtonW", PlayGUIWidgetsProperties.loadPlayButton(table));
+        elements.put("playButtonE", PlayGUIWidgetsProperties.loadPlayButton(table));
 
+
+        table.row();
+        String tutorialS = Gdx.files.internal("tutorialS.txt").readString();
+        elements.put("textAreaS", PlayGUIWidgetsProperties.loadTextAreaTutorial(table,
+                "", //não funciona
+                "blueBackgroundTextArea.png"));
+
+        String tutorialW = new String(Gdx.files.internal("tutorialW.txt").readString());
+        elements.put("textAreaW", PlayGUIWidgetsProperties.loadTextAreaTutorial(table,
+                "", //não funciona
+                "greenBackgroundTextArea.png"));
+
+        String tutorialE = new String(Gdx.files.internal("tutorialE.txt").readString());
+        elements.put("textAreaE", PlayGUIWidgetsProperties.loadTextAreaTutorial(table,
+                "", //não funciona
+                "redBackgroundTextArea.png"));
     }
 
     protected void loadInputlisteners(){
