@@ -9,9 +9,10 @@ public class PlayGUI extends AbstractGUI{
         addInputProcessors();
     }
 
-    protected void addComponents(){
-        menuComponets.add(new PlayGUIComponent1(menuManager));
-        menuComponets.add(new PlayGUIComponent2(menuManager));
+
+    private void addComponents(){
+        this.addComponent(new PlayGUIComponent1(menuManager));
+        this.addComponent(new PlayGUIComponent2(menuManager));
     }
 
 

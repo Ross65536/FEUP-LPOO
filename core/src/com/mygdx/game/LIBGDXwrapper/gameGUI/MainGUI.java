@@ -9,8 +9,8 @@ public class MainGUI extends AbstractGUI{
         addInputProcessors();
     }
 
-    protected void addComponents(){
-        menuComponets.add(new MainGUIComponet(menuManager));
+    private void addComponents(){
+        this.addComponent(new MainGUIComponet(menuManager));
     }
 
 }
