@@ -68,17 +68,17 @@ The pause menu will be shown when the player is ingame and clicks the pause butt
 
 The settings menu should be available from the main menu, the play menu and from the paused game. It should appear in the middle of the screen and display several settings options to select or deselect. There will be a big X button on the top left corner that exits the settings menu when clicked.
 
-#### From the main menu
+#### From the main menu:
 ![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUImock-up/SettingsMenu.png)
-#### From the play menu
+#### From the play menu:
 ![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUImock-up/SettingsPlayMenu.png)
-#### From ingame
+#### From ingame:
 ![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUImock-up/InGameSettings.png)
 
 
 ### HUD
 
-The HUD for now is just a pause button on the corner of the screen
+The HUD for now is just a pause button on the corner of the screen that will lead to the pause menu seen above.
 
 ![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUImock-up/InGame.png)
 
