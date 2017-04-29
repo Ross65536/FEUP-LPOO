@@ -27,21 +27,24 @@ public class MenuManager {
                 System.out.println("No constructor with MenuManager as only argument in class.");
                 return null;
             }
+            updateUsages();
+            return menu;
+        }
+
+        private void updateUsages(){
             increaseUsage();
             for(GameMenus ms: GameMenus.values()){
                 ms.decreasedUsage();
             }
-            return menu;
         }
-
-        private void decreasedUsage(){
-            if(menu != null){
-                if(usage <= 0){
+        private void decreasedUsage() {
+            if (menu != null) {
+                if (usage <= 0) {
                     menu = null;
                     System.gc();
                     usage = 0;
                 }
-                usage-=1/(GameMenus.LASTVALUEMARKER.ordinal()*2);
+                usage -= 1 / (GameMenus.LASTVALUEMARKER.ordinal() * 2);
             }
         }
 
