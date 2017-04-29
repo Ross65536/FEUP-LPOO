@@ -9,11 +9,16 @@ public class MainGUI extends AbstractGUI{
 
     public MainGUI(MenuManager menuManager){
         super(menuManager);
-        widgetsProperties = new MainGUIWidgetsProperties();
-        widgetsInput = new MainGUIWidgetsInput();
+
 
         addComponents();
         addInputProcessors();
+    }
+
+
+    protected void createWidgets(){
+        widgetsProperties = new MainGUIWidgetsProperties();
+        widgetsInput = new MainGUIWidgetsInput();
     }
 
     private void addComponents(){

@@ -136,6 +136,8 @@ public class PlayGUIWidgetsInput extends WidgetsInput{
 
                 @Override
                 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
+                    //if(this.isPressed())
+                    //    return false;
                     currentXCoor = getScreenX(x);
                     table.removeAction(action);
                     return true;

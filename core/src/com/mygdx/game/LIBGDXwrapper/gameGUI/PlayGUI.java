@@ -7,13 +7,16 @@ public class PlayGUI extends AbstractGUI{
 
     public PlayGUI(MenuManager menuManager){
         super(menuManager);
-        widgetsProperties = new PlayGUIWidgetsProperties();
-        widgetsInput = new PlayGUIWidgetsInput();
+
 
         addComponents();
         addInputProcessors();
     }
 
+    protected void createWidgets(){
+        widgetsProperties = new PlayGUIWidgetsProperties();
+        widgetsInput = new PlayGUIWidgetsInput();
+    }
 
     private void addComponents(){
         this.addComponent(new PlayGUIComponent1(menuManager, widgetsProperties, widgetsInput));

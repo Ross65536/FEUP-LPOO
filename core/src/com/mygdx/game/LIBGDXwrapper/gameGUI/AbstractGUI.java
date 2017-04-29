@@ -27,6 +27,7 @@ public abstract class AbstractGUI extends InputMultiplexer{
     public AbstractGUI(MenuManager menuManager){
         menuComponets = new ArrayList<InputProcessor>();
         this.menuManager = menuManager;
+        createWidgets();
     }
 
     protected void addInputProcessors(){
@@ -34,7 +35,7 @@ public abstract class AbstractGUI extends InputMultiplexer{
             this.addProcessor(input);
     }
 
-
+    protected abstract void createWidgets();
 
     //************************************************************//
     //*****************STAGE RELATED FUCNTIONS********************//
