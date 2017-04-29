@@ -18,6 +18,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PlayGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PlayGUIWidgetsProperties;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsInput;
 
 import java.util.HashMap;
 
@@ -27,8 +29,8 @@ public class PlayGUIComponent1 extends AbstractSingleStageGUI {
 
     HashMap<String, Object> elements;
 
-    public PlayGUIComponent1(MenuManager menuManager){
-        super(menuManager);
+    public PlayGUIComponent1(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput){
+        super(menuManager, widgetsProperties, widgetsInput);
 
         elements = new HashMap<String, Object>();
         table = new Table();
@@ -49,20 +51,24 @@ public class PlayGUIComponent1 extends AbstractSingleStageGUI {
 
     protected void loadWidgets(){
 
-        elements.put("backToMenu", PlayGUIWidgetsProperties.loadBackToMenuButton(table));
-        elements.put("settings", PlayGUIWidgetsProperties.loadSettingsButton(table));
+        PlayGUIWidgetsProperties playGUIWidgetsProperties = ((PlayGUIWidgetsProperties)widgetsProperties);
+
+        elements.put("backToMenu", playGUIWidgetsProperties.loadBackToMenuButton(table));
+        elements.put("settings", playGUIWidgetsProperties.loadSettingsButton(table));
 
         loadInputlisteners();
     }
 
     protected void loadInputlisteners(){
 
-        PlayGUIWidgetsInput.loadSettingsButton(
+        PlayGUIWidgetsInput playGUIWidgetsInput = ((PlayGUIWidgetsInput)widgetsInput);
+
+        playGUIWidgetsInput.loadSettingsButton(
             (Button)elements.get("settings"),
             menuManager
         );
 
-        PlayGUIWidgetsInput.loadBackToMenuButton(
+        playGUIWidgetsInput.loadBackToMenuButton(
             (Button)elements.get("backToMenu"),
             menuManager
         );

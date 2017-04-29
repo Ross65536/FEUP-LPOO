@@ -12,20 +12,20 @@ public class MenuManager {
         GameMenus(Class<? extends AbstractGUI> menuType){
             this.menuType = menuType;
         }
-        public Class<? extends AbstractGUI> getType(){
-            return menuType;
-        }
+
+        AbstractGUI menu = null;
 
         public AbstractGUI createInstance(MenuManager menuManager){
-            AbstractGUI newgui;
+            if(menu!=null)
+                return menu;
             try {
-                newgui = menuType.getDeclaredConstructor(MenuManager.class).newInstance(menuManager);
+                menu = menuType.getDeclaredConstructor(MenuManager.class).newInstance(menuManager);
             }catch (Exception e){
                 System.out.println(e.toString());
                 System.out.println("No constructor with MenuManager as only argument in class.");
                 return null;
             }
-            return newgui;
+            return menu;
         }
     };
 

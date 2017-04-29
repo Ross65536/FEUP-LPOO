@@ -3,10 +3,12 @@ package com.mygdx.game.LIBGDXwrapper.gameGUI.widgets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
@@ -28,7 +30,7 @@ public class WidgetsGeneric{
         return table.add(playButton);
     }
 
-    public static Cell<Label> loadLabel(Table table, String text, String font) {
+    public static Cell<Label> loadLabel(Table table, String text, String font, String backgroundImage) {
 
         BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal(font+".fnt"),
                 Gdx.files.internal(font + ".png"), false);
@@ -36,26 +38,34 @@ public class WidgetsGeneric{
 
         labelStyle.font = bitmapFont;
 
+        if(backgroundImage!=null) {
+            Skin skin = new Skin();
+            loadToSkin("background", backgroundImage, skin);
+            labelStyle.background = skin.getDrawable("background");
+        }
+
         Label label = new Label(text,labelStyle);
-        label.setFontScale(2);
-        label.setAlignment(0);
         return table.add(label);
     }
 
-    public static Cell<TextArea> loadTextArea(Table table, String text, String font, String background) {
-        Skin skin = new Skin();
-
-        loadToSkin("background", background,skin);
-
+    public static Cell<ScrollPane> loadTextArea(Table table, String text, String font, String background) {
         BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal(font+".fnt"),
                 Gdx.files.internal(font + ".png"), false);
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
 
-        TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
-        textFieldStyle.background = skin.getDrawable("background");
-        textFieldStyle.font = bitmapFont;
-        TextArea textArea = new TextArea(text, textFieldStyle);
-        textArea.pack();
-        return table.add(textArea).fill();
+        labelStyle.font = bitmapFont;
+
+        if(background!=null) {
+            Skin skin = new Skin();
+            loadToSkin("background", background, skin);
+            labelStyle.background = skin.getDrawable("background");
+        }
+
+        Label label = new Label(text,labelStyle);
+        ScrollPane scrollPane = new ScrollPane(label);
+        scrollPane.layout();
+        scrollPane.setTouchable(Touchable.enabled);
+        return table.add(scrollPane);
     }
 
     private static void loadToSkin(String name, String file, Skin skin){
