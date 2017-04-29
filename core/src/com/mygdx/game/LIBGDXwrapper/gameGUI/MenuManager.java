@@ -7,13 +7,15 @@ public class MenuManager {
 
     private MyGame game;
 
-    public static enum GameMenus {MainMenu(MainGUI.class),PlayGUI(PlayGUI.class),/*TODO*/;
+    public static enum GameMenus {MainMenu(MainGUI.class),PlayGUI(PlayGUI.class)/*TODO*/,LASTVALUEMARKER(null);
         private Class<? extends AbstractGUI> menuType;
         GameMenus(Class<? extends AbstractGUI> menuType){
             this.menuType = menuType;
         }
 
         AbstractGUI menu = null;
+
+        private int usage = 0;
 
         public AbstractGUI createInstance(MenuManager menuManager){
             if(menu!=null)
@@ -25,7 +27,26 @@ public class MenuManager {
                 System.out.println("No constructor with MenuManager as only argument in class.");
                 return null;
             }
+            increaseUsage();
+            for(GameMenus ms: GameMenus.values()){
+                ms.decreasedUsage();
+            }
             return menu;
+        }
+
+        private void decreasedUsage(){
+            if(menu != null){
+                if(usage <= 0){
+                    menu = null;
+                    System.gc();
+                    usage = 0;
+                }
+                usage-=1/(GameMenus.LASTVALUEMARKER.ordinal()*2);
+            }
+        }
+
+        private void increaseUsage(){
+            usage= 1 + 1/(GameMenus.LASTVALUEMARKER.ordinal()*2);
         }
     };
 
