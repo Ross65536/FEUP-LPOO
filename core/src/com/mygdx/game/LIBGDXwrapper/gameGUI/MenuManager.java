@@ -56,8 +56,6 @@ public class MenuManager {
     private AbstractGUI currentMenu;
 
     public void setMenu(GameMenus menuTypeEnum){
-        currentMenu = null;
-        System.gc();
         currentMenu = menuTypeEnum.createInstance(this);
         this.setInputProcessor();
         resize(Gdx.graphics.getWidth() ,Gdx.graphics.getHeight());
@@ -88,16 +86,12 @@ public class MenuManager {
         Gdx.input.setInputProcessor(currentMenu);
     }
 
-    public void nullifyMenu(){
-        currentMenu = null;
-        System.gc();
-    }
-
     public final MyGame getGame(){
         return game;
     }
 
     public void resize(int width, int height){
-        currentMenu.updateViewPorts(width, height,true);
+
+        currentMenu.updateViewPorts(width, height,false);
     }
 }

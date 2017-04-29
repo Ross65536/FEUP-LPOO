@@ -30,10 +30,6 @@ public class MenuScreen extends ScreenAdapter {
         menuManager.backToMenu();
     }
 
-    public void nullifyMenu(){
-        menuManager.backToMenu();
-    }
-
     public void pauseGame(){
         menuManager.pauseGame();
     }

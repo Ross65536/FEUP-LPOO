@@ -92,7 +92,6 @@ public class MyGame extends Game {
 
     public void SwicthToGameScreen(GameInstr instruction){
         gameScreen.registerInputHandler();
-        menuScreen.nullifyMenu();
         switch (instruction){
             case RESUME:
 
