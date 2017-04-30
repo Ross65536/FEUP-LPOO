@@ -15,7 +15,7 @@ João Carlos Oliveira Lago | ID: up201504374 | Email: up201504374@fe.up.pt
 
 ### State Machine of game
 
-[state machine here]
+![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/UML/stateUML.png)
 
 ### Design Patterns used
 
