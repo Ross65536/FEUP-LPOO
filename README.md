@@ -1,5 +1,4 @@
 # LPOO1617_T4G10 Final Project
-## [GAME_NAME]
 
 ### Members:
 
