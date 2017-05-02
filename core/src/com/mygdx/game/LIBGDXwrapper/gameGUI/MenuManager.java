@@ -7,7 +7,7 @@ public class MenuManager {
 
     private MyGame game;
 
-    public static enum GameMenus {MainMenu(MainGUI.class),PlayGUI(PlayGUI.class)/*TODO*/,LASTVALUEMARKER(null);
+    public static enum GameMenus {MainMenu(MainGUI.class),PlayGUI(PlayGUI.class),SettingsGUI(SettingsGUI.class)/*TODO*/,LASTVALUEMARKER(null);
         private Class<? extends AbstractGUI> menuType;
         GameMenus(Class<? extends AbstractGUI> menuType){
             this.menuType = menuType;

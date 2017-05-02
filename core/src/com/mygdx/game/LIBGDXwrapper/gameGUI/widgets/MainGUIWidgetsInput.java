@@ -4,8 +4,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.LIBGDXwrapper.MyGame;
-import com.mygdx.game.LIBGDXwrapper.Settings;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.MenuManager;
+
+import static com.badlogic.gdx.Gdx.app;
 
 public class MainGUIWidgetsInput extends WidgetsInput{
 
@@ -31,7 +32,7 @@ public class MainGUIWidgetsInput extends WidgetsInput{
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                menuManager.setMenu(MenuManager.GameMenus.SettingsGUI);
             }
         });
     }
@@ -40,7 +41,7 @@ public class MainGUIWidgetsInput extends WidgetsInput{
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                app.exit();
             }
         });
     }

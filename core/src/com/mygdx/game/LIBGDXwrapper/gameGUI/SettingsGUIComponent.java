@@ -7,23 +7,31 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsProperties;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsInput;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsProperties;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsInput;
 
 import java.util.HashMap;
 
-public class MainGUIComponet extends AbstractSingleStageGUI {
+public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
     Table table;
 
     HashMap<String, Object> elements;
 
-    public MainGUIComponet(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput){
+
+    public SettingsGUIComponent(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput){
         super(menuManager, widgetsProperties, widgetsInput);
 
         elements = new HashMap<String, Object>();
         table = new Table();
         table.setFillParent(true);
+        table.pad(DeviceConstants.MENU_VIEWPORT/10
+                ,DeviceConstants.MENU_VIEWPORT/10
+                ,DeviceConstants.MENU_VIEWPORT/10
+                ,DeviceConstants.MENU_VIEWPORT/10
+        );
         this.addActor(table);
         this.setViewport(
                 new FitViewport(
@@ -39,43 +47,21 @@ public class MainGUIComponet extends AbstractSingleStageGUI {
     }
 
     protected void loadWidgets(){
+        SettingsGUIWidgetsProperties mainGUIWidgetsProperties = ((SettingsGUIWidgetsProperties)widgetsProperties);
 
-        MainGUIWidgetsProperties mainGUIWidgetsProperties = ((MainGUIWidgetsProperties)widgetsProperties);
-
-        elements.put("playButton", mainGUIWidgetsProperties.loadPropertiesPlayButton(table));
-        table.row();
-        elements.put("hightScoreButton", mainGUIWidgetsProperties.loadPropertiesHighScoreButton(table));
-        table.row();
-        elements.put("settingsButton", mainGUIWidgetsProperties.loadPropertiesSettingsButton(table));
-        table.row();
-        elements.put("exitButton", mainGUIWidgetsProperties.loadPropertiesExitButton(table));
-
+        //elements.put("playButton", mainGUIWidgetsProperties.loadPropertiesPlayButton(table));
+        //table.row();
         loadInputlisteners();
     }
 
     protected void loadInputlisteners(){
 
-        MainGUIWidgetsInput mainGUIWidgetsInput = ((MainGUIWidgetsInput)widgetsInput);
+        SettingsGUIWidgetsInput mainGUIWidgetsInput = ((SettingsGUIWidgetsInput)widgetsInput);
 
-        mainGUIWidgetsInput.loadInputPlayButton(
+        /*mainGUIWidgetsInput.loadInputPlayButton(
                 (Button)elements.get("playButton"),
                 menuManager
-        );
-
-        mainGUIWidgetsInput.loadInputHighScoreButton(
-                (Button)elements.get("hightScoreButton"),
-                menuManager
-        );
-
-        mainGUIWidgetsInput.loadInputSettingsButton(
-                (Button)elements.get("settingsButton"),
-                menuManager
-        );
-
-        mainGUIWidgetsInput.loadInputExitButton(
-                (Button)elements.get("exitButton"),
-                menuManager
-        );
+        );*/
     }
 
     @Override
