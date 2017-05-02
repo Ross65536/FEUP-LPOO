@@ -9,7 +9,7 @@ public class MainGUIWidgetsProperties extends WidgetsGeneric {
 
 
 
-    public static Button loadPropertiesPlayButton(Table table) {
+    public Button loadPropertiesPlayButton(Table table) {
 
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float) DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
@@ -30,7 +30,7 @@ public class MainGUIWidgetsProperties extends WidgetsGeneric {
                 .getActor();
     }
 
-    public static Button loadPropertiesHighScoreButton(Table table) {
+    public Button loadPropertiesHighScoreButton(Table table) {
 
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
@@ -51,7 +51,7 @@ public class MainGUIWidgetsProperties extends WidgetsGeneric {
                 .getActor();
     }
 
-    public static Button loadPropertiesSettingsButton(Table table){
+    public Button loadPropertiesSettingsButton(Table table){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
@@ -71,7 +71,7 @@ public class MainGUIWidgetsProperties extends WidgetsGeneric {
                 .getActor();
     }
 
-    public static Button loadPropertiesExitButton(Table table){
+    public Button loadPropertiesExitButton(Table table){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 

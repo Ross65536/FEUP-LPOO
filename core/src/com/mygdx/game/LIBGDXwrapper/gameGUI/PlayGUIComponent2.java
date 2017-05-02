@@ -16,6 +16,8 @@ import com.mygdx.game.CommonConstants;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PlayGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PlayGUIWidgetsProperties;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsInput;
 
 import java.nio.charset.Charset;
 import java.util.HashMap;
@@ -27,9 +29,8 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
     HashMap<String, Object> elements;
 
 
-
-    public PlayGUIComponent2(MenuManager menuManager){
-        super(menuManager);
+    public PlayGUIComponent2(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput){
+        super(menuManager, widgetsProperties, widgetsInput);
 
         elements = new  HashMap<String, Object>();
         table = new Table();
@@ -54,36 +55,40 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
 
     protected void loadWidgets(){
 
+        PlayGUIWidgetsProperties playGUIWidgetsProperties = ((PlayGUIWidgetsProperties)widgetsProperties);
+
         table.center().top();
-        elements.put("topLabelS", PlayGUIWidgetsProperties.loadTopLabel(table, "Survival"));
-        elements.put("topLabelW", PlayGUIWidgetsProperties.loadTopLabel(table, "Weapons"));
-        elements.put("topLabelE", PlayGUIWidgetsProperties.loadTopLabel(table, "Exemplo"));
+        elements.put("topLabelS",  playGUIWidgetsProperties.loadTopLabel(table, "Survival"));
+        elements.put("topLabelW",  playGUIWidgetsProperties.loadTopLabel(table, "Weapons"));
+        elements.put("topLabelE",  playGUIWidgetsProperties.loadTopLabel(table, "Exemplo"));
 
         table.row();
-        elements.put("playButtonS", PlayGUIWidgetsProperties.loadPlayButton(table));
-        elements.put("playButtonW", PlayGUIWidgetsProperties.loadPlayButton(table));
-        elements.put("playButtonE", PlayGUIWidgetsProperties.loadPlayButton(table));
+        elements.put("playButtonS",  playGUIWidgetsProperties.loadPlayButton(table));
+        elements.put("playButtonW",  playGUIWidgetsProperties.loadPlayButton(table));
+        elements.put("playButtonE",  playGUIWidgetsProperties.loadPlayButton(table));
 
 
         table.row();
         String tutorialS = Gdx.files.internal("tutorialS.txt").readString();
-        elements.put("textAreaS", PlayGUIWidgetsProperties.loadTextAreaTutorial(table,
-                "", //não funciona
+        elements.put("textAreaS", playGUIWidgetsProperties.loadTextAreaTutorial(table,
+                tutorialS,
                 "blueBackgroundTextArea.png"));
 
         String tutorialW = new String(Gdx.files.internal("tutorialW.txt").readString());
-        elements.put("textAreaW", PlayGUIWidgetsProperties.loadTextAreaTutorial(table,
-                "", //não funciona
+        elements.put("textAreaW", playGUIWidgetsProperties.loadTextAreaTutorial(table,
+                tutorialW,
                 "greenBackgroundTextArea.png"));
 
         String tutorialE = new String(Gdx.files.internal("tutorialE.txt").readString());
-        elements.put("textAreaE", PlayGUIWidgetsProperties.loadTextAreaTutorial(table,
-                "", //não funciona
+        elements.put("textAreaE", playGUIWidgetsProperties.loadTextAreaTutorial(table,
+                tutorialE,
                 "redBackgroundTextArea.png"));
     }
 
     protected void loadInputlisteners(){
-        PlayGUIWidgetsInput.loadSlideFunction(
+        PlayGUIWidgetsInput playGUIWidgetsInput = ((PlayGUIWidgetsInput)widgetsInput);
+
+        playGUIWidgetsInput.loadSlideFunction(
                 table,
                 menuManager,
                 (OrthographicCamera)this.getCamera()

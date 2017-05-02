@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.CommonConstants;
@@ -18,9 +19,9 @@ import com.mygdx.game.LIBGDXwrapper.gameGUI.MenuManager;
 import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.table;
 import static com.mygdx.game.CommonConstants.NUMBER_OF_GAMEMODES;
 
-public class PlayGUIWidgetsInput{
+public class PlayGUIWidgetsInput extends WidgetsInput{
 
-    static public void loadSettingsButton(Button button, final MenuManager menuManager){
+    public void loadSettingsButton(Button button, final MenuManager menuManager){
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -29,7 +30,7 @@ public class PlayGUIWidgetsInput{
         });
     }
 
-    static public void loadBackToMenuButton(Button button, final MenuManager menuManager){
+    public void loadBackToMenuButton(Button button, final MenuManager menuManager){
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -38,7 +39,7 @@ public class PlayGUIWidgetsInput{
         });
     }
 
-    static public void loadSlideFunction(final Table table, final MenuManager menuManager, final OrthographicCamera camera){
+    public void loadSlideFunction(final Table table, final MenuManager menuManager, final OrthographicCamera camera){
 
         table.addListener(
             new ClickListener(){
@@ -135,6 +136,8 @@ public class PlayGUIWidgetsInput{
 
                 @Override
                 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
+                    //if(this.isPressed())
+                    //    return false;
                     currentXCoor = getScreenX(x);
                     table.removeAction(action);
                     return true;

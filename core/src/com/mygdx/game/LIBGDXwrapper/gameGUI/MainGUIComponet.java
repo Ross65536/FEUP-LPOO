@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsProperties;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsInput;
 
 import java.util.HashMap;
 
@@ -16,8 +18,12 @@ public class MainGUIComponet extends AbstractSingleStageGUI {
 
     HashMap<String, Object> elements;
 
-    public MainGUIComponet(MenuManager menuManager){
-        super(menuManager);
+    MainGUIWidgetsInput mainGUIWidgetsInput;
+
+    MainGUIWidgetsProperties mainGUIWidgetsProperties;
+
+    public MainGUIComponet(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput){
+        super(menuManager, widgetsProperties, widgetsInput);
 
         elements = new HashMap<String, Object>();
         table = new Table();
@@ -38,34 +44,39 @@ public class MainGUIComponet extends AbstractSingleStageGUI {
 
     protected void loadWidgets(){
 
-        elements.put("playButton", MainGUIWidgetsProperties.loadPropertiesPlayButton(table));
+        MainGUIWidgetsProperties mainGUIWidgetsProperties = ((MainGUIWidgetsProperties)widgetsProperties);
+
+        elements.put("playButton", mainGUIWidgetsProperties.loadPropertiesPlayButton(table));
         table.row();
-        elements.put("hightScoreButton", MainGUIWidgetsProperties.loadPropertiesHighScoreButton(table));
+        elements.put("hightScoreButton", mainGUIWidgetsProperties.loadPropertiesHighScoreButton(table));
         table.row();
-        elements.put("settingsButton", MainGUIWidgetsProperties.loadPropertiesSettingsButton(table));
+        elements.put("settingsButton", mainGUIWidgetsProperties.loadPropertiesSettingsButton(table));
         table.row();
-        elements.put("exitButton", MainGUIWidgetsProperties.loadPropertiesExitButton(table));
+        elements.put("exitButton", mainGUIWidgetsProperties.loadPropertiesExitButton(table));
 
         loadInputlisteners();
     }
 
     protected void loadInputlisteners(){
-        MainGUIWidgetsInput.loadInputPlayButton(
+
+        MainGUIWidgetsInput mainGUIWidgetsInput = ((MainGUIWidgetsInput)widgetsInput);
+
+        mainGUIWidgetsInput.loadInputPlayButton(
                 (Button)elements.get("playButton"),
                 menuManager
         );
 
-        MainGUIWidgetsInput.loadInputHighScoreButton(
+        mainGUIWidgetsInput.loadInputHighScoreButton(
                 (Button)elements.get("hightScoreButton"),
                 menuManager
         );
 
-        MainGUIWidgetsInput.loadInputSettingsButton(
+        mainGUIWidgetsInput.loadInputSettingsButton(
                 (Button)elements.get("settingsButton"),
                 menuManager
         );
 
-        MainGUIWidgetsInput.loadInputExitButton(
+        mainGUIWidgetsInput.loadInputExitButton(
                 (Button)elements.get("exitButton"),
                 menuManager
         );

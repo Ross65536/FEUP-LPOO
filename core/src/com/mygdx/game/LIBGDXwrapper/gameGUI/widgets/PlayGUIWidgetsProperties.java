@@ -2,6 +2,7 @@ package com.mygdx.game.LIBGDXwrapper.gameGUI.widgets;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
@@ -10,9 +11,9 @@ import static com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric.loadBu
 import static com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric.loadLabel;
 import static com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric.loadTextArea;
 
-public class PlayGUIWidgetsProperties {
+public class PlayGUIWidgetsProperties extends WidgetsGeneric {
 
-    public static Button loadBackToMenuButton(Table table){
+    public Button loadBackToMenuButton(Table table){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
@@ -33,7 +34,7 @@ public class PlayGUIWidgetsProperties {
                 .getActor();
     }
 
-    public static Button loadSettingsButton(Table table){
+    public Button loadSettingsButton(Table table){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
@@ -54,14 +55,15 @@ public class PlayGUIWidgetsProperties {
                 .getActor();
     }
 
-    public static Label loadTopLabel(Table table, String modeName){
+    public Label loadTopLabel(Table table, String modeName){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        return loadLabel(table
+        Label label = loadLabel(table
                 //images
                 ,modeName
-                ,"gameFont")
+                ,"gameFont"
+                ,null)
                 //pos. and location
                 .prefWidth(screenWidth / 3)
                 .minWidth(screenWidth / 10)
@@ -73,9 +75,12 @@ public class PlayGUIWidgetsProperties {
                 .top()
                 .padTop(20)
                 .getActor();
+        label.setFontScale(2);
+        label.setAlignment(0);
+        return label;
     }
 
-    public static Button loadPlayButton(Table table){
+    public Button loadPlayButton(Table table){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
@@ -96,17 +101,22 @@ public class PlayGUIWidgetsProperties {
                 .getActor();
     }
 
-    public static TextArea loadTextAreaTutorial(Table table, String text, String backgroundImage){
+    public ScrollPane loadTextAreaTutorial(Table table, String text, String backgroundImage){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        return loadTextArea(table,
+        ScrollPane textArea = loadTextArea(table,
                 text,
                 "tutorial",
                 backgroundImage)
+                .fill()
+                .expand()
                 .padBottom(screenHeight / 6)
                 //pos. and location
                 .getActor();
+        textArea.setBounds(0,0,DeviceConstants.MENU_VIEWPORT,500);
+        //((Label)textArea.getChildren().pop()).setWrap(true);
+        return textArea;
     }
 
 }
