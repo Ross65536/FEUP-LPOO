@@ -8,7 +8,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		System.setProperty("user.name","username");
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 720; //16/9 ratio
+		config.width = 720;
 		config.height = 405;
 		new LwjglApplication(new MyGame(), config);
 	}

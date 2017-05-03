@@ -4,12 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
-
-import static com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric.loadButton;
-import static com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric.loadLabel;
-import static com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric.loadTextArea;
 
 public class PlayGUIWidgetsProperties extends WidgetsGeneric {
 
