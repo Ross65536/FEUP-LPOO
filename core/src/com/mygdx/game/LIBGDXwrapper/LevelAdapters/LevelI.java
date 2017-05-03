@@ -24,5 +24,11 @@ public interface LevelI {
      * @param mov goes from -1.0 to 1.0, negative being movement to the left and postive to the right, 0.0 stops hero's horintal movement.
      */
     void setHeroXMovement(double mov);
+
+    /**
+     *
+     * @param strength indicates the "strength" of the jump, can go from 0.5 (half strength) to 1.0 (full strength)
+     */
+    void setHeroJump(double strength);
 }
 

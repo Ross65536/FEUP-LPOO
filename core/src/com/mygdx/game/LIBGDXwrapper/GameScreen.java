@@ -37,7 +37,7 @@ public class GameScreen extends ScreenAdapter {
     /**
      * Start of Periodic function.
      *
-     * @param deltaT
+     * @param deltaT in seconds
      */
     @Override
     public void render(float deltaT) {
@@ -71,5 +71,10 @@ public class GameScreen extends ScreenAdapter {
     public void nullifyLevel(){
         currentLevel = null;
         System.gc();
+    }
+
+    public void sendHeroJump(double d) {
+        if (currentLevel != null)
+            currentLevel.setHeroJump(d);
     }
 }

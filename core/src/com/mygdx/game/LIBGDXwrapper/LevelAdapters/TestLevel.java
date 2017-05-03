@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 
+
 public class TestLevel extends GameLevel {
     public static final double HERO_HEIGHT_BY_SCREEN_HEIGHT = 3;
     private static Texture[] texEnemyTiers = new Texture[10];

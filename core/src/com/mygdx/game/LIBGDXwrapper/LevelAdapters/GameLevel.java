@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
+import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.GameWorld;
 import com.mygdx.game.gameLogic.Characters.HeroInputs;
 
@@ -41,7 +42,7 @@ public abstract class GameLevel implements LevelI {
 
     protected void drawHero()
     {
-        CharacterInfo hero = gameLogicWorld.getHeroInfo();
+        HeroInfo hero = gameLogicWorld.getHeroInfo();
         final float heroXPos = (float) hero.getXPos();
         final float heroYPos = (float) hero.getYPos();
         final float heroXDim = (float) hero.getXDim();
@@ -61,9 +62,29 @@ public abstract class GameLevel implements LevelI {
         heroTex = gameAssetManager.get(LevelAssetsConstants.heroImagePath);
     }
 
-    public void setHeroXMovement(double mov){
+    public void setHeroXMovement(double mov)
+    {
+        if (mov < -1.0)
+            mov = -1.0;
+        else if (mov > 1.0)
+            mov = 1.0;
+
         HeroInputs hero = gameLogicWorld.getHeroInput();
         hero.setXMovement(mov);
+    }
+
+    public void setHeroJump(double strength)
+    {
+        double gravityStrength = 1.0 - strength;
+        final double minLimit = 0.6;
+        if (gravityStrength < minLimit)
+            gravityStrength = minLimit;
+
+        else if (gravityStrength > 1.0)
+            gravityStrength = 1.0;
+
+        HeroInputs hero = gameLogicWorld.getHeroInput();
+        hero.jump(gravityStrength);
     }
 }
 

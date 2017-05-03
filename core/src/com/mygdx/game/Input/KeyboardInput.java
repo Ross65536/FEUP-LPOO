@@ -16,15 +16,16 @@ public class KeyboardInput extends InputAdapter {
         public boolean keyDown (int keycode) {
             switch (keycode){
                 case Input.Keys.UP://up
-
+                    gameScreen.sendHeroJump(1.0);
                     break;
                 case Input.Keys.LEFT://left
-                    gameScreen.sendHeroXMovement(-0.5);
+                    gameScreen.sendHeroXMovement(-1.0);
                     break;
                 case Input.Keys.RIGHT://right
-                    gameScreen.sendHeroXMovement(0.5);
+                    gameScreen.sendHeroXMovement(1.0);
                     break;
                 default:
+
                     return false;
             }
             return true;
@@ -34,7 +35,7 @@ public class KeyboardInput extends InputAdapter {
         public boolean keyUp (int keycode) {
             switch (keycode){
                 case Input.Keys.UP://up
-
+                    gameScreen.sendHeroJump(0.0);
                     break;
                 case Input.Keys.LEFT://left
                 case Input.Keys.RIGHT://right
