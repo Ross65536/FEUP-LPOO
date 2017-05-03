@@ -2,18 +2,13 @@ package com.mygdx.game.LIBGDXwrapper;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.LIBGDXwrapper.LevelAdapters.LevelAssetsConstants;
-import com.mygdx.game.LIBGDXwrapper.LevelAdapters.TestLevel;
-import java.util.Collection;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilder;
 
 
 public class MyGame extends Game {
     private GameScreen gameScreen;
-    private AssetManager gameAssetManager;
+
 
     private MenuScreen menuScreen;
 
@@ -32,48 +27,13 @@ public class MyGame extends Game {
         menuScreen = new MenuScreen(this);
 
         setScreen(menuScreen);
-        gameAssetManager = new AssetManager(new InternalFileHandleResolver());
+
 
 	}
 
-
-    private void unloadUnneededLevelAssets(final Collection<String> assetPaths)
-    {
-        final Array<String> currentAssets = gameAssetManager.getAssetNames(); //Array is from LIBGDX
-        for (String currPath : currentAssets) //unloads uneeded assets
-        {
-            if (! assetPaths.contains(currPath))
-            {
-                gameAssetManager.unload(currPath);
-            }
-        }
-    }
-
-    /**
-     * Doesnt load duplicates if they exist
-     * @param assetPaths
-     */
-    private void loadLevelAssets (final Collection<String> assetPaths)
-    {
-        for (final String path : assetPaths) //loads missing assets
-        {
-            gameAssetManager.load(path, (java.lang.Class<Object>) LevelAssetsConstants.mapPathToType.get(path));
-        }
-
-    }
-
-
 	private void startGameTest()
 	{
-        unloadUnneededLevelAssets(TestLevel.levelAssetPaths);
-        loadLevelAssets(TestLevel.levelAssetPaths);
-
-
-        TestLevel testLevel = new TestLevel();
-
-        gameScreen.LoadLevel(testLevel);
-        testLevel.getLevelAssets(gameAssetManager);
-
+        gameScreen.LoadLevel(LevelBuilder.createTestLevel());
 	}
 
     public void SwicthToMenuScreen(MenuInstr instruction){
@@ -103,6 +63,9 @@ public class MyGame extends Game {
                 startGameTest();
                 break;
         }
+
+        GameAssetHandler.getGameAssetHandler().finishLoading(); //finish loading textures here
+
         setScreen(gameScreen);
     }
 

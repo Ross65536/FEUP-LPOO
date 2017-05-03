@@ -1,5 +1,6 @@
 package com.mygdx.game.gameLogic;
 
+import com.mygdx.game.CommonConstants;
 import com.mygdx.game.gameLogic.Characters.*;
 
 import java.util.ArrayList;
@@ -38,11 +39,8 @@ public class GameWorld
         if (! isGamePlayable())
             return;
 
-        hero.updatePos(deltaT);
         this.updateEnemies(deltaT);
-
-        if (hero.isJumping())
-            this.checkHeroJump();
+        this.updateHero(deltaT);
 
         if(this.checkHeroCollisions() > 0)
         {
@@ -51,6 +49,21 @@ public class GameWorld
             //TODO remove
             System.out.println("Game Lost");
         }
+
+    }
+
+    private void updateHero(float deltaT)
+    {
+        hero.updatePos(deltaT);
+        if (hero.isJumping())
+            this.checkHeroJump();
+
+        //loop around level
+        final double heroXPos = hero.getXPos();
+        if (heroXPos < 0.0)
+            hero.setXPos(worldDimensions.x + heroXPos);
+        else if (heroXPos > worldDimensions.x)
+            hero.setXPos(heroXPos - worldDimensions.x);
 
     }
 
@@ -86,7 +99,7 @@ public class GameWorld
     private void checkHeroJump()
     {
         if (hero.getYPos() < 0.0) //hero jumping hit ground
-            hero.stopJump();
+            hero.stopJump(0.0);
     }
 
     public final HeroInfo getHeroInfo() {
@@ -112,14 +125,23 @@ public class GameWorld
         final double heroXDim = hero.getXDim();
         final double heroYDim = hero.getYDim();
 
-        Enemy enemy1 = new Enemy(heroX + 2, 0, 0, heroYDim, 0);
+        final double scale = CommonConstants.getDimYRatio(Enemy.class);
+        final double aspectRatio = CommonConstants.getAspectRatio(Enemy.class);
+
+        final double enYDim = scale * heroYDim;
+        final double enXDim = enYDim * aspectRatio;
+
+        Vector2D dims = new Vector2D(enXDim, enYDim);
+
+        Enemy enemy1 = new Enemy(new Vector2D(heroX + 2, 0), dims, 0, 0);
         enemies.add(enemy1);
-        Enemy enemy2 = new Enemy(heroX - 5, 0, 0, heroYDim, 0);
+        Enemy enemy2 = new Enemy(new Vector2D(heroX - 5, 0), dims, 0, 0);
         enemies.add(enemy2);
 
-        Enemy enemy3 = new Enemy(heroX - 8, 0, heroYDim, heroYDim, 0);
+        Enemy enemy3 = new Enemy(new Vector2D(heroX - 8, 0), dims, heroYDim, 0);
         enemies.add(enemy3);
     }
+
     public boolean isGamePlayable()
     {
         return this.gamePlayable;

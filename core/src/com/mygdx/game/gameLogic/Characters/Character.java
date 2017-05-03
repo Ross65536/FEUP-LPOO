@@ -17,8 +17,8 @@ public class Character implements CharacterInfo {
 
     public Character (final Vector2D position, final Vector2D dimensions, final Vector2D speed)
     {
-        characterDimensions = new Vector2D(position);
-        characterPosition = new Vector2D(dimensions);
+        characterPosition = new Vector2D(position);
+        characterDimensions = new Vector2D(dimensions);
         characterSpeed = new Vector2D(speed);
     }
 
@@ -45,7 +45,10 @@ public class Character implements CharacterInfo {
     public double getXDim() {return characterDimensions.x; }
     public double getYDim() {return characterDimensions.y; }
 
-    public void setXSpeed (double vx) {characterSpeed.x =vx; }
+    @Override
+    public boolean isFalling() {
+        return characterSpeed.y < 0.0;
+    }
 
     public void updatePos (float deltaT)
     {
@@ -53,18 +56,19 @@ public class Character implements CharacterInfo {
         final double newY = this.characterPosition.y + this.characterSpeed.y * deltaT;
         this.characterPosition.setXY(newX, newY);
     }
-    protected void setXYDims (double xDim, double yDim)
-    {
-        this.characterDimensions.setXY(xDim, yDim);
+
+    public void setXPos(final double XPos) {
+        this.characterPosition.x = XPos;
     }
 
 
+
     public boolean checkCollision(final Character en) {
-        return ! (
-                (characterPosition.x + characterDimensions.x < en.characterPosition.x) ||
-                (characterPosition.x > en.characterPosition.x + en.characterDimensions.x) ||
-                (characterPosition.y + characterDimensions.y < en.characterPosition.y) ||
-                (characterPosition.y > en.characterPosition.y + en.characterDimensions.y)
-        );
+        final boolean heroXLeft = characterPosition.x + characterDimensions.x < en.characterPosition.x;
+        final boolean heroXRight = characterPosition.x > en.characterPosition.x + en.characterDimensions.x;
+        final boolean heroYDown = characterPosition.y + characterDimensions.y < en.characterPosition.y;
+        final boolean heroYUp = characterPosition.y > en.characterPosition.y + en.characterDimensions.y;
+
+        return !(heroXLeft || heroXRight || heroYUp || heroYDown);
     }
 }

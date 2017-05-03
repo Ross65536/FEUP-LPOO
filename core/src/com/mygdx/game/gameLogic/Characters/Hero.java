@@ -36,11 +36,13 @@ public class Hero extends Character implements HeroInputs, HeroInfo {
             final double newYSpeed= this.getYDim() * JUMP_SPEED_MULTIPLIER;
             characterSpeed.y = newYSpeed; //initial jump
         }
+        if (isFalling())
+            gravityStrength = 1.0;
 
         Yacceleration = - gravityStrength * this.getYDim() * JUMP_ACCELERATION_MULTIPLIER;
     }
 
-    public void stopJump()
+    public void stopJump(final double newYPos)
     {
         jumping = false;
         Yacceleration = 0.0;
@@ -59,5 +61,18 @@ public class Hero extends Character implements HeroInputs, HeroInfo {
 
     public boolean isJumping() {
         return jumping;
+    }
+
+    private static final double HERO_X_LEEWAY = 0.2;
+    private static final double HERO_Y_LEEWAY = 0.2;
+
+    @Override
+    public boolean checkCollision(final Character en) {
+        final boolean heroXLeft = characterPosition.x + (1.0 - HERO_X_LEEWAY) * characterDimensions.x < en.characterPosition.x;
+        final boolean heroXRight = characterPosition.x + HERO_X_LEEWAY * characterDimensions.x  > en.characterPosition.x + en.characterDimensions.x;
+        final boolean heroYDown = characterPosition.y + (1.0 - HERO_Y_LEEWAY) * characterDimensions.y < en.characterPosition.y;
+        final boolean heroYUp = characterPosition.y + HERO_Y_LEEWAY * characterDimensions.y > en.characterPosition.y + en.characterDimensions.y;
+
+        return !(heroXLeft || heroXRight || heroYUp || heroYDown);
     }
 }

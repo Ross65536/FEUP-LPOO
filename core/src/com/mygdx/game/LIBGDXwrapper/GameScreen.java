@@ -5,11 +5,13 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.game.Input.KeyboardInput;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameWorldAdapter;
+import com.mygdx.game.gameLogic.Vector2D;
 
 public class GameScreen extends ScreenAdapter {
     private MyGame game;
     private OrthographicCamera gameCamera;
-    private com.mygdx.game.LIBGDXwrapper.LevelAdapters.LevelI currentLevel;
+    private GameWorldAdapter currentLevel;
     private GameSettings gameSettings;
 
     public GameScreen(MyGame myGame, GameSettings gameSettings) {
@@ -19,20 +21,18 @@ public class GameScreen extends ScreenAdapter {
         this.gameSettings = gameSettings;
         this.currentLevel = null;
 
-
         registerInputHandler();
     }
 
-    public void LoadLevel(com.mygdx.game.LIBGDXwrapper.LevelAdapters.LevelI currentLevel)
+    public void LoadLevel(GameWorldAdapter currentLevel)
     {
         this.currentLevel = currentLevel;
-        currentLevel.setupCamera(gameCamera);
+        final Vector2D camDims = currentLevel.getCameraSetup();
+        gameCamera.setToOrtho(false, (float) camDims.x, (float) camDims.y); //camera has maximum world height
     }
 
 
-    public void sendHeroXMovement (double d) {
-        if (currentLevel != null)
-            currentLevel.setHeroXMovement(d); }
+
 
     /**
      * Start of Periodic function.
@@ -47,6 +47,15 @@ public class GameScreen extends ScreenAdapter {
 
         currentLevel.update(deltaT, gameCamera);
     }
+
+    public void sendHeroJump(double d) {
+        if (currentLevel != null)
+            currentLevel.setHeroJump(d);
+    }
+
+    public void sendHeroXMovement (double d) {
+        if (currentLevel != null)
+            currentLevel.setHeroXMovement(d); }
 
     public void registerInputHandler() {
         if (gameSettings.isKeyboardControlled()) //use keyboard if on desktop
@@ -71,10 +80,5 @@ public class GameScreen extends ScreenAdapter {
     public void nullifyLevel(){
         currentLevel = null;
         System.gc();
-    }
-
-    public void sendHeroJump(double d) {
-        if (currentLevel != null)
-            currentLevel.setHeroJump(d);
     }
 }
