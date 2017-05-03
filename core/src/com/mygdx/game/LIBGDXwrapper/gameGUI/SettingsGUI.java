@@ -9,14 +9,21 @@ import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsProperties
 
 public class SettingsGUI extends AbstractGUI{
 
-    public SettingsGUI(MenuManager menuManager){
+    AbstractGUI backgroundGUI;
+
+    public SettingsGUI(MenuManager menuManager, AbstractGUI backgroundGUI){
         super(menuManager);
 
-
+        this.backgroundGUI = backgroundGUI;
         addComponents();
         addInputProcessors();
     }
 
+    @Override
+    public void draw(){
+        this.backgroundGUI.draw();
+        super.draw();
+    }
 
     protected void createWidgets(){
         widgetsProperties = new SettingsGUIWidgetsProperties();
@@ -24,7 +31,12 @@ public class SettingsGUI extends AbstractGUI{
     }
 
     private void addComponents(){
-        this.addComponent(new SettingsGUIComponent(menuManager,widgetsProperties , widgetsInput));
+        this.addComponent(new SettingsGUIComponent(menuManager,this));
     }
-
+    public AbstractGUI getBackgroundGUI(){
+        return backgroundGUI;
+    }
+    public String toString(){
+        return "SettingsGUI";
+    }
 }

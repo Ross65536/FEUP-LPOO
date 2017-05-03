@@ -25,4 +25,7 @@ public class MainGUI extends AbstractGUI{
         this.addComponent(new MainGUIComponet(menuManager,widgetsProperties , widgetsInput));
     }
 
+    public String toString(){
+        return "MainMenu";
+    }
 }

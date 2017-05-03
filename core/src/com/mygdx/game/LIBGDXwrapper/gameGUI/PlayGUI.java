@@ -23,5 +23,7 @@ public class PlayGUI extends AbstractGUI{
         this.addComponent(new PlayGUIComponent2(menuManager, widgetsProperties, widgetsInput));
     }
 
-
+    public String toString(){
+        return "PlayGUI";
+    }
 }

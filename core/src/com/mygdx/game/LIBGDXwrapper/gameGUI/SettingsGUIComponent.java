@@ -1,7 +1,10 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
@@ -20,19 +23,16 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
     HashMap<String, Object> elements;
 
+    SettingsGUI settingsGUI;
 
-    public SettingsGUIComponent(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput){
-        super(menuManager, widgetsProperties, widgetsInput);
-
+    public SettingsGUIComponent(MenuManager menuManager, SettingsGUI settingsGUI){
+        super(menuManager, settingsGUI.widgetsProperties, settingsGUI.widgetsInput);
+        this.settingsGUI = settingsGUI;
         elements = new HashMap<String, Object>();
         table = new Table();
-        table.setFillParent(true);
-        table.pad(DeviceConstants.MENU_VIEWPORT/10
-                ,DeviceConstants.MENU_VIEWPORT/10
-                ,DeviceConstants.MENU_VIEWPORT/10
-                ,DeviceConstants.MENU_VIEWPORT/10
-        );
         this.addActor(table);
+        table.setFillParent(true);
+
         this.setViewport(
                 new FitViewport(
                         (int)(DeviceConstants.MENU_VIEWPORT)
@@ -47,25 +47,33 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
     }
 
     protected void loadWidgets(){
-        SettingsGUIWidgetsProperties mainGUIWidgetsProperties = ((SettingsGUIWidgetsProperties)widgetsProperties);
+        SettingsGUIWidgetsProperties settingsGUIWidgetsProperties = ((SettingsGUIWidgetsProperties)widgetsProperties);
 
-        //elements.put("playButton", mainGUIWidgetsProperties.loadPropertiesPlayButton(table));
+        elements.put("exitButton", settingsGUIWidgetsProperties.loadPropertiesExitButton(table));
         //table.row();
         loadInputlisteners();
     }
 
     protected void loadInputlisteners(){
 
-        SettingsGUIWidgetsInput mainGUIWidgetsInput = ((SettingsGUIWidgetsInput)widgetsInput);
+        SettingsGUIWidgetsInput settingsGUIWidgetsInput = ((SettingsGUIWidgetsInput)widgetsInput);
 
-        /*mainGUIWidgetsInput.loadInputPlayButton(
-                (Button)elements.get("playButton"),
-                menuManager
-        );*/
+        settingsGUIWidgetsInput.loadInputExitButton(
+                (Button)elements.get("exitButton"),
+                menuManager,
+                settingsGUI.getBackgroundGUI().getClass()
+        );
     }
 
     @Override
     public String toString(){
         return "Menu";
+    }
+
+
+    @Override
+    public void draw(){
+        super.draw();
+
     }
 }
