@@ -22,4 +22,5 @@ public abstract class AbstractSingleStageGUI extends Stage{
     protected abstract void loadWidgets();
 
     protected abstract void loadInputlisteners();
+
 }
