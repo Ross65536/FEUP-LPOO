@@ -2,7 +2,6 @@ package com.mygdx.game.gameLogic.Characters;
 
 
 import com.mygdx.game.gameLogic.Vector2D;
-import com.sun.org.apache.xerces.internal.impl.dv.xs.YearDV;
 
 public class Character implements CharacterInfo {
     protected Vector2D characterPosition;
@@ -15,35 +14,61 @@ public class Character implements CharacterInfo {
         characterPosition = new Vector2D(charXPos, charYPos);
         characterSpeed = new Vector2D(speedX, speedY);
     }
+
+    public Character (final Vector2D position, final Vector2D dimensions, final Vector2D speed)
+    {
+        characterPosition = new Vector2D(position);
+        characterDimensions = new Vector2D(dimensions);
+        characterSpeed = new Vector2D(speed);
+    }
+
     public Character (double charXPos, double charYPos, double charXDim, double charYDim)
     {
         this(charXPos, charYPos, charXDim, charYDim, 0, 0);
     }
 
-    public Character(Vector2D characterPosition, Vector2D characterDimensions, Vector2D characterSpeed) {
-        this.characterPosition= new Vector2D(characterPosition);
-        this.characterDimensions= new Vector2D( characterDimensions);
-        this.characterSpeed = new Vector2D(characterSpeed);
+    protected Character()
+    {
+        this.characterSpeed = null;
+        this.characterPosition = null;
+        this.characterDimensions = null;
     }
-    public double getXPos() {return characterPosition.getX(); }
-    public double getYPos() {
-        return characterPosition.getY();
-    }
-    public double getXDim() {return characterDimensions.getX(); }
-    public double getYDim() {return characterDimensions.getY(); }
 
-    public void setXSpeed (double vx) {characterSpeed.setX(vx); }
+    public Character(Vector2D characterPosition, Vector2D characterDimensions) {
+        this(characterPosition, characterDimensions, new Vector2D(0,0));
+    }
+
+    public double getXPos() {return characterPosition.x; }
+    public double getYPos() {
+        return characterPosition.y;
+    }
+    public double getXDim() {return characterDimensions.x; }
+    public double getYDim() {return characterDimensions.y; }
+
+    @Override
+    public boolean isFalling() {
+        return characterSpeed.y < 0.0;
+    }
 
     public void updatePos (float deltaT)
     {
-        final double newX = this.characterPosition.getX() + this.characterSpeed.getX() * deltaT;
-        final double newY = this.characterPosition.getY() + this.characterSpeed.getY() * deltaT;
+        final double newX = this.characterPosition.x + this.characterSpeed.x * deltaT;
+        final double newY = this.characterPosition.y + this.characterSpeed.y * deltaT;
         this.characterPosition.setXY(newX, newY);
     }
-    protected void setXYDims (double xDim, double yDim)
-    {
-        this.characterDimensions.setXY(xDim, yDim);
+
+    public void setXPos(final double XPos) {
+        this.characterPosition.x = XPos;
     }
 
 
+
+    public boolean checkCollision(final Character en) {
+        final boolean heroXLeft = characterPosition.x + characterDimensions.x < en.characterPosition.x;
+        final boolean heroXRight = characterPosition.x > en.characterPosition.x + en.characterDimensions.x;
+        final boolean heroYDown = characterPosition.y + characterDimensions.y < en.characterPosition.y;
+        final boolean heroYUp = characterPosition.y > en.characterPosition.y + en.characterDimensions.y;
+
+        return !(heroXLeft || heroXRight || heroYUp || heroYDown);
+    }
 }

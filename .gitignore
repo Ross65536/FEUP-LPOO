@@ -1,4 +1,5 @@
 ## Java
+local.properties
 
 *.class
 *.war

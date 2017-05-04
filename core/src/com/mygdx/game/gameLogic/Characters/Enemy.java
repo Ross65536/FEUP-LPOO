@@ -1,29 +1,18 @@
 package com.mygdx.game.gameLogic.Characters;
 
 
-import com.mygdx.game.CommonConstants;
+import com.mygdx.game.gameLogic.Vector2D;
 
 public class Enemy extends Character implements EnemyInfo {
     int tier; // tier is >= 0 and should be an indicator of the strength/difficulty of the enemy, should be used by a LevelAI to spawn enemies
 
-    /**
-     *
-     * @param charXPos
-     * @param charYPos
-     * @param heroXDim used as unit of measurement
-     * @param tier
-     */
-    public Enemy (double charXPos, double charYPos, double heroXDim, int tier)
+    public Enemy (final Vector2D pos, final Vector2D dims, final double Xspeed, int tier)
     {
-        super(charXPos, charYPos, 0, 0);
-
-        final double scale = CommonConstants.tierDimRatio[tier];
-        final double aspectRatio = CommonConstants.tierAspectRatio[tier];
-        final double enXDim = scale * heroXDim;
-        final double enYDim = enXDim / aspectRatio;
-        this.setXYDims(enXDim, enYDim);
-
+        super(pos, dims, new Vector2D(Xspeed, 0));
         this.tier=tier;
+    }
+
+    public Enemy() {
     }
 
     @Override
