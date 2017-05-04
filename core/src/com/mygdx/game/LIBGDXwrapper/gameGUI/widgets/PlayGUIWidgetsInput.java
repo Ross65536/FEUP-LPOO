@@ -1,6 +1,5 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI.widgets;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -8,16 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.mygdx.game.CommonConstants;
+import com.mygdx.game.Constants;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
-import com.mygdx.game.LIBGDXwrapper.MyGame;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.MenuManager;
-
-import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.table;
-import static com.mygdx.game.CommonConstants.NUMBER_OF_GAMEMODES;
 
 public class PlayGUIWidgetsInput extends WidgetsInput{
 
@@ -124,7 +118,7 @@ public class PlayGUIWidgetsInput extends WidgetsInput{
 
                     //check if out of bounds
                     xSlided+=diffMovement;
-                    if((xSlided<0) || (xSlided>=(CommonConstants.NUMBER_OF_GAMEMODES-1)*DeviceConstants.MENU_VIEWPORT)) {
+                    if((xSlided<0) || (xSlided>=(Constants.NUMBER_OF_GAMEMODES-1)*DeviceConstants.MENU_VIEWPORT)) {
                         xSlided-=diffMovement;
                         return;
                     }

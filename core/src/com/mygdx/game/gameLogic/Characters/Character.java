@@ -3,7 +3,7 @@ package com.mygdx.game.gameLogic.Characters;
 
 import com.mygdx.game.gameLogic.Vector2D;
 
-public class Character implements CharacterInfo {
+public abstract class Character implements CharacterInfo {
     protected Vector2D characterPosition;
     protected Vector2D characterDimensions;
     protected Vector2D characterSpeed;
@@ -17,26 +17,23 @@ public class Character implements CharacterInfo {
 
     public Character (final Vector2D position, final Vector2D dimensions, final Vector2D speed)
     {
-        characterPosition = new Vector2D(position);
-        characterDimensions = new Vector2D(dimensions);
-        characterSpeed = new Vector2D(speed);
+        if (position == null)
+            characterPosition = new Vector2D(0,0);
+        else
+            characterPosition = new Vector2D(position);
+
+        if (dimensions == null)
+            characterDimensions= new Vector2D(0,0);
+        else
+            characterDimensions = new Vector2D(dimensions);
+
+        if (speed == null)
+            characterSpeed = new Vector2D(0,0);
+        else
+            characterSpeed = new Vector2D(speed);
     }
 
-    public Character (double charXPos, double charYPos, double charXDim, double charYDim)
-    {
-        this(charXPos, charYPos, charXDim, charYDim, 0, 0);
-    }
 
-    protected Character()
-    {
-        this.characterSpeed = null;
-        this.characterPosition = null;
-        this.characterDimensions = null;
-    }
-
-    public Character(Vector2D characterPosition, Vector2D characterDimensions) {
-        this(characterPosition, characterDimensions, new Vector2D(0,0));
-    }
 
     public double getXPos() {return characterPosition.x; }
     public double getYPos() {
@@ -50,16 +47,14 @@ public class Character implements CharacterInfo {
         return characterSpeed.y < 0.0;
     }
 
-    public void updatePos (float deltaT)
+    public void update(float deltaT)
     {
         final double newX = this.characterPosition.x + this.characterSpeed.x * deltaT;
         final double newY = this.characterPosition.y + this.characterSpeed.y * deltaT;
         this.characterPosition.setXY(newX, newY);
     }
 
-    public void setXPos(final double XPos) {
-        this.characterPosition.x = XPos;
-    }
+
 
 
 
@@ -70,5 +65,12 @@ public class Character implements CharacterInfo {
         final boolean heroYUp = characterPosition.y > en.characterPosition.y + en.characterDimensions.y;
 
         return !(heroXLeft || heroXRight || heroYUp || heroYDown);
+    }
+
+    public void setYPos(double YPos) {
+        this.characterPosition.y = YPos;
+    }
+    public void setXPos(final double XPos) {
+        this.characterPosition.x = XPos;
     }
 }

@@ -1,34 +1,32 @@
 package com.mygdx.game.gameLogic.Characters;
 
-public class Hero extends Character implements HeroInputs, HeroInfo {
+import com.mygdx.game.gameLogic.Vector2D;
+
+public class Hero extends Character implements HeroInfo {
     private static final double JUMP_SPEED_MULTIPLIER = 5.0;
     private static final double JUMP_ACCELERATION_MULTIPLIER = 10.0;
-    private static final double HERO_MAX_SPEED_MULT = 3.0;
+    private final double maxSpeedXMult;
 
     private boolean jumping;
-    private double Yacceleration; //gravity
+    private double riseGravityStrength; //gravity
 
-    public Hero (double charXPos, double charYPos, double charXDim, double charYDim)
+    public Hero (final Vector2D position, final Vector2D dimensions, double heroMaxSpeedXMult)
     {
-        super( charXPos,  charYPos,  charXDim,  charYDim);
+        super( position, dimensions, null);
 
         jumping = false;
-        Yacceleration = 0.0;
+        riseGravityStrength = 0.0;
+        this.maxSpeedXMult = heroMaxSpeedXMult;
 
-    }
-
-    public Hero(Hero hero)
-    {
-        super(hero.characterPosition, hero.characterDimensions, hero.characterSpeed);
     }
 
     public void setXMovement (double d) {
-        final double heroMaxXSpeed = this.getYDim() * HERO_MAX_SPEED_MULT;
+        final double heroMaxXSpeed = this.getYDim() * maxSpeedXMult;
         characterSpeed.x = heroMaxXSpeed * d;
     }
 
-    @Override
-    public void jump(double gravityStrength)
+
+    public void jump(final double gravityStrength)
     {
         if (! isJumping()) //first time called sets the jump motion
         {
@@ -36,27 +34,34 @@ public class Hero extends Character implements HeroInputs, HeroInfo {
             final double newYSpeed= this.getYDim() * JUMP_SPEED_MULTIPLIER;
             characterSpeed.y = newYSpeed; //initial jump
         }
-        if (isFalling())
-            gravityStrength = 1.0;
 
-        Yacceleration = - gravityStrength * this.getYDim() * JUMP_ACCELERATION_MULTIPLIER;
+        this.riseGravityStrength = gravityStrength;
     }
 
-    public void stopJump(final double newYPos)
+    private double getYAcceleration(double gravityStrength) {
+        return - gravityStrength * this.getYDim() * JUMP_ACCELERATION_MULTIPLIER;
+    }
+
+    public void stopJump()
     {
         jumping = false;
-        Yacceleration = 0.0;
+        riseGravityStrength = 0.0;
         characterSpeed.y = 0.0;
-        characterPosition.y= 0.0;
     }
 
     @Override
-    public void updatePos (float deltaT)
+    public void update(float deltaT)
     {
-        super.updatePos(deltaT);
-        final double newYSpeed= this.characterSpeed.y + Yacceleration * deltaT;
-        characterSpeed.y = newYSpeed;
+        super.update(deltaT);
 
+        double yAcceleration;
+        if (isFalling())
+            yAcceleration = getYAcceleration(1.0);
+        else
+            yAcceleration = getYAcceleration(this.riseGravityStrength);
+
+        final double newYSpeed= this.characterSpeed.y + yAcceleration * deltaT;
+        characterSpeed.y = newYSpeed;
     }
 
     public boolean isJumping() {

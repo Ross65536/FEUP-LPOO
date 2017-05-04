@@ -1,46 +1,84 @@
 package com.mygdx.game.gameLogic;
 
-import com.mygdx.game.CommonConstants;
 import com.mygdx.game.gameLogic.Characters.*;
+import com.mygdx.game.gameLogic.GameDirector.StageDirector;
+import com.mygdx.game.gameLogic.GameDirector.Statistics;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 //added
-public class GameWorld
+public abstract class GameWorld
 {
-    private static final double ENEMY_MAX_RANGE = 3.0; //has performance implications
+    static protected Random random = new Random();
+    //constants
+    protected static final double ENEMY_DELETION_RANGE_MULT = 3.0; //has performance implications
+    //data
+    protected Vector2D worldDimensions;
+    protected Hero hero;
+    protected ArrayList<Enemy> enemies;
+    protected boolean gamePlayable;
+    protected StageDirector stageDirector;
 
-    private Vector2D worldDimensions;
-    private Hero hero;
-    private ArrayList<Enemy> enemies;
-    private boolean gamePlayable;
 
-    public GameWorld(double dimX, double dimY, Hero hero)
+
+    public GameWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
-        worldDimensions = new Vector2D(dimX, dimY);
+        worldDimensions = new Vector2D(worldDims);
         this.hero = hero;
+        this.stageDirector = stageDirector;
+
         enemies = new ArrayList<Enemy>();
         this.gamePlayable = true;
-
-        //TODO remove
-        createDummyEnemies();
     }
 
+    //// Queries --------------
+    /**
+     * Return hero information (position, dimension, etc).
+     * @return
+     */
+    public final HeroInfo getHeroInfo() {
+        return hero;
+    }
+
+    /**
+     * return an unmodifiable collection of enemies containing information about them to be able to draw them
+     */
+    public List<EnemyInfo> getEnemiesInfo()
+    {
+        List<EnemyInfo> ret = (List) enemies;
+        return Collections.unmodifiableList(ret);
+    }
+
+    public boolean isGamePlayable()
+    {
+        return this.gamePlayable;
+    }
+
+    //// abstract ----------------
     /**
      * Updates all characters in the world, checks collisions
      *
      * @param deltaT
      */
+    abstract public void updateSpecific (float deltaT);
+    abstract protected void checkHeroJump();
+    abstract public void moveHeroHorizontal(final double heroXMovement);
+    abstract public void heroJump(final double gravityStrength);
+    abstract protected void placeEnemy(Enemy enemy);
+
+    //// updates ---------------
     public void update (float deltaT)
     {
         if (! isGamePlayable())
             return;
 
-        this.updateEnemies(deltaT);
-        this.updateHero(deltaT);
+        updateEnemies(deltaT);
+        updateHero(deltaT);
+        updateSpecific(deltaT); //calls update functions of specific class instance
 
         if(this.checkHeroCollisions() > 0)
         {
@@ -50,101 +88,57 @@ public class GameWorld
             System.out.println("Game Lost");
         }
 
+        stageDirector.update(deltaT);
+        tryGenerateEnemy();
     }
 
-    private void updateHero(float deltaT)
+    protected void tryGenerateEnemy()
     {
-        hero.updatePos(deltaT);
-        if (hero.isJumping())
-            this.checkHeroJump();
+        final Enemy enemy = stageDirector.tryGenerateEnemy();
+        if (enemy != null)
+        {
+            placeEnemy(enemy); //specific placement
+            enemies.add(enemy);
+        }
+    }
 
-        //loop around level
-        final double heroXPos = hero.getXPos();
-        if (heroXPos < 0.0)
-            hero.setXPos(worldDimensions.x + heroXPos);
-        else if (heroXPos > worldDimensions.x)
-            hero.setXPos(heroXPos - worldDimensions.x);
+    protected void updateHero(float deltaT)
+    {
+        hero.update(deltaT);
+        checkHeroJump();
+    }
 
+    protected int updateEnemies(float deltaT) {
+        final double enemyDeletionRange = ENEMY_DELETION_RANGE_MULT * worldDimensions.y;
+        int numDeletions=0;
+
+        Iterator<Enemy> itr = enemies.iterator();
+        while(itr.hasNext())
+        {
+            Enemy enemy = itr.next();
+            enemy.update(deltaT);
+
+            final double deltaXPos = Math.abs(enemy.getXPos() - hero.getXPos());
+            if (deltaXPos > enemyDeletionRange) //remove enemy if out of range
+            {
+                itr.remove();
+                numDeletions++;
+            }
+        }
+        return numDeletions;
     }
 
     /**
      * @return number of collisions
      */
-    private long checkHeroCollisions() {
-        long ret =0;
+    protected long checkHeroCollisions() {
+        long numCollisions =0;
         for (Enemy en : enemies)
             if (hero.checkCollision(en))
-                ret ++;
+                numCollisions ++;
 
-        return ret;
+        return numCollisions;
     }
 
-    private void updateEnemies(float deltaT) {
-        final double heroXPos = hero.getXPos();
-        final double WORLD_RANGE = ENEMY_MAX_RANGE * worldDimensions.y;
-        Iterator<Enemy> itr = enemies.iterator();
-
-        while(itr.hasNext())
-        {
-            Enemy en = itr.next();
-            en.updatePos(deltaT);
-
-            final double enXPos = en.getXPos();
-            final double deltaXPos = Math.abs(enXPos - heroXPos);
-            if (deltaXPos > WORLD_RANGE) //remove enemy if out of range
-                itr.remove();
-        }
-    }
-
-    private void checkHeroJump()
-    {
-        if (hero.getYPos() < 0.0) //hero jumping hit ground
-            hero.stopJump(0.0);
-    }
-
-    public final HeroInfo getHeroInfo() {
-        return hero;
-    }
-
-    public HeroInputs getHeroInput() {
-        return hero;
-    }
-
-    /**
-     * return an unmodifiable collection
-     */
-    public List<EnemyInfo> getEnemiesInfo()
-    {
-        List<EnemyInfo> ret = (List) enemies;
-        return Collections.unmodifiableList(ret); 
-    }
-
-    private void createDummyEnemies () //testing function
-    {
-        final double heroX = hero.getXPos();
-        final double heroXDim = hero.getXDim();
-        final double heroYDim = hero.getYDim();
-
-        final double scale = CommonConstants.getDimYRatio(Enemy.class);
-        final double aspectRatio = CommonConstants.getAspectRatio(Enemy.class);
-
-        final double enYDim = scale * heroYDim;
-        final double enXDim = enYDim * aspectRatio;
-
-        Vector2D dims = new Vector2D(enXDim, enYDim);
-
-        Enemy enemy1 = new Enemy(new Vector2D(heroX + 2, 0), dims, 0, 0);
-        enemies.add(enemy1);
-        Enemy enemy2 = new Enemy(new Vector2D(heroX - 5, 0), dims, 0, 0);
-        enemies.add(enemy2);
-
-        Enemy enemy3 = new Enemy(new Vector2D(heroX - 8, 0), dims, heroYDim, 0);
-        enemies.add(enemy3);
-    }
-
-    public boolean isGamePlayable()
-    {
-        return this.gamePlayable;
-    }
 
 }

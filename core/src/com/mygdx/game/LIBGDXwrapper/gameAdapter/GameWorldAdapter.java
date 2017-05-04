@@ -1,6 +1,5 @@
 package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,7 +8,6 @@ import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.GameWorld;
-import com.mygdx.game.gameLogic.Characters.HeroInputs;
 import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.List;
@@ -28,13 +26,15 @@ public class GameWorldAdapter {
     protected double cameraWidth;
     //assets
     protected SpriteBatch drawBatch;
+    //constants
+    final static double MIN_JUMP_GRAVITY_STRENGTH = 0.5;
 
 
-    public GameWorldAdapter(double worldXDim, double worldYDim, GameWorld gameLogicWorld)
+    public GameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
     {
         drawBatch = new SpriteBatch();
-        this.worldXDim = worldXDim;
-        this.worldYDim = worldYDim;
+        this.worldXDim = worldDims.x;
+        this.worldYDim = worldDims.y;
         this.gameLogicWorld = gameLogicWorld;
     }
 
@@ -100,33 +100,31 @@ public class GameWorldAdapter {
      *
      * @param mov goes from -1.0 to 1.0, negative being movement to the left and postive to the right, 0.0 stops hero's horintal movement.
      */
-    public void setHeroXMovement(double mov)
+    public void sendHeroXMovement(double mov)
     {
         if (mov < -1.0)
             mov = -1.0;
         else if (mov > 1.0)
             mov = 1.0;
 
-        HeroInputs hero = gameLogicWorld.getHeroInput();
-        hero.setXMovement(mov);
+        gameLogicWorld.moveHeroHorizontal(mov);
     }
 
     /**
      * makes the hero jump onscreen
-     * @param strength indicates the "strength" of the jump, can go from 0.5 (half strength) to 1.0 (full strength)
+     * @param strength indicates the "strength" of the jump, can go from 0.0 to around 0.5
      */
-    public void setHeroJump(double strength)
+    public void sendHeroJump(final double strength)
     {
         double gravityStrength = 1.0 - strength;
-        final double minLimit = 0.6;
-        if (gravityStrength < minLimit)
-            gravityStrength = minLimit;
+
+        if (gravityStrength < MIN_JUMP_GRAVITY_STRENGTH)
+            gravityStrength = MIN_JUMP_GRAVITY_STRENGTH;
 
         else if (gravityStrength > 1.0)
             gravityStrength = 1.0;
 
-        HeroInputs hero = gameLogicWorld.getHeroInput();
-        hero.jump(gravityStrength);
+        gameLogicWorld.heroJump(gravityStrength);
     }
 
 }

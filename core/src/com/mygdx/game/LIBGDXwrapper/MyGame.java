@@ -27,8 +27,6 @@ public class MyGame extends Game {
         menuScreen = new MenuScreen(this);
 
         setScreen(menuScreen);
-
-
 	}
 
 	private void startGameTest()
@@ -36,7 +34,8 @@ public class MyGame extends Game {
         gameScreen.LoadLevel(LevelBuilder.createTestLevel());
 	}
 
-    public void SwicthToMenuScreen(MenuInstr instruction){
+    public void SwicthToMenuScreen(MenuInstr instruction)
+    {
         switch (instruction){
             case PAUSE:
                 menuScreen.pauseGame();

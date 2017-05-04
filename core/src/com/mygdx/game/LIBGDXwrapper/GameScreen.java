@@ -31,9 +31,6 @@ public class GameScreen extends ScreenAdapter {
         gameCamera.setToOrtho(false, (float) camDims.x, (float) camDims.y); //camera has maximum world height
     }
 
-
-
-
     /**
      * Start of Periodic function.
      *
@@ -50,12 +47,12 @@ public class GameScreen extends ScreenAdapter {
 
     public void sendHeroJump(double d) {
         if (currentLevel != null)
-            currentLevel.setHeroJump(d);
+            currentLevel.sendHeroJump(d);
     }
 
     public void sendHeroXMovement (double d) {
         if (currentLevel != null)
-            currentLevel.setHeroXMovement(d); }
+            currentLevel.sendHeroXMovement(d); }
 
     public void registerInputHandler() {
         if (gameSettings.isKeyboardControlled()) //use keyboard if on desktop

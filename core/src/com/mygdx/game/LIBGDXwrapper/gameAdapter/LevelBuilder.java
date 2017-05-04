@@ -1,30 +1,71 @@
 package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 
-import com.mygdx.game.CommonConstants;
+import com.mygdx.game.Constants;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.gameLogic.DiscWorld;
+import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves;
+import com.mygdx.game.gameLogic.GameDirector.Statistics;
+import com.mygdx.game.gameLogic.GameDirector.StatisticsInfo;
 import com.mygdx.game.gameLogic.GameWorld;
 import com.mygdx.game.gameLogic.Characters.Hero;
+import com.mygdx.game.gameLogic.GameDirector.StageDirector;
+import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 
 public class LevelBuilder {
-    public static final double HERO_HEIGHT_BY_SCREEN_HEIGHT = 3;
-    private static final String[] testLevelAssetNames = {GameAssetHandler.heroImagePath, GameAssetHandler.gremlinImagePath};
+    private static final double HERO_HEIGHT_BY_SCREEN_HEIGHT = 3;
+    private static final double WORLD_X_DIM = 100;
+    private static final String[] testLevelAssetNames = {GameAssetHandler.imagePathHero, GameAssetHandler.imagePathEnemyGround};
 
-    public static GameWorldAdapter createTestLevel() {
-
+    //// utilities -----------
+    private static void loadAssets(final Collection<String> assets)
+    {
         GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
-        gameAssetHandler.unloadUnneededLevelAssets(Arrays.asList(testLevelAssetNames));
-        gameAssetHandler.loadLevelAssets(Arrays.asList(testLevelAssetNames));
+        gameAssetHandler.unloadUnneededLevelAssets(assets);
+        gameAssetHandler.loadLevelAssets(assets);
+    }
 
-        final double worldXDim = 100;
+    private static final Vector2D createWorldDims ()
+    {
+        final double worldXDim = WORLD_X_DIM;
         final double worldYDim = DeviceConstants.INVERTED_SCREEN_RATIO * worldXDim / 10;
-        final double heroHeight = worldYDim/HERO_HEIGHT_BY_SCREEN_HEIGHT;
+        return new Vector2D(worldXDim, worldYDim);
+    }
 
-        Hero hero = new Hero(worldXDim / 2f, 0, heroHeight * CommonConstants.heroAspectRatio, heroHeight);
-        GameWorld gameLogicWorld = new GameWorld(worldXDim, worldYDim, hero);
-        GameWorldAdapter ret = new GameWorldAdapter(worldXDim, worldYDim, gameLogicWorld);
+    private static final Hero createHero(final Vector2D worldDims)
+    {
+        final double heroHeight = worldDims.y/HERO_HEIGHT_BY_SCREEN_HEIGHT;
+
+        final Constants.CharacterConstants heroConsts = Constants.getEnemyConstants(Hero.class);
+        final Vector2D heroPos = new Vector2D(worldDims.x / 2f, 0); //hero at middle of world dimensions
+        final Vector2D heroDims = new Vector2D(heroHeight * heroConsts.aspectRatio, heroHeight);
+
+        return new Hero(heroPos, heroDims, heroConsts.speedMult);
+    }
+
+    private static final StageDirector createStageDirector (DifficultyCurves.generator generator, final double heroYDIm)
+    {
+        final Statistics statistics = new Statistics();
+        final DifficultyCurves.generator curve = generator;
+        return new StageDirector(curve, statistics, heroYDIm);
+    }
+
+
+    //// core -------------
+    public static GameWorldAdapter createTestLevel() {
+        loadAssets(Arrays.asList(testLevelAssetNames));
+
+        Vector2D worldDims = createWorldDims();
+        Hero hero = createHero(worldDims);
+
+        final DifficultyCurves.generator generator = (final StatisticsInfo stats) -> DifficultyCurves.randomGenerator(stats); // pass function as argument
+        StageDirector stageDirector = createStageDirector(generator, hero.getYDim());
+
+        GameWorld gameLogicWorld = new DiscWorld(worldDims, hero, stageDirector);
+        GameWorldAdapter ret = new GameWorldAdapter(worldDims, gameLogicWorld);
 
         return ret;
     }

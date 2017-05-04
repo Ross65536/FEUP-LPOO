@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.gameLogic.Characters.EnemyGround;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
 
@@ -16,18 +17,19 @@ import java.util.TreeMap;
  * Singleton Pattern
  */
 public class GameAssetHandler {
-    public static final String heroImagePath = "person.png";
-    public static final String gremlinImagePath = "personRed.png";
+    //asset names
+    public static final String imagePathHero = "person.png";
+    public static final String imagePathEnemyGround = "personRed.png";
+    //associations between names and types
     private static final Map<String, Object> mapPathToType; //associates paths to object types for AssetManager
     static {
         mapPathToType = new TreeMap<String, Object>();
-        mapPathToType.put(heroImagePath, Texture.class);
-        mapPathToType.put(gremlinImagePath, Texture.class);
+        mapPathToType.put(imagePathHero, Texture.class);
+        mapPathToType.put(imagePathEnemyGround, Texture.class);
     }
 
     static private GameAssetHandler gameAssetHandler = null; //singelton instance
     private AssetManager assetManager;
-
 
     public GameAssetHandler()
     {
@@ -69,14 +71,25 @@ public class GameAssetHandler {
 
     public Texture getHeroTexture(HeroInfo heroInfo)
     {
-        Texture tex = assetManager.get(heroImagePath);
+        Texture tex = assetManager.get(imagePathHero);
         return tex;
     }
 
-    public Texture getCharacterTexture (EnemyInfo enemyInfo)
+    /**
+     * Associates class with textures.
+     * Receives a pointer and decides what texture to return.
+     * Also handles getting the right image for the animation time, etc.
+     *
+     * @param enemyInfo
+     * @return Texture to be drawn
+     */
+    public Texture getCharacterTexture (final EnemyInfo enemyInfo)
     {
-        Texture tex = assetManager.get(gremlinImagePath);
-        return tex;
+        if (enemyInfo instanceof EnemyGround)
+            return assetManager.get(imagePathEnemyGround);
+
+
+        return null;
     }
 
     public void finishLoading()
