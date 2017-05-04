@@ -36,7 +36,7 @@ public class GameSettings implements Settings {
         this.applicationPlatform = applicationPlatform;
     }
 
-    public boolean isKeyboardControlled() {
+    public boolean noMotionSensors() {
         return applicationPlatform == Application.ApplicationType.Desktop || applicationPlatform == Application.ApplicationType.Applet || applicationPlatform == Application.ApplicationType.WebGL;
     }
 }

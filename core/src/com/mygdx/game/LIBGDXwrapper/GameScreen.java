@@ -58,7 +58,7 @@ public class GameScreen extends ScreenAdapter {
 
 
         currentLevel.update(deltaT, gameCamera);
-        if(!gameSettings.isKeyboardControlled() && gyroscopeInput!=null){
+        if(!gameSettings.noMotionSensors() && gyroscopeInput!=null){
             gyroscopeInput.update(deltaT);
         }
     }
@@ -73,7 +73,7 @@ public class GameScreen extends ScreenAdapter {
             currentLevel.sendHeroXMovement(d); }
 
     public void registerInputHandler() {
-        if (gameSettings.isKeyboardControlled()) //use keyboard if on desktop
+        if (gameSettings.noMotionSensors()) //use keyboard if on desktop
         {
             KeyboardInput keyboardInput = new KeyboardInput(this);
             Gdx.input.setInputProcessor(keyboardInput);
@@ -81,6 +81,9 @@ public class GameScreen extends ScreenAdapter {
         else //gyroscope input
             if(Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass)){
                 gyroscopeInput = new GyroscopeInput(this);
+
+                KeyboardInput keyboardInput = new KeyboardInput(this); //for touch
+                Gdx.input.setInputProcessor(keyboardInput);
             }
 
     }

@@ -11,6 +11,7 @@ import com.mygdx.game.gameLogic.Characters.Hero;
  */
 public class Constants {
     public final static int NUMBER_OF_GAMEMODES = 3;
+    public static boolean INPUT_DEBUG = false;
     //Class specific information
     public static class CharacterConstants
     {
@@ -21,7 +22,7 @@ public class Constants {
     }
 
     //Hero class
-    private static final CharacterConstants constantsHero = new CharacterConstants(129 / (double) 281, 3.0, 1.0);
+    private static final CharacterConstants constantsHero = new CharacterConstants(129 / (double) 281, 4.0, 1.0);
     //EnemyGround class
     private static final CharacterConstants constantsEnemyGround = new CharacterConstants(129 / (double) 281, 1.5, 0.8);
 

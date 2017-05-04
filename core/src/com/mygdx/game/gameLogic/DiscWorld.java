@@ -1,12 +1,10 @@
 package com.mygdx.game.gameLogic;
 
 
-import com.badlogic.gdx.math.Vector;
 import com.mygdx.game.Constants;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyGround;
 import com.mygdx.game.gameLogic.Characters.Hero;
-import com.mygdx.game.gameLogic.GameDirector.Statistics;
 
 public class DiscWorld extends GameWorld {
     protected static final double ENEMY_GENERATION_YMULT = 1.0;
@@ -16,7 +14,8 @@ public class DiscWorld extends GameWorld {
         super(worldDims, hero, stageDirector);
 
         //TODO remove
-//        createDummyEnemies();
+        if (Constants.INPUT_DEBUG)
+            createDummyEnemies();
     }
     //// specific functions -------------
     protected void tryLoopHero() {
@@ -61,8 +60,8 @@ public class DiscWorld extends GameWorld {
         Enemy enemy2 = new EnemyGround(new Vector2D(heroX - 5, 0), dims, new Vector2D(0,0));
         enemies.add(enemy2);
 
-        Enemy enemy3 = new EnemyGround(new Vector2D(heroX - 8, 0), dims, new Vector2D(heroYDim * characterConstants.speedMult,0));
-        enemies.add(enemy3);
+//        Enemy enemy3 = new EnemyGround(new Vector2D(heroX - 8, 0), dims, new Vector2D(heroYDim * characterConstants.speedMult,0));
+//        enemies.add(enemy3);
     }
 
     public void moveHeroHorizontal(final double heroXMovement)

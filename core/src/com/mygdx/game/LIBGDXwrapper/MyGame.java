@@ -17,6 +17,7 @@ public class MyGame extends Game {
     public static enum GameInstr{RESUME, RESTART, START};
     public static enum MenuInstr{PAUSE, EXIT};
 
+
     @Override
 	public void create ()
     {

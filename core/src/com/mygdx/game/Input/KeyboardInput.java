@@ -51,12 +51,17 @@ public class KeyboardInput extends InputAdapter {
         return false;
     }
 
+    @Override
     public boolean touchDown (int x, int y, int pointer, int button) {
-        return false;
+        gameScreen.sendHeroJump(1.0);
+        return true;
     }
 
+    @Override
     public boolean touchUp (int x, int y, int pointer, int button) {
-        return false;
+        gameScreen.sendHeroJump(0.0);
+        return true;
+
     }
 
     public boolean touchDragged (int x, int y, int pointer) {

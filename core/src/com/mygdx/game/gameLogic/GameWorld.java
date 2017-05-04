@@ -1,8 +1,8 @@
 package com.mygdx.game.gameLogic;
 
+import com.mygdx.game.Constants;
 import com.mygdx.game.gameLogic.Characters.*;
 import com.mygdx.game.gameLogic.GameDirector.StageDirector;
-import com.mygdx.game.gameLogic.GameDirector.Statistics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -89,7 +89,8 @@ public abstract class GameWorld
         }
 
         stageDirector.update(deltaT);
-        tryGenerateEnemy();
+        if (! Constants.INPUT_DEBUG)
+            tryGenerateEnemy();
     }
 
     protected void tryGenerateEnemy()
