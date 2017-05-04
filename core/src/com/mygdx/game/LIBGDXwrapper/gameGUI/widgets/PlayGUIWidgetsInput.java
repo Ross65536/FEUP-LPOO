@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.CommonConstants;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.MyGame;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.GameMenus;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.MenuManager;
 
 import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.table;
@@ -34,7 +35,7 @@ public class PlayGUIWidgetsInput extends WidgetsInput{
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                menuManager.setMenu(MenuManager.GameMenus.MainMenu);
+                menuManager.setMenu(GameMenus.MainMenu);
             }
         });
     }

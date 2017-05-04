@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsProperties;
@@ -26,12 +27,15 @@ public class MainGUIComponet extends AbstractSingleStageGUI {
         table.setFillParent(true);
         this.addActor(table);
         this.setViewport(
-                new FitViewport(
-                        (int)(DeviceConstants.MENU_VIEWPORT)
-                        ,(int)(DeviceConstants.MENU_VIEWPORT*  DeviceConstants.INVERTED_SCREEN_RATIO)
+                new CustomViewport(
+                        (int)(DeviceConstants.MENU_VIEWPORT*  DeviceConstants.INVERTED_SCREEN_RATIO)
+                        ,(int)(DeviceConstants.MENU_VIEWPORT)
                 )
         );
-        ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)(DeviceConstants.MENU_VIEWPORT), (int)(DeviceConstants.MENU_VIEWPORT *  DeviceConstants.INVERTED_SCREEN_RATIO));
+        ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)(DeviceConstants.MENU_VIEWPORT *  DeviceConstants.INVERTED_SCREEN_RATIO), (int)(DeviceConstants.MENU_VIEWPORT));
+
+        ((OrthographicCamera) this.getCamera()).rotate(90);
+        ((OrthographicCamera) this.getCamera()).update();
 
         loadWidgets();
 
@@ -82,4 +86,6 @@ public class MainGUIComponet extends AbstractSingleStageGUI {
     public String toString(){
         return "Menu";
     }
+
+
 }
