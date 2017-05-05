@@ -1,8 +1,11 @@
-package com.mygdx.game.gameLogic;
+package com.mygdx.game.gameLogic.LogicWorlds;
 
-import com.mygdx.game.Constants;
-import com.mygdx.game.gameLogic.Characters.*;
+import com.mygdx.game.gameLogic.Characters.Enemy;
+import com.mygdx.game.gameLogic.Characters.EnemyInfo;
+import com.mygdx.game.gameLogic.Characters.Hero;
+import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.GameDirector.StageDirector;
+import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,8 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 //added
-public abstract class GameWorld
-{
+public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs {
     static protected Random random = new Random();
     //constants
     protected static final double ENEMY_DELETION_RANGE_MULT = 3.0; //has performance implications
@@ -58,40 +60,25 @@ public abstract class GameWorld
         return this.gamePlayable;
     }
 
+    public IGameWorldHeroInputs getWorldInputs()
+    {
+        return this;
+    }
+
     //// abstract ----------------
     /**
      * Updates all characters in the world, checks collisions
      *
      * @param deltaT
      */
-    abstract public void updateSpecific (float deltaT);
+//    abstract protected void updateSpecific (float deltaT);
+    abstract public void update (float deltaT);
     abstract protected void checkHeroJump();
-    abstract public void moveHeroHorizontal(final double heroXMovement);
-    abstract public void heroJump(final double gravityStrength);
+//    abstract public void moveHeroHorizontal(final double heroXMovement);
+//    abstract public void heroJump(final double gravityStrength);
     abstract protected void placeEnemy(Enemy enemy);
 
     //// updates ---------------
-    public void update (float deltaT)
-    {
-        if (! isGamePlayable())
-            return;
-
-        updateEnemies(deltaT);
-        updateHero(deltaT);
-        updateSpecific(deltaT); //calls update functions of specific class instance
-
-        if(this.checkHeroCollisions() > 0)
-        {
-            gamePlayable = false;
-
-            //TODO remove
-            System.out.println("Game Lost");
-        }
-
-        stageDirector.update(deltaT);
-        if (! Constants.INPUT_DEBUG)
-            tryGenerateEnemy();
-    }
 
     protected void tryGenerateEnemy()
     {

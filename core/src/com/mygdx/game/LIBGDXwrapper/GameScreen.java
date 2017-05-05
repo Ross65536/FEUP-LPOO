@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.Input.GyroscopeInput;
-import com.mygdx.game.Input.KeyboardInput;
+import com.mygdx.game.LIBGDXwrapper.Input.GyroscopeInput;
+import com.mygdx.game.LIBGDXwrapper.Input.KeyboardInput;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameWorldAdapter;
 import com.mygdx.game.gameLogic.Vector2D;
 
@@ -19,6 +19,8 @@ public class GameScreen extends ScreenAdapter {
     private GameSettings gameSettings;
     private Viewport viewport;
     private GyroscopeInput gyroscopeInput = null;
+
+    final static double MIN_JUMP_GRAVITY_STRENGTH = 0.5;
 
     public GameScreen(MyGame myGame, GameSettings gameSettings) {
         this.game = myGame;
@@ -63,14 +65,42 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
-    public void sendHeroJump(double d) {
+    /**
+     * makes the hero jump onscreen
+     * @param strength indicates the "strength" of the jump, can go from 0.0 to around 0.5
+     */
+    public void sendHeroJump(double strength) {
         if (currentLevel != null)
-            currentLevel.sendHeroJump(d);
+        {
+            double gravityStrength = 1.0 - strength;
+
+            if (gravityStrength < MIN_JUMP_GRAVITY_STRENGTH)
+                gravityStrength = MIN_JUMP_GRAVITY_STRENGTH;
+
+            else if (gravityStrength > 1.0)
+                gravityStrength = 1.0;
+
+            currentLevel.getLogicWorldInputs().heroJump(gravityStrength);
+        }
     }
 
-    public void sendHeroXMovement (double d) {
+    /**
+     * Moves the hero on the horizontal axis.
+     * mov is multiplied by the maximum poosible speed of the hero to get the horizontal speed of the hero
+     *
+     * @param xMov goes from -1.0 to 1.0, negative being movement to the left and postive to the right, 0.0 stops hero's horintal movement.
+     */
+    public void sendHeroXMovement (double xMov) {
         if (currentLevel != null)
-            currentLevel.sendHeroXMovement(d); }
+        {
+            if (xMov < -1.0)
+                xMov = -1.0;
+            else if (xMov > 1.0)
+                xMov = 1.0;
+
+            currentLevel.getLogicWorldInputs().moveHeroHorizontal(xMov);
+        }
+    }
 
     public void registerInputHandler() {
         if (gameSettings.noMotionSensors()) //use keyboard if on desktop

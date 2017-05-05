@@ -1,4 +1,4 @@
-package com.mygdx.game.Input;
+package com.mygdx.game.LIBGDXwrapper.Input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;

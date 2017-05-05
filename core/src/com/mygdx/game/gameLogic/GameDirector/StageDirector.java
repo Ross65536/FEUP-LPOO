@@ -3,62 +3,80 @@ package com.mygdx.game.gameLogic.GameDirector;
 import com.mygdx.game.Constants;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyGround;
+import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.Curves;
 import com.mygdx.game.gameLogic.Vector2D;
-
-import java.util.Random;
 
 
 public class StageDirector {
     private final double measurementUnit; //should be hero.YDim
-    private final DifficultyCurves.generator difficultyGenerator; //generatos a difficulty based on various statistics
+    private final Curves difficultyGenerator; //generatos a difficulty based on various statistics
     private Statistics gameStatistics;
+    private StageDirectorEnemyTypesAdapter.IEnemyTypes enemyTypes;
 
-    public StageDirector (DifficultyCurves.generator difficultyGenerator, Statistics gameStatistics, final double dimYScaler)
+    public StageDirector (Curves difficultyGenerator, Statistics gameStatistics, final double dimYScaler, StageDirectorEnemyTypesAdapter.IEnemyTypes enemyTypes)
     {
         this.measurementUnit = dimYScaler;
         this.difficultyGenerator = difficultyGenerator;
         this.gameStatistics = gameStatistics;
+        this.enemyTypes = enemyTypes;
     }
 
     //// utilities ------------
-    private void makeParameters (final Class<?> enType, Vector2D dimensions, Vector2D speed)
+    private void makeParameters(final Class<?> enType, Vector2D dimensions, Vector2D speed, double distortFraction)
     {
         final Constants.CharacterConstants enConsts = Constants.getEnemyConstants(enType);
-
-        final double enYDim = enConsts.dimYMult * measurementUnit;
+        final double dimDistort = enConsts.dimYPadding;
+        final double enYDim = (enConsts.dimYMult + dimDistort * distortFraction) * measurementUnit;
         final double enXDim = enYDim * enConsts.aspectRatio;
-        final double enXSpeed = enConsts.speedMult * measurementUnit;
+        final double speedDistort = enConsts.speedXPadding;
+        final double enXSpeed = (enConsts.speedMult + speedDistort * distortFraction) * measurementUnit ;
 
         dimensions.setXY(enXDim, enYDim);
         speed.setXY(enXSpeed, 0);
     }
 
-    private Enemy makeEnemy (final Class<?> enType)
+    /**
+     *
+     * @param enType
+     * @param distortion should be from 0.0 to 1.0, multiplied with speed and dimensions distrortion
+     * @return
+     */
+    protected Enemy makeEnemy (final Class<?> enType, final double distortFraction)
     {
+
+
         Vector2D dimensions = new Vector2D();
         Vector2D speed = new Vector2D();
-        makeParameters(enType, dimensions, speed);
+        makeParameters(enType, dimensions, speed, distortFraction);
 
         if (enType == EnemyGround.class)
             return new EnemyGround(null, dimensions, speed);
 
-        return null;
+        throw new IndexOutOfBoundsException("tryGenerateEnemy missing a generation class");
     }
 
     //// core -------
     public Enemy tryGenerateEnemy ()
     {
         final StatisticsInfo gameStatisticsInfo = gameStatistics;
-        double difficulty = difficultyGenerator.op(gameStatisticsInfo);
+        double difficulty = difficultyGenerator.generateDifficulty(gameStatisticsInfo);
 
-        if (difficulty == DifficultyCurves.NO_ENEMY_CREATED)
+        if (difficulty == Curves.CURVES_NO_ENEMY_CREATED)
             return null;
-        else if (difficulty <= 100.0)
-            return makeEnemy(EnemyGround.class);
-
-        throw new IndexOutOfBoundsException("tryGenerateEnemy missing a generation class");
+        else {
+            final Enemy enemy = enemyTypes.op(this, difficulty);
+            if (enemy == null)
+                throw new IndexOutOfBoundsException("tryGenerateEnemy missing a generation class");
+            else
+            {
+                gameStatistics.updateNumberOfGroundEnemies(1); //enemy created
+                return enemy;
+            }
+        }
     }
 
-    public void update(float deltaT) {
+    public StatisticsInput getStatsticsInput() {
+        return gameStatistics;
     }
+
 }

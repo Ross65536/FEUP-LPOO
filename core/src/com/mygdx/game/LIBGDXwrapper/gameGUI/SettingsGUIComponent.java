@@ -1,19 +1,12 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
-import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsInput;
-import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsProperties;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsProperties;
-import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
-import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsInput;
 
 import java.util.HashMap;
 

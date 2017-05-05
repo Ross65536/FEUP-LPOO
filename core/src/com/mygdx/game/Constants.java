@@ -15,16 +15,21 @@ public class Constants {
     //Class specific information
     public static class CharacterConstants
     {
-        private CharacterConstants(final double aspectRatio, final double speedMult, final double dimYMult) { this.aspectRatio = aspectRatio; this.speedMult = speedMult; this.dimYMult = dimYMult; }
+        private CharacterConstants(final double aspectRatio, final double speedMult, final double speedXPadding, final double dimYMult, final double dimYPadding) { this.aspectRatio = aspectRatio; this.speedMult = speedMult; this.dimYMult = dimYMult; this.speedXPadding =speedXPadding; this.dimYPadding =dimYPadding;}
         final public double aspectRatio; //aspect ratio of texture to be used
         final public double speedMult; //multiplied to Hero.dimY
+        final public double speedXPadding; // speedMult + speedXPadding * externalFraction
         final public double dimYMult; //multiplied to Hero.dimY
+        final public double dimYPadding; // dimYMult + dimYPadding * externalFraction
+        //speedXPadding and dimYPadding scale linearly when used
     }
 
     //Hero class
-    private static final CharacterConstants constantsHero = new CharacterConstants(129 / (double) 281, 4.0, 1.0);
+    private static final CharacterConstants constantsHero =
+            new CharacterConstants(129 / (double) 281, 4.0, 0, 1.0 ,0);
     //EnemyGround class
-    private static final CharacterConstants constantsEnemyGround = new CharacterConstants(129 / (double) 281, 1.5, 0.8);
+    private static final CharacterConstants constantsEnemyGround =
+            new CharacterConstants(129 / (double) 281, 1.5, 1.0, 0.8, -0.2);
 
     public static final CharacterConstants getEnemyConstants(final Class<?> enType)
     {

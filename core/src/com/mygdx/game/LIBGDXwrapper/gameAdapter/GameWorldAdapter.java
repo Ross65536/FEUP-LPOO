@@ -7,7 +7,9 @@ import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
-import com.mygdx.game.gameLogic.GameWorld;
+import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
+import com.mygdx.game.gameLogic.LogicWorlds.IGameWorld;
+import com.mygdx.game.gameLogic.LogicWorlds.IGameWorldHeroInputs;
 import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.List;
@@ -20,14 +22,14 @@ import java.util.List;
  */
 public class GameWorldAdapter {
 
-    protected GameWorld gameLogicWorld;
+    protected IGameWorld gameLogicWorld;
     protected double worldXDim;
     protected double worldYDim; //also camera Height
     protected double cameraWidth;
     //assets
     protected SpriteBatch drawBatch;
     //constants
-    final static double MIN_JUMP_GRAVITY_STRENGTH = 0.5;
+
 
 
     public GameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
@@ -95,37 +97,11 @@ public class GameWorldAdapter {
     }
 
     /**
-     * Moves the hero on the horizontal axis.
-     * mov is multiplied by the maximum poosible speed of the hero to get the horizontal speed of the hero
      *
-     * @param mov goes from -1.0 to 1.0, negative being movement to the left and postive to the right, 0.0 stops hero's horintal movement.
+     * @return objects that can send input data to logic world.
      */
-    public void sendHeroXMovement(double mov)
-    {
-        if (mov < -1.0)
-            mov = -1.0;
-        else if (mov > 1.0)
-            mov = 1.0;
-
-        gameLogicWorld.moveHeroHorizontal(mov);
+    public IGameWorldHeroInputs getLogicWorldInputs() {
+        return gameLogicWorld.getWorldInputs();
     }
-
-    /**
-     * makes the hero jump onscreen
-     * @param strength indicates the "strength" of the jump, can go from 0.0 to around 0.5
-     */
-    public void sendHeroJump(final double strength)
-    {
-        double gravityStrength = 1.0 - strength;
-
-        if (gravityStrength < MIN_JUMP_GRAVITY_STRENGTH)
-            gravityStrength = MIN_JUMP_GRAVITY_STRENGTH;
-
-        else if (gravityStrength > 1.0)
-            gravityStrength = 1.0;
-
-        gameLogicWorld.heroJump(gravityStrength);
-    }
-
 }
 

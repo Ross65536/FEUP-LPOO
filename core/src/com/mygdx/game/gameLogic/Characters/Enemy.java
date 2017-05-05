@@ -15,4 +15,7 @@ public abstract class Enemy extends Character implements EnemyInfo {
         else
             this.characterSpeed.x = - xSpeed;
     }
+
+    @Override
+    abstract public String getAssociatedImagePath();
 }

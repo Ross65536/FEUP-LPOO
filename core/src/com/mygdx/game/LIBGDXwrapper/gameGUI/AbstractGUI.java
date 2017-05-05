@@ -1,6 +1,5 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Stage;

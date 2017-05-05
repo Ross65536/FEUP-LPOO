@@ -3,9 +3,6 @@ package com.mygdx.game.LIBGDXwrapper;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
-import com.mygdx.game.LIBGDXwrapper.GameSettings;
-import com.mygdx.game.LIBGDXwrapper.MyGame;
-import com.mygdx.game.LIBGDXwrapper.Settings;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.MenuManager;
 
 public class MenuScreen extends ScreenAdapter {

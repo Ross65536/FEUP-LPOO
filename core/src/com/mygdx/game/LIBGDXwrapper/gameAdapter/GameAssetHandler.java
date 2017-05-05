@@ -4,29 +4,17 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.gameLogic.Characters.EnemyGround;
+import com.mygdx.game.PathConstants;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Used to manage assets such as sounds, textures.
  * Singleton Pattern
  */
 public class GameAssetHandler {
-    //asset names
-    public static final String imagePathHero = "person.png";
-    public static final String imagePathEnemyGround = "personRed.png";
-    //associations between names and types
-    private static final Map<String, Object> mapPathToType; //associates paths to object types for AssetManager
-    static {
-        mapPathToType = new TreeMap<String, Object>();
-        mapPathToType.put(imagePathHero, Texture.class);
-        mapPathToType.put(imagePathEnemyGround, Texture.class);
-    }
 
     static private GameAssetHandler gameAssetHandler = null; //singelton instance
     private AssetManager assetManager;
@@ -64,14 +52,14 @@ public class GameAssetHandler {
     {
         for (final String path : assetPaths) //loads missing assets
         {
-            assetManager.load(path, (java.lang.Class<Object>) GameAssetHandler.mapPathToType.get(path));
+            assetManager.load(path, (java.lang.Class<Object>) PathConstants.mapPathToType.get(path));
         }
 
     }
 
     public Texture getHeroTexture(HeroInfo heroInfo)
     {
-        Texture tex = assetManager.get(imagePathHero);
+        Texture tex = assetManager.get(PathConstants.HERO_IMAGE_PATH);
         return tex;
     }
 
@@ -85,11 +73,7 @@ public class GameAssetHandler {
      */
     public Texture getCharacterTexture (final EnemyInfo enemyInfo)
     {
-        if (enemyInfo instanceof EnemyGround)
-            return assetManager.get(imagePathEnemyGround);
-
-
-        return null;
+        return assetManager.get(enemyInfo.getAssociatedImagePath());
     }
 
     public void finishLoading()

@@ -1,22 +1,27 @@
-package com.mygdx.game.gameLogic;
+package com.mygdx.game.gameLogic.LogicWorlds;
 
 
 import com.mygdx.game.Constants;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyGround;
 import com.mygdx.game.gameLogic.Characters.Hero;
+import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
+import com.mygdx.game.gameLogic.Vector2D;
 
 public class DiscWorld extends GameWorld {
     protected static final double ENEMY_GENERATION_YMULT = 1.0;
+
 
     public DiscWorld(final Vector2D worldDims, Hero hero, com.mygdx.game.gameLogic.GameDirector.StageDirector stageDirector)
     {
         super(worldDims, hero, stageDirector);
 
+
         //TODO remove
         if (Constants.INPUT_DEBUG)
             createDummyEnemies();
     }
+
     //// specific functions -------------
     protected void tryLoopHero() {
         //loop around level
@@ -25,21 +30,6 @@ public class DiscWorld extends GameWorld {
             hero.setXPos(worldDimensions.x + heroXPos);
         else if (heroXPos > worldDimensions.x)
             hero.setXPos(heroXPos - worldDimensions.x);
-    }
-
-    @Override
-    public void updateSpecific(float deltaT) {
-        tryLoopHero();
-    }
-
-    ////
-    protected void checkHeroJump()
-    {
-        if (hero.isJumping() && hero.getYPos() < 0.0) //hero jumping hit ground
-        {
-            hero.stopJump();
-            hero.setYPos(0.0);
-        }
     }
 
     protected void createDummyEnemies () //testing function
@@ -64,16 +54,45 @@ public class DiscWorld extends GameWorld {
 //        enemies.add(enemy3);
     }
 
-    public void moveHeroHorizontal(final double heroXMovement)
+    //// abstract implementations ---------------
+    @Override
+    public void update (float deltaT)
     {
-        hero.setXMovement(heroXMovement);
+        if (! isGamePlayable())
+            return;
+
+        final int numDestroyedEnemies = updateEnemies(deltaT);
+
+        StatisticsInput statisticsInput = stageDirector.getStatsticsInput();
+        statisticsInput.updateNumberOfGroundEnemies(- numDestroyedEnemies);
+        statisticsInput.update(deltaT);
+
+        updateHero(deltaT);
+        tryLoopHero();
+
+        if(this.checkHeroCollisions() > 0)
+        {
+            gamePlayable = false;
+
+            //TODO remove
+            System.out.println("Game Lost");
+        }
+
+        if (! Constants.INPUT_DEBUG)
+            tryGenerateEnemy();
     }
 
     @Override
-    public void heroJump(final double gravityStrength) {
-        hero.jump(gravityStrength);
+    protected void checkHeroJump()
+    {
+        if (hero.isJumping() && hero.getYPos() < 0.0) //hero jumping hit ground
+        {
+            hero.stopJump();
+            hero.setYPos(0.0);
+        }
     }
 
+    @Override
     protected void placeEnemy(Enemy enemy) {
         enemy.setYPos(0.0);
 
@@ -92,5 +111,16 @@ public class DiscWorld extends GameWorld {
             enemy.setXPos(heroXPos + enXDelta);
             enemy.setMovementDirection(false);
         }
+    }
+
+    //// hero inputs -------
+    public void moveHeroHorizontal(final double heroXMovement)
+    {
+        hero.setXMovement(heroXMovement);
+    }
+
+    @Override
+    public void heroJump(final double gravityStrength) {
+        hero.jump(gravityStrength);
     }
 }

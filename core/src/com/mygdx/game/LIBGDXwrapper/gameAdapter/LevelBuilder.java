@@ -2,13 +2,15 @@ package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 
 import com.mygdx.game.Constants;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
-import com.mygdx.game.gameLogic.DiscWorld;
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves;
-import com.mygdx.game.gameLogic.GameDirector.Statistics;
-import com.mygdx.game.gameLogic.GameDirector.StatisticsInfo;
-import com.mygdx.game.gameLogic.GameWorld;
+import com.mygdx.game.PathConstants;
 import com.mygdx.game.gameLogic.Characters.Hero;
+import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.BalancedCurve;
+import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.Curves;
 import com.mygdx.game.gameLogic.GameDirector.StageDirector;
+import com.mygdx.game.gameLogic.GameDirector.StageDirectorEnemyTypesAdapter;
+import com.mygdx.game.gameLogic.GameDirector.Statistics;
+import com.mygdx.game.gameLogic.LogicWorlds.DiscWorld;
+import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
 import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.Arrays;
@@ -17,8 +19,8 @@ import java.util.Collection;
 
 public class LevelBuilder {
     private static final double HERO_HEIGHT_BY_SCREEN_HEIGHT = 3;
-    private static final double WORLD_X_DIM = 100;
-    private static final String[] testLevelAssetNames = {GameAssetHandler.imagePathHero, GameAssetHandler.imagePathEnemyGround};
+    private static final double WORLD_X_DIM = 1000;
+    private static final String[] testLevelAssetNames = {PathConstants.HERO_IMAGE_PATH, PathConstants.ENEMY_GROUND_IMAGE_PATH};
 
     //// utilities -----------
     private static void loadAssets(final Collection<String> assets)
@@ -46,22 +48,25 @@ public class LevelBuilder {
         return new Hero(heroPos, heroDims, heroConsts.speedMult);
     }
 
-    private static final StageDirector createStageDirector (DifficultyCurves.generator generator, final double heroYDIm)
+    private static final StageDirector createStageDirector (Curves generator, final double heroYDIm)
     {
         final Statistics statistics = new Statistics();
-        final DifficultyCurves.generator curve = generator;
-        return new StageDirector(curve, statistics, heroYDIm);
+        final Curves curve = generator;
+        StageDirectorEnemyTypesAdapter.IEnemyTypes iEnemyTypes = (StageDirector itself, double difficulty) -> StageDirectorEnemyTypesAdapter.testEnemyTypes(itself, difficulty);
+        return new StageDirector(curve, statistics, heroYDIm, iEnemyTypes);
     }
 
 
     //// core -------------
+    private static final double ENEMY_CREATION_DELTAT = 1.5; //seconds between each generate
+    private static final int MAX_NUM_ENEMIES = 10;
     public static GameWorldAdapter createTestLevel() {
         loadAssets(Arrays.asList(testLevelAssetNames));
 
         Vector2D worldDims = createWorldDims();
         Hero hero = createHero(worldDims);
 
-        final DifficultyCurves.generator generator = (final StatisticsInfo stats) -> DifficultyCurves.randomGenerator(stats); // pass function as argument
+        final Curves generator = new BalancedCurve(ENEMY_CREATION_DELTAT, MAX_NUM_ENEMIES);
         StageDirector stageDirector = createStageDirector(generator, hero.getYDim());
 
         GameWorld gameLogicWorld = new DiscWorld(worldDims, hero, stageDirector);
