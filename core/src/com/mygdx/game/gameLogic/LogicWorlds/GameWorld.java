@@ -26,7 +26,6 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs {
     protected StageDirector stageDirector;
 
 
-
     public GameWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
         worldDimensions = new Vector2D(worldDims);

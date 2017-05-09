@@ -16,7 +16,6 @@ public class DiscWorld extends GameWorld {
     {
         super(worldDims, hero, stageDirector);
 
-
         //TODO remove
         if (Constants.INPUT_DEBUG)
             createDummyEnemies();

@@ -11,10 +11,12 @@ import com.mygdx.game.gameLogic.GameDirector.StageDirectorEnemyTypesAdapter;
 import com.mygdx.game.gameLogic.GameDirector.Statistics;
 import com.mygdx.game.gameLogic.LogicWorlds.DiscWorld;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
+import com.mygdx.game.gameLogic.LogicWorlds.PlatWorld;
 import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Vector;
 
 
 public class LevelBuilder {
@@ -77,7 +79,48 @@ public class LevelBuilder {
 
 
 
+    private static final String[] platformTestLevelAssetNames = {PathConstants.HERO_IMAGE_PATH, PathConstants.ENEMY_GROUND_IMAGE_PATH, PathConstants.PLATFORM_IMAGE_PATH};
 
+    private static final Vector2D createWorldDimsPlat ()
+    {
+        final double worldXDim = WORLD_X_DIM;
+        final double worldYDim = WORLD_X_DIM/10;
+        return new Vector2D(worldXDim, worldYDim);
+    }
+
+    private static final Hero createHero2(final Vector2D worldDims, final Vector2D cameraDims)
+    {
+        final double heroHeight = cameraDims.y/(3*HERO_HEIGHT_BY_SCREEN_HEIGHT);
+
+        final Constants.CharacterConstants heroConsts = Constants.getEnemyConstants(Hero.class);
+        final Vector2D heroPos = new Vector2D(worldDims.x / 2f, 0); //hero at middle of world dimensions
+        final Vector2D heroDims = new Vector2D(heroHeight * heroConsts.aspectRatio, heroHeight);
+
+        return new Hero(heroPos, heroDims, heroConsts.speedMult);
+    }
+
+    private static final Vector2D createCameraDimsPlat ()
+    {
+        final double cameraXDim = WORLD_X_DIM/10;
+        final double cameraYDim = cameraXDim*DeviceConstants.SCREEN_RATIO;
+        return new Vector2D(cameraXDim, cameraYDim);
+    }
+
+    public static GameWorldAdapter2 createPlatformTestLevel() {
+        loadAssets(Arrays.asList(platformTestLevelAssetNames));
+
+        Vector2D worldDims = createWorldDimsPlat();
+        Vector2D cameraDims = createCameraDimsPlat();
+        Hero hero = createHero2(worldDims,cameraDims);
+
+        final Curves generator = new BalancedCurve(ENEMY_CREATION_DELTAT, MAX_NUM_ENEMIES);
+        StageDirector stageDirector = createStageDirector(generator, hero.getYDim());
+
+        GameWorld gameLogicWorld = new PlatWorld(worldDims, hero, stageDirector);
+        GameWorldAdapter2 ret = new GameWorldAdapter2(worldDims, gameLogicWorld);
+
+        return ret;
+    }
 
 
 }

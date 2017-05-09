@@ -6,16 +6,18 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.LIBGDXwrapper.Input.GyroscopeInput;
 import com.mygdx.game.LIBGDXwrapper.Input.KeyboardInput;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameWorldAdapter;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 import com.mygdx.game.gameLogic.Vector2D;
 
 public class GameScreen extends ScreenAdapter {
     private MyGame game;
     private OrthographicCamera gameCamera;
-    private GameWorldAdapter currentLevel;
+    private IGameWorldAdapter currentLevel;
     private GameSettings gameSettings;
     private Viewport viewport;
     private GyroscopeInput gyroscopeInput = null;
@@ -29,7 +31,7 @@ public class GameScreen extends ScreenAdapter {
         this.gameSettings = gameSettings;
         this.currentLevel = null;
 
-        viewport =  new FillViewport(
+        viewport =  new FitViewport(
                 (int)(DeviceConstants.MENU_VIEWPORT)
                 ,(int)(DeviceConstants.MENU_VIEWPORT*  DeviceConstants.INVERTED_SCREEN_RATIO)
 
@@ -39,7 +41,7 @@ public class GameScreen extends ScreenAdapter {
         registerInputHandler();
     }
 
-    public void LoadLevel(GameWorldAdapter currentLevel)
+    public void LoadLevel(IGameWorldAdapter currentLevel)
     {
         viewport.update(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),true);
         this.currentLevel = currentLevel;

@@ -3,6 +3,7 @@ package com.mygdx.game;
 
 import com.mygdx.game.gameLogic.Characters.EnemyGround;
 import com.mygdx.game.gameLogic.Characters.Hero;
+import com.mygdx.game.gameLogic.Characters.Platform;
 
 /**
  * Contants common for gameLogic and Graphics.
@@ -31,12 +32,17 @@ public class Constants {
     private static final CharacterConstants constantsEnemyGround =
             new CharacterConstants(129 / (double) 281, 1.5, 1.0, 0.8, -0.2);
 
+    private static final CharacterConstants constantsPlatform =
+            new CharacterConstants(400 / (double) 50, 0, 0, 0, 0);
+
     public static final CharacterConstants getEnemyConstants(final Class<?> enType)
     {
         if (enType == Hero.class)
             return constantsHero;
         if (enType == EnemyGround.class)
             return constantsEnemyGround;
+        if (enType == Platform.class)
+            return constantsPlatform;
         else
             return null;
     }

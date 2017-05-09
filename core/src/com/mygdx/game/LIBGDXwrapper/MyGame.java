@@ -35,6 +35,11 @@ public class MyGame extends Game {
         gameScreen.LoadLevel(LevelBuilder.createTestLevel());
 	}
 
+    private void startPlatGameTest()
+    {
+        gameScreen.LoadLevel(LevelBuilder.createPlatformTestLevel());
+    }
+
     public void SwicthToMenuScreen(MenuInstr instruction)
     {
         switch (instruction){
@@ -60,7 +65,8 @@ public class MyGame extends Game {
                 startGameTest();
                 break;
             case START:
-                startGameTest();
+                startPlatGameTest();
+                //startGameTest();
                 break;
         }
 

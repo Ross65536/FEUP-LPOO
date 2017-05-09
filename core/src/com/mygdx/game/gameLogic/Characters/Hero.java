@@ -38,6 +38,17 @@ public class Hero extends Character implements HeroInfo {
         this.riseGravityStrength = gravityStrength;
     }
 
+    public void fall(final double gravityStrength)
+    {
+        if (! isJumping()) //first time called sets the jump motion
+        {
+            jumping = true;
+            final double newYSpeed= 0;
+            characterSpeed.y = newYSpeed; //initial jump
+        }
+        this.riseGravityStrength = gravityStrength;
+    }
+
     private double getYAcceleration(double gravityStrength) {
         return - gravityStrength * this.getYDim() * JUMP_ACCELERATION_MULTIPLIER;
     }

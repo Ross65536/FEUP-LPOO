@@ -7,51 +7,56 @@ import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
+import com.mygdx.game.gameLogic.Characters.Platform;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
 import com.mygdx.game.gameLogic.LogicWorlds.IGameWorld;
 import com.mygdx.game.gameLogic.LogicWorlds.IGameWorldHeroInputs;
+import com.mygdx.game.gameLogic.LogicWorlds.PlatWorld;
 import com.mygdx.game.gameLogic.Vector2D;
 
+import java.util.ArrayList;
 import java.util.List;
 
-
-
 /**
- * Class that does the actual drawing of objects.
- * Sends input to Hero.
+ * Created by João on 06/05/2017.
  */
-public class GameWorldAdapter implements  IGameWorldAdapter{
+
+public class GameWorldAdapter2 implements  IGameWorldAdapter{
 
     protected IGameWorld gameLogicWorld;
     protected double worldXDim;
     protected double worldYDim; //also camera Height
     protected double cameraWidth;
+    protected double cameraHeight;
     //assets
     protected SpriteBatch drawBatch;
     //constants
 
 
 
-    public GameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
+    public GameWorldAdapter2(final Vector2D worldDims, GameWorld gameLogicWorld)
     {
         drawBatch = new SpriteBatch();
         this.worldXDim = worldDims.x;
         this.worldYDim = worldDims.y;
         this.gameLogicWorld = gameLogicWorld;
+        this.cameraWidth = worldDims.x/10;
+        this.cameraHeight = cameraWidth * DeviceConstants.INVERTED_SCREEN_RATIO;
     }
 
     public void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera)
     {
         final float heroXPos = (float) hero.getXPos();
         final float heroXDim = (float) hero.getXDim();
+        final float heroYPos = (float) hero.getYPos();
+        final float heroYDim = (float) hero.getYDim();
 
-        gameCamera.position.set(heroXPos + heroXDim/2, (float) worldYDim / 2, 0);
+        gameCamera.position.set(heroXPos + heroXDim/2, heroYPos + heroYDim/2, 0);
         gameCamera.update();
     }
 
     public Vector2D getCameraSetup () {
-        cameraWidth = worldYDim * DeviceConstants.SCREEN_RATIO;
-        return new Vector2D(cameraWidth, worldYDim); //camera has maximum world height
+        return new Vector2D(cameraWidth, cameraHeight); //camera has maximum world height
     }
 
     /**
@@ -69,6 +74,7 @@ public class GameWorldAdapter implements  IGameWorldAdapter{
         drawBatch.begin();
         drawEnemies();
         drawHero();
+        drawPlatforms();
         drawBatch.end();
     }
 
@@ -81,6 +87,26 @@ public class GameWorldAdapter implements  IGameWorldAdapter{
 
         final GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
         drawBatch.draw(gameAssetHandler.getHeroTexture(hero), heroXPos, heroYPos, heroXDim , (float) hero.getYDim()); //draw hero
+    }
+
+    private void drawPlatforms(){
+
+        ArrayList<Platform> platforms = ((PlatWorld)gameLogicWorld).getPlatforms();
+
+        final GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
+
+        for(Platform platform : platforms){
+            drawBatch.draw(gameAssetHandler.getPlatformTexture(platform)
+                    ,(float) platform.getXPos()
+                    ,(float) platform.getYPos()
+                    ,(float) platform.getXDim()
+                    ,(float) platform.getYDim()
+            );
+        }
+
+
+
+
     }
 
     private void drawEnemies()
@@ -104,4 +130,3 @@ public class GameWorldAdapter implements  IGameWorldAdapter{
         return gameLogicWorld.getWorldInputs();
     }
 }
-

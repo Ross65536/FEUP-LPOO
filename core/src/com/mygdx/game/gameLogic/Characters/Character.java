@@ -54,7 +54,9 @@ public abstract class Character implements CharacterInfo {
         this.characterPosition.setXY(newX, newY);
     }
 
-
+    public boolean isFlying(){
+        return characterSpeed.y != 0.0;
+    }
 
 
 
