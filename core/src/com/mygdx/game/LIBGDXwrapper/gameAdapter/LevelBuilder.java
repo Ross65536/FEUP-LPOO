@@ -84,7 +84,7 @@ public class LevelBuilder {
     private static final Vector2D createWorldDimsPlat ()
     {
         final double worldXDim = WORLD_X_DIM;
-        final double worldYDim = WORLD_X_DIM/10;
+        final double worldYDim = WORLD_X_DIM;
         return new Vector2D(worldXDim, worldYDim);
     }
 

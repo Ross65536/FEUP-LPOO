@@ -7,6 +7,7 @@ public abstract class Character implements CharacterInfo {
     protected Vector2D characterPosition;
     protected Vector2D characterDimensions;
     protected Vector2D characterSpeed;
+    protected Vector2D prevPosition;
 
     public Character (double charXPos, double charYPos, double charXDim, double charYDim, double speedX, double speedY)
     {
@@ -49,9 +50,17 @@ public abstract class Character implements CharacterInfo {
 
     public void update(float deltaT)
     {
+        //added
+        this.prevPosition =characterPosition;
+
         final double newX = this.characterPosition.x + this.characterSpeed.x * deltaT;
         final double newY = this.characterPosition.y + this.characterSpeed.y * deltaT;
         this.characterPosition.setXY(newX, newY);
+
+    }
+
+    public Vector2D getPrevPosition(){
+        return this.prevPosition;
     }
 
     public boolean isFlying(){

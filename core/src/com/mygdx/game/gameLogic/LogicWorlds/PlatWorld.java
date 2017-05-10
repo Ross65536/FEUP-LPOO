@@ -11,17 +11,18 @@ import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
 import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Map;
 import java.util.Random;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import static com.mygdx.game.gameLogic.Characters.Platform.fractionOfScreenHeightForPlatform;
 
 public class PlatWorld extends GameWorld {
     protected static final double ENEMY_GENERATION_YMULT = 1.0;
 
-    protected ArrayList<Platform> platforms;
-    protected double yPlatform;
-
-
+    protected Platform currentPlarform;
 
     protected double cameraWidth;
     protected double cameraHeight;
@@ -31,16 +32,18 @@ public class PlatWorld extends GameWorld {
     protected double negXExplored;
     protected double negYExplored;
 
+    protected TreeMap<Double, TreeMap<Double,Platform>> platformsT;
+    protected ArrayList<Platform> platformsInRange;
 
     public PlatWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
         super(worldDims, hero, stageDirector);
-        yPlatform = 0.0;
+        currentPlarform = null;
 
         this.cameraWidth = worldDims.x/10;
         this.cameraHeight = cameraWidth * DeviceConstants.INVERTED_SCREEN_RATIO;
 
-        platforms = new ArrayList<Platform>();
+        platformsT = new TreeMap<Double, TreeMap<Double,Platform>>();
 
         posXExplored = hero.getXPos() + this.cameraWidth/2;
         posYExplored = hero.getYPos() + this.cameraHeight;
@@ -59,7 +62,15 @@ public class PlatWorld extends GameWorld {
     }
 
     void createPlatformHere(double xPos,double yPos, double xWidth, double yHeight){
-        platforms.add(new Platform(new Vector2D(xPos, yPos),new Vector2D(xWidth,yHeight)));
+        //platforms.add(new Platform(new Vector2D(xPos, yPos),new Vector2D(xWidth,yHeight)));
+        if(platformsT.containsKey(yPos)){
+            platformsT.get(yPos).put(new Double(xPos),new Platform(new Vector2D(xPos, yPos),new Vector2D(xWidth,yHeight)));
+            return;
+        }
+        TreeMap<Double,Platform> xTree = new TreeMap<Double,Platform>();
+        xTree.put(new Double(xPos),new Platform(new Vector2D(xPos, yPos),new Vector2D(xWidth,yHeight)));
+        platformsT.put(new Double(yPos),xTree);
+
     }
 
     void surrondMatrix(int platformAuxiliarMatrix[][], int i, int e, Vector2D spacing, Vector2D matrixSize){
@@ -89,22 +100,16 @@ public class PlatWorld extends GameWorld {
     }
 
     void createPlarforms(){
-
-
-
         double platformHeight = fractionOfScreenHeightForPlatform*this.cameraHeight;
         double platformWidth =  platformHeight*Constants.getEnemyConstants(Platform.class).aspectRatio;
 
         int xSize = (int)(worldDimensions.x / platformWidth);
         int ySize = (int)(worldDimensions.y / platformHeight);
-        int platformAuxiliarMatrix[][];
+        int platformAuxiliarMatrix[][] = new int[ySize][xSize];
 
 
-        Vector2D spacingBetweenPlatforms = new Vector2D(1,(int)hero.getYDim()*2/platformHeight);
+        Vector2D spacingBetweenPlatforms = new Vector2D(0,(int)hero.getYDim()*2/platformHeight);
         int initFreqPlatforms = 10;
-
-        platformAuxiliarMatrix = new int[ySize][xSize];
-
 
         Random randomizer = new Random();
         int chance = 1;
@@ -157,9 +162,7 @@ public class PlatWorld extends GameWorld {
         StatisticsInput statisticsInput = stageDirector.getStatsticsInput();
         statisticsInput.updateNumberOfGroundEnemies(- numDestroyedEnemies);
         statisticsInput.update(deltaT);
-
-        //updateExploredXY();
-
+        platformsInRange = getPlatformsInRange();
         checkPlatformCollisions();
 
         updateHero(deltaT);
@@ -175,84 +178,66 @@ public class PlatWorld extends GameWorld {
         if (! Constants.INPUT_DEBUG)
             tryGenerateEnemy();
     }
-/*
-    public void tryCreatePlatform(double diffPosX,double diffPosY,double diffNegX, double diffNegY){
-
-        Platform platform;
-        if(null != (platform = Platform.tryCreate(
-                diffPosX
-                ,diffPosY
-                ,diffNegX
-                ,diffNegY
-                ,hero.getXPos() + hero.getXDim()/2
-                ,hero.getYPos()
-                ,new Vector2D(cameraWidth, cameraHeight)
-        ))){
-            platforms.add(platform);
-        }
-    }
-*/
     public ArrayList<Platform> getPlatforms(){
-        return platforms;
+        return platformsInRange;
     }
-/*
-    private void updateExploredXY(){
+    ArrayList<Platform> getPlatformsInRange(){
 
-        System.out.println(posXExplored + " " + posYExplored + " " + negXExplored + " " + negYExplored);
+        ArrayList<Platform> res = new ArrayList<Platform>();
 
-        double prevPosXExplored = posXExplored;
-        double prevPosYExplored = posYExplored;
-        double prevNegXExplored = negXExplored;
-        double prevNegYExplored = negYExplored;
+        double platformHeight = fractionOfScreenHeightForPlatform*this.cameraHeight;
+        double platformWidth =  platformHeight*Constants.getEnemyConstants(Platform.class).aspectRatio;
+        double topRightCornerX = hero.getXPos()+(cameraWidth/2)+platformWidth;
+        double topRightCornerY = hero.getYPos()+(cameraHeight/2)+platformHeight*2;
+        double bottomLeftCornerX = hero.getXPos()-(cameraWidth/2)-platformWidth;
+        double bottomLeftCornerY = hero.getYPos()-(cameraHeight/2)-platformHeight*2;
 
-        if((hero.getXPos() + this.cameraWidth/2)>posXExplored){
-            posXExplored = hero.getXPos() + this.cameraWidth/2;
-        }
+        Double topYKey = platformsT.floorKey(topRightCornerY);
+        Double bottomYKey = platformsT.ceilingKey(bottomLeftCornerY);
 
-        if((hero.getYPos() + this.cameraHeight)>posYExplored){
-            posYExplored = hero.getYPos() + this.cameraHeight;
-        }
-
-        if((hero.getXPos() - this.cameraWidth/2)<negXExplored){
-            negXExplored = hero.getXPos() + this.cameraWidth/2;
-        }
-
-        if(hero.getYPos()<negYExplored){
-            negYExplored = hero.getYPos();
-        }
-
-        this.tryCreatePlatform(prevPosXExplored - posXExplored
-                ,prevPosYExplored - posYExplored
-                ,prevNegXExplored - negXExplored
-                ,prevNegYExplored - negYExplored
-                );
-
+        if(topYKey!=null && bottomYKey!=null && topYKey>=bottomYKey)
+            for(Map.Entry<Double,TreeMap<Double,Platform>> xTree: platformsT.subMap(bottomYKey,true,topYKey,true).entrySet()){
+                Double leftXKey = xTree.getValue().ceilingKey(bottomLeftCornerX);
+                Double rightXKey = xTree.getValue().floorKey(topRightCornerX );
+                if(rightXKey!=null && leftXKey!=null && rightXKey>=leftXKey)
+                    for(Map.Entry<Double,Platform> platforms : xTree.getValue().subMap(leftXKey,true,rightXKey,true).entrySet()){
+                        res.add(platforms.getValue());
+                    }
+            }
+        return res;
     }
-*/
+
     public void checkPlatformCollisions(){
-        for(Platform plat: platforms){
-            if(plat.checkCollision(hero)){
-                yPlatform = plat.getTopY();
-                return;
-            }
-            if(plat.isCharacterOnThisPlatform(hero)){
-                return;
-            }
+        if(currentPlarform!= null && currentPlarform.isCharacterOnThisPlatform(hero)){
+            return;
         }
-        if(!hero.isJumping()&& (yPlatform!=0.0)) {
-            System.out.println("asdasd");
+        for(Platform plat: platformsInRange){
+            if(plat.checkCollision(hero)){
+                currentPlarform = plat;
+                return;
+            }
+
+        }
+        //left platform
+        if(!hero.isFlying()&& (currentPlarform!=null)) {
             hero.fall(1.0);
         }
-        yPlatform = 0.0;
+        currentPlarform = null;
     }
 
     @Override
     protected void checkHeroJump()
     {
-        if (hero.isJumping() && hero.getYPos() < yPlatform)
+        double yValue;
+        if(currentPlarform==null)
+            yValue = 0;
+        else
+            yValue = currentPlarform.getTopY();
+
+        if (hero.isJumping() && hero.getYPos() < yValue)
         {
             hero.stopJump();
-            hero.setYPos(yPlatform);
+            hero.setYPos(yValue);
         }
     }
 
