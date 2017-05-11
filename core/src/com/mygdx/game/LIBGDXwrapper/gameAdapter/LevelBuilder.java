@@ -79,7 +79,7 @@ public class LevelBuilder {
 
 
 
-    private static final String[] platformTestLevelAssetNames = {PathConstants.HERO_IMAGE_PATH, PathConstants.ENEMY_GROUND_IMAGE_PATH, PathConstants.PLATFORM_IMAGE_PATH};
+    private static final String[] platformTestLevelAssetNames = {PathConstants.HERO_IMAGE_PATH, PathConstants.ENEMY_GROUND_IMAGE_PATH, PathConstants.PLATFORM_IMAGE_PATH, PathConstants.LIGHT_IMAGE_PATH};
 
     private static final Vector2D createWorldDimsPlat ()
     {
@@ -118,7 +118,6 @@ public class LevelBuilder {
 
         GameWorld gameLogicWorld = new PlatWorld(worldDims, hero, stageDirector);
         GameWorldAdapter2 ret = new GameWorldAdapter2(worldDims, gameLogicWorld);
-
         return ret;
     }
 

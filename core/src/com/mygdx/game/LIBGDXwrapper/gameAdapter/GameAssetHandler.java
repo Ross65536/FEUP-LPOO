@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.PathConstants;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
+import com.mygdx.game.gameLogic.Characters.Light;
 import com.mygdx.game.gameLogic.Characters.Platform;
 
 import java.util.Collection;
@@ -80,6 +81,11 @@ public class GameAssetHandler {
     public Texture getPlatformTexture(final Platform platform)
     {
         return assetManager.get(platform.getAssociatedImagePath());
+    }
+
+    public Texture getLightTexture()
+    {
+        return assetManager.get(PathConstants.LIGHT_IMAGE_PATH);
     }
 
     public void finishLoading()

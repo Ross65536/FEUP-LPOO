@@ -25,6 +25,11 @@ public class Hero extends Character implements HeroInfo {
         characterSpeed.x = heroMaxXSpeed * d;
     }
 
+    public boolean isMoving(){
+        if((characterSpeed.x!=0) || (this.isJumping()))
+            return true;
+        return false;
+    }
 
     public void jump(final double gravityStrength)
     {

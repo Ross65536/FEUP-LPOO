@@ -1,28 +1,37 @@
 package com.mygdx.game.gameLogic.LogicWorlds;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g3d.Renderable;
+import com.badlogic.gdx.graphics.g3d.Shader;
+import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Constants;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyGround;
 import com.mygdx.game.gameLogic.Characters.Hero;
+import com.mygdx.game.gameLogic.Characters.Light;
 import com.mygdx.game.gameLogic.Characters.Platform;
 import com.mygdx.game.gameLogic.GameDirector.StageDirector;
 import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
 import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
-import java.util.TreeSet;
+
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 
 import static com.mygdx.game.gameLogic.Characters.Platform.fractionOfScreenHeightForPlatform;
 
 public class PlatWorld extends GameWorld {
+
     protected static final double ENEMY_GENERATION_YMULT = 1.0;
 
-    protected Platform currentPlarform;
 
     protected double cameraWidth;
     protected double cameraHeight;
@@ -32,8 +41,12 @@ public class PlatWorld extends GameWorld {
     protected double negXExplored;
     protected double negYExplored;
 
+    protected Light light;
+
     protected TreeMap<Double, TreeMap<Double,Platform>> platformsT;
     protected ArrayList<Platform> platformsInRange;
+    protected Platform currentPlarform; //platform where hero is on
+
 
     public PlatWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
@@ -50,13 +63,11 @@ public class PlatWorld extends GameWorld {
         negXExplored = hero.getXPos() - this.cameraWidth/2;
         negYExplored = hero.getYPos();
 
+        light = new Light(new Vector2D(hero.getXPos(),hero.getYPos()),hero.getYDim()*8,true,0.05);
+
         //TODO remove
         if (Constants.INPUT_DEBUG)
             createDummyEnemies();
-
-
-        double platformHeight = fractionOfScreenHeightForPlatform*this.cameraHeight;
-        double platformWidth =  platformHeight*Constants.getEnemyConstants(Platform.class).aspectRatio;
 
         createPlarforms();
     }
@@ -166,6 +177,7 @@ public class PlatWorld extends GameWorld {
         checkPlatformCollisions();
 
         updateHero(deltaT);
+        updateLight(deltaT);
 
         if(this.checkHeroCollisions() > 0)
         {
@@ -178,6 +190,23 @@ public class PlatWorld extends GameWorld {
         if (! Constants.INPUT_DEBUG)
             tryGenerateEnemy();
     }
+
+    private void updateLight(float deltaT){
+        light.setXPos(hero.getXPos() + (hero.getXDim()/2.0)-(light.getRadious()/2.0));
+        light.setYPos(hero.getYPos()-(light.getRadious()/2.0) + hero.getYDim()/2.0);
+        if(light.isOscilating()){
+            light.updateOscilation(deltaT);
+        }
+        if(hero.isMoving())
+            deltaT*=-1;
+        light.updateRadious(deltaT);
+
+    }
+
+    public Light getLightInfo(){
+        return light;
+    }
+
     public ArrayList<Platform> getPlatforms(){
         return platformsInRange;
     }

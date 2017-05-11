@@ -47,6 +47,7 @@ public class GameScreen extends ScreenAdapter {
         this.currentLevel = currentLevel;
         final Vector2D camDims = currentLevel.getCameraSetup();
         gameCamera.setToOrtho(false, (float) camDims.x, (float) camDims.y); //camera has maximum world height
+
     }
 
     /**

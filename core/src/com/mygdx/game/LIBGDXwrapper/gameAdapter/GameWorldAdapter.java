@@ -3,6 +3,7 @@ package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
@@ -29,7 +30,6 @@ public class GameWorldAdapter implements  IGameWorldAdapter{
     //assets
     protected SpriteBatch drawBatch;
     //constants
-
 
 
     public GameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
@@ -95,6 +95,8 @@ public class GameWorldAdapter implements  IGameWorldAdapter{
             drawBatch.draw(enemyTex, (float) enemy.getXPos(), (float) enemy.getYPos(), (float) enemy.getXDim(), (float) enemy.getYDim());
         }
     }
+
+
 
     /**
      *
