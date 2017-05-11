@@ -35,10 +35,6 @@ public class Light extends Character{
         this.oscilationVelocity = oscilationVelocity;
     }
 
-    public void setRadious(double radious){
-        this.radious = radious;
-    }
-
     public void setOscilationLengthFraction(double oscilationLengthFraction){
         this.oscilationLength = radious*oscilationLengthFraction;//10% the radious
     }
@@ -62,8 +58,8 @@ public class Light extends Character{
             this.radious = this.originalRadious;
     }
 
-    public void resetRadious(){
-        this.radious = this.originalRadious;
+    public float getRadiousPercentage(){
+        return (float)(this.radious/this.originalRadious);
     }
 
     public double getRadious(){

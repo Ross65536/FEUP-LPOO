@@ -5,12 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.LIBGDXwrapper.Input.GyroscopeInput;
 import com.mygdx.game.LIBGDXwrapper.Input.KeyboardInput;
-import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 import com.mygdx.game.gameLogic.Vector2D;
 

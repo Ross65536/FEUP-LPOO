@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface IGameWorld {
     HeroInfo getHeroInfo();
-    List<EnemyInfo> getEnemiesInfo();
     void update (float deltaT);
     IGameWorldHeroInputs getWorldInputs();
 }

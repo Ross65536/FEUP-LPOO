@@ -16,7 +16,6 @@ import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Vector;
 
 
 public class LevelBuilder {
@@ -62,7 +61,7 @@ public class LevelBuilder {
     //// core -------------
     private static final double ENEMY_CREATION_DELTAT = 1.5; //seconds between each generate
     private static final int MAX_NUM_ENEMIES = 10;
-    public static GameWorldAdapter createTestLevel() {
+    public static DiscGameWorldAdapter createTestLevel() {
         loadAssets(Arrays.asList(testLevelAssetNames));
 
         Vector2D worldDims = createWorldDims();
@@ -72,7 +71,7 @@ public class LevelBuilder {
         StageDirector stageDirector = createStageDirector(generator, hero.getYDim());
 
         GameWorld gameLogicWorld = new DiscWorld(worldDims, hero, stageDirector);
-        GameWorldAdapter ret = new GameWorldAdapter(worldDims, gameLogicWorld);
+        DiscGameWorldAdapter ret = new DiscGameWorldAdapter(worldDims, gameLogicWorld);
 
         return ret;
     }
@@ -106,7 +105,7 @@ public class LevelBuilder {
         return new Vector2D(cameraXDim, cameraYDim);
     }
 
-    public static GameWorldAdapter2 createPlatformTestLevel() {
+    public static PlatGameWorldAdapter createPlatformTestLevel() {
         loadAssets(Arrays.asList(platformTestLevelAssetNames));
 
         Vector2D worldDims = createWorldDimsPlat();
@@ -117,7 +116,7 @@ public class LevelBuilder {
         StageDirector stageDirector = createStageDirector(generator, hero.getYDim());
 
         GameWorld gameLogicWorld = new PlatWorld(worldDims, hero, stageDirector);
-        GameWorldAdapter2 ret = new GameWorldAdapter2(worldDims, gameLogicWorld);
+        PlatGameWorldAdapter ret = new PlatGameWorldAdapter(worldDims, gameLogicWorld);
         return ret;
     }
 

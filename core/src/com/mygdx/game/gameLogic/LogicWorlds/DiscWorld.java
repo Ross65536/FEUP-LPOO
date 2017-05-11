@@ -2,24 +2,31 @@ package com.mygdx.game.gameLogic.LogicWorlds;
 
 
 import com.mygdx.game.Constants;
-import com.mygdx.game.gameLogic.Characters.Enemy;
-import com.mygdx.game.gameLogic.Characters.EnemyGround;
+import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
-import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
+import com.mygdx.game.gameLogic.GameDirector.StageDirector;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemyFeature;
 import com.mygdx.game.gameLogic.Vector2D;
 
-public class DiscWorld extends GameWorld {
+import java.util.List;
+
+public class DiscWorld extends GameWorld implements DummyEnemyFeature {
     protected static final double ENEMY_GENERATION_YMULT = 1.0;
 
+    DummyEnemies dummyEnemies;
 
-    public DiscWorld(final Vector2D worldDims, Hero hero, com.mygdx.game.gameLogic.GameDirector.StageDirector stageDirector)
+    public DiscWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
-        super(worldDims, hero, stageDirector);
+        super(worldDims, hero);
+
+        dummyEnemies = new DummyEnemies(hero,worldDims,stageDirector);
 
         //TODO remove
         if (Constants.INPUT_DEBUG)
             createDummyEnemies();
     }
+
 
     //// specific functions -------------
     protected void tryLoopHero() {
@@ -31,27 +38,8 @@ public class DiscWorld extends GameWorld {
             hero.setXPos(heroXPos - worldDimensions.x);
     }
 
-    protected void createDummyEnemies () //testing function
-    {
-        final double heroX = hero.getXPos();
-        final double heroXDim = hero.getXDim();
-        final double heroYDim = hero.getYDim();
 
-        final Constants.CharacterConstants characterConstants = Constants.getEnemyConstants(EnemyGround.class);
 
-        final double enYDim = characterConstants.dimYMult * heroYDim;
-        final double enXDim = enYDim * characterConstants.aspectRatio;
-
-        Vector2D dims = new Vector2D(enXDim, enYDim);
-
-        Enemy enemy1 = new EnemyGround(new Vector2D(heroX + 2, 0), dims, new Vector2D(0,0));
-        enemies.add(enemy1);
-        Enemy enemy2 = new EnemyGround(new Vector2D(heroX - 5, 0), dims, new Vector2D(0,0));
-        enemies.add(enemy2);
-
-//        Enemy enemy3 = new EnemyGround(new Vector2D(heroX - 8, 0), dims, new Vector2D(heroYDim * characterConstants.speedMult,0));
-//        enemies.add(enemy3);
-    }
 
     //// abstract implementations ---------------
     @Override
@@ -60,20 +48,15 @@ public class DiscWorld extends GameWorld {
         if (! isGamePlayable())
             return;
 
-        final int numDestroyedEnemies = updateEnemies(deltaT);
+        updateEnemieStatistics(deltaT);
 
-        StatisticsInput statisticsInput = stageDirector.getStatsticsInput();
-        statisticsInput.updateNumberOfGroundEnemies(- numDestroyedEnemies);
-        statisticsInput.update(deltaT);
 
         updateHero(deltaT);
         tryLoopHero();
 
-        if(this.checkHeroCollisions() > 0)
+        if(this.checkEnemyCollisions() > 0)
         {
             gamePlayable = false;
-
-            //TODO remove
             System.out.println("Game Lost");
         }
 
@@ -91,28 +74,10 @@ public class DiscWorld extends GameWorld {
         }
     }
 
-    @Override
-    protected void placeEnemy(Enemy enemy) {
-        enemy.setYPos(0.0);
 
-        final double enXDelta = worldDimensions.y * ENEMY_GENERATION_YMULT;
-        final double heroXPos = hero.getXPos();
-
-        final boolean bool = random.nextBoolean(); //random
-
-        if (bool) //left side spawn
-        {
-            enemy.setXPos(heroXPos - enXDelta);
-            enemy.setMovementDirection(true);
-        }
-        else //right
-        {
-            enemy.setXPos(heroXPos + enXDelta);
-            enemy.setMovementDirection(false);
-        }
-    }
 
     //// hero inputs -------
+    @Override
     public void moveHeroHorizontal(final double heroXMovement)
     {
         hero.setXMovement(heroXMovement);
@@ -122,4 +87,33 @@ public class DiscWorld extends GameWorld {
     public void heroJump(final double gravityStrength) {
         hero.jump(gravityStrength);
     }
+
+
+
+    ////////Dummny Enemy Implementation/////////
+    @Override
+    public void createDummyEnemies(){
+        dummyEnemies.createDummyEnemies();
+    }
+
+    @Override
+    public void updateEnemieStatistics(float deltaT){
+        dummyEnemies.updateEnemieStatistics(deltaT);
+    }
+
+    @Override
+    public long checkEnemyCollisions(){
+        return dummyEnemies.checkEnemyCollisions();
+    }
+
+    @Override
+    public void tryGenerateEnemy(){
+        dummyEnemies.tryGenerateEnemy();
+    }
+
+    @Override
+    public List<EnemyInfo> getEnemiesInfo(){
+       return dummyEnemies.getEnemiesInfo();
+    }
+
 }

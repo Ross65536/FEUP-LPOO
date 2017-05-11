@@ -1,47 +1,33 @@
 package com.mygdx.game.gameLogic.LogicWorlds;
 
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g3d.Renderable;
-import com.badlogic.gdx.graphics.g3d.Shader;
-import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Constants;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
-import com.mygdx.game.gameLogic.Characters.Enemy;
-import com.mygdx.game.gameLogic.Characters.EnemyGround;
+import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.Light;
 import com.mygdx.game.gameLogic.Characters.Platform;
 import com.mygdx.game.gameLogic.GameDirector.StageDirector;
-import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemyFeature;
 import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
-
 import static com.mygdx.game.gameLogic.Characters.Platform.fractionOfScreenHeightForPlatform;
 
-public class PlatWorld extends GameWorld {
-
-    protected static final double ENEMY_GENERATION_YMULT = 1.0;
+public class PlatWorld extends GameWorld implements DummyEnemyFeature {
 
 
     protected double cameraWidth;
     protected double cameraHeight;
 
-    protected double posXExplored;
-    protected double posYExplored;
-    protected double negXExplored;
-    protected double negYExplored;
-
     protected Light light;
+
+    DummyEnemies dummyEnemies;
 
     protected TreeMap<Double, TreeMap<Double,Platform>> platformsT;
     protected ArrayList<Platform> platformsInRange;
@@ -50,7 +36,7 @@ public class PlatWorld extends GameWorld {
 
     public PlatWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
-        super(worldDims, hero, stageDirector);
+        super(worldDims, hero);
         currentPlarform = null;
 
         this.cameraWidth = worldDims.x/10;
@@ -58,10 +44,7 @@ public class PlatWorld extends GameWorld {
 
         platformsT = new TreeMap<Double, TreeMap<Double,Platform>>();
 
-        posXExplored = hero.getXPos() + this.cameraWidth/2;
-        posYExplored = hero.getYPos() + this.cameraHeight;
-        negXExplored = hero.getXPos() - this.cameraWidth/2;
-        negYExplored = hero.getYPos();
+        dummyEnemies = new DummyEnemies(hero,worldDims,stageDirector);
 
         light = new Light(new Vector2D(hero.getXPos(),hero.getYPos()),hero.getYDim()*8,true,0.05);
 
@@ -70,6 +53,10 @@ public class PlatWorld extends GameWorld {
             createDummyEnemies();
 
         createPlarforms();
+    }
+
+    public float getDangerLevel(){
+        return 1-light.getRadiousPercentage();
     }
 
     void createPlatformHere(double xPos,double yPos, double xWidth, double yHeight){
@@ -139,28 +126,6 @@ public class PlatWorld extends GameWorld {
     }
 
 
-    protected void createDummyEnemies () //testing function
-    {
-        final double heroX = hero.getXPos();
-        final double heroXDim = hero.getXDim();
-        final double heroYDim = hero.getYDim();
-
-        final Constants.CharacterConstants characterConstants = Constants.getEnemyConstants(EnemyGround.class);
-
-        final double enYDim = characterConstants.dimYMult * heroYDim;
-        final double enXDim = enYDim * characterConstants.aspectRatio;
-
-        Vector2D dims = new Vector2D(enXDim, enYDim);
-
-        Enemy enemy1 = new EnemyGround(new Vector2D(heroX + 2, 0), dims, new Vector2D(0,0));
-        enemies.add(enemy1);
-        Enemy enemy2 = new EnemyGround(new Vector2D(heroX - 5, 0), dims, new Vector2D(0,0));
-        enemies.add(enemy2);
-
-//        Enemy enemy3 = new EnemyGround(new Vector2D(heroX - 8, 0), dims, new Vector2D(heroYDim * characterConstants.speedMult,0));
-//        enemies.add(enemy3);
-    }
-
     //// abstract implementations ---------------
     @Override
     public void update (float deltaT)
@@ -168,18 +133,15 @@ public class PlatWorld extends GameWorld {
         if (! isGamePlayable())
             return;
 
-        final int numDestroyedEnemies = updateEnemies(deltaT);
+        updateEnemieStatistics(deltaT);
 
-        StatisticsInput statisticsInput = stageDirector.getStatsticsInput();
-        statisticsInput.updateNumberOfGroundEnemies(- numDestroyedEnemies);
-        statisticsInput.update(deltaT);
         platformsInRange = getPlatformsInRange();
         checkPlatformCollisions();
 
         updateHero(deltaT);
         updateLight(deltaT);
 
-        if(this.checkHeroCollisions() > 0)
+        if(this.checkEnemyCollisions() > 0)
         {
             gamePlayable = false;
 
@@ -210,6 +172,7 @@ public class PlatWorld extends GameWorld {
     public ArrayList<Platform> getPlatforms(){
         return platformsInRange;
     }
+
     ArrayList<Platform> getPlatformsInRange(){
 
         ArrayList<Platform> res = new ArrayList<Platform>();
@@ -270,26 +233,6 @@ public class PlatWorld extends GameWorld {
         }
     }
 
-    @Override
-    protected void placeEnemy(Enemy enemy) {
-        enemy.setYPos(0.0);
-
-        final double enXDelta = worldDimensions.y * ENEMY_GENERATION_YMULT;
-        final double heroXPos = hero.getXPos();
-
-        final boolean bool = random.nextBoolean(); //random
-
-        if (bool) //left side spawn
-        {
-            enemy.setXPos(heroXPos - enXDelta);
-            enemy.setMovementDirection(true);
-        }
-        else //right
-        {
-            enemy.setXPos(heroXPos + enXDelta);
-            enemy.setMovementDirection(false);
-        }
-    }
 
     //// hero inputs -------
     public void moveHeroHorizontal(final double heroXMovement)
@@ -300,5 +243,33 @@ public class PlatWorld extends GameWorld {
     @Override
     public void heroJump(final double gravityStrength) {
         hero.jump(gravityStrength);
+    }
+
+
+
+    ////////Dummny Enemy Implementation/////////
+    @Override
+    public void createDummyEnemies(){
+        dummyEnemies.createDummyEnemies();
+    }
+
+    @Override
+    public void updateEnemieStatistics(float deltaT){
+        dummyEnemies.updateEnemieStatistics(deltaT);
+    }
+
+    @Override
+    public long checkEnemyCollisions(){
+        return dummyEnemies.checkEnemyCollisions();
+    }
+
+    @Override
+    public void tryGenerateEnemy(){
+        dummyEnemies.tryGenerateEnemy();
+    }
+
+    @Override
+    public List<EnemyInfo> getEnemiesInfo(){
+        return dummyEnemies.getEnemiesInfo();
     }
 }
