@@ -3,7 +3,7 @@ package com.mygdx.game.LIBGDXwrapper;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
-import com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilder;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.LevelBuilder;
 
 
 public class MyGame extends Game {
