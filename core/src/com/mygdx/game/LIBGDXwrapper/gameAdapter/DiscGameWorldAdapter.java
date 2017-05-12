@@ -63,5 +63,18 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
         lightVisualHandler.drawLight(gameCamera);
     }
 
+    @Override
+    public void resize(int width, int height){
+        super.resize(width,height);
+        if(lightVisualHandler!=null)
+            lightVisualHandler.resize( width, height);
+    }
+
+    @Override
+    public void dispose(){
+        super.dispose();
+        if(lightVisualHandler!=null)
+            lightVisualHandler.dispose();
+    }
 }
 

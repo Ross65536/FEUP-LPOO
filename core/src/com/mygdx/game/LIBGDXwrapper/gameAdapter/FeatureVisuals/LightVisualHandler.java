@@ -18,15 +18,15 @@ import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightsFeature;
 public class LightVisualHandler{
 
 
-    private FrameBuffer frambuffer;
+    private FrameBuffer frameBuffer;
     private SpriteBatch drawBatch;
     private GameWorld gameLogicWorld;
 
     public LightVisualHandler(GameWorld gameLogicWorld, SpriteBatch drawBatch){
         try {
-            frambuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+            frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         }catch (GdxRuntimeException e){ // device doesn't support 8888
-            frambuffer = new FrameBuffer(Pixmap.Format.RGB565,  Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+            frameBuffer = new FrameBuffer(Pixmap.Format.RGB565,  Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         }
         this.gameLogicWorld = gameLogicWorld;
         this.drawBatch = drawBatch;
@@ -53,13 +53,13 @@ public class LightVisualHandler{
 
         drawBatch.begin();
 
-        drawBatch.draw(frambuffer.getColorBufferTexture(), -1, 1, 2, -2);
+        drawBatch.draw(frameBuffer.getColorBufferTexture(), -1, 1, 2, -2);
         drawBatch.end();
 
     }
 
     private void drawSurroundingDarkness(OrthographicCamera gameCamera, Texture lightTextute, Light lightInfo){
-        frambuffer.begin();
+        frameBuffer.begin();
 
         Gdx.gl.glClearColor(0f,0f,0f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -70,8 +70,23 @@ public class LightVisualHandler{
         drawBatch.draw(lightTextute, (float)lightInfo.getXPos(), (float)lightInfo.getYPos(), (float)lightInfo.getRadious() , (float)lightInfo.getRadious()); //draw hero
         drawBatch.end();
 
-        frambuffer.end();
+        frameBuffer.end();
     }
 
+    public void resize(int width, int height){
+        if (frameBuffer != null && (frameBuffer.getWidth() != width || frameBuffer.getHeight() != height)){
+            frameBuffer.dispose();
+            frameBuffer = null;
+            try {
+                frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, width, height, false);
+            } catch (GdxRuntimeException e){ // device doesn't support 8888
+                frameBuffer = new FrameBuffer(Pixmap.Format.RGB565, width, height, false);
+            }
+        }
+    }
 
+    public void dispose(){
+        if(frameBuffer!=null)
+            frameBuffer.dispose();
+    }
 }

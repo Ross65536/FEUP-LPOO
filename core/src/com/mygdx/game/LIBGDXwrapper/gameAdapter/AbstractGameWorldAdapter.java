@@ -50,7 +50,10 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
         drawBatch.draw(gameAssetHandler.getHeroTexture(hero), heroXPos, heroYPos, heroXDim , (float) hero.getYDim()); //draw hero
     }
 
-
+    public void resize(int width, int height){
+        if(drawBatch!=null)
+            drawBatch.getProjectionMatrix().setToOrtho2D(0,0,width,height);
+    }
 
     public void update(float deltaT, OrthographicCamera gameCamera) {
         gameLogicWorld.update(deltaT); //updates all world characters
@@ -60,6 +63,10 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
         drawBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
     }
 
+    public void dispose(){
+        if(drawBatch!=null)
+            drawBatch.dispose();
+    }
 
     /**
      *
