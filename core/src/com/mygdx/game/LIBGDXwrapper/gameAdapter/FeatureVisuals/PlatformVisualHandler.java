@@ -5,6 +5,7 @@ import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.gameLogic.Characters.Platform;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
 import com.mygdx.game.gameLogic.LogicWorlds.PlatWorld;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.PlatformFeature;
 
 import java.util.List;
 
@@ -20,7 +21,14 @@ public class PlatformVisualHandler {
 
     public void drawPlatforms(){
 
-        List<Platform> platforms = ((PlatWorld)gameLogicWorld).getPlatforms();
+        List<Platform> platforms;
+        if(gameLogicWorld instanceof PlatformFeature){
+            platforms = ((PlatformFeature)gameLogicWorld).getPlatforms();
+        }
+        else {
+            System.out.println("This world does not support platforms");
+            return;
+        }
 
         final GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
 

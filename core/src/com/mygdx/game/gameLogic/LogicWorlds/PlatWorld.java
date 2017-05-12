@@ -14,8 +14,6 @@ import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightsFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.PlatformFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Platforms;
 import com.mygdx.game.gameLogic.Vector2D;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class PlatWorld extends GameWorld implements DummyEnemyFeature, PlatformFeature, LightsFeature {
@@ -23,7 +21,6 @@ public class PlatWorld extends GameWorld implements DummyEnemyFeature, PlatformF
 
     protected double cameraWidth;
     protected double cameraHeight;
-
 
 
     DummyEnemies dummyEnemies;

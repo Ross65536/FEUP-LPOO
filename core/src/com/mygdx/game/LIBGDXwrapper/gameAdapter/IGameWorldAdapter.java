@@ -10,7 +10,8 @@ import com.mygdx.game.gameLogic.Vector2D;
 public interface IGameWorldAdapter {
     void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera);
     Vector2D getCameraSetup ();
-    void update(float deltaT, OrthographicCamera gameCamera);
+    void updateWorld(float delaT);
+    void updateScreen(float deltaT, OrthographicCamera gameCamera);
     IGameWorldHeroInputs getLogicWorldInputs();
     void resize(int width, int height);
     void dispose();

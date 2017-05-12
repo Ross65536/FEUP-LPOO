@@ -1,14 +1,22 @@
 package com.mygdx.game.LIBGDXwrapper;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.LIBGDXwrapper.Input.GyroscopeInput;
 import com.mygdx.game.LIBGDXwrapper.Input.KeyboardInput;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.AbstractGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 import com.mygdx.game.gameLogic.Vector2D;
 
@@ -17,8 +25,9 @@ public class GameScreen extends ScreenAdapter {
     private OrthographicCamera gameCamera;
     private IGameWorldAdapter currentLevel;
     private GameSettings gameSettings;
-    private Viewport viewport;
     private GyroscopeInput gyroscopeInput = null;
+    protected float fps = 0;
+    private StretchViewport viewport;
 
     final static double MIN_JUMP_GRAVITY_STRENGTH = 0.5;
 
@@ -28,22 +37,17 @@ public class GameScreen extends ScreenAdapter {
         gameCamera = new OrthographicCamera();
         this.gameSettings = gameSettings;
         this.currentLevel = null;
-
-        viewport =  new FitViewport(
-                (int)(DeviceConstants.MENU_VIEWPORT)
-                ,(int)(DeviceConstants.MENU_VIEWPORT*  DeviceConstants.INVERTED_SCREEN_RATIO)
-
-        );
-        viewport.setCamera(gameCamera);
-
+        viewport = new StretchViewport(0,0,gameCamera);
         registerInputHandler();
     }
 
     public void LoadLevel(IGameWorldAdapter currentLevel)
     {
-        viewport.update(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),true);
+        Gdx.graphics.setVSync(true);
         this.currentLevel = currentLevel;
         final Vector2D camDims = currentLevel.getCameraSetup();
+        viewport.setWorldSize((float)camDims.x,(float)camDims.y);
+        viewport.update(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),true);
         gameCamera.setToOrtho(false, (float) camDims.x, (float) camDims.y); //camera has maximum world height
 
     }
@@ -55,15 +59,17 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void render(float deltaT) {
-        super.render(deltaT);
-        Gdx.gl.glClearColor(103 / 255f, 69 / 255f, 117 / 255f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        currentLevel.updateWorld(deltaT);
 
-
-        currentLevel.update(deltaT, gameCamera);
         if(!gameSettings.noMotionSensors() && gyroscopeInput!=null){
             gyroscopeInput.update(deltaT);
         }
+
+        super.render(deltaT);
+
+        Gdx.gl.glClearColor(103 / 255f, 69 / 255f, 117 / 255f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        currentLevel.updateScreen(deltaT, gameCamera);
     }
 
     /**
@@ -124,6 +130,8 @@ public class GameScreen extends ScreenAdapter {
         super.resize(width, height);
         if(currentLevel!= null)
             currentLevel.resize(width, height);
+
+        this.viewport.update(width,height,false);
     }
 
 

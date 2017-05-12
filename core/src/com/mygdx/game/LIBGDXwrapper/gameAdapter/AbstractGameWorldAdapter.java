@@ -1,18 +1,14 @@
 package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
-import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
-import com.mygdx.game.gameLogic.LogicWorlds.IGameWorld;
 import com.mygdx.game.gameLogic.LogicWorlds.IGameWorldHeroInputs;
 import com.mygdx.game.gameLogic.Vector2D;
-
-import java.util.List;
 
 public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
 
@@ -26,6 +22,7 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
     public AbstractGameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
     {
         drawBatch = new SpriteBatch();
+        drawBatch.getProjectionMatrix().setToOrtho2D(0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         this.worldXDim = worldDims.x;
         this.worldYDim = worldDims.y;
         this.gameLogicWorld = gameLogicWorld;
@@ -55,9 +52,11 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
             drawBatch.getProjectionMatrix().setToOrtho2D(0,0,width,height);
     }
 
-    public void update(float deltaT, OrthographicCamera gameCamera) {
+    public void updateWorld(float deltaT){
         gameLogicWorld.update(deltaT); //updates all world characters
+    }
 
+    public void updateScreen(float deltaT, OrthographicCamera gameCamera) {
         CharacterInfo hero = gameLogicWorld.getHeroInfo();
         updateCameraPos(hero, gameCamera);
         drawBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);

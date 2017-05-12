@@ -6,6 +6,7 @@ public class GameSettings implements Settings {
     private boolean isSensorControlled;
     float volume;
     GameModeID mode;
+    public static float FRAMERATE = 60;
     private Application.ApplicationType applicationPlatform;
 
     GameSettings(GameModeID mode, float volume, boolean isSensorControlled){

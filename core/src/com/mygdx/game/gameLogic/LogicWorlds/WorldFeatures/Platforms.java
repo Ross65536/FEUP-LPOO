@@ -48,6 +48,7 @@ public class Platforms implements PlatformFeature{
         freqPlatforms = 10;
 
         createPlarforms();
+        updatePlatformsInRange();
     }
 
 

@@ -64,12 +64,11 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
      * @param gameCamera
      */
     @Override
-    public void update(float deltaT, OrthographicCamera gameCamera) {
+    public void updateScreen(float deltaT, OrthographicCamera gameCamera) {
+        super.updateScreen(deltaT,gameCamera);
 
-        super.update(deltaT,gameCamera);
-
-        drawBatch.begin();
         drawBatch.setProjectionMatrix(gameCamera.combined);
+        drawBatch.begin();
 
         dummyEnemyVisualsHandler.drawEnemies();
 

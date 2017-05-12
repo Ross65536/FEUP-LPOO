@@ -16,7 +16,7 @@ import java.util.Collection;
  * Used to manage assets such as sounds, textures.
  * Singleton Pattern
  */
-public class GameAssetHandler {
+public class GameAssetHandler { //dispose textures when swicth to menu
 
     static private GameAssetHandler gameAssetHandler = null; //singelton instance
     private AssetManager assetManager;

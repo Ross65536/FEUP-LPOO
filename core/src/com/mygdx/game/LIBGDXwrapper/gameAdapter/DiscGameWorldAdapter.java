@@ -1,6 +1,10 @@
 package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.DummyEnemyVisualsHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.LightVisualHandler;
@@ -25,6 +29,10 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
     public DiscGameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
     {
         super(worldDims,gameLogicWorld);
+
+        dummyEnemyVisuals = new DummyEnemyVisualsHandler(gameLogicWorld,drawBatch);
+
+        lightVisualHandler = new LightVisualHandler(gameLogicWorld, drawBatch);
     }
 
     public void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera)
@@ -35,9 +43,6 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
         gameCamera.position.set(heroXPos + heroXDim/2, (float) worldYDim / 2, 0);
         gameCamera.update();
 
-        dummyEnemyVisuals = new DummyEnemyVisualsHandler(gameLogicWorld,drawBatch);
-
-        lightVisualHandler = new LightVisualHandler(gameLogicWorld, drawBatch);
     }
 
     public Vector2D getCameraSetup () {
@@ -50,8 +55,9 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
      * @param deltaT
      * @param gameCamera
      */
-    public void update(float deltaT, OrthographicCamera gameCamera) {
-        super.update(deltaT, gameCamera);
+    @Override
+    public void updateScreen(float deltaT, OrthographicCamera gameCamera) {
+        super.updateScreen(deltaT, gameCamera);
 
         drawBatch.setProjectionMatrix(gameCamera.combined);
         drawBatch.begin();
@@ -59,22 +65,15 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
         drawHero();
         drawBatch.end();
 
-
         lightVisualHandler.drawLight(gameCamera);
+
     }
 
     @Override
     public void resize(int width, int height){
         super.resize(width,height);
-        if(lightVisualHandler!=null)
+        if(lightVisualHandler != null)
             lightVisualHandler.resize( width, height);
-    }
-
-    @Override
-    public void dispose(){
-        super.dispose();
-        if(lightVisualHandler!=null)
-            lightVisualHandler.dispose();
     }
 }
 
