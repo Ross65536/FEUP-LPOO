@@ -8,7 +8,6 @@ import com.mygdx.game.gameLogic.Characters.Light;
 import com.mygdx.game.gameLogic.Characters.Platform;
 import com.mygdx.game.gameLogic.GameDirector.StageDirector;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemyFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Lights;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightsFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.PlatformFeature;
@@ -16,16 +15,12 @@ import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Platforms;
 import com.mygdx.game.gameLogic.Vector2D;
 import java.util.List;
 
-public class PlatWorld extends GameWorld implements DummyEnemyFeature, PlatformFeature, LightsFeature {
-
+public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeature {
 
     protected double cameraWidth;
     protected double cameraHeight;
 
-
-    DummyEnemies dummyEnemies;
     Platforms platforms;
-    Lights light;
 
 
     public PlatWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
@@ -102,21 +97,6 @@ public class PlatWorld extends GameWorld implements DummyEnemyFeature, PlatformF
     }
 
 
-    //// hero inputs -------
-    public void moveHeroHorizontal(final double heroXMovement)
-    {
-        hero.setXMovement(heroXMovement);
-    }
-
-    @Override
-    public void heroJump(final double gravityStrength) {
-        hero.jump(gravityStrength);
-    }
-
-
-
-
-
     ////////Lights Implementation///////////
     @Override
     public void updateLight(float deltaT){
@@ -154,17 +134,12 @@ public class PlatWorld extends GameWorld implements DummyEnemyFeature, PlatformF
         platforms.checkPlatformCollisions();
     }
 
-
     ////////Dummny Enemy Implementation/////////
     @Override
     public void createDummyEnemies(){
         dummyEnemies.createDummyEnemies();
     }
 
-    @Override
-    public void updateEnemieStatistics(float deltaT){
-        dummyEnemies.updateEnemieStatistics(deltaT);
-    }
 
     @Override
     public long checkEnemyCollisions(){

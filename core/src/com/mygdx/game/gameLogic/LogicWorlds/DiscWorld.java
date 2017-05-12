@@ -14,11 +14,8 @@ import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.List;
 
-public class DiscWorld extends GameWorld implements DummyEnemyFeature, LightsFeature {
+public class DiscWorld extends GameWorld implements LightsFeature {
     protected static final double ENEMY_GENERATION_YMULT = 1.0;
-
-    DummyEnemies dummyEnemies;
-    Lights light;
 
     public DiscWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
@@ -82,20 +79,6 @@ public class DiscWorld extends GameWorld implements DummyEnemyFeature, LightsFea
     }
 
 
-
-    //// hero inputs -------
-    @Override
-    public void moveHeroHorizontal(final double heroXMovement)
-    {
-        hero.setXMovement(heroXMovement);
-    }
-
-    @Override
-    public void heroJump(final double gravityStrength) {
-        hero.jump(gravityStrength);
-    }
-
-
     ////////Lights Implementation///////////
     @Override
     public void updateLight(float deltaT){
@@ -119,10 +102,6 @@ public class DiscWorld extends GameWorld implements DummyEnemyFeature, LightsFea
         dummyEnemies.createDummyEnemies();
     }
 
-    @Override
-    public void updateEnemieStatistics(float deltaT){
-        dummyEnemies.updateEnemieStatistics(deltaT);
-    }
 
     @Override
     public long checkEnemyCollisions(){

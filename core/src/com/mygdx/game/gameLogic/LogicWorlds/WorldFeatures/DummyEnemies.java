@@ -115,6 +115,11 @@ public class DummyEnemies implements DummyEnemyFeature {
         statisticsInput.update(deltaT);
     }
 
+    public StageDirector getStageDirector()
+    {
+        return stageDirector;
+    }
+
 
 
     /**
@@ -136,6 +141,10 @@ public class DummyEnemies implements DummyEnemyFeature {
                 numCollisions ++;
 
         return numCollisions;
+    }
+
+    public StatisticsInput getStatsticsInput() {
+        return stageDirector.getStatsticsInput();
     }
 }
 
