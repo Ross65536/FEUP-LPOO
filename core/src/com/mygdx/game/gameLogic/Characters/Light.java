@@ -56,6 +56,8 @@ public class Light extends Character{
         this.radious-=this.velocityDisappearance*deltaT;
         if(this.radious>this.originalRadious)
             this.radious = this.originalRadious;
+        if(this.radious<0)
+            this.radious = 0;
     }
 
     public float getRadiousPercentage(){

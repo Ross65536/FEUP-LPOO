@@ -1,5 +1,6 @@
 package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -56,6 +57,7 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
 
         CharacterInfo hero = gameLogicWorld.getHeroInfo();
         updateCameraPos(hero, gameCamera);
+        drawBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
     }
 
 

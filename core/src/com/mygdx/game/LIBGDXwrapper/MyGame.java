@@ -37,7 +37,7 @@ public class MyGame extends Game {
 
     private void startPlatGameTest()
     {
-        gameScreen.LoadLevel(LevelBuilder.createPlatformTestLevel());
+        gameScreen.LoadLevel(LevelBuilder.createTestLevel());
     }
 
     public void SwicthToMenuScreen(MenuInstr instruction)

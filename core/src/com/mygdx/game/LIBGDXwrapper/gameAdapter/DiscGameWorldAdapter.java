@@ -1,17 +1,11 @@
 package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.DummyEnemyVisualsHandler;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.LightVisualHandler;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
-import com.mygdx.game.gameLogic.Characters.EnemyInfo;
-import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
-import com.mygdx.game.gameLogic.LogicWorlds.IGameWorld;
-import com.mygdx.game.gameLogic.LogicWorlds.IGameWorldHeroInputs;
 import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.List;
@@ -24,7 +18,9 @@ import java.util.List;
  */
 public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
 
-    DummyEnemyVisualsHandler dummyEnemyVisuals;
+    private DummyEnemyVisualsHandler dummyEnemyVisuals;
+
+    private LightVisualHandler lightVisualHandler;
 
     public DiscGameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
     {
@@ -40,6 +36,8 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
         gameCamera.update();
 
         dummyEnemyVisuals = new DummyEnemyVisualsHandler(gameLogicWorld,drawBatch);
+
+        lightVisualHandler = new LightVisualHandler(gameLogicWorld, drawBatch);
     }
 
     public Vector2D getCameraSetup () {
@@ -60,6 +58,9 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
         dummyEnemyVisuals.drawEnemies();
         drawHero();
         drawBatch.end();
+
+
+        lightVisualHandler.drawLight(gameCamera);
     }
 
 }

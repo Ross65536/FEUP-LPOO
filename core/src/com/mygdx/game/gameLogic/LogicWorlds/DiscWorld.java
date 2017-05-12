@@ -4,23 +4,29 @@ package com.mygdx.game.gameLogic.LogicWorlds;
 import com.mygdx.game.Constants;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
+import com.mygdx.game.gameLogic.Characters.Light;
 import com.mygdx.game.gameLogic.GameDirector.StageDirector;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemyFeature;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Lights;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightsFeature;
 import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.List;
 
-public class DiscWorld extends GameWorld implements DummyEnemyFeature {
+public class DiscWorld extends GameWorld implements DummyEnemyFeature, LightsFeature {
     protected static final double ENEMY_GENERATION_YMULT = 1.0;
 
     DummyEnemies dummyEnemies;
+    Lights light;
 
     public DiscWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
         super(worldDims, hero);
 
         dummyEnemies = new DummyEnemies(hero,worldDims,stageDirector);
+
+        light = new Lights(hero);
 
         //TODO remove
         if (Constants.INPUT_DEBUG)
@@ -52,6 +58,7 @@ public class DiscWorld extends GameWorld implements DummyEnemyFeature {
 
 
         updateHero(deltaT);
+        updateLight(deltaT);
         tryLoopHero();
 
         if(this.checkEnemyCollisions() > 0)
@@ -88,6 +95,22 @@ public class DiscWorld extends GameWorld implements DummyEnemyFeature {
         hero.jump(gravityStrength);
     }
 
+
+    ////////Lights Implementation///////////
+    @Override
+    public void updateLight(float deltaT){
+        light.updateLight(deltaT);
+    }
+
+    @Override
+    public Light getLightInfo(){
+        return light.getLightInfo();
+    }
+
+    @Override
+    public float getRadiousPercentage(){
+        return light.getRadiousPercentage();
+    }
 
 
     ////////Dummny Enemy Implementation/////////
