@@ -1,5 +1,6 @@
 package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -49,15 +50,23 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
         drawBatch.draw(gameAssetHandler.getHeroTexture(hero), heroXPos, heroYPos, heroXDim , (float) hero.getYDim()); //draw hero
     }
 
-
+    public void resize(int width, int height){
+        if(drawBatch!=null)
+            drawBatch.getProjectionMatrix().setToOrtho2D(0,0,width,height);
+    }
 
     public void update(float deltaT, OrthographicCamera gameCamera) {
         gameLogicWorld.update(deltaT); //updates all world characters
 
         CharacterInfo hero = gameLogicWorld.getHeroInfo();
         updateCameraPos(hero, gameCamera);
+        drawBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
     }
 
+    public void dispose(){
+        if(drawBatch!=null)
+            drawBatch.dispose();
+    }
 
     /**
      *

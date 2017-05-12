@@ -121,13 +121,17 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height){
-
         super.resize(width, height);
+        if(currentLevel!= null)
+            currentLevel.resize(width, height);
     }
 
 
     public void nullifyLevel(){
-        currentLevel = null;
+        if(currentLevel!=null){
+            currentLevel.dispose();
+            currentLevel = null;
+        }
         System.gc();
     }
 }

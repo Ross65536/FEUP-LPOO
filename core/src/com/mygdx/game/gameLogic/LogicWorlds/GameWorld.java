@@ -1,21 +1,12 @@
 package com.mygdx.game.gameLogic.LogicWorlds;
 
-import com.badlogic.gdx.math.Matrix4;
-import com.mygdx.game.gameLogic.Characters.Enemy;
-import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
-import com.mygdx.game.gameLogic.GameDirector.StageDirector;
 import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemyFeature;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Lights;
 import com.mygdx.game.gameLogic.Vector2D;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
 
 //added
 public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, DummyEnemyFeature {
@@ -24,6 +15,7 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
     protected Hero hero;
     protected boolean gamePlayable;
     DummyEnemies dummyEnemies;
+    Lights light;
 
 
     public GameWorld(final Vector2D worldDims, Hero hero)
@@ -87,4 +79,12 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
         hero.jump(gravityStrength);
     }
 
+
+    @Override
+    public void updateEnemieStatistics(float deltaT){
+        dummyEnemies.updateEnemieStatistics(deltaT);
+        StatisticsInput statisticsInput = dummyEnemies.getStatsticsInput();
+        statisticsInput.setLightLevel(light.getRadiousPercentage());
+
+    }
 }

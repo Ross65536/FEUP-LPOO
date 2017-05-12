@@ -9,6 +9,7 @@ public class Statistics implements StatisticsInfo, StatisticsInput
     private double currentPlayTime; //playtime since level start
     private double lastEnemyCreationTime;
     private int numGroundEnemies;
+    private double currLightRadiusPart; // 0.0 to 1.0
     private Queue<Double> jumpTimes;
     private Queue<Double> movementTimes;
     private final double jumpFreqScaler; //point at wich strees is 0.5
@@ -24,6 +25,7 @@ public class Statistics implements StatisticsInfo, StatisticsInput
         currentPlayTime =0;
         numGroundEnemies=0;
         lastEnemyCreationTime=0;
+        currLightRadiusPart = 1.0;
         jumpTimes = new ArrayDeque<>();
         movementTimes = new ArrayDeque<>();
     }
@@ -46,26 +48,34 @@ public class Statistics implements StatisticsInfo, StatisticsInput
 
     @Override
     public void update(float deltaT) {
+
         currentPlayTime += deltaT;
+        updateQueue(jumpTimes);
+        updateQueue(movementTimes);
     }
 
     private void updateQueue(final Queue<Double> queue)
     {
         //delta time since jump or movement is bigger than memory?
-        while(! queue.isEmpty() && currentPlayTime - queue.element() > INPUTS_TIME_MEMORY)
+        while((! queue.isEmpty()) && currentPlayTime - queue.element() > INPUTS_TIME_MEMORY)
             queue.remove();
     }
 
     @Override
     public void registerMovement() {
-        updateQueue(movementTimes);
+
         movementTimes.add(currentPlayTime);
     }
 
     @Override
     public void registerJump() {
-        updateQueue(jumpTimes);
+
         jumpTimes.add(currentPlayTime);
+    }
+
+    @Override
+    public void setLightLevel(double radiusPart) {
+        currLightRadiusPart = radiusPart;
     }
 
     //// getters -------
@@ -102,5 +112,10 @@ public class Statistics implements StatisticsInfo, StatisticsInput
     @Override
     public double getMovStress() {
         return stressNormalizer(movementTimes.size() / movFreqScaler);
+    }
+
+    @Override
+    public double getLightLevel() {
+        return currLightRadiusPart;
     }
 }

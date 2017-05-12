@@ -13,4 +13,5 @@ public interface StatisticsInfo
      */
     double getJumpStress();
     double getMovStress();
+    double getLightLevel();
 }

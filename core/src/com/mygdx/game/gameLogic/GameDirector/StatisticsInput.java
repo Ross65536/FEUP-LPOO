@@ -10,4 +10,5 @@ public interface StatisticsInput {
     void registerMovement();
     void registerJump();
 
+    void setLightLevel(double radiousPercentage);
 }
