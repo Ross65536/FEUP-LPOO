@@ -1,17 +1,31 @@
 package com.mygdx.game.gameLogic.GameDirector;
 
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 public class Statistics implements StatisticsInfo, StatisticsInput
 {
     private double currentPlayTime; //playtime since level start
     private double lastEnemyCreationTime;
     private int numGroundEnemies;
+    private Queue<Double> jumpTimes;
+    private Queue<Double> movementTimes;
+    private final double jumpFreqScaler; //point at wich strees is 0.5
+    private final double movFreqScaler; //point at wich strees is 0.5
 
-    public Statistics()
+    private static final double INPUTS_TIME_MEMORY = 2.0; //in seconds
+
+    public Statistics(final double jumpFrequencyScaler, final double movementFrequencyScaler )
     {
+        this.jumpFreqScaler = jumpFrequencyScaler;
+        this.movFreqScaler = movementFrequencyScaler;
+
         currentPlayTime =0;
         numGroundEnemies=0;
         lastEnemyCreationTime=0;
+        jumpTimes = new ArrayDeque<>();
+        movementTimes = new ArrayDeque<>();
     }
 
     private void checkCreatedEnemy(int deltaEnemies)
@@ -35,6 +49,25 @@ public class Statistics implements StatisticsInfo, StatisticsInput
         currentPlayTime += deltaT;
     }
 
+    private void updateQueue(final Queue<Double> queue)
+    {
+        //delta time since jump or movement is bigger than memory?
+        while(! queue.isEmpty() && currentPlayTime - queue.element() > INPUTS_TIME_MEMORY)
+            queue.remove();
+    }
+
+    @Override
+    public void registerMovement() {
+        updateQueue(movementTimes);
+        movementTimes.add(currentPlayTime);
+    }
+
+    @Override
+    public void registerJump() {
+        updateQueue(jumpTimes);
+        jumpTimes.add(currentPlayTime);
+    }
+
     //// getters -------
     @Override
     public int getNumGroundEnemies() {
@@ -53,5 +86,21 @@ public class Statistics implements StatisticsInfo, StatisticsInput
     @Override
     public double getLastCreatedEnemyDeltaT() {
         return currentPlayTime - lastEnemyCreationTime;
+    }
+
+    private static double stressNormalizer(final double x)
+    {
+        return Math.atan(x) * 2/ Math.PI;
+
+    }
+
+    @Override
+    public double getJumpStress() {
+        return stressNormalizer(jumpTimes.size() / jumpFreqScaler);
+    }
+
+    @Override
+    public double getMovStress() {
+        return stressNormalizer(movementTimes.size() / movFreqScaler);
     }
 }

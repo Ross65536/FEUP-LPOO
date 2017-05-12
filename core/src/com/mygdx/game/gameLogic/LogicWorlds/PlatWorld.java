@@ -19,7 +19,7 @@ import java.util.TreeMap;
 
 import static com.mygdx.game.gameLogic.Characters.Platform.fractionOfScreenHeightForPlatform;
 
-public class PlatWorld extends GameWorld implements DummyEnemyFeature {
+public class PlatWorld extends GameWorld  {
 
 
     protected double cameraWidth;
@@ -27,7 +27,7 @@ public class PlatWorld extends GameWorld implements DummyEnemyFeature {
 
     protected Light light;
 
-    DummyEnemies dummyEnemies;
+
 
     protected TreeMap<Double, TreeMap<Double,Platform>> platformsT;
     protected ArrayList<Platform> platformsInRange;
@@ -232,20 +232,6 @@ public class PlatWorld extends GameWorld implements DummyEnemyFeature {
             hero.setYPos(yValue);
         }
     }
-
-
-    //// hero inputs -------
-    public void moveHeroHorizontal(final double heroXMovement)
-    {
-        hero.setXMovement(heroXMovement);
-    }
-
-    @Override
-    public void heroJump(final double gravityStrength) {
-        hero.jump(gravityStrength);
-    }
-
-
 
     ////////Dummny Enemy Implementation/////////
     @Override

@@ -11,10 +11,9 @@ import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.List;
 
-public class DiscWorld extends GameWorld implements DummyEnemyFeature {
+public class DiscWorld extends GameWorld {
     protected static final double ENEMY_GENERATION_YMULT = 1.0;
 
-    DummyEnemies dummyEnemies;
 
     public DiscWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
@@ -73,22 +72,6 @@ public class DiscWorld extends GameWorld implements DummyEnemyFeature {
             hero.setYPos(0.0);
         }
     }
-
-
-
-    //// hero inputs -------
-    @Override
-    public void moveHeroHorizontal(final double heroXMovement)
-    {
-        hero.setXMovement(heroXMovement);
-    }
-
-    @Override
-    public void heroJump(final double gravityStrength) {
-        hero.jump(gravityStrength);
-    }
-
-
 
     ////////Dummny Enemy Implementation/////////
     @Override

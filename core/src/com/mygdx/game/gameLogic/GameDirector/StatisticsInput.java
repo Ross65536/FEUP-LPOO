@@ -7,5 +7,7 @@ public interface StatisticsInput {
      */
     void updateNumberOfGroundEnemies (final int deltaEnemies);
     void update(final float deltaT);
+    void registerMovement();
+    void registerJump();
 
 }

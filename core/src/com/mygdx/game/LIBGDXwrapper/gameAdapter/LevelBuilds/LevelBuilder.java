@@ -33,9 +33,11 @@ public class LevelBuilder {
     //// core -------------
     private static final double ENEMY_CREATION_DELTAT = 1.5; //seconds between each generate
     private static final int MAX_NUM_ENEMIES = 10;
+    private static final double STATISTICS_DEVICE_JUMP = 3.0;
+    private static final double STATISTICS_DEVICE_MOV = 5.0;
     private static final StageDirector createStageDirector (Curves generator, final double heroYDIm)
     {
-        final Statistics statistics = new Statistics();
+        final Statistics statistics = new Statistics(STATISTICS_DEVICE_JUMP, STATISTICS_DEVICE_MOV);
         final Curves curve = generator;
         StageDirectorEnemyTypesAdapter.IEnemyTypes iEnemyTypes = (StageDirector itself, double difficulty) -> StageDirectorEnemyTypesAdapter.testEnemyTypes(itself, difficulty);
         return new StageDirector(curve, statistics, heroYDIm, iEnemyTypes);
