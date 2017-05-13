@@ -33,7 +33,7 @@ public class LevelBuilder {
     //// core -------------
     private static final double ENEMY_CREATION_DELTAT = 1.5; //seconds between each generate
     private static final int MAX_NUM_ENEMIES = 10;
-    private static final double STATISTICS_DEVICE_JUMP = 3.0;
+    private static final double STATISTICS_DEVICE_JUMP = 2.0;
     private static final double STATISTICS_DEVICE_MOV = 5.0;
     private static final StageDirector createStageDirector (Curves generator, final double heroYDIm)
     {

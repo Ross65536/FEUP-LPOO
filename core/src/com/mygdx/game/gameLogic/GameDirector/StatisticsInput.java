@@ -6,6 +6,7 @@ public interface StatisticsInput {
      * @param deltaEnemies
      */
     void updateNumberOfGroundEnemies (final int deltaEnemies);
+    void updateNumberOfFlyingEnemies (final int deltaEnemies);
     void update(final float deltaT);
     void registerMovement();
     void registerJump();

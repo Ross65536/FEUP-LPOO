@@ -8,13 +8,7 @@ public abstract class Character implements CharacterInfo {
     protected Vector2D characterDimensions;
     protected Vector2D characterSpeed;
     protected Vector2D prevPosition;
-
-    public Character (double charXPos, double charYPos, double charXDim, double charYDim, double speedX, double speedY)
-    {
-        characterDimensions = new Vector2D(charXDim, charYDim);
-        characterPosition = new Vector2D(charXPos, charYPos);
-        characterSpeed = new Vector2D(speedX, speedY);
-    }
+    protected double animationTime; //goes from 0.0 to 1.0
 
     public Character (final Vector2D position, final Vector2D dimensions, final Vector2D speed)
     {
@@ -32,6 +26,9 @@ public abstract class Character implements CharacterInfo {
             characterSpeed = new Vector2D(0,0);
         else
             characterSpeed = new Vector2D(speed);
+
+        animationTime= 0.0;
+
     }
 
 
@@ -50,6 +47,10 @@ public abstract class Character implements CharacterInfo {
 
     public void update(float deltaT)
     {
+        animationTime += deltaT;
+        if (animationTime > 1.0) //loop animation time
+            animationTime -= 1.0;
+
         //added
         this.prevPosition =characterPosition;
 
@@ -59,12 +60,32 @@ public abstract class Character implements CharacterInfo {
 
     }
 
+    public double getAnimationTime()
+    {
+        return animationTime;
+    }
+
     public Vector2D getPrevPosition(){
         return this.prevPosition;
     }
 
-    public boolean isFlying(){
+    public boolean isMovingY()
+    {
         return characterSpeed.y != 0.0;
+    }
+
+    public boolean isMovingX()
+    {
+        return characterSpeed.x != 0.0;
+    }
+
+    public double getMovementDirectionX()
+    {
+        return characterSpeed.x;
+    }
+
+    public boolean isMovingRight() {
+        return getMovementDirectionX() >= 0.0;
     }
 
 

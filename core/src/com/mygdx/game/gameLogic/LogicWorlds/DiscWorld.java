@@ -2,26 +2,28 @@ package com.mygdx.game.gameLogic.LogicWorlds;
 
 
 import com.mygdx.game.Constants;
+import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.Light;
 import com.mygdx.game.gameLogic.GameDirector.StageDirector;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemyFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Lights;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightsFeature;
 import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.List;
+import java.util.Random;
 
 public class DiscWorld extends GameWorld implements LightsFeature {
     protected static final double ENEMY_GENERATION_YMULT = 1.0;
+    protected static Random random = new Random();
 
     public DiscWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
         super(worldDims, hero);
 
-        dummyEnemies = new DummyEnemies(hero,worldDims,stageDirector);
+        dummyEnemies = new DummyEnemies(hero,worldDims,stageDirector, this);
 
         light = new Lights(hero);
 
@@ -118,4 +120,33 @@ public class DiscWorld extends GameWorld implements LightsFeature {
        return dummyEnemies.getEnemiesInfo();
     }
 
+    static final double FLYING_HEIGHT_MIN = 0.5;
+    static final double FLYING_HEIGHT_MAX = 0.9;
+    static final double FLYING_HEIGHT_DELTA = FLYING_HEIGHT_MAX - FLYING_HEIGHT_MIN;
+    public void placeEnemy(Enemy enemy) {
+        if (enemy.isFlyingType())
+        {
+            final double heightRatio = random.nextDouble() * FLYING_HEIGHT_DELTA;
+            final double enYHeight = worldDimensions.y * (FLYING_HEIGHT_MIN + heightRatio);
+            enemy.setYPos(enYHeight);
+        }
+        else
+            enemy.setYPos(0.0); //ground
+
+        final double enXDelta = worldDimensions.y * ENEMY_GENERATION_YMULT;
+        final double heroXPos = hero.getXPos();
+
+        final boolean bool = random.nextBoolean(); //random
+
+        if (bool) //left side spawn
+        {
+            enemy.setXPos(heroXPos - enXDelta);
+            enemy.setMovementDirection(true);
+        }
+        else //right
+        {
+            enemy.setXPos(heroXPos + enXDelta);
+            enemy.setMovementDirection(false);
+        }
+    }
 }

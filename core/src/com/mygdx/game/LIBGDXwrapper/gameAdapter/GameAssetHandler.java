@@ -3,11 +3,12 @@ package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.PathConstants;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
-import com.mygdx.game.gameLogic.Characters.Light;
 import com.mygdx.game.gameLogic.Characters.Platform;
 
 import java.util.Collection;
@@ -21,9 +22,12 @@ public class GameAssetHandler { //dispose textures when swicth to menu
     static private GameAssetHandler gameAssetHandler = null; //singelton instance
     private AssetManager assetManager;
 
+    private Animation<TextureRegion> heroWalkAnimations;
+
     public GameAssetHandler()
     {
         assetManager = new AssetManager(new InternalFileHandleResolver());
+        heroWalkAnimations = null;
     }
 
     public static GameAssetHandler getGameAssetHandler()
@@ -44,6 +48,32 @@ public class GameAssetHandler { //dispose textures when swicth to menu
                 assetManager.unload(currPath);
             }
         }
+
+        heroWalkAnimations = null;
+    }
+
+    public void setupHeroAnimations()
+    {
+        if (heroWalkAnimations == null)
+        {
+            finishLoading();
+            Texture heroWalking = assetManager.get(PathConstants.HERO_WALKING_IMAGE_PATH);
+
+            TextureRegion[][] tmp = TextureRegion.split(heroWalking,
+                    heroWalking.getWidth() / PathConstants.HERO_WALKING_FRAME_COLS,
+                    heroWalking.getHeight() / PathConstants.HERO_WALKING_FRAME_ROWS);
+
+
+            TextureRegion[] walkFrames = new TextureRegion[PathConstants.HERO_WALKING_FRAME_COLS * PathConstants.HERO_WALKING_FRAME_ROWS];
+            int index = 0;
+            for (int i = 0; i < PathConstants.HERO_WALKING_FRAME_ROWS; i++) {
+                for (int j = 0; j < PathConstants.HERO_WALKING_FRAME_COLS; j++) {
+                    walkFrames[index++] = tmp[i][j];
+                }
+            }
+
+            heroWalkAnimations = new Animation<TextureRegion>(PathConstants.HERO_FRAME_TIME, walkFrames);
+        }
     }
 
     /**
@@ -59,9 +89,23 @@ public class GameAssetHandler { //dispose textures when swicth to menu
 
     }
 
-    public Texture getHeroTexture(HeroInfo heroInfo)
+    public TextureRegion getHeroTexture(HeroInfo heroInfo)
     {
-        Texture tex = assetManager.get(PathConstants.HERO_IMAGE_PATH);
+        TextureRegion tex = null;
+        if (heroInfo.isMovingY()) //jumping texture
+            tex = heroWalkAnimations.getKeyFrame(0.5f, true);
+        else if(heroInfo.isMovingX()) //moving on ground texture
+            tex =  heroWalkAnimations.getKeyFrame((float) heroInfo.getAnimationTime(), true);
+        else //stationary texture
+            tex =  heroWalkAnimations.getKeyFrame(0.0f, true);
+
+        final boolean isMovingRight = heroInfo.isMovingRight();
+        if (! isMovingRight) //flip on Y axis if hero moving leftwards
+        {
+            tex = new TextureRegion(tex);
+            tex.flip(true, false);
+        }
+
         return tex;
     }
 

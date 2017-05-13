@@ -9,7 +9,7 @@ import com.mygdx.game.gameLogic.Vector2D;
 public class PlatLevelBuild{
     private static final double HERO_HEIGHT_BY_SCREEN_HEIGHT = 3;
     private static final double WORLD_X_DIM = 1000;
-    public static final String[] platformTestLevelAssetNames = {PathConstants.HERO_IMAGE_PATH, PathConstants.ENEMY_GROUND_IMAGE_PATH, PathConstants.PLATFORM_IMAGE_PATH, PathConstants.LIGHT_IMAGE_PATH};
+    public static final String[] platformTestLevelAssetNames = {PathConstants.HERO_WALKING_IMAGE_PATH, PathConstants.ENEMY_GROUND_IMAGE_PATH, PathConstants.PLATFORM_IMAGE_PATH, PathConstants.LIGHT_IMAGE_PATH};
 
     public static final Vector2D createWorldDimsPlat ()
     {

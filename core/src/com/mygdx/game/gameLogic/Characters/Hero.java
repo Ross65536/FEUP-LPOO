@@ -6,6 +6,7 @@ public class Hero extends Character implements HeroInfo {
     private static final double JUMP_SPEED_MULTIPLIER = 5.0;
     private static final double JUMP_ACCELERATION_MULTIPLIER = 10.0;
     private final double maxSpeedXMult;
+    private boolean bMovingRight;
 
     private boolean jumping;
     private double riseGravityStrength; //gravity
@@ -17,10 +18,16 @@ public class Hero extends Character implements HeroInfo {
         jumping = false;
         riseGravityStrength = 0.0;
         this.maxSpeedXMult = heroMaxSpeedXMult;
+        bMovingRight = true;
 
     }
 
     public void setXMovement (double d) {
+        if (d > 0.0)
+            bMovingRight = true;
+        else if (d < 0.0)
+            bMovingRight = false;
+
         final double heroMaxXSpeed = this.getYDim() * maxSpeedXMult;
         characterSpeed.x = heroMaxXSpeed * d;
     }
@@ -70,6 +77,9 @@ public class Hero extends Character implements HeroInfo {
     {
         super.update(deltaT);
 
+        if (!isMovingX() || isMovingY()) //resets animation
+            animationTime = 0.0;
+
         double yAcceleration;
         if (isFalling())
             yAcceleration = getYAcceleration(1.0);
@@ -84,8 +94,15 @@ public class Hero extends Character implements HeroInfo {
         return jumping;
     }
 
+    @Override
+    public boolean isMovingRight() {
+        return bMovingRight;
+    }
+
     private static final double HERO_X_LEEWAY = 0.2;
     private static final double HERO_Y_LEEWAY = 0.2;
+
+
 
     @Override
     public boolean checkCollision(final Character en) {

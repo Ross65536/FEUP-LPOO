@@ -9,6 +9,7 @@ public class Statistics implements StatisticsInfo, StatisticsInput
     private double currentPlayTime; //playtime since level start
     private double lastEnemyCreationTime;
     private int numGroundEnemies;
+    private int numFlyingEnemies;
     private double currLightRadiusPart; // 0.0 to 1.0
     private Queue<Double> jumpTimes;
     private Queue<Double> movementTimes;
@@ -24,6 +25,7 @@ public class Statistics implements StatisticsInfo, StatisticsInput
 
         currentPlayTime =0;
         numGroundEnemies=0;
+        numFlyingEnemies = 0;
         lastEnemyCreationTime=0;
         currLightRadiusPart = 1.0;
         jumpTimes = new ArrayDeque<>();
@@ -84,9 +86,13 @@ public class Statistics implements StatisticsInfo, StatisticsInput
         return numGroundEnemies;
     }
 
+    public int getNumFlyingEnemies() {
+        return numFlyingEnemies;
+    }
+
     @Override
     public int getNumberOfEnemies() {
-        return getNumGroundEnemies();
+        return getNumGroundEnemies() + getNumFlyingEnemies();
     }
 
     public double getCurrentPlayTime() {
@@ -98,24 +104,51 @@ public class Statistics implements StatisticsInfo, StatisticsInput
         return currentPlayTime - lastEnemyCreationTime;
     }
 
+
+
     private static double stressNormalizer(final double x)
     {
         return Math.atan(x) * 2/ Math.PI;
 
     }
 
-    @Override
-    public double getJumpStress() {
+    private double getJumpStress() {
         return stressNormalizer(jumpTimes.size() / jumpFreqScaler);
     }
 
-    @Override
-    public double getMovStress() {
+    private double getMovStress() {
         return stressNormalizer(movementTimes.size() / movFreqScaler);
     }
 
-    @Override
-    public double getLightLevel() {
+    private double getLightLevel() {
         return currLightRadiusPart;
+    }
+
+    private static final double JUMP_WEIGHT = 6.0;
+    private static final double MOV_WEIGHT = 1.0;
+    private static final double LIGHT_WEIGHT = 2.0;
+
+    @Override
+    public double getStressLevel() {
+        final double jumpStressRatio = 1.0 - getJumpStress();
+        final double movStressRatio = 1.0 - getMovStress();
+        final double lightRatio = getLightLevel();
+
+        final double compositeStressRatio =
+                (JUMP_WEIGHT * jumpStressRatio + MOV_WEIGHT * movStressRatio + LIGHT_WEIGHT * lightRatio)
+                / (JUMP_WEIGHT + MOV_WEIGHT + LIGHT_WEIGHT);
+
+        System.out.println("input portion " + compositeStressRatio +" light portion " + lightRatio);
+
+        return compositeStressRatio;
+    }
+
+    @Override
+    public void updateNumberOfFlyingEnemies(int i) {
+        numFlyingEnemies += i;
+        if (numFlyingEnemies < 0)
+            numFlyingEnemies = 0;
+
+        checkCreatedEnemy(i);
     }
 }

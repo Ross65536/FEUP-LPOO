@@ -37,7 +37,7 @@ public class MyGame extends Game {
 
     private void startPlatGameTest()
     {
-        gameScreen.LoadLevel(LevelBuilder.createPlatformTestLevel());
+        gameScreen.LoadLevel(LevelBuilder.createTestLevel());
     }
 
     public void SwicthToMenuScreen(MenuInstr instruction)
@@ -70,7 +70,10 @@ public class MyGame extends Game {
                 break;
         }
 
-        GameAssetHandler.getGameAssetHandler().finishLoading(); //finish loading textures here
+        GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
+        gameAssetHandler.finishLoading(); //finish loading textures here
+        gameAssetHandler.setupHeroAnimations();
+
 
         setScreen(gameScreen);
     }
