@@ -11,7 +11,7 @@ import com.mygdx.game.gameLogic.Characters.Platform;
  * Aspect ratio == width / height
  */
 public class Constants {
-    public final static int NUMBER_OF_GAMEMODES = 3;
+    public final static int NUMBER_OF_GAMEMODES = 2;
     public static boolean INPUT_DEBUG = false;
     //Class specific information
     public static class CharacterConstants

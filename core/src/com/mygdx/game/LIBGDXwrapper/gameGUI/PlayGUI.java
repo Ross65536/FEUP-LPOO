@@ -21,6 +21,7 @@ public class PlayGUI extends AbstractGUI{
     private void addComponents(){
         this.addComponent(new PlayGUIComponent1(menuManager, widgetsProperties, widgetsInput));
         this.addComponent(new PlayGUIComponent2(menuManager, widgetsProperties, widgetsInput));
+
     }
 
     public String toString(){

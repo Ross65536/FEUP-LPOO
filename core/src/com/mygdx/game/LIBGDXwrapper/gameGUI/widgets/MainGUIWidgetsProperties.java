@@ -1,6 +1,7 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI.widgets;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 
@@ -9,12 +10,12 @@ public class MainGUIWidgetsProperties extends WidgetsGeneric {
 
 
 
-    public Button loadPropertiesPlayButton(Table table) {
+    public Button loadPropertiesPlayButton(Table table, Skin skin) {
 
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float) DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        return loadButton(table
+        return loadButton(skin, table
                 //images
                 ,"playButtonUp.png"
                 ,"playButtonDown.png")
@@ -30,12 +31,12 @@ public class MainGUIWidgetsProperties extends WidgetsGeneric {
                 .getActor();
     }
 
-    public Button loadPropertiesHighScoreButton(Table table) {
+    public Button loadPropertiesHighScoreButton( Table table,Skin skin) {
 
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        return loadButton(table
+        return loadButton(skin, table
                 //images
                 ,"highScoreButtonUp.png"
                 ,"highScoreButtonDown.png")
@@ -51,11 +52,11 @@ public class MainGUIWidgetsProperties extends WidgetsGeneric {
                 .getActor();
     }
 
-    public Button loadPropertiesSettingsButton(Table table){
+    public Button loadPropertiesSettingsButton(Table table,Skin skin){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        return loadButton(table
+        return loadButton(skin, table
                 //images
                 ,"settingsButtonUp.png"
                 ,"settingsButtonDown.png")
@@ -71,11 +72,11 @@ public class MainGUIWidgetsProperties extends WidgetsGeneric {
                 .getActor();
     }
 
-    public Button loadPropertiesExitButton(Table table){
+    public Button loadPropertiesExitButton(Table table,Skin skin){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        return loadButton(table
+        return loadButton(skin, table
                 //images
                 ,"exitButtonUp.png"
                 ,"exitButtonDown.png")

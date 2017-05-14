@@ -1,6 +1,7 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -14,15 +15,17 @@ import java.util.HashMap;
 
 public class PlayGUIComponent1 extends AbstractSingleStageGUI {
 
-    Table table;
-
     HashMap<String, Object> elements;
+
+    Table table;
 
     public PlayGUIComponent1(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput){
         super(menuManager, widgetsProperties, widgetsInput);
+        table = new Table(skin);
 
         elements = new HashMap<String, Object>();
-        table = new Table();
+
+        table.setTouchable(Touchable.enabled);
         table.setFillParent(true);
         this.addActor(table);
         this.setViewport(
@@ -34,7 +37,6 @@ public class PlayGUIComponent1 extends AbstractSingleStageGUI {
         ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)(DeviceConstants.MENU_VIEWPORT), (int)(DeviceConstants.MENU_VIEWPORT *  DeviceConstants.INVERTED_SCREEN_RATIO));
         loadWidgets();
 
-
         table.setDebug(true);
     }
 
@@ -42,8 +44,8 @@ public class PlayGUIComponent1 extends AbstractSingleStageGUI {
 
         PlayGUIWidgetsProperties playGUIWidgetsProperties = ((PlayGUIWidgetsProperties)widgetsProperties);
 
-        elements.put("backToMenu", playGUIWidgetsProperties.loadBackToMenuButton(table));
-        elements.put("settings", playGUIWidgetsProperties.loadSettingsButton(table));
+        elements.put("backToMenu", playGUIWidgetsProperties.loadBackToMenuButton(table,skin));
+        elements.put("settings", playGUIWidgetsProperties.loadSettingsButton(table,skin));
 
         loadInputlisteners();
     }

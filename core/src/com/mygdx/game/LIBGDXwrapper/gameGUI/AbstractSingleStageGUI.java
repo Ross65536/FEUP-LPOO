@@ -2,10 +2,13 @@ package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsInput;
 
 public abstract class AbstractSingleStageGUI extends Stage{
+    protected Skin skin;
 
     protected WidgetsInput widgetsInput;
 
@@ -17,10 +20,16 @@ public abstract class AbstractSingleStageGUI extends Stage{
         this.widgetsInput = widgetsInput;
         this.widgetsProperties = widgetsProperties;
         this.menuManager = menuManager;
+        skin = new Skin();
     }
 
     protected abstract void loadWidgets();
 
     protected abstract void loadInputlisteners();
+
+    public void dispose(){
+        super.dispose();
+        skin.dispose();
+    }
 
 }

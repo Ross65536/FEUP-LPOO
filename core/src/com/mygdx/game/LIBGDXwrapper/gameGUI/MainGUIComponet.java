@@ -1,8 +1,14 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsProperties;
@@ -19,21 +25,24 @@ public class MainGUIComponet extends AbstractSingleStageGUI {
 
     public MainGUIComponet(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput){
         super(menuManager, widgetsProperties, widgetsInput);
+        table = new Table(skin);
 
         elements = new HashMap<String, Object>();
-        table = new Table();
         table.setFillParent(true);
         this.addActor(table);
+
+
+        double viewportWidth = (DeviceConstants.MENU_VIEWPORT);
+        double viewportHeight = (DeviceConstants.MENU_VIEWPORT*DeviceConstants.INVERTED_SCREEN_RATIO);
+
         this.setViewport(
-                new CustomViewport(
-                        (int)(DeviceConstants.MENU_VIEWPORT*  DeviceConstants.INVERTED_SCREEN_RATIO)
-                        ,(int)(DeviceConstants.MENU_VIEWPORT)
+                new FitViewport(
+                        (int)viewportWidth
+                        ,(int)viewportHeight
                 )
         );
-        ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)(DeviceConstants.MENU_VIEWPORT *  DeviceConstants.INVERTED_SCREEN_RATIO), (int)(DeviceConstants.MENU_VIEWPORT));
 
-        ((OrthographicCamera) this.getCamera()).rotate(90);
-        ((OrthographicCamera) this.getCamera()).update();
+        ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)viewportWidth, (int)viewportHeight);
 
         loadWidgets();
 
@@ -44,13 +53,13 @@ public class MainGUIComponet extends AbstractSingleStageGUI {
 
         MainGUIWidgetsProperties mainGUIWidgetsProperties = ((MainGUIWidgetsProperties)widgetsProperties);
 
-        elements.put("playButton", mainGUIWidgetsProperties.loadPropertiesPlayButton(table));
+        elements.put("playButton", mainGUIWidgetsProperties.loadPropertiesPlayButton(table,skin));
         table.row();
-        elements.put("hightScoreButton", mainGUIWidgetsProperties.loadPropertiesHighScoreButton(table));
+        elements.put("hightScoreButton", mainGUIWidgetsProperties.loadPropertiesHighScoreButton(table,skin));
         table.row();
-        elements.put("settingsButton", mainGUIWidgetsProperties.loadPropertiesSettingsButton(table));
+        elements.put("settingsButton", mainGUIWidgetsProperties.loadPropertiesSettingsButton(table,skin));
         table.row();
-        elements.put("exitButton", mainGUIWidgetsProperties.loadPropertiesExitButton(table));
+        elements.put("exitButton", mainGUIWidgetsProperties.loadPropertiesExitButton(table,skin));
 
         loadInputlisteners();
     }

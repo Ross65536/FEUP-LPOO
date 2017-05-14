@@ -40,6 +40,7 @@ public abstract class AbstractGUI extends InputMultiplexer{
     //*****************STAGE RELATED FUCNTIONS********************//
     //************************************************************//
     public void act(float delta){
+
         for(InputProcessor stage: menuComponets) {
             if(stage instanceof Stage)
                 ((Stage)stage).act(delta);
@@ -47,14 +48,28 @@ public abstract class AbstractGUI extends InputMultiplexer{
     }
 
     public void draw(){
-        for(InputProcessor stage: menuComponets)
-            if(stage instanceof Stage)
-                ((Stage)stage).draw();
+        for(int i = menuComponets.size()-1; i >=0; i--){
+            ((Stage)menuComponets.get(i)).draw();
+        }
     }
 
     public void updateViewPorts(int width,int height, boolean centerCamera){
-        for(InputProcessor stage: menuComponets)
-            if(stage instanceof Stage)
-                ((Stage)stage).getViewport().update(width,height,centerCamera);
+        for(InputProcessor stage: menuComponets) {
+            if (stage instanceof Stage) {
+                ((Stage) stage).getViewport().update(width, height, centerCamera);
+            }
+        }
+    }
+
+    public void dispose(){
+        for(InputProcessor comp: menuComponets){
+            if(comp instanceof AbstractSingleStageGUI){
+                ((AbstractSingleStageGUI)comp).dispose();
+            }else
+                if(comp instanceof AbstractGUI){
+                    ((AbstractGUI)comp).dispose();
+                }
+
+        }
     }
 }

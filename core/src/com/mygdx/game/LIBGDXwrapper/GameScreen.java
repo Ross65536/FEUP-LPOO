@@ -49,7 +49,6 @@ public class GameScreen extends ScreenAdapter {
         viewport.setWorldSize((float)camDims.x,(float)camDims.y);
         viewport.update(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),true);
         gameCamera.setToOrtho(false, (float) camDims.x, (float) camDims.y); //camera has maximum world height
-
     }
 
     /**

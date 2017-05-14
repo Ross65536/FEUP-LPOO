@@ -1,6 +1,15 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
-public enum GameMenus {MainMenu(MainGUI.class),PlayGUI(PlayGUI.class),SettingsGUI(SettingsGUI.class)/*TODO*/,LASTVALUEMARKER(null);
+public enum GameMenus {
+
+    MainMenu(MainGUI.class),
+
+    PlayGUI(PlayGUI.class),
+
+    SettingsGUI(SettingsGUI.class)/*TODO*/,
+
+    LASTVALUEMARKER(null);
+
     private Class<? extends AbstractGUI> menuType;
     GameMenus(Class<? extends AbstractGUI> menuType){
         this.menuType = menuType;
@@ -48,6 +57,7 @@ public enum GameMenus {MainMenu(MainGUI.class),PlayGUI(PlayGUI.class),SettingsGU
     private void decreasedUsage() {
         if (menu != null) {
             if (usage <= 0) {
+                menu.dispose();
                 menu = null;
                 System.gc();
                 usage = 0;
