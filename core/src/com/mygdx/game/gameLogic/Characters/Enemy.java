@@ -18,4 +18,6 @@ public abstract class Enemy extends Character implements EnemyInfo {
 
     @Override
     abstract public String getAssociatedImagePath();
+
+    abstract public boolean isFlyingType();
 }

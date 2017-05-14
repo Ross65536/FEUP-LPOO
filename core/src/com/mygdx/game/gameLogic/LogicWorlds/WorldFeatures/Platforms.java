@@ -84,7 +84,7 @@ public class Platforms implements PlatformFeature{
 
 
     private void checkDropFromPlatform(){
-        if(!hero.isFlying()&& (currentPlarform!=null)) {
+        if(!hero.isMovingY()&& (currentPlarform!=null)) {
             hero.fall(1.0);
         }
         currentPlarform = null;

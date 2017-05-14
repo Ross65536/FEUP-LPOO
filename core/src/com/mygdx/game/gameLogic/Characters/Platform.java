@@ -3,8 +3,6 @@ package com.mygdx.game.gameLogic.Characters;
 import com.mygdx.game.PathConstants;
 import com.mygdx.game.gameLogic.Vector2D;
 
-import java.util.Random;
-
 public class Platform extends Character{
 
     public static double fractionOfScreenHeightForPlatform = 1.0/15.0;
@@ -54,7 +52,7 @@ public class Platform extends Character{
     }
 
     public boolean isCharacterOnThisPlatform(final Character ch){
-        return isIntersecting(ch) && !ch.isFlying();
+        return isIntersecting(ch) && !ch.isMovingY();
     }
 
     public double getTopY(){

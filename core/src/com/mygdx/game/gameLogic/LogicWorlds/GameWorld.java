@@ -1,5 +1,6 @@
 package com.mygdx.game.gameLogic.LogicWorlds;
 
+import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
@@ -54,6 +55,7 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
     abstract public void update (float deltaT);
     abstract protected void checkHeroJump();
 
+    abstract public void placeEnemy(Enemy enemy) ;
 
     protected void updateHero(float deltaT)
     {

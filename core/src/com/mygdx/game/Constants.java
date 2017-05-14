@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 
 import com.mygdx.game.gameLogic.Characters.EnemyGround;
+import com.mygdx.game.gameLogic.Characters.EnemyFlying;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.Platform;
 
@@ -11,8 +12,9 @@ import com.mygdx.game.gameLogic.Characters.Platform;
  * Aspect ratio == width / height
  */
 public class Constants {
+
     public final static int NUMBER_OF_GAMEMODES = 2;
-    public static boolean INPUT_DEBUG = false;
+    public static boolean INPUT_DEBUG = true;
     //Class specific information
     public static class CharacterConstants
     {
@@ -31,7 +33,11 @@ public class Constants {
     //EnemyGround class
     private static final CharacterConstants constantsEnemyGround =
             new CharacterConstants(129 / (double) 281, 1.5, 1.0, 0.8, -0.2);
+    //Flying Enemy class
+    private static final CharacterConstants constantsEnemyFlying =
+            new CharacterConstants(200 / (double) 100, 3.0, 1.0, 0.5, -0.2);
 
+    //platform
     private static final CharacterConstants constantsPlatform =
             new CharacterConstants(400 / (double) 50, 0, 0, 0, 0);
 
@@ -39,9 +45,11 @@ public class Constants {
     {
         if (enType == Hero.class)
             return constantsHero;
-        if (enType == EnemyGround.class)
+        else if (enType == EnemyGround.class)
             return constantsEnemyGround;
-        if (enType == Platform.class)
+        else if (enType == EnemyFlying.class)
+            return constantsEnemyFlying;
+        else if (enType == Platform.class)
             return constantsPlatform;
         else
             return null;

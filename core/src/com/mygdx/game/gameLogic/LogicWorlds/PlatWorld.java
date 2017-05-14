@@ -2,6 +2,7 @@ package com.mygdx.game.gameLogic.LogicWorlds;
 
 import com.mygdx.game.Constants;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.Light;
@@ -29,7 +30,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
         this.cameraWidth = worldDims.x/10;
         this.cameraHeight = cameraWidth * DeviceConstants.INVERTED_SCREEN_RATIO;
 
-        dummyEnemies = new DummyEnemies(hero,worldDims,stageDirector);
+        dummyEnemies = new DummyEnemies(hero,worldDims,stageDirector, this);
 
         light = new Lights(hero);
 
@@ -94,6 +95,11 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
             hero.stopJump();
             hero.setYPos(yValue);
         }
+    }
+
+    @Override
+    public void placeEnemy(Enemy enemy) {
+        //tens q fazer para plataformas
     }
 
 

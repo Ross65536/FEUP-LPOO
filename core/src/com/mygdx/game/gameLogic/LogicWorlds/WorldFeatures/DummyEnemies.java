@@ -7,6 +7,7 @@ import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.GameDirector.StageDirector;
 import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
+import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
 import com.mygdx.game.gameLogic.Vector2D;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class DummyEnemies implements DummyEnemyFeature {
 
 
     protected static final double ENEMY_DELETION_RANGE_MULT = 3.0;
-    protected static final double ENEMY_GENERATION_YMULT = 1.0;
+
     protected static Random random = new Random();
 
     private ArrayList<Enemy> enemies;
@@ -27,30 +28,14 @@ public class DummyEnemies implements DummyEnemyFeature {
     protected StageDirector stageDirector;
     protected Vector2D worldDimensions;
 
+    private GameWorld gameWorld;
 
-    private void placeEnemy(Enemy enemy) {
-        enemy.setYPos(0.0);
 
-        final double enXDelta = worldDimensions.y * ENEMY_GENERATION_YMULT;
-        final double heroXPos = hero.getXPos();
 
-        final boolean bool = random.nextBoolean(); //random
-
-        if (bool) //left side spawn
-        {
-            enemy.setXPos(heroXPos - enXDelta);
-            enemy.setMovementDirection(true);
-        }
-        else //right
-        {
-            enemy.setXPos(heroXPos + enXDelta);
-            enemy.setMovementDirection(false);
-        }
-    }
-
-    private int updateEnemies(float deltaT) {
+    private void updateEnemies(float deltaT, StatisticsInput statisticsInput) {
         final double enemyDeletionRange = ENEMY_DELETION_RANGE_MULT * worldDimensions.y;
-        int numDeletions=0;
+        int numGroundDeletions=0;
+        int numFlyingDeletions=0;
 
         Iterator<Enemy> itr = enemies.iterator();
         while(itr.hasNext())
@@ -61,18 +46,29 @@ public class DummyEnemies implements DummyEnemyFeature {
             final double deltaXPos = Math.abs(enemy.getXPos() - hero.getXPos());
             if (deltaXPos > enemyDeletionRange) //remove enemy if out of range
             {
+                if (enemy.isFlyingType())
+                    numFlyingDeletions++;
+                else
+                    numGroundDeletions++;
+
                 itr.remove();
-                numDeletions++;
+
             }
         }
-        return numDeletions;
+
+        statisticsInput.updateNumberOfGroundEnemies(- numGroundDeletions);
+        statisticsInput.updateNumberOfFlyingEnemies(- numFlyingDeletions);
+
+        return;
     }
 
-    public DummyEnemies(Hero hero, Vector2D worldDims, StageDirector stageDirector){
+    public DummyEnemies(Hero hero, Vector2D worldDims, StageDirector stageDirector, GameWorld gameWorld){
         enemies = new ArrayList<Enemy>();
         this.hero = hero;
         this.stageDirector = stageDirector;
         worldDimensions = new Vector2D(worldDims);
+
+        this.gameWorld = gameWorld;
     }
 
     public void createDummyEnemies () //testing function
@@ -88,9 +84,9 @@ public class DummyEnemies implements DummyEnemyFeature {
 
         Vector2D dims = new Vector2D(enXDim, enYDim);
 
-        Enemy enemy1 = new EnemyGround(new Vector2D(heroX + 2, 0), dims, new Vector2D(0,0));
+        Enemy enemy1 = new EnemyGround(new Vector2D(heroX + 20, 0), dims, new Vector2D(0,0));
         enemies.add(enemy1);
-        Enemy enemy2 = new EnemyGround(new Vector2D(heroX - 5, 0), dims, new Vector2D(0,0));
+        Enemy enemy2 = new EnemyGround(new Vector2D(heroX - 20, 0), dims, new Vector2D(0,0));
         enemies.add(enemy2);
 
     }
@@ -100,19 +96,21 @@ public class DummyEnemies implements DummyEnemyFeature {
         final Enemy enemy = stageDirector.tryGenerateEnemy();
         if (enemy != null)
         {
-            placeEnemy(enemy); //specific placement
+            gameWorld.placeEnemy(enemy); //specific placement
             enemies.add(enemy);
         }
     }
 
 
 
-    public void updateEnemieStatistics(float deltaT){
-        final int numDestroyedEnemies = updateEnemies(deltaT);
+    public void updateEnemieStatistics(float deltaT)
+    {
+
 
         StatisticsInput statisticsInput = stageDirector.getStatsticsInput();
-        statisticsInput.updateNumberOfGroundEnemies(- numDestroyedEnemies);
         statisticsInput.update(deltaT);
+
+        updateEnemies(deltaT, statisticsInput);
     }
 
     public StageDirector getStageDirector()

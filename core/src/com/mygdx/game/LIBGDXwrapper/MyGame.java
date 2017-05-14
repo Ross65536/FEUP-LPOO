@@ -75,7 +75,10 @@ public class MyGame extends Game {
 
         }
 
-        GameAssetHandler.getGameAssetHandler().finishLoading(); //finish loading textures here
+        GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
+        gameAssetHandler.finishLoading(); //finish loading textures here
+        gameAssetHandler.setupHeroAnimations();
+
 
         setScreen(gameScreen);
     }

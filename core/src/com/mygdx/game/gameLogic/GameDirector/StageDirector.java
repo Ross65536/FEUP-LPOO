@@ -2,6 +2,7 @@ package com.mygdx.game.gameLogic.GameDirector;
 
 import com.mygdx.game.Constants;
 import com.mygdx.game.gameLogic.Characters.Enemy;
+import com.mygdx.game.gameLogic.Characters.EnemyFlying;
 import com.mygdx.game.gameLogic.Characters.EnemyGround;
 import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.Curves;
 import com.mygdx.game.gameLogic.Vector2D;
@@ -51,6 +52,8 @@ public class StageDirector {
 
         if (enType == EnemyGround.class)
             return new EnemyGround(null, dimensions, speed);
+        else if (enType == EnemyFlying.class)
+            return new EnemyFlying(null, dimensions, speed);
 
         throw new IndexOutOfBoundsException("tryGenerateEnemy missing a generation class");
     }
@@ -69,7 +72,11 @@ public class StageDirector {
                 throw new IndexOutOfBoundsException("tryGenerateEnemy missing a generation class");
             else
             {
-                gameStatistics.updateNumberOfGroundEnemies(1); //enemy created
+                if (enemy.isFlyingType())
+                    gameStatistics.updateNumberOfFlyingEnemies(1);
+                else
+                    gameStatistics.updateNumberOfGroundEnemies(1); //enemy ground created
+
                 return enemy;
             }
         }
