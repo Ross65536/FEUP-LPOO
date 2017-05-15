@@ -68,16 +68,16 @@ public class LevelBuilder {
     public static PlatGameWorldAdapter createPlatformTestLevel() {
         loadAssets(Arrays.asList(PathConstants.platformTestLevelAssetNames));
 
-        Vector2D worldDims = PlatLevelBuild.createWorldDimsPlat();
         Vector2D cameraDims = PlatLevelBuild.createCameraDimsPlat();
+        Vector2D worldDims = PlatLevelBuild.createWorldDimsPlat();
         Hero hero = PlatLevelBuild.createHero2(worldDims,cameraDims);
 
         final Curves generator = new BalancedCurve(ENEMY_CREATION_DELTAT, MAX_NUM_ENEMIES);
         final IEnemyTypes iEnemyTypes = new EnemyTypesLinear(0.25, 1.0);
         StageDirector stageDirector = createStageDirector(generator, hero.getYDim(), iEnemyTypes);
 
-        GameWorld gameLogicWorld = new PlatWorld(worldDims, hero, stageDirector);
-        PlatGameWorldAdapter ret = new PlatGameWorldAdapter(worldDims, gameLogicWorld);
+        GameWorld gameLogicWorld = new PlatWorld(cameraDims, worldDims, hero, stageDirector);
+        PlatGameWorldAdapter ret = new PlatGameWorldAdapter(cameraDims, worldDims, gameLogicWorld);
         return ret;
     }
 

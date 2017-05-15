@@ -21,16 +21,24 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
     protected double worldXDim;
     protected double worldYDim; //also camera Height
     protected double cameraWidth;
+    protected double cameraHeight;
     protected OrthographicCamera gameCamera;
+    private double currentTime;
+
 
     public AbstractGameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
     {
+
         drawBatch = new SpriteBatch();
         drawBatch.getProjectionMatrix().setToOrtho2D(0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         this.worldXDim = worldDims.x;
         this.worldYDim = worldDims.y;
         this.gameLogicWorld = gameLogicWorld;
 
+    }
+
+    public double getCreationTime(){
+        return currentTime;
     }
 
     protected Vector2D getCenterScreen(){
@@ -82,14 +90,14 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
         final Texture backgroundTex = GameAssetHandler.getGameAssetHandler().getBackgroundTexture();
         final HeroInfo heroInfo = gameLogicWorld.getHeroInfo();
 
-        final float backgroundYDim = (float) (worldYDim * PathConstants.BACKGROUND_PORTION_OF_CAMERA_Y);
+        final float backgroundYDim = (float) (cameraHeight * PathConstants.BACKGROUND_PORTION_OF_CAMERA_Y);
         final float backgroundXDim = (float) (backgroundYDim * PathConstants.BACKGROUND_ASPECT_RATIO);
 
-        final float drawXMin = (float) floorDouble(heroInfo.getXPos() - worldYDim, backgroundXDim); //max 2:1 screen
+        final float drawXMin = (float) floorDouble(heroInfo.getXPos() - cameraHeight, backgroundXDim); //max 2:1 screen
         final float drawYMin = (float) getBackgroundYStart(backgroundYDim);
 
-        final float maxX = (float) (drawXMin + 2.0 * (worldYDim + backgroundXDim)); //should be 2:1 max screen
-        final float maxY = (float) (drawYMin + 1.0 * (worldYDim + backgroundYDim));
+        final float maxX = (float) (drawXMin + 2.0 * (cameraHeight + backgroundXDim)); //should be 2:1 max screen
+        final float maxY = (float) (drawYMin + 1.0 * (cameraHeight + backgroundYDim));
 
         for (float drawY = drawYMin; drawY <= maxY; drawY += backgroundYDim)
         {

@@ -7,6 +7,7 @@ import com.mygdx.game.gameLogic.LogicWorlds.IGameWorldHeroInputs;
 import com.mygdx.game.Vector2D;
 
 public interface IGameWorldAdapter {
+    double getCreationTime();
     void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera);
     Vector2D getCameraSetup ();
     void updateWorld(float delaT);

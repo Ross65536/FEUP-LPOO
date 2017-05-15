@@ -1,5 +1,6 @@
 package com.mygdx.game.gameLogic.LogicWorlds;
 
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.gameLogic.Characters.Enemy;
@@ -18,17 +19,18 @@ import java.util.List;
 
 public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeature {
 
-    protected double cameraWidth;
-    protected double cameraHeight;
-
     Platforms platforms;
 
+    final private double cameraWidth;
+    final private double cameraHeight;
 
-    public PlatWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
+
+    public PlatWorld(final Vector2D cameraDim, final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
         super(worldDims, hero);
-        this.cameraWidth = worldDims.x/10;
-        this.cameraHeight = cameraWidth * DeviceConstants.INVERTED_SCREEN_RATIO;
+
+        this.cameraWidth = cameraDim.x;
+        this.cameraHeight = cameraDim.y;
 
         dummyEnemies = new DummyEnemies(hero,worldDims,stageDirector, this);
 
@@ -97,16 +99,37 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
         }
     }
 
-    static final double FLYING_HEIGHT_MIN = 0.5;
-    static final double FLYING_HEIGHT_MAX = 1.3;
-    static final double FLYING_HEIGHT_DELTA = FLYING_HEIGHT_MAX - FLYING_HEIGHT_MIN;
+    @Override
+    final public void placeEnemy(final Enemy enemy){
+        placeEnemyYPos(enemy);
+
+        final double enXDelta = cameraWidth/1.5f * ENEMY_GENERATION_YMULT;
+        final double heroXPos = hero.getXPos();
+
+        final boolean bool = random.nextBoolean(); //random
+
+        if (bool) //left side spawn
+        {
+            enemy.setXPos(heroXPos - enXDelta);
+            enemy.setMovementDirection(true);
+        }
+        else //right
+        {
+            enemy.setXPos(heroXPos + enXDelta);
+            enemy.setMovementDirection(false);
+        }
+    }
+
     @Override
     public void placeEnemyYPos(Enemy enemy) {
         if (enemy.isFlyingType())
         {
-            final double heightRatio = random.nextDouble() * FLYING_HEIGHT_DELTA;
-            final double enYHeight = worldDimensions.y * (FLYING_HEIGHT_MIN + heightRatio);
-            enemy.setYPos(enYHeight);
+            final double extraHeight = random.nextDouble() * (cameraHeight);
+            double minHeight = hero.getYPos()-(cameraHeight/2f);
+            if(minHeight<hero.getYDim()){
+                minHeight=hero.getYDim();
+            }
+            enemy.setYPos(extraHeight + minHeight);
         }
         else
             enemy.setYPos(0.0); //ground

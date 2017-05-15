@@ -24,8 +24,6 @@ import java.util.HashMap;
 public class PauseGUIComponent extends AbstractSingleStageGUI{
     HashMap<String, Object> elements;
 
-    SettingsGUI settingsGUI;
-
     Table table;
 
     private double viewportWidth = (DeviceConstants.MENU_VIEWPORT);
@@ -72,7 +70,13 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
 //        pauseGUIWidgetsProperties.loadHeaderLabel(table,skin);
 
-  //      pauseGUIWidgetsProperties.loadCurrentScoreLabel(table, skin);
+        pauseGUIWidgetsProperties.loadCurrentScoreLabel(table, skin,"Paused");
+
+        table.row();
+        
+        pauseGUIWidgetsProperties.loadCurrentScoreLabel(table, skin,"Score: ");
+
+        table.row();
 
         elements.put("resume",pauseGUIWidgetsProperties.loadPMButton( table, skin, "resumeButton"));
 

@@ -9,6 +9,8 @@ import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.PlatformFeature;
 
 import java.util.List;
 
+import javax.swing.plaf.synth.SynthEditorPaneUI;
+
 public class PlatformVisualHandler {
 
     private GameWorld gameLogicWorld;

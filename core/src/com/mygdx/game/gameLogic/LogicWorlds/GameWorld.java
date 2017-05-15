@@ -60,7 +60,7 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
 
     protected static final double ENEMY_GENERATION_YMULT = 1.0;
 
-    final public void placeEnemy(final Enemy enemy)
+    public void placeEnemy(final Enemy enemy)
     {
         placeEnemyYPos(enemy);
 

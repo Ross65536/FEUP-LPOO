@@ -131,10 +131,14 @@ public class Platforms implements PlatformFeature{
         double platformHeight = fractionOfScreenHeightForPlatform * this.cameraHeight;
         double platformWidth = platformHeight * CommonConsts.getEnemyConstants(Platform.class).aspectRatio;
         double topRightCornerX = hero.getXPos() + (cameraWidth / 2) + platformWidth;
-        double topRightCornerY = hero.getYPos() + (cameraHeight / 2) + platformHeight * 2;
+        double topRightCornerY = hero.getYPos() + (cameraHeight / 2) + platformHeight * 3;
         double bottomLeftCornerX = hero.getXPos() - (cameraWidth / 2) - platformWidth;
-        double bottomLeftCornerY = hero.getYPos() - (cameraHeight / 2) - platformHeight * 2;
+        double bottomLeftCornerY = hero.getYPos() - (cameraHeight / 2) - platformHeight * 3;
 
+        if(hero.getYPos() < cameraHeight/2f){
+            topRightCornerY = cameraHeight + platformHeight * 2;
+            bottomLeftCornerY = 0;
+        }
 
         Double topYKey = platformsT.floorKey(topRightCornerY);
         Double bottomYKey = platformsT.ceilingKey(bottomLeftCornerY);

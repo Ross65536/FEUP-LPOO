@@ -26,6 +26,8 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
         dummyEnemyVisuals = new DummyEnemyVisualsHandler(gameLogicWorld,drawBatch);
 
         lightVisualHandler = new LightVisualHandler(gameLogicWorld, drawBatch);
+
+        this.cameraHeight = worldYDim;
     }
 
     public void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera)

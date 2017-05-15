@@ -13,7 +13,6 @@ import com.mygdx.game.Vector2D;
 
 public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
 
-    private double cameraHeight;
 
     private DummyEnemyVisualsHandler dummyEnemyVisualsHandler;
 
@@ -21,7 +20,7 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
 
     private PlatformVisualHandler platformVisualHandler;
 
-    public PlatGameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
+    public PlatGameWorldAdapter(final Vector2D cameraDims, final Vector2D worldDims, GameWorld gameLogicWorld)
     {
         super(worldDims,gameLogicWorld);
 
@@ -29,8 +28,8 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
         drawBatch.enableBlending();//default
 
 
-        this.cameraWidth = worldDims.x/10;
-        this.cameraHeight = cameraWidth * DeviceConstants.INVERTED_SCREEN_RATIO;
+        this.cameraWidth = cameraDims.x;
+        this.cameraHeight = cameraDims.y;
 
         dummyEnemyVisualsHandler = new DummyEnemyVisualsHandler(gameLogicWorld,drawBatch);
 
@@ -50,12 +49,12 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
         final float heroYCenter = heroYPos + heroYDim/2;
 
         float cameraYCenter;
-        if (heroYCenter <= worldYDim / 2)
-            cameraYCenter = (float) worldYDim / 2;
+        if (heroYCenter <= cameraHeight / 2f)
+            cameraYCenter = (float) cameraHeight / 2f;
         else
             cameraYCenter = heroYCenter;
 
-        gameCamera.position.set(heroXPos + heroXDim/2, cameraYCenter, 0);
+        gameCamera.position.set(heroXPos + heroXDim/2f, cameraYCenter, 0);
         gameCamera.update();
     }
 
@@ -99,11 +98,11 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
 
         final HeroInfo heroInfo = gameLogicWorld.getHeroInfo();
         final double heroYCenter = heroInfo.getYCenter();
-        if (heroYCenter < worldYDim / 2.0)
+        if (heroYCenter < cameraHeight / 2.0)
             return 0.0;
         else
         {
-            final double Yintermediary = heroYCenter - worldYDim * 0.6;
+            final double Yintermediary = heroYCenter - cameraHeight * 0.6;
             return floorDouble(Yintermediary, backgroundYDim);
         }
     }

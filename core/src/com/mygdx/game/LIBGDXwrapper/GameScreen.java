@@ -48,6 +48,7 @@ public class GameScreen extends ScreenAdapter {
         currentLevel.setCamera(gameCamera);
         final Vector2D camDims = currentLevel.getCameraSetup();
 
+
         ////////HUD////////
         hud = new HUD(camDims,game);
         registerHUDInput(hud);
