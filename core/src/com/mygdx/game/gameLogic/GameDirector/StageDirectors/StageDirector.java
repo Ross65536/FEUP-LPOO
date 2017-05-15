@@ -47,14 +47,18 @@ public class StageDirector {
      */
     protected Enemy makeEnemy (final Class<?> enType, final double distortFraction, final int arrayIndex)
     {
+        boolean bossEn = false;
+        if (arrayIndex >= CommonConsts.ENEMY_ARRAY_SIZE)
+            bossEn = true;
+
         Vector2D dimensions = new Vector2D();
         Vector2D speed = new Vector2D();
         makeParameters(dimensions, speed, distortFraction, arrayIndex);
 
         if (enType == EnemyGround.class)
-            return new EnemyGround(null, dimensions, speed);
+            return new EnemyGround(null, dimensions, speed, bossEn);
         else if (enType == EnemyFlying.class)
-            return new EnemyFlying(null, dimensions, speed);
+            return new EnemyFlying(null, dimensions, speed, bossEn);
 
         throw new IndexOutOfBoundsException("tryGenerateEnemy missing a generation class");
     }

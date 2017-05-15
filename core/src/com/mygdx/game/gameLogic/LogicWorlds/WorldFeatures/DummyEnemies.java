@@ -1,7 +1,6 @@
 package com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures;
 
 import com.mygdx.game.CommonConsts;
-import com.mygdx.game.PathConstants;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyGround;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
@@ -78,16 +77,16 @@ public class DummyEnemies implements DummyEnemyFeature {
         final double heroXDim = hero.getXDim();
         final double heroYDim = hero.getYDim();
 
-        final CommonConsts.CharacterConstants characterConstants = CommonConsts.getEnemyConstants(PathConstants.ENEMY_GROUND_ARRAY_INDEX);
+        final CommonConsts.CharacterConstants characterConstants = CommonConsts.getEnemyConstants(CommonConsts.ENEMY_GROUND_ARRAY_INDEX);
 
         final double enYDim = characterConstants.dimYMult * heroYDim;
         final double enXDim = enYDim * characterConstants.aspectRatio;
 
         Vector2D dims = new Vector2D(enXDim, enYDim);
 
-        Enemy enemy1 = new EnemyGround(new Vector2D(heroX + 20, 0), dims, new Vector2D(0,0));
+        Enemy enemy1 = new EnemyGround(new Vector2D(heroX + 20, 0), dims, new Vector2D(0,0), false);
         enemies.add(enemy1);
-        Enemy enemy2 = new EnemyGround(new Vector2D(heroX - 20, 0), dims, new Vector2D(0,0));
+        Enemy enemy2 = new EnemyGround(new Vector2D(heroX - 20, 0), dims, new Vector2D(0,0), false);
         enemies.add(enemy2);
 
     }

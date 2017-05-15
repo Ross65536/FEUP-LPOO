@@ -1,6 +1,5 @@
 package com.mygdx.game.gameLogic.Characters;
 
-import com.mygdx.game.PathConstants;
 import com.mygdx.game.Vector2D;
 
 public class Platform extends Character{

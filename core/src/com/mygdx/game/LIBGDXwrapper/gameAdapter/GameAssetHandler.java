@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.PathConstants;
+import com.mygdx.game.CommonConsts;
+import com.mygdx.game.LIBGDXwrapper.PathConstants;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
@@ -15,8 +16,6 @@ import com.mygdx.game.gameLogic.Characters.Platform;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Used to manage assets such as sounds, textures.
@@ -34,7 +33,7 @@ public class GameAssetHandler { //dispose textures when swicth to menu
     {
         assetManager = new AssetManager(new InternalFileHandleResolver());
         heroWalkAnimations = null;
-        enemyAnimations = new ArrayList<>(PathConstants.ENEMY_ARRAY_SIZE);
+        enemyAnimations = new ArrayList<>(CommonConsts.ENEMY_ARRAY_SIZE);
     }
 
     public static GameAssetHandler getGameAssetHandler()

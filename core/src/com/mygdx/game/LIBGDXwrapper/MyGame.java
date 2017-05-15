@@ -2,9 +2,9 @@ package com.mygdx.game.LIBGDXwrapper;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.LevelBuilder;
-import com.mygdx.game.PathConstants;
 
 import static com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.LevelBuilder.createPlatformTestLevel;
 
@@ -96,8 +96,8 @@ public class MyGame extends Game {
         GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
         gameAssetHandler.finishLoading(); //finish loading textures here
         gameAssetHandler.setupHeroAssets();
-        gameAssetHandler.setupEnemyAnimationsFlat(PathConstants.ENEMY_GROUND_ARRAY_INDEX);
-        gameAssetHandler.setupEnemyAnimationsFlat(PathConstants.ENEMY_FLYING_ARRAY_INDEX);
+        gameAssetHandler.setupEnemyAnimationsFlat(CommonConsts.ENEMY_GROUND_ARRAY_INDEX);
+        gameAssetHandler.setupEnemyAnimationsFlat(CommonConsts.ENEMY_FLYING_ARRAY_INDEX);
     }
 
 

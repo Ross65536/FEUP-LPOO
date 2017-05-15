@@ -1,14 +1,14 @@
 package com.mygdx.game.gameLogic.Characters;
 
 
-import com.mygdx.game.PathConstants;
+import com.mygdx.game.CommonConsts;
 import com.mygdx.game.Vector2D;
 
 public class EnemyFlying extends Enemy {
 
 
-    public EnemyFlying(Vector2D position, Vector2D dimensions, Vector2D speed) {
-        super(position, dimensions, speed);
+    public EnemyFlying(Vector2D position, Vector2D dimensions, Vector2D speed, boolean bossEn) {
+        super(position, dimensions, speed, bossEn);
     }
 
 
@@ -19,11 +19,9 @@ public class EnemyFlying extends Enemy {
 
     @Override
     public int getArrayIndex() {
-        return PathConstants.ENEMY_FLYING_ARRAY_INDEX;
+        return CommonConsts.ENEMY_FLYING_ARRAY_INDEX;
     }
 
-    @Override
-    public boolean isBossType() {
-        return true;
-    }
+
+
 }

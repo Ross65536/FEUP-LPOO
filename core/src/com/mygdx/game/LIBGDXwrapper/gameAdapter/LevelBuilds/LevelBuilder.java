@@ -3,7 +3,7 @@ package com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.DiscGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.PlatGameWorldAdapter;
-import com.mygdx.game.PathConstants;
+import com.mygdx.game.LIBGDXwrapper.PathConstants;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.BalancedCurve;
 import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.Curves;
@@ -33,7 +33,7 @@ public class LevelBuilder {
 
 
     //// core -------------
-    private static final double ENEMY_CREATION_DELTAT = 2.0; //seconds between each generate
+    private static final double ENEMY_CREATION_DELTAT = 2.5; //seconds between each generate
     private static final int MAX_NUM_ENEMIES = 10;
     private static final double STATISTICS_DEVICE_JUMP = 2.0;
     private static final double STATISTICS_DEVICE_MOV = 5.0;
@@ -47,6 +47,10 @@ public class LevelBuilder {
 
 
 
+    private static final double GROUND_CUTTOFF_DISC = 0.5;
+    private static final double FLYING_CUTTOFF_DISC = 0.8;
+    private static final double GROUND_BOSS_CUTTOFF_DISC = 0.9;
+    private static final double FLYING_BOSS_CUTTOFF_DISC = 1.0;
     public static DiscGameWorldAdapter createTestLevel() {
         loadAssets(Arrays.asList(PathConstants.discLevelAssetNames));
 
@@ -54,7 +58,7 @@ public class LevelBuilder {
         Hero hero = DiscLevelBuild.createHero(worldDims);
 
         final Curves generator = new BalancedCurve(ENEMY_CREATION_DELTAT, MAX_NUM_ENEMIES);
-        final IEnemyTypes iEnemyTypes = new EnemyTypesLinear(0.75, 1.0);
+        final IEnemyTypes iEnemyTypes = new EnemyTypesLinear(GROUND_CUTTOFF_DISC, FLYING_CUTTOFF_DISC, GROUND_BOSS_CUTTOFF_DISC, FLYING_BOSS_CUTTOFF_DISC);
         StageDirector stageDirector = createStageDirector(generator, hero.getYDim(), iEnemyTypes);
 
         GameWorld gameLogicWorld = new DiscWorld(worldDims, hero, stageDirector);
@@ -64,7 +68,10 @@ public class LevelBuilder {
     }
 
 
-
+    private static final double GROUND_CUTTOFF_PLAT = 0.2;
+    private static final double FLYING_CUTTOFF_PLAT = 0.7;
+    private static final double GROUND_BOSS_CUTTOFF_PLAT = 0.8;
+    private static final double FLYING_BOSS_CUTTOFF_PLAT = 1.0;
     public static PlatGameWorldAdapter createPlatformTestLevel() {
         loadAssets(Arrays.asList(PathConstants.platformTestLevelAssetNames));
 
@@ -73,7 +80,7 @@ public class LevelBuilder {
         Hero hero = PlatLevelBuild.createHero2(worldDims,cameraDims);
 
         final Curves generator = new BalancedCurve(ENEMY_CREATION_DELTAT, MAX_NUM_ENEMIES);
-        final IEnemyTypes iEnemyTypes = new EnemyTypesLinear(0.25, 1.0);
+        final IEnemyTypes iEnemyTypes = new EnemyTypesLinear(GROUND_CUTTOFF_PLAT, FLYING_CUTTOFF_PLAT, GROUND_BOSS_CUTTOFF_PLAT, FLYING_BOSS_CUTTOFF_PLAT);
         StageDirector stageDirector = createStageDirector(generator, hero.getYDim(), iEnemyTypes);
 
         GameWorld gameLogicWorld = new PlatWorld(cameraDims, worldDims, hero, stageDirector);

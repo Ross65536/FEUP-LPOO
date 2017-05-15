@@ -19,6 +19,18 @@ public class CommonConsts {
     public final static int NUMBER_OF_GAMEMODES = 2;
     public static boolean INPUT_DEBUG = false;
 
+    //global arrays that contain information about each enemy, each index is essentially the type of enemy (ground, flying, etc)
+    public static final int ENEMY_GROUND_ARRAY_INDEX;
+    public static final int ENEMY_FLYING_ARRAY_INDEX;
+    public static final int ENEMY_ARRAY_SIZE;
+    static
+    {
+        int i=0;
+        ENEMY_GROUND_ARRAY_INDEX = i; i++;
+        ENEMY_FLYING_ARRAY_INDEX = i; i++;
+        ENEMY_ARRAY_SIZE = i;
+    }
+
     //Class specific information
     public static class CharacterConstants
     {
@@ -36,14 +48,14 @@ public class CommonConsts {
             new CharacterConstants(31.0 / 24, 4.0, 0, 1.0 ,0);
     //EnemyGround class
     private static final CharacterConstants constantsEnemyGround =
-            new CharacterConstants(1.0f, 1.5, 1.0, 0.5, 0.2);
+            new CharacterConstants(1.0f, 1.0, 0.5, 0.5, 0.2);
     private static final CharacterConstants constantsEnemyGroundBoss =
-            new CharacterConstants(1.0f, 1.5, 1.0, 0.5, 0.2); //TODO
+            new CharacterConstants(1.0f, 3.0, 0.5, 0.6, 0.1);
     //Flying Enemy class
     private static final CharacterConstants constantsEnemyFlying =
             new CharacterConstants(200 / (double) 100, 1.0, 1.0, 0.5, -0.2);
     private static final CharacterConstants constantsEnemyFlyingBoss =
-            new CharacterConstants(200 / (double) 100, 1.0, 1.0, 0.5, -0.2); //TODO
+            new CharacterConstants(200 / (double) 100, 0.6, 0.4, 1.2, -0.1);
 
     //platform
     private static final CharacterConstants constantsPlatform =
@@ -52,14 +64,14 @@ public class CommonConsts {
     public static final List<CharacterConstants> enemyIndexToConstants;
     static
     {
-        enemyIndexToConstants = new ArrayList<>(PathConstants.ENEMY_ARRAY_SIZE * 2);
+        enemyIndexToConstants = new ArrayList<>(ENEMY_ARRAY_SIZE * 2);
         //common
-        enemyIndexToConstants.add(PathConstants.ENEMY_GROUND_ARRAY_INDEX, constantsEnemyGround);
-        enemyIndexToConstants.add(PathConstants.ENEMY_FLYING_ARRAY_INDEX, constantsEnemyFlying);
+        enemyIndexToConstants.add(ENEMY_GROUND_ARRAY_INDEX, constantsEnemyGround);
+        enemyIndexToConstants.add(ENEMY_FLYING_ARRAY_INDEX, constantsEnemyFlying);
 
-        //boss
-        enemyIndexToConstants.add(PathConstants.ENEMY_GROUND_ARRAY_INDEX + PathConstants.ENEMY_ARRAY_SIZE, constantsEnemyGroundBoss);
-        enemyIndexToConstants.add(PathConstants.ENEMY_FLYING_ARRAY_INDEX + PathConstants.ENEMY_ARRAY_SIZE, constantsEnemyFlyingBoss);
+        //boss - boss should ALWAYS have index as base class index + num base enemy classes
+        enemyIndexToConstants.add(ENEMY_GROUND_ARRAY_INDEX + ENEMY_ARRAY_SIZE, constantsEnemyGroundBoss);
+        enemyIndexToConstants.add(ENEMY_FLYING_ARRAY_INDEX + ENEMY_ARRAY_SIZE, constantsEnemyFlyingBoss);
     }
 
 

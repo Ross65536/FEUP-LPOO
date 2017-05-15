@@ -122,9 +122,9 @@ public class DiscWorld extends GameWorld implements LightsFeature {
     }
 
     static final double FLYING_HEIGHT_MIN = 0.5;
-    static final double FLYING_HEIGHT_MAX = 0.9;
+    static final double FLYING_HEIGHT_MAX = 0.85;
     static final double FLYING_HEIGHT_DELTA = FLYING_HEIGHT_MAX - FLYING_HEIGHT_MIN;
-    public void placeEnemyYPos(Enemy enemy) {
+    protected void placeEnemyYPos(Enemy enemy) {
         if (enemy.isFlyingType())
         {
             final double heightRatio = random.nextDouble() * FLYING_HEIGHT_DELTA;
@@ -133,5 +133,26 @@ public class DiscWorld extends GameWorld implements LightsFeature {
         }
         else
             enemy.setYPos(0.0); //ground
+    }
+
+    public void placeEnemy(final Enemy enemy)
+    {
+        placeEnemyYPos(enemy);
+
+        final double enXDelta = worldDimensions.y * ENEMY_GENERATION_YMULT;
+        final double heroXPos = hero.getXPos();
+
+        final boolean bool = random.nextBoolean(); //random
+
+        if (bool) //left side spawn
+        {
+            enemy.setXPos(heroXPos - enXDelta);
+            enemy.setMovementDirection(true);
+        }
+        else //right
+        {
+            enemy.setXPos(heroXPos + enXDelta);
+            enemy.setMovementDirection(false);
+        }
     }
 }

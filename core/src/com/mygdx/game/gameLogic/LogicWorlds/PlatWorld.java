@@ -1,9 +1,7 @@
 package com.mygdx.game.gameLogic.LogicWorlds;
 
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.CommonConsts;
-import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
-import com.mygdx.game.PathConstants;
+import com.mygdx.game.LIBGDXwrapper.PathConstants;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
@@ -124,7 +122,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
     }
 
     @Override
-    public void placeEnemyYPos(Enemy enemy) {
+    protected void placeEnemyYPos(Enemy enemy) {
         if (enemy.isFlyingType())
         {
             final double extraHeight = random.nextDouble() * (cameraHeight);
