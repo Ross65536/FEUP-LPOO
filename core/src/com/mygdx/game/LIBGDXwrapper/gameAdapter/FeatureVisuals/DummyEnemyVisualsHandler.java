@@ -1,13 +1,11 @@
 package com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
-import com.mygdx.game.gameLogic.LogicWorlds.DiscWorld;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
-import com.mygdx.game.gameLogic.LogicWorlds.PlatWorld;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemyFeature;
 
 import java.util.List;
@@ -37,7 +35,7 @@ public class DummyEnemyVisualsHandler {
 
         for (EnemyInfo enemy : enemies)
         {
-            Texture enemyTex = gameAssetHandler.getCharacterTexture(enemy);
+            TextureRegion enemyTex = gameAssetHandler.getEnemyTexture(enemy);
 
             drawBatch.draw(enemyTex, (float) enemy.getXPos(), (float) enemy.getYPos(), (float) enemy.getXDim(), (float) enemy.getYDim());
         }

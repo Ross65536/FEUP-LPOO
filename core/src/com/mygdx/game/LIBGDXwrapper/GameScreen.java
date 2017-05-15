@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LIBGDXwrapper.Input.GyroscopeInput;
@@ -13,7 +12,7 @@ import com.mygdx.game.LIBGDXwrapper.gameAdapter.DiscGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.PlatGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.HUD;
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
 
 public class GameScreen extends ScreenAdapter {
     private MyGame game;

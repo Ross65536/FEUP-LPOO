@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.LevelBuilder;
+import com.mygdx.game.PathConstants;
 
 import static com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.LevelBuilder.createPlatformTestLevel;
 
@@ -35,11 +36,13 @@ public class MyGame extends Game {
 	private void startGameTest()
 	{
         gameScreen.LoadLevel(LevelBuilder.createTestLevel());
+        finishDiscWorldAssets();
 	}
 
     private void startPlatGameTest()
     {
         gameScreen.LoadLevel(createPlatformTestLevel());
+        finishDiscWorldAssets(); // ???????????
     }
 
     public void SwicthToMenuScreen(MenuInstr instruction)
@@ -85,13 +88,16 @@ public class MyGame extends Game {
 
         }
 
-        GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
-        gameAssetHandler.finishLoading(); //finish loading textures here
-        gameAssetHandler.setupHeroAnimations();
-
-
         setScreen(gameScreen);
         gameScreen.setAsInput();
+    }
+
+    private void finishDiscWorldAssets() {
+        GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
+        gameAssetHandler.finishLoading(); //finish loading textures here
+        gameAssetHandler.setupHeroAssets();
+        gameAssetHandler.setupEnemyAnimationsFlat(PathConstants.ENEMY_GROUND_IMAGE_PATH);
+        gameAssetHandler.setupEnemyAnimationsFlat(PathConstants.ENEMY_FLYING_IMAGE_PATH);
     }
 
 

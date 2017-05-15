@@ -1,20 +1,23 @@
-package com.mygdx.game.gameLogic.GameDirector;
+package com.mygdx.game.gameLogic.GameDirector.StageDirectors;
 
-import com.mygdx.game.Constants;
+import com.mygdx.game.CommonConsts;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyFlying;
 import com.mygdx.game.gameLogic.Characters.EnemyGround;
 import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.Curves;
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
+import com.mygdx.game.gameLogic.GameDirector.Statistics;
+import com.mygdx.game.gameLogic.GameDirector.StatisticsInfo;
+import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
 
 
 public class StageDirector {
     private final double measurementUnit; //should be hero.YDim
     private final Curves difficultyGenerator; //generatos a difficulty based on various statistics
     private Statistics gameStatistics;
-    private StageDirectorEnemyTypesAdapter.IEnemyTypes enemyTypes;
+    private IEnemyTypes enemyTypes;
 
-    public StageDirector (Curves difficultyGenerator, Statistics gameStatistics, final double dimYScaler, StageDirectorEnemyTypesAdapter.IEnemyTypes enemyTypes)
+    public StageDirector (Curves difficultyGenerator, Statistics gameStatistics, final double dimYScaler, IEnemyTypes enemyTypes)
     {
         this.measurementUnit = dimYScaler;
         this.difficultyGenerator = difficultyGenerator;
@@ -25,7 +28,7 @@ public class StageDirector {
     //// utilities ------------
     private void makeParameters(final Class<?> enType, Vector2D dimensions, Vector2D speed, double distortFraction)
     {
-        final Constants.CharacterConstants enConsts = Constants.getEnemyConstants(enType);
+        final CommonConsts.CharacterConstants enConsts = CommonConsts.getEnemyConstants(enType);
         final double dimDistort = enConsts.dimYPadding;
         final double enYDim = (enConsts.dimYMult + dimDistort * distortFraction) * measurementUnit;
         final double enXDim = enYDim * enConsts.aspectRatio;
@@ -67,7 +70,7 @@ public class StageDirector {
         if (difficulty == Curves.CURVES_NO_ENEMY_CREATED)
             return null;
         else {
-            final Enemy enemy = enemyTypes.op(this, difficulty);
+            Enemy enemy = enemyTypes.get(this, difficulty);
             if (enemy == null)
                 throw new IndexOutOfBoundsException("tryGenerateEnemy missing a generation class");
             else

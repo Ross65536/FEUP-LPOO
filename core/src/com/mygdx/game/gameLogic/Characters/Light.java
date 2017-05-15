@@ -1,6 +1,6 @@
 package com.mygdx.game.gameLogic.Characters;
 
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
 
 public class Light extends Character{
 

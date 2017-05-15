@@ -9,13 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.mygdx.game.Constants;
+import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.MyGame;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.GameMenus;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.MenuManager;
-
-import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.actor;
 
 
 public class PlayGUIWidgetsInput extends WidgetsInput{
@@ -141,7 +139,7 @@ public class PlayGUIWidgetsInput extends WidgetsInput{
 
                         //check if out of bounds
                         xSlided+=diffMovement;
-                        if((xSlided<0) || (xSlided>=(Constants.NUMBER_OF_GAMEMODES-1)*DeviceConstants.MENU_VIEWPORT)) {
+                        if((xSlided<0) || (xSlided>=(CommonConsts.NUMBER_OF_GAMEMODES-1)*DeviceConstants.MENU_VIEWPORT)) {
                             xSlided-=diffMovement;
                             return;
                         }

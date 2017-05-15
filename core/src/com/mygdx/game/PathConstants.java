@@ -6,24 +6,58 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public final class PathConstants {
+
+
     //asset names
-    public static final String HERO_WALKING_IMAGE_PATH = "heroWalking.png";
-    public static final String ENEMY_GROUND_IMAGE_PATH = "personRed.png";
-    public static final String PLATFORM_IMAGE_PATH = "platform.png";
+    private static final String SPRITE_PATH = "Sprites/";
+    public static final String HERO_WALKING_IMAGE_PATH = SPRITE_PATH + "heroWalking.png";
+    public static final String HERO_JUMPING_IMAGE_PATH = SPRITE_PATH + "heroJumping.png";
+    public static final String ENEMY_GROUND_IMAGE_PATH = SPRITE_PATH + "gobby_moveR_strip6.png";
+    public static final String ENEMY_FLYING_IMAGE_PATH = SPRITE_PATH + "flyingSpritesPixelated.png";
+    public static final String PLATFORM_IMAGE_PATH = SPRITE_PATH + "platform2.png";
     public static final String LIGHT_IMAGE_PATH = "light.png";
-    public static final int HERO_WALKING_FRAME_COLS = 6;
-    public static final int HERO_WALKING_FRAME_ROWS = 5;
-    public static final float HERO_FRAME_TIME = 0.033f;
+
+    //background
+    public static final String BACKGROUND_IMAGE = SPRITE_PATH + "Background3.png";
+    public static final double BACKGROUND_ASPECT_RATIO = 1.0;
+    public static final double BACKGROUND_PORTION_OF_CAMERA_Y = 0.5;
+
+    public static final int HERO_WALKING_FRAME_COLS = 4;
+    public static final int HERO_WALKING_FRAME_ROWS = 1;
+    public static final float HERO_FRAME_TIME = 1.0f / HERO_WALKING_FRAME_COLS / 2;
+
+    public static final String[] discLevelAssetNames = {HERO_WALKING_IMAGE_PATH, ENEMY_GROUND_IMAGE_PATH, LIGHT_IMAGE_PATH, ENEMY_FLYING_IMAGE_PATH, HERO_JUMPING_IMAGE_PATH, BACKGROUND_IMAGE};
+    public static final String[] platformTestLevelAssetNames = {HERO_WALKING_IMAGE_PATH, HERO_JUMPING_IMAGE_PATH, ENEMY_GROUND_IMAGE_PATH, PLATFORM_IMAGE_PATH, LIGHT_IMAGE_PATH, BACKGROUND_IMAGE, ENEMY_FLYING_IMAGE_PATH};
 
 
     //associations between names and assetmanager types
     public static  Map<String, Object> mapPathToType; //associates paths to object types for AssetManager
     static {
 
-        PathConstants.mapPathToType = new TreeMap<String, Object>();
+        PathConstants.mapPathToType = new TreeMap<>();
         PathConstants.mapPathToType.put(PathConstants.HERO_WALKING_IMAGE_PATH, Texture.class);
+        PathConstants.mapPathToType.put(PathConstants.HERO_JUMPING_IMAGE_PATH, Texture.class);
         PathConstants.mapPathToType.put(PathConstants.ENEMY_GROUND_IMAGE_PATH, Texture.class);
+        PathConstants.mapPathToType.put(PathConstants.ENEMY_FLYING_IMAGE_PATH, Texture.class);
+        PathConstants.mapPathToType.put(PathConstants.BACKGROUND_IMAGE, Texture.class);
         PathConstants.mapPathToType.put(PathConstants.PLATFORM_IMAGE_PATH, Texture.class);
         PathConstants.mapPathToType.put(PathConstants.LIGHT_IMAGE_PATH, Texture.class);
     }
+
+    public static Map<String, Integer> enemyNumAnimationFrames; //assuming flat images, number of frames for each enemy animation
+    static
+    {
+        enemyNumAnimationFrames = new TreeMap<>();
+        enemyNumAnimationFrames.put(ENEMY_GROUND_IMAGE_PATH, 6);
+        enemyNumAnimationFrames.put(ENEMY_FLYING_IMAGE_PATH, 4);
+    }
+
+    public static Map<String, Float> enemyFrameTimes; // Associates each enemy image to a animation frame time
+    static
+    {
+        enemyFrameTimes = new TreeMap<>();
+        enemyFrameTimes.put(ENEMY_GROUND_IMAGE_PATH, 1.0f/6 / 1.5f);
+        enemyFrameTimes.put(ENEMY_FLYING_IMAGE_PATH, 1.0f/4 / 1.5f);
+    }
+
 }

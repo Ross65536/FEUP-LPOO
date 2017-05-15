@@ -1,15 +1,17 @@
 package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.PathConstants;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
 import com.mygdx.game.gameLogic.LogicWorlds.IGameWorldHeroInputs;
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
+
 
 public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
 
@@ -61,6 +63,43 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
 
     public void updateWorld(float deltaT){
         gameLogicWorld.update(deltaT); //updates all world characters
+    }
+
+    protected static double floorDouble(final double numerator, final double divisor)
+    {
+        double numMult = numerator / divisor;
+        numMult = Math.floor(numMult);
+        return numMult * divisor;
+    }
+
+    protected abstract double getBackgroundYStart(double backgroundYDim);
+
+    private static final float DRAW_Y_LEEWAY = 0.5f;
+    private static final float DRAW_X_LEEWAY = 0.2f;
+
+    protected void drawBackground()
+    {
+        final Texture backgroundTex = GameAssetHandler.getGameAssetHandler().getBackgroundTexture();
+        final HeroInfo heroInfo = gameLogicWorld.getHeroInfo();
+
+        final float backgroundYDim = (float) (worldYDim * PathConstants.BACKGROUND_PORTION_OF_CAMERA_Y);
+        final float backgroundXDim = (float) (backgroundYDim * PathConstants.BACKGROUND_ASPECT_RATIO);
+
+        final float drawXMin = (float) floorDouble(heroInfo.getXPos() - worldYDim, backgroundXDim); //max 2:1 screen
+        final float drawYMin = (float) getBackgroundYStart(backgroundYDim);
+
+        final float maxX = (float) (drawXMin + 2.0 * (worldYDim + backgroundXDim)); //should be 2:1 max screen
+        final float maxY = (float) (drawYMin + 1.0 * (worldYDim + backgroundYDim));
+
+        for (float drawY = drawYMin; drawY <= maxY; drawY += backgroundYDim)
+        {
+            for (float drawX = drawXMin; drawX <= maxX; drawX += backgroundXDim)
+            {
+                drawBatch.draw(backgroundTex, drawX,drawY, backgroundXDim, backgroundYDim);
+            }
+        }
+
+
     }
 
     public void updateScreen(float deltaT) {

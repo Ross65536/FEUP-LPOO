@@ -1,19 +1,19 @@
 package com.mygdx.game.gameLogic.LogicWorlds;
 
-import com.mygdx.game.Constants;
+import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.Light;
 import com.mygdx.game.gameLogic.Characters.Platform;
-import com.mygdx.game.gameLogic.GameDirector.StageDirector;
+import com.mygdx.game.gameLogic.GameDirector.StageDirectors.StageDirector;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Lights;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightsFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.PlatformFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Platforms;
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
 import java.util.List;
 
 public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeature {
@@ -37,7 +37,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
         platforms = new Platforms(hero, worldDims, new Vector2D(this.cameraWidth,this.cameraHeight));
 
         //TODO remove
-        if (Constants.INPUT_DEBUG)
+        if (CommonConsts.INPUT_DEBUG)
             createDummyEnemies();
 
     }
@@ -81,7 +81,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
             System.out.println("Game Lost");
         }
 
-        if (! Constants.INPUT_DEBUG)
+        if (! CommonConsts.INPUT_DEBUG)
             tryGenerateEnemy();
     }
 
@@ -97,9 +97,19 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
         }
     }
 
+    static final double FLYING_HEIGHT_MIN = 0.5;
+    static final double FLYING_HEIGHT_MAX = 1.3;
+    static final double FLYING_HEIGHT_DELTA = FLYING_HEIGHT_MAX - FLYING_HEIGHT_MIN;
     @Override
-    public void placeEnemy(Enemy enemy) {
-        //tens q fazer para plataformas
+    public void placeEnemyYPos(Enemy enemy) {
+        if (enemy.isFlyingType())
+        {
+            final double heightRatio = random.nextDouble() * FLYING_HEIGHT_DELTA;
+            final double enYHeight = worldDimensions.y * (FLYING_HEIGHT_MIN + heightRatio);
+            enemy.setYPos(enYHeight);
+        }
+        else
+            enemy.setYPos(0.0); //ground
     }
 
 

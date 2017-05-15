@@ -1,7 +1,7 @@
 package com.mygdx.game.gameLogic.Characters;
 
 
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
 
 public abstract class Character implements CharacterInfo {
     protected Vector2D characterPosition;
@@ -52,7 +52,7 @@ public abstract class Character implements CharacterInfo {
             animationTime -= 1.0;
 
         //added
-        this.prevPosition =characterPosition;
+        this.prevPosition = new Vector2D(characterPosition);
 
         final double newX = this.characterPosition.x + this.characterSpeed.x * deltaT;
         final double newY = this.characterPosition.y + this.characterSpeed.y * deltaT;
@@ -88,6 +88,10 @@ public abstract class Character implements CharacterInfo {
         return getMovementDirectionX() >= 0.0;
     }
 
+    public double getYCenter()
+    {
+        return characterPosition.y + characterDimensions.y/2.0;
+    }
 
 
     public boolean checkCollision(final Character en) {

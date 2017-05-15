@@ -7,8 +7,9 @@ import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.DummyEnemyVisuals
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.LightVisualHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.PlatformVisualHandler;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
+import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
 
 public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
 
@@ -46,8 +47,15 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
         final float heroXDim = (float) hero.getXDim();
         final float heroYPos = (float) hero.getYPos();
         final float heroYDim = (float) hero.getYDim();
+        final float heroYCenter = heroYPos + heroYDim/2;
 
-        gameCamera.position.set(heroXPos + heroXDim/2, heroYPos + heroYDim/2, 0);
+        float cameraYCenter;
+        if (heroYCenter <= worldYDim / 2)
+            cameraYCenter = (float) worldYDim / 2;
+        else
+            cameraYCenter = heroYCenter;
+
+        gameCamera.position.set(heroXPos + heroXDim/2, cameraYCenter, 0);
         gameCamera.update();
     }
 
@@ -68,7 +76,7 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
 
         drawBatch.setProjectionMatrix(gameCamera.combined);
         drawBatch.begin();
-
+        drawBackground();
         dummyEnemyVisualsHandler.drawEnemies();
 
         drawHero();
@@ -84,6 +92,20 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
         super.resize(width,height);
         if(lightVisualHandler!=null)
             lightVisualHandler.resize( width, height);
+    }
+
+    @Override
+    protected double getBackgroundYStart(double backgroundYDim) {
+
+        final HeroInfo heroInfo = gameLogicWorld.getHeroInfo();
+        final double heroYCenter = heroInfo.getYCenter();
+        if (heroYCenter < worldYDim / 2.0)
+            return 0.0;
+        else
+        {
+            final double Yintermediary = heroYCenter - worldYDim * 0.6;
+            return floorDouble(Yintermediary, backgroundYDim);
+        }
     }
 
     @Override

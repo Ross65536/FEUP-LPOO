@@ -10,5 +10,6 @@ public interface CharacterInfo {
     boolean isMovingX();
     double getAnimationTime();
     double getMovementDirectionX();
-
+    boolean isMovingRight();
+    double getYCenter();
 }

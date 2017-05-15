@@ -7,7 +7,9 @@ import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemyFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Lights;
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
+
+import java.util.Random;
 
 //added
 public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, DummyEnemyFeature {
@@ -15,6 +17,7 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
     protected Vector2D worldDimensions;
     protected Hero hero;
     protected boolean gamePlayable;
+    protected static Random random = new Random();
     DummyEnemies dummyEnemies;
     Lights light;
 
@@ -55,7 +58,31 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
     abstract public void update (float deltaT);
     abstract protected void checkHeroJump();
 
-    abstract public void placeEnemy(Enemy enemy) ;
+    protected static final double ENEMY_GENERATION_YMULT = 1.0;
+
+    final public void placeEnemy(final Enemy enemy)
+    {
+        placeEnemyYPos(enemy);
+
+        final double enXDelta = worldDimensions.y * ENEMY_GENERATION_YMULT;
+        final double heroXPos = hero.getXPos();
+
+        final boolean bool = random.nextBoolean(); //random
+
+        if (bool) //left side spawn
+        {
+            enemy.setXPos(heroXPos - enXDelta);
+            enemy.setMovementDirection(true);
+        }
+        else //right
+        {
+            enemy.setXPos(heroXPos + enXDelta);
+            enemy.setMovementDirection(false);
+        }
+    }
+
+    abstract public void placeEnemyYPos(Enemy enemy);
+
 
     protected void updateHero(float deltaT)
     {
@@ -67,6 +94,9 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
     @Override
     public void moveHeroHorizontal(final double heroXMovement)
     {
+        if (! gamePlayable)
+            return ;
+
         final StatisticsInput statisticsInput = dummyEnemies.getStatsticsInput();
         statisticsInput.registerMovement();
 

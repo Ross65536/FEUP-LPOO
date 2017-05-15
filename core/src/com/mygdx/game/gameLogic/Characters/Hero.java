@@ -1,6 +1,6 @@
 package com.mygdx.game.gameLogic.Characters;
 
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
 
 public class Hero extends Character implements HeroInfo {
     private static final double JUMP_SPEED_MULTIPLIER = 5.0;
@@ -99,7 +99,7 @@ public class Hero extends Character implements HeroInfo {
         return bMovingRight;
     }
 
-    private static final double HERO_X_LEEWAY = 0.2;
+    private static final double HERO_X_LEEWAY = 0.4;
     private static final double HERO_Y_LEEWAY = 0.2;
 
 

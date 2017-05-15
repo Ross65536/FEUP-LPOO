@@ -138,7 +138,7 @@ public class Statistics implements StatisticsInfo, StatisticsInput
                 (JUMP_WEIGHT * jumpStressRatio + MOV_WEIGHT * movStressRatio + LIGHT_WEIGHT * lightRatio)
                 / (JUMP_WEIGHT + MOV_WEIGHT + LIGHT_WEIGHT);
 
-        System.out.println("input portion " + compositeStressRatio +" light portion " + lightRatio);
+//        System.out.println("input portion " + compositeStressRatio +" light portion " + lightRatio);
 
         return compositeStressRatio;
     }

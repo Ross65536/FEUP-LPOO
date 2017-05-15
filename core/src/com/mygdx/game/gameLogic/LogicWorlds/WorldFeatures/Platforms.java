@@ -1,9 +1,9 @@
 package com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures;
 
-import com.mygdx.game.Constants;
+import com.mygdx.game.CommonConsts;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.Platform;
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +42,7 @@ public class Platforms implements PlatformFeature{
 
 
         platformHeight = fractionOfScreenHeightForPlatform*this.cameraHeight;
-        platformWidth =  platformHeight*Constants.getEnemyConstants(Platform.class).aspectRatio;
+        platformWidth =  platformHeight* CommonConsts.getEnemyConstants(Platform.class).aspectRatio;
 
         spacingBetweenPlatforms = new Vector2D(0,(int)hero.getYDim()*2.0/platformHeight);
         freqPlatforms = 10;
@@ -129,7 +129,7 @@ public class Platforms implements PlatformFeature{
         ArrayList<Platform> res = new ArrayList<Platform>();
 
         double platformHeight = fractionOfScreenHeightForPlatform * this.cameraHeight;
-        double platformWidth = platformHeight * Constants.getEnemyConstants(Platform.class).aspectRatio;
+        double platformWidth = platformHeight * CommonConsts.getEnemyConstants(Platform.class).aspectRatio;
         double topRightCornerX = hero.getXPos() + (cameraWidth / 2) + platformWidth;
         double topRightCornerY = hero.getYPos() + (cameraHeight / 2) + platformHeight * 2;
         double bottomLeftCornerX = hero.getXPos() - (cameraWidth / 2) - platformWidth;

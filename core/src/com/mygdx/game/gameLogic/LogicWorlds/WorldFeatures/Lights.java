@@ -2,7 +2,7 @@ package com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures;
 
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.Light;
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
 
 public class Lights implements LightsFeature{
 

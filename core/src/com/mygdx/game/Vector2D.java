@@ -1,4 +1,4 @@
-package com.mygdx.game.gameLogic;
+package com.mygdx.game;
 
 public class Vector2D
 {

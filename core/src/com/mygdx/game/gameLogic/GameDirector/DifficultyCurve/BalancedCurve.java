@@ -23,10 +23,10 @@ public class BalancedCurve extends Curves {
         final double stressedDifficulty = ( difficulty + stressPortion)
                 / (1.0 + STRESS_DIFFICULTY_PORTION);
 
-        System.out.println("Diff: " + stressedDifficulty);
+//        System.out.println("Diff: " + stressedDifficulty);
 
         return stressedDifficulty;
-    }
+}
 
     @Override
     public double generateDifficulty(StatisticsInfo statistics) {

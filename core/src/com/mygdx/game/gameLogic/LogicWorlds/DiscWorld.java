@@ -1,23 +1,22 @@
 package com.mygdx.game.gameLogic.LogicWorlds;
 
 
-import com.mygdx.game.Constants;
+import com.mygdx.game.CommonConsts;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.Light;
-import com.mygdx.game.gameLogic.GameDirector.StageDirector;
+import com.mygdx.game.gameLogic.GameDirector.StageDirectors.StageDirector;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Lights;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightsFeature;
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
 
 import java.util.List;
-import java.util.Random;
 
 public class DiscWorld extends GameWorld implements LightsFeature {
-    protected static final double ENEMY_GENERATION_YMULT = 1.0;
-    protected static Random random = new Random();
+
+
 
     public DiscWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
@@ -28,19 +27,21 @@ public class DiscWorld extends GameWorld implements LightsFeature {
         light = new Lights(hero);
 
         //TODO remove
-        if (Constants.INPUT_DEBUG)
+        if (CommonConsts.INPUT_DEBUG)
             createDummyEnemies();
     }
 
 
     //// specific functions -------------
+    private static final double LOOP_OFFSET = 0.2;
     protected void tryLoopHero() {
+        final double scaler = 1.0 - LOOP_OFFSET;
         //loop around level
         final double heroXPos = hero.getXPos();
         if (heroXPos < 0.0)
-            hero.setXPos(worldDimensions.x + heroXPos);
+            hero.setXPos(scaler * worldDimensions.x + heroXPos);
         else if (heroXPos > worldDimensions.x)
-            hero.setXPos(heroXPos - worldDimensions.x);
+            hero.setXPos(heroXPos - scaler * worldDimensions.x);
     }
 
 
@@ -66,7 +67,7 @@ public class DiscWorld extends GameWorld implements LightsFeature {
             System.out.println("Game Lost");
         }
 
-        if (! Constants.INPUT_DEBUG)
+        if (! CommonConsts.INPUT_DEBUG)
             tryGenerateEnemy();
     }
 
@@ -123,7 +124,7 @@ public class DiscWorld extends GameWorld implements LightsFeature {
     static final double FLYING_HEIGHT_MIN = 0.5;
     static final double FLYING_HEIGHT_MAX = 0.9;
     static final double FLYING_HEIGHT_DELTA = FLYING_HEIGHT_MAX - FLYING_HEIGHT_MIN;
-    public void placeEnemy(Enemy enemy) {
+    public void placeEnemyYPos(Enemy enemy) {
         if (enemy.isFlyingType())
         {
             final double heightRatio = random.nextDouble() * FLYING_HEIGHT_DELTA;
@@ -132,21 +133,5 @@ public class DiscWorld extends GameWorld implements LightsFeature {
         }
         else
             enemy.setYPos(0.0); //ground
-
-        final double enXDelta = worldDimensions.y * ENEMY_GENERATION_YMULT;
-        final double heroXPos = hero.getXPos();
-
-        final boolean bool = random.nextBoolean(); //random
-
-        if (bool) //left side spawn
-        {
-            enemy.setXPos(heroXPos - enXDelta);
-            enemy.setMovementDirection(true);
-        }
-        else //right
-        {
-            enemy.setXPos(heroXPos + enXDelta);
-            enemy.setMovementDirection(false);
-        }
     }
 }

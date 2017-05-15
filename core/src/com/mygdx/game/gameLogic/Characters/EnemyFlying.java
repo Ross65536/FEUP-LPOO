@@ -2,7 +2,7 @@ package com.mygdx.game.gameLogic.Characters;
 
 
 import com.mygdx.game.PathConstants;
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
 
 public class EnemyFlying extends Enemy {
 
@@ -14,7 +14,7 @@ public class EnemyFlying extends Enemy {
     @Override
     public String getAssociatedImagePath() {
         //TODO
-        return PathConstants.ENEMY_GROUND_IMAGE_PATH;
+        return PathConstants.ENEMY_FLYING_IMAGE_PATH;
     }
 
     @Override

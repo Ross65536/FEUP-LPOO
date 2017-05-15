@@ -1,19 +1,12 @@
 package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.DummyEnemyVisualsHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.LightVisualHandler;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
-import com.mygdx.game.gameLogic.Vector2D;
-
-import java.util.List;
-
+import com.mygdx.game.Vector2D;
 
 
 /**
@@ -60,6 +53,7 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
 
         drawBatch.setProjectionMatrix(gameCamera.combined);
         drawBatch.begin();
+        drawBackground();
         dummyEnemyVisuals.drawEnemies();
         drawHero();
         drawBatch.end();
@@ -73,6 +67,11 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
         super.resize(width,height);
         if(lightVisualHandler != null)
             lightVisualHandler.resize( width, height);
+    }
+
+    @Override
+    protected double getBackgroundYStart(double backgroundYDim) {
+        return 0.0;
     }
 }
 

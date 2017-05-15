@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.LIBGDXwrapper.MyGame;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
 
 import java.util.HashMap;
 

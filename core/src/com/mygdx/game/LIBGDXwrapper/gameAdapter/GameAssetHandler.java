@@ -7,11 +7,14 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.PathConstants;
+import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.Characters.Platform;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Used to manage assets such as sounds, textures.
@@ -23,11 +26,13 @@ public class GameAssetHandler { //dispose textures when swicth to menu
     private AssetManager assetManager;
 
     private Animation<TextureRegion> heroWalkAnimations;
+    private Map<String, Animation<TextureRegion>> enemyAnimations;
 
     public GameAssetHandler()
     {
         assetManager = new AssetManager(new InternalFileHandleResolver());
         heroWalkAnimations = null;
+        enemyAnimations = new TreeMap<>();
     }
 
     public static GameAssetHandler getGameAssetHandler()
@@ -37,6 +42,8 @@ public class GameAssetHandler { //dispose textures when swicth to menu
 
         return gameAssetHandler;
     }
+
+
 
     public void unloadUnneededLevelAssets(final Collection<String> assetPaths)
     {
@@ -49,32 +56,55 @@ public class GameAssetHandler { //dispose textures when swicth to menu
             }
         }
 
-        heroWalkAnimations = null;
+        nullifyAssetReferences();
     }
 
-    public void setupHeroAnimations()
+    private void nullifyAssetReferences() {
+        heroWalkAnimations = null;
+        enemyAnimations.clear();
+    }
+
+    public void setupHeroAssets()
     {
         if (heroWalkAnimations == null)
         {
-            finishLoading();
             Texture heroWalking = assetManager.get(PathConstants.HERO_WALKING_IMAGE_PATH);
+            final int numCols = PathConstants.HERO_WALKING_FRAME_COLS;
+            final int numRows = PathConstants.HERO_WALKING_FRAME_ROWS;
 
-            TextureRegion[][] tmp = TextureRegion.split(heroWalking,
-                    heroWalking.getWidth() / PathConstants.HERO_WALKING_FRAME_COLS,
-                    heroWalking.getHeight() / PathConstants.HERO_WALKING_FRAME_ROWS);
-
-
-            TextureRegion[] walkFrames = new TextureRegion[PathConstants.HERO_WALKING_FRAME_COLS * PathConstants.HERO_WALKING_FRAME_ROWS];
-            int index = 0;
-            for (int i = 0; i < PathConstants.HERO_WALKING_FRAME_ROWS; i++) {
-                for (int j = 0; j < PathConstants.HERO_WALKING_FRAME_COLS; j++) {
-                    walkFrames[index++] = tmp[i][j];
-                }
-            }
-
-            heroWalkAnimations = new Animation<TextureRegion>(PathConstants.HERO_FRAME_TIME, walkFrames);
+            heroWalkAnimations = getAnimationFromTiles(heroWalking, numCols, numRows, PathConstants.HERO_FRAME_TIME);
         }
     }
+
+    private Animation<TextureRegion> getAnimationFromTiles(Texture tiles, final int numCols, final int numRows, final float frameTime) {
+        TextureRegion[][] tmp = TextureRegion.split(tiles,
+                tiles.getWidth() / numCols,
+                tiles.getHeight() / numRows);
+
+
+        TextureRegion[] frames = new TextureRegion[numCols * numRows];
+        int index = 0;
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
+                frames[index++] = tmp[i][j];
+            }
+        }
+
+        return new Animation<TextureRegion>(frameTime, frames);
+    }
+
+    public void setupEnemyAnimationsFlat(final String enemyImagePath)
+    {
+        Texture enemyTex = assetManager.get(enemyImagePath);
+
+        final int numCols = PathConstants.enemyNumAnimationFrames.get(enemyImagePath);
+        final float animationTime = PathConstants.enemyFrameTimes.get(enemyImagePath);
+
+        Animation<TextureRegion> WalkAnimations = getAnimationFromTiles(enemyTex, numCols, 1, animationTime);
+
+        enemyAnimations.put(enemyImagePath, WalkAnimations);
+    }
+
 
     /**
      * Doesnt load duplicates if they exist
@@ -93,20 +123,30 @@ public class GameAssetHandler { //dispose textures when swicth to menu
     {
         TextureRegion tex = null;
         if (heroInfo.isMovingY()) //jumping texture
-            tex = heroWalkAnimations.getKeyFrame(0.5f, true);
+        {
+            Texture texture = assetManager.get(PathConstants.HERO_JUMPING_IMAGE_PATH);
+            tex =  new TextureRegion(texture);
+        }
         else if(heroInfo.isMovingX()) //moving on ground texture
             tex =  heroWalkAnimations.getKeyFrame((float) heroInfo.getAnimationTime(), true);
         else //stationary texture
             tex =  heroWalkAnimations.getKeyFrame(0.0f, true);
 
-        final boolean isMovingRight = heroInfo.isMovingRight();
-        if (! isMovingRight) //flip on Y axis if hero moving leftwards
-        {
-            tex = new TextureRegion(tex);
-            tex.flip(true, false);
-        }
+        tex= tryFlippingTexture(heroInfo, tex);
 
         return tex;
+    }
+
+    private TextureRegion tryFlippingTexture(final CharacterInfo charInfo, TextureRegion tex) {
+        TextureRegion newTex = tex;
+        final boolean isMovingRight = charInfo.isMovingRight();
+        if (! isMovingRight) //flip on Y axis if hero moving leftwards
+        {
+            newTex = new TextureRegion(tex);
+            newTex.flip(true, false);
+        }
+
+        return newTex;
     }
 
     /**
@@ -117,9 +157,16 @@ public class GameAssetHandler { //dispose textures when swicth to menu
      * @param enemyInfo
      * @return Texture to be drawn
      */
-    public Texture getCharacterTexture (final EnemyInfo enemyInfo)
+    public TextureRegion getEnemyTexture(final EnemyInfo enemyInfo)
     {
-        return assetManager.get(enemyInfo.getAssociatedImagePath());
+        final String enemyImagePath = enemyInfo.getAssociatedImagePath();
+        Animation<TextureRegion> walkAnimation = enemyAnimations.get(enemyImagePath);
+
+        TextureRegion enTex =  walkAnimation.getKeyFrame((float) enemyInfo.getAnimationTime(), true);
+
+        enTex = tryFlippingTexture(enemyInfo, enTex);
+
+        return enTex;
     }
 
     public Texture getPlatformTexture(final Platform platform)
@@ -135,5 +182,9 @@ public class GameAssetHandler { //dispose textures when swicth to menu
     public void finishLoading()
     {
         assetManager.finishLoading();
+    }
+
+    public Texture getBackgroundTexture() {
+        return assetManager.get(PathConstants.BACKGROUND_IMAGE);
     }
 }
