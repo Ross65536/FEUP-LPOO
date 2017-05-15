@@ -6,6 +6,7 @@ import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.DummyEnemyVisualsHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.LightVisualHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.PlatformVisualHandler;
+import com.mygdx.game.PathConstants;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
@@ -43,19 +44,30 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
     @Override
     public void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera)
     {
-        final float heroXPos = (float) hero.getXPos();
         final float heroXDim = (float) hero.getXDim();
-        final float heroYPos = (float) hero.getYPos();
-        final float heroYDim = (float) hero.getYDim();
-        final float heroYCenter = heroYPos + heroYDim/2;
+        final float heroYCenter = (float) hero.getYCenter();
+        final float heroXCenter = (float) hero.getXCenter();
 
+        //camera Y
         float cameraYCenter;
-        if (heroYCenter <= worldYDim / 2)
-            cameraYCenter = (float) worldYDim / 2;
+        final float cameraYMinLimit = (float) worldYDim / 2;
+        if (heroYCenter <= cameraYMinLimit)
+            cameraYCenter = cameraYMinLimit;
         else
             cameraYCenter = heroYCenter;
 
-        gameCamera.position.set(heroXPos + heroXDim/2, cameraYCenter, 0);
+        //camera X
+        float cameraXCenter;
+        final float cameraXMinLimit = (float) (cameraWidth / 2 + heroXDim * PathConstants.HERO_WORLD_EDGE_LEEWAY);
+        final float cameraXMaxLimit = (float) (worldXDim - cameraWidth / 2 - PathConstants.HERO_WORLD_EDGE_LEEWAY/**/);
+        if(heroXCenter <= cameraXMinLimit) //left edge
+            cameraXCenter = cameraXMinLimit;
+        else if(heroXCenter >= cameraXMaxLimit) //right edge
+            cameraXCenter = cameraXMaxLimit;
+        else
+            cameraXCenter = heroXCenter;
+
+        gameCamera.position.set(cameraXCenter, cameraYCenter, 0);
         gameCamera.update();
     }
 

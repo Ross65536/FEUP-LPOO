@@ -2,6 +2,7 @@ package com.mygdx.game.gameLogic.LogicWorlds;
 
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.PathConstants;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
@@ -43,12 +44,14 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
     }
 
 
-    protected void tryLoopHero() {
+    protected void checkHeroAtWorldEdges() {
         final double heroXPos = hero.getXPos();
+        final double heroXDim = hero.getXDim();
+        final double worldXMax = worldDimensions.x - heroXDim * (1.0 - PathConstants.HERO_WORLD_EDGE_LEEWAY);
         if (heroXPos < 0.0)
-            hero.setXPos(worldDimensions.x + heroXPos);
-        else if (heroXPos > worldDimensions.x)
-            hero.setXPos(heroXPos - worldDimensions.x);
+            hero.setXPos(0.0);
+        else if (heroXPos > worldXMax)
+            hero.setXPos(worldXMax);
     }
 
 
@@ -71,7 +74,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
 
         updateHero(deltaT);
         updateLight(deltaT);
-        tryLoopHero();
+        checkHeroAtWorldEdges();
 
         if(this.checkEnemyCollisions() > 0)
         {

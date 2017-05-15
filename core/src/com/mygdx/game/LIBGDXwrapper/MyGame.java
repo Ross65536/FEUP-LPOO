@@ -96,8 +96,8 @@ public class MyGame extends Game {
         GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
         gameAssetHandler.finishLoading(); //finish loading textures here
         gameAssetHandler.setupHeroAssets();
-        gameAssetHandler.setupEnemyAnimationsFlat(PathConstants.ENEMY_GROUND_IMAGE_PATH);
-        gameAssetHandler.setupEnemyAnimationsFlat(PathConstants.ENEMY_FLYING_IMAGE_PATH);
+        gameAssetHandler.setupEnemyAnimationsFlat(PathConstants.ENEMY_GROUND_ARRAY_INDEX);
+        gameAssetHandler.setupEnemyAnimationsFlat(PathConstants.ENEMY_FLYING_ARRAY_INDEX);
     }
 
 

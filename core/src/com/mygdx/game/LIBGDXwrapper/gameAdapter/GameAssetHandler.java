@@ -12,7 +12,9 @@ import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.Characters.Platform;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -26,13 +28,13 @@ public class GameAssetHandler { //dispose textures when swicth to menu
     private AssetManager assetManager;
 
     private Animation<TextureRegion> heroWalkAnimations;
-    private Map<String, Animation<TextureRegion>> enemyAnimations;
+    private List<Animation<TextureRegion>> enemyAnimations;
 
     public GameAssetHandler()
     {
         assetManager = new AssetManager(new InternalFileHandleResolver());
         heroWalkAnimations = null;
-        enemyAnimations = new TreeMap<>();
+        enemyAnimations = new ArrayList<>(PathConstants.ENEMY_ARRAY_SIZE);
     }
 
     public static GameAssetHandler getGameAssetHandler()
@@ -93,16 +95,17 @@ public class GameAssetHandler { //dispose textures when swicth to menu
         return new Animation<TextureRegion>(frameTime, frames);
     }
 
-    public void setupEnemyAnimationsFlat(final String enemyImagePath)
+    public void setupEnemyAnimationsFlat(final int enemyArrayIndex)
     {
-        Texture enemyTex = assetManager.get(enemyImagePath);
+        final String enTexPath = PathConstants.enemyIndexToTexture.get(enemyArrayIndex);
+        Texture enemyTex = assetManager.get(enTexPath);
 
-        final int numCols = PathConstants.enemyNumAnimationFrames.get(enemyImagePath);
-        final float animationTime = PathConstants.enemyFrameTimes.get(enemyImagePath);
+        final int numCols = PathConstants.enemyNumAnimationFrames.get(enemyArrayIndex);
+        final float animationTime = PathConstants.enemyFrameTimes.get(enemyArrayIndex);
 
         Animation<TextureRegion> WalkAnimations = getAnimationFromTiles(enemyTex, numCols, 1, animationTime);
 
-        enemyAnimations.put(enemyImagePath, WalkAnimations);
+        enemyAnimations.add(enemyArrayIndex, WalkAnimations);
     }
 
 
@@ -159,8 +162,8 @@ public class GameAssetHandler { //dispose textures when swicth to menu
      */
     public TextureRegion getEnemyTexture(final EnemyInfo enemyInfo)
     {
-        final String enemyImagePath = enemyInfo.getAssociatedImagePath();
-        Animation<TextureRegion> walkAnimation = enemyAnimations.get(enemyImagePath);
+        final int arrayIndex = enemyInfo.getArrayIndex();
+        Animation<TextureRegion> walkAnimation = enemyAnimations.get(arrayIndex);
 
         TextureRegion enTex =  walkAnimation.getKeyFrame((float) enemyInfo.getAnimationTime(), true);
 
@@ -171,7 +174,7 @@ public class GameAssetHandler { //dispose textures when swicth to menu
 
     public Texture getPlatformTexture(final Platform platform)
     {
-        return assetManager.get(platform.getAssociatedImagePath());
+        return assetManager.get(PathConstants.PLATFORM_IMAGE_PATH);
     }
 
     public Texture getLightTexture()

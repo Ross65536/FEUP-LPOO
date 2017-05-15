@@ -26,9 +26,9 @@ public class StageDirector {
     }
 
     //// utilities ------------
-    private void makeParameters(final Class<?> enType, Vector2D dimensions, Vector2D speed, double distortFraction)
+    private void makeParameters(Vector2D dimensions, Vector2D speed, double distortFraction, int arrayIndex)
     {
-        final CommonConsts.CharacterConstants enConsts = CommonConsts.getEnemyConstants(enType);
+        final CommonConsts.CharacterConstants enConsts = CommonConsts.getEnemyConstants(arrayIndex);
         final double dimDistort = enConsts.dimYPadding;
         final double enYDim = (enConsts.dimYMult + dimDistort * distortFraction) * measurementUnit;
         final double enXDim = enYDim * enConsts.aspectRatio;
@@ -45,13 +45,11 @@ public class StageDirector {
      * @param distortion should be from 0.0 to 1.0, multiplied with speed and dimensions distrortion
      * @return
      */
-    protected Enemy makeEnemy (final Class<?> enType, final double distortFraction)
+    protected Enemy makeEnemy (final Class<?> enType, final double distortFraction, final int arrayIndex)
     {
-
-
         Vector2D dimensions = new Vector2D();
         Vector2D speed = new Vector2D();
-        makeParameters(enType, dimensions, speed, distortFraction);
+        makeParameters(dimensions, speed, distortFraction, arrayIndex);
 
         if (enType == EnemyGround.class)
             return new EnemyGround(null, dimensions, speed);

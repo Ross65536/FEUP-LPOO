@@ -11,14 +11,19 @@ public class EnemyFlying extends Enemy {
         super(position, dimensions, speed);
     }
 
-    @Override
-    public String getAssociatedImagePath() {
-        //TODO
-        return PathConstants.ENEMY_FLYING_IMAGE_PATH;
-    }
 
     @Override
     public boolean isFlyingType() {
+        return true;
+    }
+
+    @Override
+    public int getArrayIndex() {
+        return PathConstants.ENEMY_FLYING_ARRAY_INDEX;
+    }
+
+    @Override
+    public boolean isBossType() {
         return true;
     }
 }

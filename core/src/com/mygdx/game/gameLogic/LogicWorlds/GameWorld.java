@@ -60,35 +60,13 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
 
     protected static final double ENEMY_GENERATION_YMULT = 1.0;
 
-    final public void placeEnemy(final Enemy enemy)
-    {
-        placeEnemyYPos(enemy);
 
-        final double enXDelta = worldDimensions.y * ENEMY_GENERATION_YMULT;
-        final double heroXPos = hero.getXPos();
-
-        final boolean bool = random.nextBoolean(); //random
-
-        if (bool) //left side spawn
-        {
-            enemy.setXPos(heroXPos - enXDelta);
-            enemy.setMovementDirection(true);
-        }
-        else //right
-        {
-            enemy.setXPos(heroXPos + enXDelta);
-            enemy.setMovementDirection(false);
-        }
-    }
 
     abstract public void placeEnemyYPos(Enemy enemy);
 
+    abstract protected void checkHeroAtWorldEdges();
 
-    protected void updateHero(float deltaT)
-    {
-        hero.update(deltaT);
-        checkHeroJump();
-    }
+
 
     //// hero inputs -------
     @Override
@@ -118,5 +96,32 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
         StatisticsInput statisticsInput = dummyEnemies.getStatsticsInput();
         statisticsInput.setLightLevel(light.getRadiousPercentage());
 
+    }
+
+    final public void placeEnemy(final Enemy enemy)
+    {
+        placeEnemyYPos(enemy);
+
+        final double enXDelta = worldDimensions.y * ENEMY_GENERATION_YMULT;
+        final double heroXPos = hero.getXPos();
+
+        final boolean bool = random.nextBoolean(); //random
+
+        if (bool) //left side spawn
+        {
+            enemy.setXPos(heroXPos - enXDelta);
+            enemy.setMovementDirection(true);
+        }
+        else //right
+        {
+            enemy.setXPos(heroXPos + enXDelta);
+            enemy.setMovementDirection(false);
+        }
+    }
+
+    protected void updateHero(float deltaT)
+    {
+        hero.update(deltaT);
+        checkHeroJump();
     }
 }

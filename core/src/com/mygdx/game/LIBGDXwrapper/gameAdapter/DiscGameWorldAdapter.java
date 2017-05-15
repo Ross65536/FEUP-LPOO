@@ -17,7 +17,7 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
 
     private DummyEnemyVisualsHandler dummyEnemyVisuals;
 
-    private LightVisualHandler lightVisualHandler;
+    private LightVisualHandler /**/lightVisualHandler;
 
     public DiscGameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
     {

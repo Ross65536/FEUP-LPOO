@@ -93,6 +93,8 @@ public abstract class Character implements CharacterInfo {
         return characterPosition.y + characterDimensions.y/2.0;
     }
 
+    public double getXCenter() { return characterPosition.x + characterDimensions.x/2.0;};
+
 
     public boolean checkCollision(final Character en) {
         final boolean heroXLeft = characterPosition.x + characterDimensions.x < en.characterPosition.x;
