@@ -34,7 +34,7 @@ public class DiscWorld extends GameWorld implements LightsFeature {
 
     //// specific functions -------------
     private static final double LOOP_OFFSET = 0.2;
-    protected void tryLoopHero() {
+    protected void checkHeroAtWorldEdges() {
         final double scaler = 1.0 - LOOP_OFFSET;
         //loop around level
         final double heroXPos = hero.getXPos();
@@ -59,7 +59,7 @@ public class DiscWorld extends GameWorld implements LightsFeature {
 
         updateHero(deltaT);
         updateLight(deltaT);
-        tryLoopHero();
+        checkHeroAtWorldEdges();
 
         if(this.checkEnemyCollisions() > 0)
         {

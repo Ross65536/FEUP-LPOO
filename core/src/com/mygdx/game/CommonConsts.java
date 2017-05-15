@@ -6,6 +6,9 @@ import com.mygdx.game.gameLogic.Characters.EnemyFlying;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.Platform;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Contants common for gameLogic and Graphics.
  *
@@ -34,25 +37,52 @@ public class CommonConsts {
     //EnemyGround class
     private static final CharacterConstants constantsEnemyGround =
             new CharacterConstants(1.0f, 1.5, 1.0, 0.5, 0.2);
+    private static final CharacterConstants constantsEnemyGroundBoss =
+            new CharacterConstants(1.0f, 1.5, 1.0, 0.5, 0.2); //TODO
     //Flying Enemy class
     private static final CharacterConstants constantsEnemyFlying =
             new CharacterConstants(200 / (double) 100, 1.0, 1.0, 0.5, -0.2);
+    private static final CharacterConstants constantsEnemyFlyingBoss =
+            new CharacterConstants(200 / (double) 100, 1.0, 1.0, 0.5, -0.2); //TODO
 
     //platform
     private static final CharacterConstants constantsPlatform =
             new CharacterConstants(400 / (double) 50, 0, 0, 0, 0);
 
-    public static final CharacterConstants getEnemyConstants(final Class<?> enType)
+    public static final List<CharacterConstants> enemyIndexToConstants;
+    static
     {
-        if (enType == Hero.class)
-            return constantsHero;
-        else if (enType == EnemyGround.class)
-            return constantsEnemyGround;
-        else if (enType == EnemyFlying.class)
-            return constantsEnemyFlying;
-        else if (enType == Platform.class)
-            return constantsPlatform;
-        else
+        enemyIndexToConstants = new ArrayList<>(PathConstants.ENEMY_ARRAY_SIZE * 2);
+        //common
+        enemyIndexToConstants.add(PathConstants.ENEMY_GROUND_ARRAY_INDEX, constantsEnemyGround);
+        enemyIndexToConstants.add(PathConstants.ENEMY_FLYING_ARRAY_INDEX, constantsEnemyFlying);
+
+        //boss
+        enemyIndexToConstants.add(PathConstants.ENEMY_GROUND_ARRAY_INDEX + PathConstants.ENEMY_ARRAY_SIZE, constantsEnemyGroundBoss);
+        enemyIndexToConstants.add(PathConstants.ENEMY_FLYING_ARRAY_INDEX + PathConstants.ENEMY_ARRAY_SIZE, constantsEnemyFlyingBoss);
+    }
+
+
+    public static final CharacterConstants getEnemyConstants(final int enArrayIndex)
+    {
+        if (enArrayIndex > enemyIndexToConstants.size())
             return null;
+        else
+            return enemyIndexToConstants.get(enArrayIndex);
+
+    }
+
+    public static final CharacterConstants getCharacterConstants(final Class<?> enType)
+    {
+            if (enType == Hero.class)
+                return constantsHero;
+            else if (enType == Platform.class)
+                return constantsPlatform;
+            else if (enType == EnemyGround.class)
+                return constantsEnemyGround;
+            else if (enType == EnemyFlying.class)
+                return constantsEnemyFlying;
+            else
+                return null;
     }
 }

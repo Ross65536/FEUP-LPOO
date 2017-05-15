@@ -11,12 +11,17 @@ public class EnemyGround extends Enemy {
     }
 
     @Override
-    public String getAssociatedImagePath() {
-        return PathConstants.ENEMY_GROUND_IMAGE_PATH;
+    public boolean isFlyingType() {
+        return false;
     }
 
     @Override
-    public boolean isFlyingType() {
+    public int getArrayIndex() {
+        return PathConstants.ENEMY_GROUND_ARRAY_INDEX;
+    }
+
+    @Override
+    public boolean isBossType() {
         return false;
     }
 }

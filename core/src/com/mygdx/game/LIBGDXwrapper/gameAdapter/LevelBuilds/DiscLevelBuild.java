@@ -21,7 +21,7 @@ public class DiscLevelBuild {
     {
         final double heroHeight = worldDims.y/HERO_HEIGHT_BY_SCREEN_HEIGHT;
 
-        final CommonConsts.CharacterConstants heroConsts = CommonConsts.getEnemyConstants(Hero.class);
+        final CommonConsts.CharacterConstants heroConsts = CommonConsts.getCharacterConstants(Hero.class);
         final Vector2D heroPos = new Vector2D(worldDims.x / 2f, 0); //hero at middle of world dimensions
         final Vector2D heroDims = new Vector2D(heroHeight * heroConsts.aspectRatio, heroHeight);
 

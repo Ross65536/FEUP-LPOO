@@ -1,6 +1,7 @@
 package com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures;
 
 import com.mygdx.game.CommonConsts;
+import com.mygdx.game.PathConstants;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyGround;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
@@ -77,7 +78,7 @@ public class DummyEnemies implements DummyEnemyFeature {
         final double heroXDim = hero.getXDim();
         final double heroYDim = hero.getYDim();
 
-        final CommonConsts.CharacterConstants characterConstants = CommonConsts.getEnemyConstants(EnemyGround.class);
+        final CommonConsts.CharacterConstants characterConstants = CommonConsts.getEnemyConstants(PathConstants.ENEMY_GROUND_ARRAY_INDEX);
 
         final double enYDim = characterConstants.dimYMult * heroYDim;
         final double enXDim = enYDim * characterConstants.aspectRatio;

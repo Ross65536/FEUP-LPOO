@@ -33,7 +33,7 @@ public class LevelBuilder {
 
 
     //// core -------------
-    private static final double ENEMY_CREATION_DELTAT = 3.0; //seconds between each generate
+    private static final double ENEMY_CREATION_DELTAT = 2.0; //seconds between each generate
     private static final int MAX_NUM_ENEMIES = 10;
     private static final double STATISTICS_DEVICE_JUMP = 2.0;
     private static final double STATISTICS_DEVICE_MOV = 5.0;

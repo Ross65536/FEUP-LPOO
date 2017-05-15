@@ -59,8 +59,5 @@ public class Platform extends Character{
         return characterPosition.y + characterDimensions.y*(PLATFORM_Y_LEEWAY+0.1);
     }
 
-    public String getAssociatedImagePath(){
-        return PathConstants.PLATFORM_IMAGE_PATH;
-    }
 
 }

@@ -16,8 +16,6 @@ public abstract class Enemy extends Character implements EnemyInfo {
             this.characterSpeed.x = - xSpeed;
     }
 
-    @Override
-    abstract public String getAssociatedImagePath();
 
     abstract public boolean isFlyingType();
 }

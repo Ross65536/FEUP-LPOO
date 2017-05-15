@@ -2,7 +2,6 @@ package com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds;
 
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
-import com.mygdx.game.PathConstants;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.Vector2D;
 
@@ -30,7 +29,7 @@ public class PlatLevelBuild{
     {
         final double heroHeight = cameraDims.y/(HERO_HEIGHT_BY_SCREEN_HEIGHT);
 
-        final CommonConsts.CharacterConstants heroConsts = CommonConsts.getEnemyConstants(Hero.class);
+        final CommonConsts.CharacterConstants heroConsts = CommonConsts.getCharacterConstants(Hero.class);
         final Vector2D heroPos = new Vector2D(worldDims.x / 2f, 0); //hero at middle of world dimensions
         final Vector2D heroDims = new Vector2D(heroHeight * heroConsts.aspectRatio, heroHeight);
 

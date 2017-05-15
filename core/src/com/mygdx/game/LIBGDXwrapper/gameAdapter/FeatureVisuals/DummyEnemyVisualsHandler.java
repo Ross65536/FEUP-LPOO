@@ -33,11 +33,21 @@ public class DummyEnemyVisualsHandler {
             return;
         }
 
+
+
         for (EnemyInfo enemy : enemies)
         {
             TextureRegion enemyTex = gameAssetHandler.getEnemyTexture(enemy);
+            final boolean isBossEnemy = enemy.isBossType();
+            if (isBossEnemy)
+                drawBatch.setColor(1,0,1,1); //boss color
 
             drawBatch.draw(enemyTex, (float) enemy.getXPos(), (float) enemy.getYPos(), (float) enemy.getXDim(), (float) enemy.getYDim());
+
+            if (isBossEnemy)
+                drawBatch.setColor(1,1,1,1); //reset color
         }
+
+
     }
 }

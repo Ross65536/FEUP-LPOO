@@ -3,5 +3,6 @@ package com.mygdx.game.gameLogic.Characters;
 
 public interface EnemyInfo extends CharacterInfo
 {
-    String getAssociatedImagePath();
+    int getArrayIndex();
+    boolean isBossType();
 }

@@ -12,4 +12,5 @@ public interface CharacterInfo {
     double getMovementDirectionX();
     boolean isMovingRight();
     double getYCenter();
+    double getXCenter();
 }
