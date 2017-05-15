@@ -46,7 +46,9 @@ public class MyGame extends Game {
     {
         switch (instruction){
             case PAUSE:
-                menuScreen.pauseGame();
+                if(menuScreen==null)
+                    menuScreen = new MenuScreen(this);
+                menuScreen.pauseGame(gameScreen.getCurrentLevel());
                 break;
             case EXIT:
                 gameScreen.nullifyLevel(); //very important
@@ -58,13 +60,21 @@ public class MyGame extends Game {
 
 
     public void SwicthToGameScreen(GameInstr instruction){
-        gameScreen.registerInputHandler();
         switch (instruction){
             case RESUME:
 
                 break;
             case RESTART:
-                startGameTest();
+                if(gameScreen==null)
+                    break;
+                switch (gameScreen.whatGameMode()){
+                    case DODGING:
+                        startGameTest();
+                        break;
+                    case PLATAFORMS:
+                        startPlatGameTest();
+                        break;
+                }
                 break;
             case START_GAME_MODE1:
                 startGameTest();
@@ -81,6 +91,7 @@ public class MyGame extends Game {
 
 
         setScreen(gameScreen);
+        gameScreen.setAsInput();
     }
 
 

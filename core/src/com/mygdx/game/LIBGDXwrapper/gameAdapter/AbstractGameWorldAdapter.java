@@ -1,6 +1,7 @@
 package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,6 +19,7 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
     protected double worldXDim;
     protected double worldYDim; //also camera Height
     protected double cameraWidth;
+    protected OrthographicCamera gameCamera;
 
     public AbstractGameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
     {
@@ -34,6 +36,11 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
         double x = hero.getXPos()+hero.getXDim()/2.0;
         double y = hero.getYPos()+hero.getYDim()/2.0;
         return new Vector2D(x,y);
+    }
+
+    @Override
+    public void setCamera(OrthographicCamera camera){
+        gameCamera = camera;
     }
 
     protected void drawHero()
@@ -56,7 +63,9 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
         gameLogicWorld.update(deltaT); //updates all world characters
     }
 
-    public void updateScreen(float deltaT, OrthographicCamera gameCamera) {
+    public void updateScreen(float deltaT) {
+        Gdx.gl.glClearColor(103 / 255f, 69 / 255f, 117 / 255f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         CharacterInfo hero = gameLogicWorld.getHeroInfo();
         updateCameraPos(hero, gameCamera);
         drawBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);

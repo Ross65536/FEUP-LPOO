@@ -7,6 +7,7 @@ import com.mygdx.game.LIBGDXwrapper.gameGUI.AbstractGUI;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.GameMenus;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.MainGUI;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.MenuManager;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.PauseGUI;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.PlayGUI;
 
 public class SettingsGUIWidgetsInput extends WidgetsInput{
@@ -19,6 +20,9 @@ public class SettingsGUIWidgetsInput extends WidgetsInput{
                     menuManager.setMenu(GameMenus.MainMenu);
                 if(backGUI.equals(PlayGUI.class))
                     menuManager.setMenu(GameMenus.PlayGUI);
+                if(backGUI.equals(PauseGUI.class)){
+                    menuManager.setMenu(GameMenus.PauseGUI);
+                }
             }
         });
     }

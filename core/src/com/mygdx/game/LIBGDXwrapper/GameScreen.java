@@ -1,23 +1,18 @@
 package com.mygdx.game.LIBGDXwrapper;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.LIBGDXwrapper.Input.GyroscopeInput;
 import com.mygdx.game.LIBGDXwrapper.Input.KeyboardInput;
-import com.mygdx.game.LIBGDXwrapper.gameAdapter.AbstractGameWorldAdapter;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.DiscGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.PlatGameWorldAdapter;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.HUD;
 import com.mygdx.game.gameLogic.Vector2D;
 
 public class GameScreen extends ScreenAdapter {
@@ -26,8 +21,13 @@ public class GameScreen extends ScreenAdapter {
     private IGameWorldAdapter currentLevel;
     private GameSettings gameSettings;
     private GyroscopeInput gyroscopeInput = null;
-    protected float fps = 0;
     private StretchViewport viewport;
+
+    private InputMultiplexer input;
+
+    public static enum GameMode{PLATAFORMS, DODGING};
+    ///////HUD////////
+    private HUD hud;
 
     final static double MIN_JUMP_GRAVITY_STRENGTH = 0.5;
 
@@ -38,17 +38,36 @@ public class GameScreen extends ScreenAdapter {
         this.gameSettings = gameSettings;
         this.currentLevel = null;
         viewport = new StretchViewport(0,0,gameCamera);
+
+
         registerInputHandler();
     }
 
     public void LoadLevel(IGameWorldAdapter currentLevel)
     {
-        Gdx.graphics.setVSync(true);
         this.currentLevel = currentLevel;
+        currentLevel.setCamera(gameCamera);
         final Vector2D camDims = currentLevel.getCameraSetup();
+
+        ////////HUD////////
+        hud = new HUD(camDims,game);
+        registerHUDInput(hud);
+
         viewport.setWorldSize((float)camDims.x,(float)camDims.y);
         viewport.update(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),true);
         gameCamera.setToOrtho(false, (float) camDims.x, (float) camDims.y); //camera has maximum world height
+    }
+
+    public void setAsInput(){
+        Gdx.input.setInputProcessor(input);
+    }
+
+    ///////HUD////////
+    private void registerHUDInput(HUD hud){
+        if(input.size()>1)
+            input.removeProcessor(0);
+        input.addProcessor(0,hud);
+        this.setAsInput();
     }
 
     /**
@@ -58,6 +77,7 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void render(float deltaT) {
+
         currentLevel.updateWorld(deltaT);
 
         if(!gameSettings.noMotionSensors() && gyroscopeInput!=null){
@@ -66,9 +86,11 @@ public class GameScreen extends ScreenAdapter {
 
         super.render(deltaT);
 
-        Gdx.gl.glClearColor(103 / 255f, 69 / 255f, 117 / 255f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        currentLevel.updateScreen(deltaT, gameCamera);
+        currentLevel.updateScreen(deltaT);
+
+        ////////HUD////////
+        hud.act(deltaT);
+        hud.draw();
     }
 
     /**
@@ -109,17 +131,18 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void registerInputHandler() {
+        input = new InputMultiplexer();
         if (gameSettings.noMotionSensors()) //use keyboard if on desktop
         {
             KeyboardInput keyboardInput = new KeyboardInput(this);
-            Gdx.input.setInputProcessor(keyboardInput);
+            input.addProcessor(keyboardInput);
         }
         else //gyroscope input
             if(Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass)){
                 gyroscopeInput = new GyroscopeInput(this);
 
                 KeyboardInput keyboardInput = new KeyboardInput(this); //for touch
-                Gdx.input.setInputProcessor(keyboardInput);
+                input.addProcessor(keyboardInput);
             }
 
     }
@@ -133,6 +156,9 @@ public class GameScreen extends ScreenAdapter {
         this.viewport.update(width,height,false);
     }
 
+    public IGameWorldAdapter getCurrentLevel(){
+        return currentLevel;
+    }
 
     public void nullifyLevel(){
         if(currentLevel!=null){
@@ -140,5 +166,16 @@ public class GameScreen extends ScreenAdapter {
             currentLevel = null;
         }
         System.gc();
+    }
+
+
+    public GameMode whatGameMode(){
+        if(currentLevel instanceof DiscGameWorldAdapter){
+            return GameMode.DODGING;
+        }else
+            if(currentLevel instanceof PlatGameWorldAdapter){
+                return GameMode.PLATAFORMS;
+            }
+        return null;
     }
 }

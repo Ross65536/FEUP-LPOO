@@ -3,6 +3,7 @@ package com.mygdx.game.LIBGDXwrapper;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.MenuManager;
 
 import static com.mygdx.game.LIBGDXwrapper.DeviceConstants.INVERTED_SCREEN_RATIO;
@@ -30,8 +31,8 @@ public class MenuScreen extends ScreenAdapter {
         menuManager.backToMenu();
     }
 
-    public void pauseGame(){
-        menuManager.pauseGame();
+    public void pauseGame(IGameWorldAdapter gameScreen){
+        menuManager.pauseGame(gameScreen);
     }
 
     @Override

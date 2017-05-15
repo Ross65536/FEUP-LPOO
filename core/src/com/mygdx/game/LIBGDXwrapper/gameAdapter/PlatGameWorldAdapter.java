@@ -61,11 +61,10 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
     /**
      * function ticks the GameWorld, gets the objects information from it and draws them
      * @param deltaT
-     * @param gameCamera
      */
     @Override
-    public void updateScreen(float deltaT, OrthographicCamera gameCamera) {
-        super.updateScreen(deltaT,gameCamera);
+    public void updateScreen(float deltaT) {
+        super.updateScreen(deltaT);
 
         drawBatch.setProjectionMatrix(gameCamera.combined);
         drawBatch.begin();

@@ -33,16 +33,21 @@ public class WidgetsGeneric{
         return table.add(label);
     }
 
-    public static Cell<Button> loadButton(Skin skin, Table table, String upFileName, String downFileName) {
+    public static Button getButton(Skin skin, String upFileName, String downFileName){
         loadToSkin(downFileName, downFileName, skin);
         loadToSkin(upFileName, upFileName, skin);
         Button.ButtonStyle button = new Button.ButtonStyle();
         button.down = skin.getDrawable(downFileName);
         button.up = skin.getDrawable(upFileName);
 
-        Button playButton = new Button(button);
+        return new Button(button);
+    }
 
-        return table.add(playButton);
+    public static Cell<Button> loadButton(Skin skin, Table table, String upFileName, String downFileName) {
+
+        Button button = getButton(skin,upFileName,downFileName);
+
+        return table.add(button);
     }
 
 

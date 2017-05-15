@@ -1,7 +1,9 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.LIBGDXwrapper.GameScreen;
 import com.mygdx.game.LIBGDXwrapper.MyGame;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 
 public class MenuManager {
 
@@ -11,23 +13,26 @@ public class MenuManager {
     public AbstractGUI currentMenu;
 
     public void setMenu(GameMenus menuTypeEnum){
-        if(menuTypeEnum.equals(GameMenus.SettingsGUI)){
-            currentMenu = menuTypeEnum.openSettings(this, currentMenu);
-        }else
-            currentMenu = menuTypeEnum.createInstance(this);
-
+        switch(menuTypeEnum){
+            case SettingsGUI:
+                currentMenu = menuTypeEnum.openSettings(this, currentMenu);
+                break;
+            default:
+                currentMenu = menuTypeEnum.createInstance(this);
+                break;
+        }
         this.setInputProcessor();
         resize(Gdx.graphics.getWidth() ,Gdx.graphics.getHeight());
     }
 
-    public void pauseGame(){
-        //TODO
-        //this.setMenu(GameMenus.PauseInGame);
+    public void pauseGame(IGameWorldAdapter gameScreen){
+        currentMenu = GameMenus.PauseGUI.openPauseMenu(this, gameScreen);
+        this.setInputProcessor();
+        resize(Gdx.graphics.getWidth() ,Gdx.graphics.getHeight());
     }
 
     public void backToMenu(){
-        //TODO
-        //this.setMenu(GameMenus.PlayMenu);
+        this.setMenu(GameMenus.PlayGUI);
     }
 
 

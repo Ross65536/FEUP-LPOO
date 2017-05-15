@@ -11,7 +11,8 @@ public interface IGameWorldAdapter {
     void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera);
     Vector2D getCameraSetup ();
     void updateWorld(float delaT);
-    void updateScreen(float deltaT, OrthographicCamera gameCamera);
+    void updateScreen(float deltaT);
+    void setCamera(OrthographicCamera camera);
     IGameWorldHeroInputs getLogicWorldInputs();
     void resize(int width, int height);
     void dispose();
