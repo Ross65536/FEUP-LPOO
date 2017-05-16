@@ -33,7 +33,6 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
         drawBatch = new SpriteBatch();
         drawBatch.enableBlending();//default
 
-
         this.cameraWidth = cameraDims.x;
         this.cameraHeight = cameraDims.y;
 

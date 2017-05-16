@@ -23,14 +23,13 @@ public class LightRecharger implements LightRechargerFeature{
 
     private TreeMap<Double, TreeMap<Double,Platform>> allPlatforms;
 
-    private double timePast = 0;
-
-    private double distanceVelInc;
-
     private double cameraHeight;
 
     private double lightRadious;
     //private double minDiameter;
+
+    private int rechargersCaught = 0;
+    private int distanteLevel = 1;
 
     public LightRecharger(HeroInfo hero, TreeMap<Double, TreeMap<Double,Platform>> allPlatforms, Light light, Vector2D cameraDim){
         this.cameraHeight = cameraDim.y;
@@ -38,7 +37,6 @@ public class LightRecharger implements LightRechargerFeature{
         this.heroLight = light;
         this.allPlatforms = allPlatforms;
         //this.minDiameter = Math.sqrt(cameraDim.x*cameraDim.x + cameraDim.y*cameraDim.y)/2f;
-        this.distanceVelInc = hero.getYDim()/20f;//per s
 
         lightRadious = heroInfo.getYDim()*5;
         generateItem();
@@ -49,13 +47,18 @@ public class LightRecharger implements LightRechargerFeature{
     }
 
     public void updateRechargerItem(float deltaT){
-        timePast+=deltaT;
         if(checkFound()){
+            rechargersCaught++;
+            distanteLevel++;
             heroLight.resetRadious();
             generateItem();
         }
         updateLight();
         itemLight.updateOscilation(deltaT);
+    }
+
+    public int totalRechargersCaught(){
+        return rechargersCaught;
     }
 
     public Recharger getItemInfo(){
@@ -68,7 +71,13 @@ public class LightRecharger implements LightRechargerFeature{
 
     private void generateItem(){
         Random randomPercentage = new Random();
-        Platform plat = getPlatformForItem();
+
+        Platform plat = null;
+        while(plat==null){
+            plat = getPlatformForItem();
+            if(plat == null)
+                distanteLevel--;
+        }
 
         Vector2D posItem = new Vector2D();
 
@@ -104,7 +113,6 @@ public class LightRecharger implements LightRechargerFeature{
         posLight.x = item.getXPos() + (item.getXDim()/2.0)-(lightRadious/2.0);
         posLight.y = item.getYPos() + (item.getYDim()/2.0) - (lightRadious/2.0);
 
-
         if(itemLight == null) {
             itemLight = new Light(posLight,lightRadious ,true,0.5);
         }
@@ -112,6 +120,18 @@ public class LightRecharger implements LightRechargerFeature{
             itemLight.setXPos(posLight.x);
             itemLight.setYPos(posLight.y);
         }
+    }
+
+    private Platform getRandomPlatform(){
+        Platform minPlatform = null;
+        for(Map.Entry<Double,TreeMap<Double,Platform>> platformsY: allPlatforms.entrySet()){
+            for(Map.Entry<Double,Platform> platformsX: platformsY.getValue().entrySet()){
+                if((minPlatform == null || dist(platformsX.getValue()) < dist(minPlatform)) && (dist(platformsX.getValue())>calculateMinDistance())){
+                    minPlatform = platformsX.getValue();
+                }
+            }
+        }
+        return minPlatform;
     }
 
     private Platform getPlatformForItem(){
@@ -218,7 +238,7 @@ public class LightRecharger implements LightRechargerFeature{
      * @return Minimum distance to item.
      */
     private double calculateMinDistance(){
-        return timePast*distanceVelInc + heroInfo.getYDim()*3;
+        return distanteLevel*heroInfo.getYDim()*3;
     }
 
 }

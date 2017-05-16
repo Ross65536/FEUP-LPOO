@@ -27,8 +27,8 @@ public class Light extends Entity{
         this.velocityDisappearance = radious/40;
     }
 
-    public void setVelocityDisappearance(double velDis){
-        this.velocityDisappearance = velDis;
+    public void setVelocityDisappearance(double perDis){
+        this.velocityDisappearance = originalRadious*perDis;
     }
 
     public void setOscilationVelocity(double oscilationVelocity){

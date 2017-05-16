@@ -38,6 +38,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
         dummyEnemies = new DummyEnemies(hero,worldDims,stageDirector, this);
 
         light = new HeroLight(hero);
+        light.getLightInfo().setVelocityDisappearance(1.0/200.0);
 
         platforms = new Platforms(hero, worldDims, new Vector2D(this.cameraWidth,this.cameraHeight));
 
@@ -83,16 +84,29 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
         checkHeroAtWorldEdges();
 
         updateRechargerItem(deltaT);
-        if(this.checkEnemyCollisions() > 0)
-        {
-            gamePlayable = false;
 
-            //TODO remove
-            System.out.println("Game Lost");
-        }
+        checkLost();
 
         if (! CommonConsts.INPUT_DEBUG)
             tryGenerateEnemy();
+    }
+
+
+    private void checkLost(){
+        /*if(this.checkEnemyCollisions() > 0)
+        {
+            gamePlayable = false;
+            //TODO remove
+            System.out.println("Game Lost");
+        }*/
+
+        float leastLightPercentage = 0.1f;
+        if(light.getRadiousPercentage()<=leastLightPercentage){
+
+            gamePlayable = false;
+            //TODO remove
+            System.out.println("Game Lost");
+        }
     }
 
     @Override
