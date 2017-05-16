@@ -2,8 +2,11 @@ package com.mygdx.game.LIBGDXwrapper;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
-import com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilder;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.LevelBuilder;
+
+import static com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.LevelBuilder.createPlatformTestLevel;
 
 
 public class MyGame extends Game {
@@ -14,7 +17,7 @@ public class MyGame extends Game {
 
     private GameSettings gameSettings;
 
-    public static enum GameInstr{RESUME, RESTART, START};
+    public static enum GameInstr{RESUME, RESTART, START_GAME_MODE1, START_GAME_MODE2};
     public static enum MenuInstr{PAUSE, EXIT};
 
 
@@ -33,16 +36,25 @@ public class MyGame extends Game {
 	private void startGameTest()
 	{
         gameScreen.LoadLevel(LevelBuilder.createTestLevel());
+        finishDiscWorldAssets();
 	}
+
+    private void startPlatGameTest()
+    {
+        gameScreen.LoadLevel(createPlatformTestLevel());
+        finishDiscWorldAssets(); // ???????????
+    }
 
     public void SwicthToMenuScreen(MenuInstr instruction)
     {
         switch (instruction){
             case PAUSE:
-                menuScreen.pauseGame();
+                if(menuScreen==null)
+                    menuScreen = new MenuScreen(this);
+                menuScreen.pauseGame(gameScreen.getCurrentLevel());
                 break;
             case EXIT:
-                gameScreen.nullifyLevel();
+                gameScreen.nullifyLevel(); //very important
                 menuScreen.backToMenu();
                 break;
         }
@@ -51,22 +63,41 @@ public class MyGame extends Game {
 
 
     public void SwicthToGameScreen(GameInstr instruction){
-        gameScreen.registerInputHandler();
         switch (instruction){
             case RESUME:
 
                 break;
             case RESTART:
+                if(gameScreen==null)
+                    break;
+                switch (gameScreen.whatGameMode()){
+                    case DODGING:
+                        startGameTest();
+                        break;
+                    case PLATAFORMS:
+                        startPlatGameTest();
+                        break;
+                }
+                break;
+            case START_GAME_MODE1:
                 startGameTest();
                 break;
-            case START:
-                startGameTest();
+            case START_GAME_MODE2:
+                startPlatGameTest();
                 break;
+
         }
 
-        GameAssetHandler.getGameAssetHandler().finishLoading(); //finish loading textures here
-
         setScreen(gameScreen);
+        gameScreen.setAsInput();
+    }
+
+    private void finishDiscWorldAssets() {
+        GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
+        gameAssetHandler.finishLoading(); //finish loading textures here
+        gameAssetHandler.setupHeroAssets();
+        gameAssetHandler.setupEnemyAnimationsFlat(CommonConsts.ENEMY_GROUND_ARRAY_INDEX);
+        gameAssetHandler.setupEnemyAnimationsFlat(CommonConsts.ENEMY_FLYING_ARRAY_INDEX);
     }
 
 

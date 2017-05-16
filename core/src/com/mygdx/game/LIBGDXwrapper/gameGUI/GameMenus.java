@@ -1,6 +1,19 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
-public enum GameMenus {MainMenu(MainGUI.class),PlayGUI(PlayGUI.class),SettingsGUI(SettingsGUI.class)/*TODO*/,LASTVALUEMARKER(null);
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
+
+public enum GameMenus {
+
+    MainMenu(MainGUI.class),
+
+    PlayGUI(PlayGUI.class),
+
+    SettingsGUI(SettingsGUI.class),
+
+    PauseGUI(PauseGUI.class)/*TODO*/,
+
+    LASTVALUEMARKER(null);
+
     private Class<? extends AbstractGUI> menuType;
     GameMenus(Class<? extends AbstractGUI> menuType){
         this.menuType = menuType;
@@ -22,6 +35,19 @@ public enum GameMenus {MainMenu(MainGUI.class),PlayGUI(PlayGUI.class),SettingsGU
             return null;
         }
         updateUsages();
+        return menu;
+    }
+
+    public AbstractGUI openPauseMenu(MenuManager menuManager, IGameWorldAdapter gameScreen){
+        if(!menuType.equals(PauseGUI.class))
+            return null;
+        try{
+            menu = ((Class<PauseGUI>) menuType).getDeclaredConstructor(MenuManager.class,IGameWorldAdapter.class).newInstance(menuManager,gameScreen);
+        }catch (Exception e){
+            System.out.println(e.toString());
+            System.out.println("No constructor with MenuManager as only argument in class.");
+            return null;
+        }
         return menu;
     }
 
@@ -48,6 +74,7 @@ public enum GameMenus {MainMenu(MainGUI.class),PlayGUI(PlayGUI.class),SettingsGU
     private void decreasedUsage() {
         if (menu != null) {
             if (usage <= 0) {
+                menu.dispose();
                 menu = null;
                 System.gc();
                 usage = 0;

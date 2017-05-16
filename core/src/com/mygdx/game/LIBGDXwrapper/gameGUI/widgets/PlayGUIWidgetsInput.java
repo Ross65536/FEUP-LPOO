@@ -9,8 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.mygdx.game.Constants;
+import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.MyGame;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.GameMenus;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.MenuManager;
 
@@ -21,7 +22,7 @@ public class PlayGUIWidgetsInput extends WidgetsInput{
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                menuManager.setMenu(GameMenus.SettingsGUI);
             }
         });
     }
@@ -31,6 +32,24 @@ public class PlayGUIWidgetsInput extends WidgetsInput{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 menuManager.setMenu(GameMenus.MainMenu);
+            }
+        });
+    }
+
+    public void loadPlayMode2Button(Button button, final MenuManager menuManager){
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                menuManager.getGame().SwicthToGameScreen(MyGame.GameInstr.START_GAME_MODE2);
+            }
+        });
+    }
+
+    public void loadPlayMode1Button(Button button, final MenuManager menuManager){
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                menuManager.getGame().SwicthToGameScreen(MyGame.GameInstr.START_GAME_MODE1);
             }
         });
     }
@@ -120,7 +139,7 @@ public class PlayGUIWidgetsInput extends WidgetsInput{
 
                         //check if out of bounds
                         xSlided+=diffMovement;
-                        if((xSlided<0) || (xSlided>=(Constants.NUMBER_OF_GAMEMODES-1)*DeviceConstants.MENU_VIEWPORT)) {
+                        if((xSlided<0) || (xSlided>=(CommonConsts.NUMBER_OF_GAMEMODES-1)*DeviceConstants.MENU_VIEWPORT)) {
                             xSlided-=diffMovement;
                             return;
                         }
@@ -132,8 +151,18 @@ public class PlayGUIWidgetsInput extends WidgetsInput{
 
                     @Override
                     public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
-                        //if(this.isPressed())
-                        //    return false;
+
+                        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
+
+                        if(y<(screenHeight-(screenHeight/6f)-(screenHeight/8f)-(2*screenHeight/30))){
+                            event.cancel();
+                            return false;
+                        }
+
+                        if(this.isPressed()) {
+                            event.cancel();
+                            return false;
+                        }
                         currentXCoor = getScreenX(x);
                         table.removeAction(action);
                         return true;

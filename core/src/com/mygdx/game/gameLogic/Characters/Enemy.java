@@ -1,10 +1,12 @@
 package com.mygdx.game.gameLogic.Characters;
 
-import com.mygdx.game.gameLogic.Vector2D;
+import com.mygdx.game.Vector2D;
 
 public abstract class Enemy extends Character implements EnemyInfo {
-    public Enemy(Vector2D position, Vector2D dimensions, Vector2D speed) {
+    final boolean isBossType;
+    public Enemy(Vector2D position, Vector2D dimensions, Vector2D speed, boolean bossEn) {
         super(position, dimensions, speed);
+        this.isBossType = bossEn;
     }
 
     public void setMovementDirection(final boolean bRight) {
@@ -15,4 +17,11 @@ public abstract class Enemy extends Character implements EnemyInfo {
         else
             this.characterSpeed.x = - xSpeed;
     }
+
+    @Override
+    public boolean isBossType() {
+        return isBossType;
+    }
+
+    abstract public boolean isFlyingType();
 }

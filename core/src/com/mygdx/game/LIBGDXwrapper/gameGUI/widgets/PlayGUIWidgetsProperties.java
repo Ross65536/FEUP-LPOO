@@ -1,18 +1,21 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI.widgets;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 
 public class PlayGUIWidgetsProperties extends WidgetsGeneric {
 
-    public Button loadBackToMenuButton(Table table){
+    public Button loadBackToMenuButton(Table table, Skin skin){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        return loadButton(table
+        return loadButton(skin, table
                 //images
                 ,"playBackToMenuButtonUp.png"
                 ,"playBackToMenuButtonDown.png")
@@ -29,11 +32,11 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
                 .getActor();
     }
 
-    public Button loadSettingsButton(Table table){
+    public Button loadSettingsButton(Table table,Skin skin){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        return loadButton(table
+        return loadButton(skin, table
                 //images
                 ,"playSettingsButtonDown.png"
                 ,"playSettingsButtonUp.png")
@@ -50,57 +53,53 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
                 .getActor();
     }
 
-    public Label loadTopLabel(Table table, String modeName){
+    public Label loadTopLabel(Table table, String modeName, Skin skin){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        Label label = loadLabel(table
+        Label label = loadLabel(skin, table
                 //images
                 ,modeName
                 ,"gameFont"
                 ,null)
                 //pos. and location
-                .prefWidth(screenWidth / 3)
-                .minWidth(screenWidth / 10)
-                .maxWidth(screenWidth)
-                .prefHeight(screenHeight / 9)
-                .minHeight(screenHeight / 30)
-                .maxHeight(screenHeight/3)
+                .width(screenWidth / 3.5f)
+                .height(screenHeight / 8)
                 .expandX()
                 .top()
-                .padTop(20)
+                .padTop(screenHeight/30)
                 .getActor();
-        label.setFontScale(2);
-        label.setAlignment(0);
+
+        label.setFontScale(1f);
+        float xRatio = (screenWidth/3.5f)/label.getWidth();
+        float yRatio = (screenHeight/8f)/label.getHeight();
+        label.setFontScale(xRatio,yRatio);
+
         return label;
     }
 
-    public Button loadPlayButton(Table table){
+    public Button loadPlayButton(Table table, Skin skin){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        return loadButton(table
+        return loadButton(skin, table
                 //images
                 ,"playBackToMenuButtonDown.png"
                 ,"playBackToMenuButtonUp.png")
                 //pos. and location
-                .prefWidth(screenWidth / 4)
-                .minWidth(screenWidth / 10)
-                .maxWidth(screenWidth)
-                .prefHeight(screenHeight / 7)
-                .minHeight(screenHeight / 30)
-                .maxHeight(screenHeight/3)
+                .width(screenWidth / 3)
+                .height(screenHeight / 6)
                 .expandX()
                 .top()
-                .padTop(20)
+                .padTop(screenHeight/30)
                 .getActor();
     }
 
-    public ScrollPane loadTextAreaTutorial(Table table, String text, String backgroundImage){
+    public ScrollPane loadTextAreaTutorial(Table table, String text, String backgroundImage, Skin skin){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        ScrollPane textArea = loadTextArea(table,
+        ScrollPane textArea = loadTextArea(skin, table,
                 text,
                 "tutorial",
                 backgroundImage)
@@ -109,8 +108,15 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
                 .padBottom(screenHeight / 6)
                 //pos. and location
                 .getActor();
-        textArea.setBounds(0,0,DeviceConstants.MENU_VIEWPORT,500);
-        //((Label)textArea.getChildren().pop()).setWrap(true);
+
+        skin.add("vScrollKnobPlayMenu",new Texture(Gdx.files.internal("vScrollKnobSettings.png")));
+
+        ScrollPane.ScrollPaneStyle styleScroll = new ScrollPane.ScrollPaneStyle();
+        styleScroll.vScrollKnob = skin.getDrawable("vScrollKnobPlayMenu");
+
+        textArea.setStyle(styleScroll);
+        textArea.setScrollingDisabled(true,false);
+
         return textArea;
     }
 
