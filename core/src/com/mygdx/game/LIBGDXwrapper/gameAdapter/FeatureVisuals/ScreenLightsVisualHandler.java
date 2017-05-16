@@ -5,47 +5,40 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.gameLogic.Characters.Light;
-import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
-import com.mygdx.game.gameLogic.LogicWorlds.PlatWorld;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightsFeature;
 
-public class LightVisualHandler{
+import java.util.ArrayList;
+
+public class ScreenLightsVisualHandler {
 
 
     private FrameBuffer frameBuffer;
     private SpriteBatch drawBatch;
-    private GameWorld gameLogicWorld;
 
-    public LightVisualHandler(GameWorld gameLogicWorld, SpriteBatch drawBatch){
+    private ArrayList<Light> lights;
+
+    public ScreenLightsVisualHandler(SpriteBatch drawBatch){
         try {
             frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         }catch (GdxRuntimeException e){ // device doesn't support 8888
             frameBuffer = new FrameBuffer(Pixmap.Format.RGB565,  Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
         }
-        this.gameLogicWorld = gameLogicWorld;
+
         this.drawBatch = drawBatch;
+        lights = new ArrayList<Light>();
+    }
+
+    public void addNewLight(Light lightInfo){
+        lights.add(lightInfo);
     }
 
     public void drawLight(OrthographicCamera gameCamera){
 
-
-        final GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
-        Texture lightTexture = gameAssetHandler.getLightTexture();
-
-        if(!(gameLogicWorld instanceof LightsFeature)){
-            System.out.println("This world does not support the light");
-            return;
-        }
-
-        Light light = ((LightsFeature)gameLogicWorld).getLightInfo();
-
-        drawSurroundingDarkness(gameCamera,lightTexture,light);
+        drawSurroundingDarkness(gameCamera);
 
         drawBatch.setProjectionMatrix(drawBatch.getProjectionMatrix().idt());
 
@@ -58,7 +51,11 @@ public class LightVisualHandler{
 
     }
 
-    private void drawSurroundingDarkness(OrthographicCamera gameCamera, Texture lightTextute, Light lightInfo){
+    private void drawSurroundingDarkness(OrthographicCamera gameCamera){
+
+        final GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
+        Texture lightTexture = gameAssetHandler.getLightTexture();
+
         frameBuffer.begin();
 
         Gdx.gl.glClearColor(0f,0f,0f,1);
@@ -67,7 +64,11 @@ public class LightVisualHandler{
         drawBatch.setProjectionMatrix(gameCamera.combined);
         drawBatch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE);
         drawBatch.begin();
-        drawBatch.draw(lightTextute, (float)lightInfo.getXPos(), (float)lightInfo.getYPos(), (float)lightInfo.getRadious() , (float)lightInfo.getRadious()); //draw hero
+
+        for(Light light: lights){
+            drawBatch.draw(lightTexture, (float)light.getXPos(), (float)light.getYPos(), (float)light.getRadious() , (float)light.getRadious()); //draw hero
+        }
+
         drawBatch.end();
 
         frameBuffer.end();

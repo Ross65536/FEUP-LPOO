@@ -13,11 +13,13 @@ import java.util.TreeMap;
 
 public class LightRecharger implements LightRechargerFeature{
 
-    private Recharger item;
+    private Recharger item = null;
 
     private HeroInfo heroInfo;
 
-    private Light light;
+    private Light heroLight;
+
+    private Light itemLight = null;
 
     private TreeMap<Double, TreeMap<Double,Platform>> allPlatforms;
 
@@ -27,15 +29,18 @@ public class LightRecharger implements LightRechargerFeature{
 
     private double cameraHeight;
 
+    private double lightRadious;
     //private double minDiameter;
 
     public LightRecharger(HeroInfo hero, TreeMap<Double, TreeMap<Double,Platform>> allPlatforms, Light light, Vector2D cameraDim){
         this.cameraHeight = cameraDim.y;
         this.heroInfo = hero;
-        this.light = light;
+        this.heroLight = light;
         this.allPlatforms = allPlatforms;
         //this.minDiameter = Math.sqrt(cameraDim.x*cameraDim.x + cameraDim.y*cameraDim.y)/2f;
         this.distanceVelInc = hero.getYDim()/20f;//per s
+
+        lightRadious = heroInfo.getYDim()*5;
         generateItem();
     }
 
@@ -46,18 +51,25 @@ public class LightRecharger implements LightRechargerFeature{
     public void updateRechargerItem(float deltaT){
         timePast+=deltaT;
         if(checkFound()){
-            light.resetRadious();
+            heroLight.resetRadious();
             generateItem();
         }
+        updateLight();
+        itemLight.updateOscilation(deltaT);
     }
 
     public Recharger getItemInfo(){
         return item;
     }
 
+    public Light getItemLight(){
+        return itemLight;
+    }
+
     private void generateItem(){
         Random randomPercentage = new Random();
         Platform plat = getPlatformForItem();
+
         Vector2D posItem = new Vector2D();
 
         posItem.x = plat.getXPos() + randomPercentage.nextFloat()*plat.getXDim();
@@ -65,7 +77,41 @@ public class LightRecharger implements LightRechargerFeature{
 
         double itemSize = Recharger.fractionOfScreenHeightForPlatform*this.cameraHeight;
 
-        item = new Recharger(posItem, new Vector2D(itemSize,itemSize));
+        if(item == null) {
+
+            item = new Recharger(posItem, new Vector2D(itemSize, itemSize));
+        }
+        else {
+            item.setXPos(posItem.x);
+            item.setYPos(posItem.y);
+        }
+
+        updateLight();
+
+    }
+
+    private void updateLight(){
+
+        double lightRadious;
+
+        if(itemLight !=null){
+            lightRadious= itemLight.getRadious();
+        }else
+            lightRadious = this.lightRadious;
+
+        Vector2D posLight = new Vector2D();
+
+        posLight.x = item.getXPos() + (item.getXDim()/2.0)-(lightRadious/2.0);
+        posLight.y = item.getYPos() + (item.getYDim()/2.0) - (lightRadious/2.0);
+
+
+        if(itemLight == null) {
+            itemLight = new Light(posLight,lightRadious ,true,0.5);
+        }
+        else {
+            itemLight.setXPos(posLight.x);
+            itemLight.setYPos(posLight.y);
+        }
     }
 
     private Platform getPlatformForItem(){

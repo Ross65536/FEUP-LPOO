@@ -8,13 +8,13 @@ import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.Light;
 import com.mygdx.game.gameLogic.GameDirector.StageDirectors.StageDirector;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Lights;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightsFeature;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLight;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLightFeature;
 import com.mygdx.game.Vector2D;
 
 import java.util.List;
 
-public class DiscWorld extends GameWorld implements LightsFeature {
+public class DiscWorld extends GameWorld implements HeroLightFeature {
 
 
 
@@ -24,7 +24,7 @@ public class DiscWorld extends GameWorld implements LightsFeature {
 
         dummyEnemies = new DummyEnemies(hero,worldDims,stageDirector, this);
 
-        light = new Lights(hero);
+        light = new HeroLight(hero);
 
         //TODO remove
         if (CommonConsts.INPUT_DEBUG)
@@ -58,7 +58,12 @@ public class DiscWorld extends GameWorld implements LightsFeature {
 
 
         updateHero(deltaT);
-        updateLight(deltaT);
+
+        int sign = 1;
+        if(hero.isMoving())
+            sign*=-1;
+        updateLight(sign*deltaT);
+
         checkHeroAtWorldEdges();
 
         if(this.checkEnemyCollisions() > 0)
@@ -82,7 +87,7 @@ public class DiscWorld extends GameWorld implements LightsFeature {
     }
 
 
-    ////////Lights Implementation///////////
+    ////////HeroLight Implementation///////////
     @Override
     public void updateLight(float deltaT){
         light.updateLight(deltaT);

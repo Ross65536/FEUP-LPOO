@@ -6,7 +6,7 @@ import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemyFeature;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Lights;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLight;
 import com.mygdx.game.Vector2D;
 
 import java.util.Random;
@@ -19,7 +19,7 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
     protected boolean gamePlayable;
     protected static Random random = new Random();
     DummyEnemies dummyEnemies;
-    Lights light;
+    HeroLight light;
 
 
     public GameWorld(final Vector2D worldDims, Hero hero)

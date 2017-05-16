@@ -3,10 +3,11 @@ package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.DummyEnemyVisualsHandler;
-import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.LightVisualHandler;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.ScreenLightsVisualHandler;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
 import com.mygdx.game.Vector2D;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLightFeature;
 
 
 /**
@@ -17,7 +18,7 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
 
     private DummyEnemyVisualsHandler dummyEnemyVisuals;
 
-    private LightVisualHandler /**/lightVisualHandler;
+    private ScreenLightsVisualHandler /**/lightVisualHandler;
 
     public DiscGameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
     {
@@ -25,9 +26,19 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
 
         dummyEnemyVisuals = new DummyEnemyVisualsHandler(gameLogicWorld,drawBatch);
 
-        lightVisualHandler = new LightVisualHandler(gameLogicWorld, drawBatch);
+        lightVisualHandler = new ScreenLightsVisualHandler(drawBatch);
 
         this.cameraHeight = worldYDim;
+
+        addLights();
+    }
+
+    private void addLights(){
+        if(!(gameLogicWorld instanceof HeroLightFeature)){
+            System.out.println("this world does not support the hero light feature");
+        }else {
+            lightVisualHandler.addNewLight(((HeroLightFeature) gameLogicWorld).getLightInfo());
+        }
     }
 
     public void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera)

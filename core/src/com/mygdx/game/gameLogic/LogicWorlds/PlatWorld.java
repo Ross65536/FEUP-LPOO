@@ -12,14 +12,14 @@ import com.mygdx.game.gameLogic.GameDirector.StageDirectors.StageDirector;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightRecharger;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightRechargerFeature;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Lights;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightsFeature;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLight;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLightFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.PlatformFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Platforms;
 import com.mygdx.game.Vector2D;
 import java.util.List;
 
-public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeature, LightRechargerFeature {
+public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFeature, LightRechargerFeature {
 
     Platforms platforms;
 
@@ -37,7 +37,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
 
         dummyEnemies = new DummyEnemies(hero,worldDims,stageDirector, this);
 
-        light = new Lights(hero);
+        light = new HeroLight(hero);
 
         platforms = new Platforms(hero, worldDims, new Vector2D(this.cameraWidth,this.cameraHeight));
 
@@ -144,7 +144,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
     }
 
 
-    ////////Lights Implementation///////////
+    ////////HeroLight Implementation///////////
     @Override
     public void updateLight(float deltaT){
         light.updateLight(deltaT);
@@ -214,4 +214,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
     public void updateRechargerItem(float deltaT){
         lightRecharger.updateRechargerItem(deltaT);
     }
+
+    @Override
+    public Light getItemLight(){ return lightRecharger.getItemLight();}
 }

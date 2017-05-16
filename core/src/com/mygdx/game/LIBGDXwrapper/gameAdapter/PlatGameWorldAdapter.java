@@ -3,23 +3,24 @@ package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.PathConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.DummyEnemyVisualsHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.LightRechargerVisualHandler;
-import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.LightVisualHandler;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.ScreenLightsVisualHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.PlatformVisualHandler;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
 import com.mygdx.game.Vector2D;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightRechargerFeature;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLightFeature;
 
 public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
 
 
     private DummyEnemyVisualsHandler dummyEnemyVisualsHandler;
 
-    private LightVisualHandler lightVisualHandler;
+    private ScreenLightsVisualHandler lightVisualHandler;
 
     private PlatformVisualHandler platformVisualHandler;
 
@@ -38,13 +39,28 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
 
         dummyEnemyVisualsHandler = new DummyEnemyVisualsHandler(gameLogicWorld,drawBatch);
 
-        lightVisualHandler = new LightVisualHandler(gameLogicWorld, drawBatch);
+        lightVisualHandler = new ScreenLightsVisualHandler( drawBatch);
 
         platformVisualHandler = new PlatformVisualHandler(gameLogicWorld,drawBatch);
 
         lightRechargerVisualHandler = new LightRechargerVisualHandler(gameLogicWorld,drawBatch);
 
+        addLights();
     }
+
+    private void addLights(){
+        if(!(gameLogicWorld instanceof HeroLightFeature)){
+            System.out.println("this world does not support the hero light feature");
+        }else {
+            lightVisualHandler.addNewLight(((HeroLightFeature) gameLogicWorld).getLightInfo());
+        }
+
+        if(!(gameLogicWorld instanceof LightRechargerFeature)){
+            System.out.println("this world does not support the recharger feature");
+        }else
+            lightVisualHandler.addNewLight(((LightRechargerFeature)gameLogicWorld).getItemLight());
+    }
+
 
     @Override
     public void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera)
