@@ -23,7 +23,7 @@ public class GyroscopeInput {
     public void update(float delta){
         handlePitch();
 
-//        handleRoll();
+        handleRoll();
     }
 
     private void handlePitch()
