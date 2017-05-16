@@ -2,33 +2,38 @@ package com.mygdx.game.gameLogic.Characters;
 
 import com.mygdx.game.Vector2D;
 
-public class Platform extends Character{
+public class Platform extends Entity{
 
     public static double fractionOfScreenHeightForPlatform = 1.0/15.0;
 
     public Platform (final Vector2D position, final Vector2D dimensions){
-        super(position, dimensions, (new Vector2D(0,0)));
+        super(position, dimensions);
 
     }
 
-    private static final double PLATFORM_X_LEEWAY = 0.05;
+    private static final double PLATFORM_HERO_X_LEEWAY = 0.3;
     private static final double PLATFORM_Y_LEEWAY = 0.5;
 
-    private static final double MAX_Y_DIM = 2;
-    private static final double MAX_X_DIM = 5;
 
     private boolean isIntersecting(final Character ch){
-        final boolean charXLeft = (characterPosition.x + characterDimensions.x) < ch.characterPosition.x;
-        final boolean charXRight = characterPosition.x > (ch.characterPosition.x + ch.characterDimensions.x);
+
+        double charPosX = ch.getXPos();
+        double charSizeX = ch.getXDim();
+        if(ch instanceof Hero){
+            charPosX = ch.getXPos()+PLATFORM_HERO_X_LEEWAY*ch.getXDim();
+            charSizeX = (1-2*PLATFORM_HERO_X_LEEWAY)*ch.getXDim();
+        }
+
+        final boolean charXLeft = (characterPosition.x + characterDimensions.x) < charPosX;
+        final boolean charXRight = characterPosition.x > (charPosX + charSizeX);
         final boolean charYDown = (characterPosition.y + characterDimensions.y) < ch.characterPosition.y;
         final boolean charYUp = characterPosition.y > (ch.characterPosition.y + ch.characterDimensions.y);
         return !(charXLeft || charXRight || charYUp || charYDown);
     }
 
-    public boolean checkCollision(final Character ch){
 
-        //ch.checkPrevPosition - ch.position > platformHeight {checkIfWentTrough}
-        Vector2D prevPosition = ch.getPrevPosition();
+    private boolean checkWentTrough(Entity ch){
+        Vector2D prevPosition = ((Character)ch).getPrevPosition();
         if(prevPosition == null)
             return false;
         if(prevPosition.y - ch.characterPosition.y >= (characterDimensions.y*(1-PLATFORM_Y_LEEWAY))){
@@ -38,15 +43,31 @@ public class Platform extends Character{
                 }
             }
         }
+        return false;
+    }
 
-        return ch.isFalling() &&
-               isIntersecting(ch) &&
+    @Override
+    public boolean checkCollision(Entity ch){
+
+        if(checkWentTrough(ch)){
+            return true;
+        }
+
+        double charPosX = ch.getXPos();
+        double charSizeX = ch.getXDim();
+        if(ch instanceof Hero){
+            charPosX = ch.getXPos()+PLATFORM_HERO_X_LEEWAY*ch.getXDim();
+            charSizeX = (1-2*PLATFORM_HERO_X_LEEWAY)*ch.getXDim();
+        }
+
+        return ((Character)ch).isFalling() &&
+               isIntersecting((Character)ch) &&
                 ((ch.characterPosition.y>(characterPosition.y + PLATFORM_Y_LEEWAY * characterDimensions.y)) ||
 
                 //stairs effect
                         ((
-                (ch.characterPosition.x>(characterPosition.x + characterDimensions.x - (ch.characterDimensions.x*1.5))) ||
-                (ch.characterPosition.x<(characterPosition.x + (ch.characterDimensions.x*1.5)))))
+                (charPosX>(charPosX + charSizeX - (charSizeX*1.5))) ||
+                (charPosX<(charPosX + (charSizeX*1.5)))))
                         && (characterPosition.y+(characterDimensions.y/2))<=(ch.characterPosition.y+0.25*ch.characterDimensions.y));
     }
 

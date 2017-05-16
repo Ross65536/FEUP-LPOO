@@ -189,4 +189,15 @@ public class GameAssetHandler { //dispose textures when swicth to menu
     public Texture getBackgroundTexture() {
         return assetManager.get(PathConstants.BACKGROUND_IMAGE);
     }
+
+    public Texture getBorderTexture() {
+        return assetManager.get(PathConstants.BACKGROUND_BORDER);
+    }
+
+    public Texture getLightRechargerTexture()
+    {
+        return assetManager.get(PathConstants.RECHARGER_IMAGE_PATH);
+    }
+
+
 }

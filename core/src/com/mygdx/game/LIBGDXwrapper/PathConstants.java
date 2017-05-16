@@ -21,6 +21,7 @@ public final class PathConstants {
     public static final String ENEMY_FLYING_IMAGE_PATH = SPRITE_PATH + "flyingSpritesPixelated.png";
     public static final String PLATFORM_IMAGE_PATH = SPRITE_PATH + "platform2.png";
     public static final String LIGHT_IMAGE_PATH = "light.png";
+    public static final String RECHARGER_IMAGE_PATH = "recharger.png";
 
     //hero
     public static final String HERO_WALKING_IMAGE_PATH = SPRITE_PATH + "heroWalking.png";
@@ -32,6 +33,7 @@ public final class PathConstants {
 
     //background
     public static final String BACKGROUND_IMAGE = SPRITE_PATH + "Background3.png";
+    public static final String BACKGROUND_BORDER = SPRITE_PATH + "border.png";
     public static final double BACKGROUND_ASPECT_RATIO = 1.0;
     public static final double BACKGROUND_PORTION_OF_CAMERA_Y = 0.5;
 
@@ -39,7 +41,7 @@ public final class PathConstants {
 
     //assets for each gaeme mode
     public static final String[] discLevelAssetNames = {HERO_WALKING_IMAGE_PATH, ENEMY_GROUND_IMAGE_PATH, LIGHT_IMAGE_PATH, ENEMY_FLYING_IMAGE_PATH, HERO_JUMPING_IMAGE_PATH, BACKGROUND_IMAGE};
-    public static final String[] platformTestLevelAssetNames = {HERO_WALKING_IMAGE_PATH, HERO_JUMPING_IMAGE_PATH, ENEMY_GROUND_IMAGE_PATH, PLATFORM_IMAGE_PATH, LIGHT_IMAGE_PATH, BACKGROUND_IMAGE, ENEMY_FLYING_IMAGE_PATH};
+    public static final String[] platformTestLevelAssetNames = {HERO_WALKING_IMAGE_PATH, HERO_JUMPING_IMAGE_PATH, ENEMY_GROUND_IMAGE_PATH, PLATFORM_IMAGE_PATH, LIGHT_IMAGE_PATH, BACKGROUND_IMAGE, ENEMY_FLYING_IMAGE_PATH,RECHARGER_IMAGE_PATH,BACKGROUND_BORDER};
 
 
 
@@ -55,6 +57,8 @@ public final class PathConstants {
         mapPathToType.put(BACKGROUND_IMAGE, Texture.class);
         mapPathToType.put(PLATFORM_IMAGE_PATH, Texture.class);
         mapPathToType.put(LIGHT_IMAGE_PATH, Texture.class);
+        mapPathToType.put(RECHARGER_IMAGE_PATH, Texture.class);
+        mapPathToType.put(BACKGROUND_BORDER, Texture.class);
     }
 
     public static final List<Integer> enemyNumAnimationFrames; //assuming flat images, number of frames for each enemy animation

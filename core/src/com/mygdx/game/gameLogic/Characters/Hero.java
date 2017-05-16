@@ -105,7 +105,7 @@ public class Hero extends Character implements HeroInfo {
 
 
     @Override
-    public boolean checkCollision(final Character en) {
+    public boolean checkCollision(final Entity en) {
         final boolean heroXLeft = characterPosition.x + (1.0 - HERO_X_LEEWAY) * characterDimensions.x < en.characterPosition.x;
         final boolean heroXRight = characterPosition.x + HERO_X_LEEWAY * characterDimensions.x  > en.characterPosition.x + en.characterDimensions.x;
         final boolean heroYDown = characterPosition.y + (1.0 - HERO_Y_LEEWAY) * characterDimensions.y < en.characterPosition.y;

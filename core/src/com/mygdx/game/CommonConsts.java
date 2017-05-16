@@ -57,6 +57,7 @@ public class CommonConsts {
     private static final CharacterConstants constantsEnemyFlyingBoss =
             new CharacterConstants(200 / (double) 100, 0.6, 0.4, 1.2, -0.1);
 
+
     //platform
     private static final CharacterConstants constantsPlatform =
             new CharacterConstants(400 / (double) 50, 0, 0, 0, 0);

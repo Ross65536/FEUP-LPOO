@@ -2,7 +2,7 @@ package com.mygdx.game.gameLogic.Characters;
 
 import com.mygdx.game.Vector2D;
 
-public class Light extends Character{
+public class Light extends Entity{
 
     private boolean oscilating;
 
@@ -19,7 +19,7 @@ public class Light extends Character{
     private double velocityDisappearance;
 
     public Light (final Vector2D position, final double radious, boolean oscilating, double oscilationLengthFraction) {
-        super(position, new Vector2D(radious,radious), null);
+        super(position, new Vector2D(radious,radious));
         this.radious = radious;
         this.originalRadious = radious;
         this.oscilating = oscilating;
@@ -37,6 +37,10 @@ public class Light extends Character{
 
     public void setOscilationLengthFraction(double oscilationLengthFraction){
         this.oscilationLength = radious*oscilationLengthFraction;//10% the radious
+    }
+
+    public void resetRadious(){
+        this.radious = this.originalRadious;
     }
 
     private void setInnerRadious(double radious){

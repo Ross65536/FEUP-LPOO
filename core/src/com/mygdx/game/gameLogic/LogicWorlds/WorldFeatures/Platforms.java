@@ -57,6 +57,10 @@ public class Platforms implements PlatformFeature{
         return unmList;
     }
 
+    public TreeMap<Double, TreeMap<Double,Platform>> getAllPlatforms(){
+        return platformsT;
+    }
+
     public void updatePlatformsInRange(){
         platformsInRange = getPlatformsInRange();
     }

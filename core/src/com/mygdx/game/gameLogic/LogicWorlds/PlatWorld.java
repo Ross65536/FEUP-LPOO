@@ -5,10 +5,13 @@ import com.mygdx.game.LIBGDXwrapper.PathConstants;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
+import com.mygdx.game.gameLogic.Characters.Recharger;
 import com.mygdx.game.gameLogic.Characters.Light;
 import com.mygdx.game.gameLogic.Characters.Platform;
 import com.mygdx.game.gameLogic.GameDirector.StageDirectors.StageDirector;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightRecharger;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightRechargerFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Lights;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightsFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.PlatformFeature;
@@ -16,13 +19,14 @@ import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Platforms;
 import com.mygdx.game.Vector2D;
 import java.util.List;
 
-public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeature {
+public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeature, LightRechargerFeature {
 
     Platforms platforms;
 
-    final private double cameraWidth;
-    final private double cameraHeight;
+    LightRecharger lightRecharger;
 
+    private double cameraWidth;
+    private double cameraHeight;
 
     public PlatWorld(final Vector2D cameraDim, final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
@@ -36,6 +40,8 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
         light = new Lights(hero);
 
         platforms = new Platforms(hero, worldDims, new Vector2D(this.cameraWidth,this.cameraHeight));
+
+        lightRecharger = new LightRecharger(hero, platforms.getAllPlatforms(), light.getLightInfo(), cameraDim);
 
         //TODO remove
         if (CommonConsts.INPUT_DEBUG)
@@ -76,6 +82,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
         updateLight(deltaT);
         checkHeroAtWorldEdges();
 
+        updateRechargerItem(deltaT);
         if(this.checkEnemyCollisions() > 0)
         {
             gamePlayable = false;
@@ -194,5 +201,17 @@ public class PlatWorld extends GameWorld implements PlatformFeature, LightsFeatu
     @Override
     public List<EnemyInfo> getEnemiesInfo(){
         return dummyEnemies.getEnemiesInfo();
+    }
+
+    /////////Light Recharger Implementation/////////
+
+    @Override
+    public Recharger getItemInfo(){
+        return lightRecharger.getItemInfo();
+    }
+
+    @Override
+    public void updateRechargerItem(float deltaT){
+        lightRecharger.updateRechargerItem(deltaT);
     }
 }
