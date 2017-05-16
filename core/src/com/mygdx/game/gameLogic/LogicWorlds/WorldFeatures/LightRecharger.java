@@ -238,7 +238,7 @@ public class LightRecharger implements LightRechargerFeature{
      * @return Minimum distance to item.
      */
     private double calculateMinDistance(){
-        return distanteLevel*heroInfo.getYDim()*3;
+        return (heroInfo.getYDim()*distanteLevel)+heroInfo.getYDim()*3;
     }
 
 }
