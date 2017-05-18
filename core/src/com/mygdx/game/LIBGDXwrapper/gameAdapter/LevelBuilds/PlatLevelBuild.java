@@ -12,7 +12,7 @@ public class PlatLevelBuild{
 
     public static final Vector2D createCameraDimsPlat ()
     {
-        final double cameraXDim = WORLD_X_DIM/10f;
+        final double cameraXDim = WORLD_X_DIM/100f;
         final double cameraYDim = cameraXDim* DeviceConstants.INVERTED_SCREEN_RATIO;
         WORLD_Y_DIM = cameraYDim*10f;
         return new Vector2D(cameraXDim, cameraYDim);

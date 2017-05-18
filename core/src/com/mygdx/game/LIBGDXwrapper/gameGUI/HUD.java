@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LIBGDXwrapper.MyGame;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
 import com.mygdx.game.Vector2D;
@@ -45,7 +46,7 @@ public class HUD extends Stage{
         viewportHeight = (float)cameraDim.y;
 
         this.setViewport(
-                new FitViewport(
+                new StretchViewport(
                         (int)viewportWidth
                         ,(int)viewportHeight
                 )

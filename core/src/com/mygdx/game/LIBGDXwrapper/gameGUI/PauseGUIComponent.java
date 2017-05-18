@@ -66,17 +66,20 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
 
     protected void loadWidgets(){
+        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
         PauseGUIWidgetsProperties pauseGUIWidgetsProperties = ((PauseGUIWidgetsProperties)widgetsProperties);
 
 //        pauseGUIWidgetsProperties.loadHeaderLabel(table,skin);
 
-        pauseGUIWidgetsProperties.loadCurrentScoreLabel(table, skin,"Paused");
+        table.row().padTop(screenHeight/25);
 
-        table.row();
+        pauseGUIWidgetsProperties.loadPMLabel(table, skin,"Paused");
 
-        pauseGUIWidgetsProperties.loadCurrentScoreLabel(table, skin,"Score: ");
+        table.row().padTop(screenHeight/25).padBottom(screenHeight/25);
 
-        table.row();
+        pauseGUIWidgetsProperties.loadPMLabel(table, skin,"Score: ");
+
+        table.row().padBottom(screenHeight/20);
 
         elements.put("resume",pauseGUIWidgetsProperties.loadPMButton( table, skin, "resumeButton"));
 
@@ -118,5 +121,16 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
     }
 
+    @Override
+    public boolean touchDown (int screenX, int screenY, int pointer, int button) {
+        super.touchDown(screenX, screenY, pointer, button);
+        return true;
+    }
+
+    @Override
+    public boolean touchUp (int screenX, int screenY, int pointer, int button) {
+        super.touchUp(screenX, screenY, pointer, button);
+        return true;
+    }
 
 }
