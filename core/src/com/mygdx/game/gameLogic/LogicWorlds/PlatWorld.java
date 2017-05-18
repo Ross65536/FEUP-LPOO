@@ -38,7 +38,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
         dummyEnemies = new DummyEnemies(hero,worldDims,stageDirector, this);
 
         light = new HeroLight(hero);
-        light.getLightInfo().setVelocityDisappearance(1.0/200.0);
+        light.getLightInfo().setVelocityDisappearance(1.0/100.0);
 
         platforms = new Platforms(hero, worldDims, new Vector2D(this.cameraWidth,this.cameraHeight));
 

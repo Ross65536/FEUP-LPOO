@@ -68,8 +68,6 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
     protected void loadWidgets(){
         PauseGUIWidgetsProperties pauseGUIWidgetsProperties = ((PauseGUIWidgetsProperties)widgetsProperties);
 
-//        pauseGUIWidgetsProperties.loadHeaderLabel(table,skin);
-
         pauseGUIWidgetsProperties.loadCurrentScoreLabel(table, skin,"Paused");
 
         table.row();
