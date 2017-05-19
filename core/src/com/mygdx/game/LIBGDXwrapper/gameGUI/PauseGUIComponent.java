@@ -68,7 +68,7 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
     protected void loadWidgets(){
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
         PauseGUIWidgetsProperties pauseGUIWidgetsProperties = ((PauseGUIWidgetsProperties)widgetsProperties);
-        
+
         table.row().padTop(screenHeight/25);
 
         pauseGUIWidgetsProperties.loadPMLabel(table, skin,"Paused");

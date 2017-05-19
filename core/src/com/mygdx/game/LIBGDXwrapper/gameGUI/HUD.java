@@ -2,19 +2,24 @@ package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LIBGDXwrapper.MyGame;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
 import com.mygdx.game.Vector2D;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HUD extends Stage{
@@ -30,6 +35,9 @@ public class HUD extends Stage{
     private float viewportWidth;
 
     private float viewportHeight;
+
+    private ArrayList<Image> hearts = null;
+    private int numberOfHearts;
 
     public HUD(Vector2D cameraDim, MyGame game){
         skin = new Skin();
@@ -54,7 +62,9 @@ public class HUD extends Stage{
 
         this.getViewport().update(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),true);
         ((OrthographicCamera)this.getCamera()).setToOrtho(false, (float) cameraDim.x, (float) cameraDim.y); //camera has maximum world height
-        //System.out
+
+        this.getViewport().setCamera(this.getCamera());
+        table.setRound(false);
         table.setDebug(true);
         loadWidgets();
     }
@@ -64,12 +74,14 @@ public class HUD extends Stage{
 
         table.add(((Button)elements.get("pauseButton")))
                 .grow()
-                .center()
                 .right()
                 .top()
                 .size(viewportHeight/10.0f)
                 .padRight(viewportHeight/20.0f).padTop(viewportHeight/20.0f);
+
         table.row();
+
+
 
         loadInputlisteners();
     }
@@ -86,6 +98,35 @@ public class HUD extends Stage{
         });
     }
 
+    public void addLifeHearts(int numberOfHearts){
+        table.getCell(((Button)elements.get("pauseButton"))).colspan(numberOfHearts);
+        if(hearts == null){
+            skin.add("heartEmpty",new Texture(Gdx.files.internal("heart_empty.png")));
+            skin.add("heartGlow",new Texture(Gdx.files.internal("heart_glow.png")));
+            hearts = new ArrayList<Image>();
+            this.numberOfHearts = numberOfHearts;
+        }
+        table.row().left().size(viewportHeight/10f).padBottom(viewportHeight/20);
+        for(int i = 0; i < numberOfHearts; i++){
+            if(i==(numberOfHearts-1))
+                addLifeHeart().padRight(viewportWidth-viewportHeight/20f-numberOfHearts*viewportHeight/10f);
+            else
+                if(i==0)
+                    addLifeHeart().padLeft(viewportHeight/20f);
+                else
+                    addLifeHeart();
+        }
+    }
+
+    private Cell addLifeHeart(){
+        Image heartImage = new Image(skin, "heartGlow");
+        hearts.add(heartImage);
+        return table.add(heartImage);
+    }
+
+    public void removeHeart(){
+        hearts.get(--this.numberOfHearts).setDrawable(skin,"heartEmpty");
+    }
 
     @Override
     public boolean touchDown (int screenX, int screenY, int pointer, int button) {
@@ -114,5 +155,7 @@ public class HUD extends Stage{
         this.dispose();
         skin.dispose();
     }
+
+
 
 }

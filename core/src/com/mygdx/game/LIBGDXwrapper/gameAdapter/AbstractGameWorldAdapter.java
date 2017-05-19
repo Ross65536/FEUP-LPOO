@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.LIBGDXwrapper.PathConstants;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.HUD;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
@@ -23,6 +24,7 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
     protected double cameraWidth;
     protected double cameraHeight;
     protected OrthographicCamera gameCamera;
+    protected HUD hud;
     private double currentTime;
 
 
@@ -133,4 +135,8 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
 
     public abstract void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera);
     public abstract Vector2D getCameraSetup ();
+
+    public void setHUD(HUD hud){
+        this.hud = hud;
+    }
 }

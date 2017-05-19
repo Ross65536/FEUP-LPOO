@@ -41,7 +41,7 @@ public class MyGame extends Game {
 
     private void startPlatGameTest()
     {
-        gameScreen.LoadLevel(createPlatformTestLevel());
+        gameScreen.LoadLevel(LevelBuilder.createPlatformTestLevel());
         finishDiscWorldAssets(); // ???????????
     }
 

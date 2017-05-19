@@ -21,12 +21,10 @@ public class GameScreen extends ScreenAdapter {
     private GameSettings gameSettings;
     private GyroscopeInput gyroscopeInput = null;
     private StretchViewport viewport;
-
+    private HUD hud;
     private InputMultiplexer input;
 
     public static enum GameMode{PLATAFORMS, DODGING};
-    ///////HUD////////
-    private HUD hud;
 
     final static double MIN_JUMP_GRAVITY_STRENGTH = 0.5;
 
@@ -37,6 +35,7 @@ public class GameScreen extends ScreenAdapter {
         this.gameSettings = gameSettings;
         this.currentLevel = null;
         viewport = new StretchViewport(0,0,gameCamera);
+        viewport.setCamera(gameCamera);
 
 
         registerInputHandler();
@@ -48,25 +47,24 @@ public class GameScreen extends ScreenAdapter {
         currentLevel.setCamera(gameCamera);
         final Vector2D camDims = currentLevel.getCameraSetup();
 
+        createHUD(camDims);
 
-        ////////HUD////////
-        hud = new HUD(camDims,game);
-        registerHUDInput(hud);
         viewport.setWorldSize((float)camDims.x,(float)camDims.y);
         viewport.update(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),true);
         gameCamera.setToOrtho(false, (float) camDims.x, (float) camDims.y); //camera has maximum world height
     }
 
-    public void setAsInput(){
-        Gdx.input.setInputProcessor(input);
+
+    private void createHUD(Vector2D camDims){
+        hud = new HUD(camDims,game);
+        registerHUDInput(hud);
+        currentLevel.setHUD(hud);
     }
 
-    ///////HUD////////
     private void registerHUDInput(HUD hud){
         if(input.size()>1)
             input.removeProcessor(0);
         input.addProcessor(0,hud);
-        this.setAsInput();
     }
 
     /**
@@ -144,6 +142,11 @@ public class GameScreen extends ScreenAdapter {
                 input.addProcessor(keyboardInput);
             }
 
+        this.setAsInput();
+    }
+
+    public void setAsInput(){
+        Gdx.input.setInputProcessor(input);
     }
 
     @Override
@@ -153,6 +156,9 @@ public class GameScreen extends ScreenAdapter {
             currentLevel.resize(width, height);
 
         this.viewport.update(width,height,false);
+
+        this.hud.getCamera().update();
+        this.hud.getViewport().update(width,height,true);
     }
 
     public IGameWorldAdapter getCurrentLevel(){

@@ -1,22 +1,27 @@
 package com.mygdx.game.LIBGDXwrapper.gameAdapter;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.LIBGDXwrapper.GameScreen;
 import com.mygdx.game.LIBGDXwrapper.PathConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.DummyEnemyVisualsHandler;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.HeroLifesVisualHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.LightRechargerVisualHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.ScreenLightsVisualHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.PlatformVisualHandler;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.HUD;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
 import com.mygdx.game.Vector2D;
+import com.mygdx.game.gameLogic.LogicWorlds.PlatWorld;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLifesFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightRechargerFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLightFeature;
 
 public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
-
 
     private DummyEnemyVisualsHandler dummyEnemyVisualsHandler;
 
@@ -25,6 +30,8 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
     private PlatformVisualHandler platformVisualHandler;
 
     private LightRechargerVisualHandler lightRechargerVisualHandler;
+
+    private HeroLifesVisualHandler heroLifesVisualHandler;
 
     public PlatGameWorldAdapter(final Vector2D cameraDims, final Vector2D worldDims, GameWorld gameLogicWorld)
     {
@@ -44,8 +51,17 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
 
         lightRechargerVisualHandler = new LightRechargerVisualHandler(gameLogicWorld,drawBatch);
 
+        heroLifesVisualHandler = new HeroLifesVisualHandler(gameLogicWorld,drawBatch);
+
         addLights();
     }
+
+    @Override
+    public void setHUD(HUD hud){
+        super.setHUD(hud);
+        heroLifesVisualHandler.setHUD(hud);
+    }
+
 
     private void addLights(){
         if(!(gameLogicWorld instanceof HeroLightFeature)){
@@ -95,19 +111,34 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
     public void updateScreen(float deltaT) {
         super.updateScreen(deltaT);
 
+
         drawBatch.setProjectionMatrix(gameCamera.combined);
         drawBatch.begin();
+
+        heroLifesVisualHandler.drawHeroLifes();
         drawBackground();
         drawWorldEdges();
         dummyEnemyVisualsHandler.drawEnemies();
 
+
         drawHero();
+
         platformVisualHandler.drawPlatforms();
         lightRechargerVisualHandler.drawLightRecharger();
         drawBatch.end();
 
         lightVisualHandler.drawLight(gameCamera);
 
+    }
+
+    @Override
+    protected void drawHero(){
+        if((gameLogicWorld instanceof HeroLifesFeature) && ((HeroLifesFeature)gameLogicWorld).isImmune()){
+            drawBatch.setColor(Color.CYAN);
+            super.drawHero();
+            drawBatch.setColor(Color.WHITE);
+        }else
+            super.drawHero();
     }
 
     @Override

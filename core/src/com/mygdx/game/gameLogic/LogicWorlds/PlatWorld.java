@@ -5,11 +5,13 @@ import com.mygdx.game.LIBGDXwrapper.PathConstants;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
+import com.mygdx.game.gameLogic.Characters.HeroLifesWrapper;
 import com.mygdx.game.gameLogic.Characters.Recharger;
 import com.mygdx.game.gameLogic.Characters.Light;
 import com.mygdx.game.gameLogic.Characters.Platform;
 import com.mygdx.game.gameLogic.GameDirector.StageDirectors.StageDirector;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
+import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLifesFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightRecharger;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightRechargerFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLight;
@@ -18,8 +20,9 @@ import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.PlatformFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Platforms;
 import com.mygdx.game.Vector2D;
 import java.util.List;
+import java.util.Random;
 
-public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFeature, LightRechargerFeature {
+public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFeature, LightRechargerFeature, HeroLifesFeature {
 
     Platforms platforms;
 
@@ -93,12 +96,13 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
 
 
     private void checkLost(){
-        /*if(this.checkEnemyCollisions() > 0)
+        if(this.checkEnemyCollisions() > 0)
         {
-            gamePlayable = false;
-            //TODO remove
-            System.out.println("Game Lost");
-        }*/
+            if(takeLife()==0) {
+                gamePlayable = false;
+                System.out.println("Game Lost");
+            }
+        }
 
         float leastLightPercentage = 0.1f;
         if(light.getRadiousPercentage()<=leastLightPercentage){
@@ -125,7 +129,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
     public void placeEnemy(final Enemy enemy){
         placeEnemyYPos(enemy);
 
-        final double enXDelta = cameraWidth/1.5f * ENEMY_GENERATION_YMULT;
+        final double enXDelta = cameraWidth * ENEMY_GENERATION_YMULT;
         final double heroXPos = hero.getXPos();
 
         final boolean bool = random.nextBoolean(); //random
@@ -146,8 +150,8 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
     protected void placeEnemyYPos(Enemy enemy) {
         if (enemy.isFlyingType())
         {
-            final double extraHeight = random.nextDouble() * (cameraHeight);
-            double minHeight = hero.getYPos()-(cameraHeight/2f);
+            final double extraHeight = random.nextDouble() * (cameraHeight*2f);
+            double minHeight = hero.getYPos()-(cameraHeight);
             if(minHeight<hero.getYDim()){
                 minHeight=hero.getYDim();
             }
@@ -231,4 +235,16 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
 
     @Override
     public Light getItemLight(){ return lightRecharger.getItemLight();}
+
+
+    ////////Hero Lifes Implementation///////////
+    @Override
+    public int getNumberOfLifes(){ return ((HeroLifesWrapper)hero).getNumberOfLifes();}
+
+    @Override
+    public boolean isImmune(){ return ((HeroLifesWrapper)hero).isImmune();}
+
+    @Override
+    public int takeLife(){ return ((HeroLifesWrapper)hero).takeLife();}
+
 }
