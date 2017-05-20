@@ -8,6 +8,13 @@ public abstract class Character extends Entity implements CharacterInfo {
     protected Vector2D prevPosition;
     protected double animationTime; //goes from 0.0 to 1.0
 
+    /**
+     * Constructor. All parameters are object references which are CLONED. If object are null references
+     * they are cloned as if they contained (0.0, 0.0)
+     * @param position Vector2D object that contains the position of the Character
+     * @param dimensions Vector2D object that contains the dimensions of the Character
+     * @param speed Vector2D object that contains the position of the Character
+     */
     public Character (final Vector2D position, final Vector2D dimensions, final Vector2D speed)
     {
         super(position, dimensions);
@@ -18,15 +25,22 @@ public abstract class Character extends Entity implements CharacterInfo {
             characterSpeed = new Vector2D(speed);
 
         animationTime= 0.0;
-
+        prevPosition = null;
     }
 
-
+    /**
+     *
+     * @return true if the character is moving downwards
+     */
     @Override
     public boolean isFalling() {
         return characterSpeed.y < 0.0;
     }
 
+    /**
+     * Updates the state of the character, letting deltaT seconds pass, updating position and etc
+     * @param deltaT tiem in seconds
+     */
     public void update(float deltaT)
     {
         animationTime += deltaT;
@@ -42,30 +56,55 @@ public abstract class Character extends Entity implements CharacterInfo {
 
     }
 
+    /**
+     *
+     * @return Animation time, which goes from 0.0 to 1.0
+     */
     public double getAnimationTime()
     {
         return animationTime;
     }
 
+    /**
+     *
+     * @return Vector2D containted the position of the character before the last update method call
+     */
     public Vector2D getPrevPosition(){
         return this.prevPosition;
     }
 
+    /**
+     *
+     * @return true if character is moving along the y axis
+     */
     public boolean isMovingY()
     {
         return characterSpeed.y != 0.0;
     }
 
+    /**
+     *
+     * @return true if character is moving along the x axis
+     */
     public boolean isMovingX()
     {
         return characterSpeed.x != 0.0;
     }
 
+    /**
+     *
+     * @return double indicating which direction the character is moving. 0.0 for not moving, < 0.0 for moving left,  > 0.0 for moving right
+     *
+     */
     public double getMovementDirectionX()
     {
         return characterSpeed.x;
     }
 
+    /**
+     *
+     * @return true if character is moving to the right or standing still (on X axis).
+     */
     public boolean isMovingRight() {
         return getMovementDirectionX() >= 0.0;
     }
