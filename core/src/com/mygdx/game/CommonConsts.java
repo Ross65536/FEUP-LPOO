@@ -53,7 +53,7 @@ public class CommonConsts {
             new CharacterConstants(1.0f, 3.0, 0.5, 0.6, 0.1);
     //Flying Enemy class
     private static final CharacterConstants constantsEnemyFlying =
-            new CharacterConstants(200 / (double) 100, 1.0, 1.0, 0.5, -0.2);
+            new CharacterConstants(200 / (double) 100, 1.0, 1.0, 0.7, -0.2);
     private static final CharacterConstants constantsEnemyFlyingBoss =
             new CharacterConstants(200 / (double) 100, 0.6, 0.4, 1.2, -0.1);
 
