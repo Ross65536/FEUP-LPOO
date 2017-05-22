@@ -35,12 +35,12 @@ public class LevelBuilder {
 
 
     //// core -------------
-
+    private static final double TIME_MEMORY = 2.0; // in seconds
     private static final double STATISTICS_DEVICE_JUMP = 2.0;
     private static final double STATISTICS_DEVICE_MOV = 5.0;
     private static final StageDirector createStageDirector (Curves generator, final double heroYDIm, final IEnemyTypes iEnemyTypes)
     {
-        final Statistics statistics = new Statistics(STATISTICS_DEVICE_JUMP, STATISTICS_DEVICE_MOV);
+        final Statistics statistics = new Statistics(STATISTICS_DEVICE_JUMP, STATISTICS_DEVICE_MOV, TIME_MEMORY);
         final Curves curve = generator;
         return new StageDirector(curve, statistics, heroYDIm, iEnemyTypes);
     }

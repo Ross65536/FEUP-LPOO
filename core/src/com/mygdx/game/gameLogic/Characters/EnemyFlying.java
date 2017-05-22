@@ -4,6 +4,9 @@ package com.mygdx.game.gameLogic.Characters;
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.Vector2D;
 
+/**
+ * class that implements ground based enemies
+ */
 public class EnemyFlying extends Enemy {
 
 

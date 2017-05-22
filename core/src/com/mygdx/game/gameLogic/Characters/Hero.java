@@ -50,6 +50,11 @@ public class Hero extends Character implements HeroInfo {
         return false;
     }
 
+    /**
+     * makes the hero character jump into the Y axis. Te movement along the Y axis follows a parabollic path (jump with gravity).
+     * The hero is shot into the Y axis with a speed and is then that speed is then subtracted on each update.
+     * @param gravityStrength strength of the gravity that determines how much the hero is slowed down. should go from aorund 0.5 to 1.0
+     */
     public void jump(final double gravityStrength)
     {
         if (! isJumping()) //first time called sets the jump motion
@@ -62,6 +67,10 @@ public class Hero extends Character implements HeroInfo {
         this.riseGravityStrength = gravityStrength;
     }
 
+    /**
+     * Allows the hero to fall from platform. Same as jump method only without an initial thrust on the Y axis.
+     * @param gravityStrength determines the strenght of the gravity, same as in the jump method.
+     */
     public void fall(final double gravityStrength)
     {
         if (! isJumping()) //first time called sets the jump motion
@@ -77,6 +86,9 @@ public class Hero extends Character implements HeroInfo {
         return - gravityStrength * this.getYDim() * JUMP_ACCELERATION_MULTIPLIER;
     }
 
+    /**
+     * Stops the hero's movement on the Y axis (juming and falling).
+     */
     public void stopJump()
     {
         jumping = false;
@@ -84,6 +96,10 @@ public class Hero extends Character implements HeroInfo {
         characterSpeed.y = 0.0;
     }
 
+    /**
+     * Specific update method for Hero class. updates speed on Y axis when jumping or falling is in progress. and has specific animation time logic.
+     * @param deltaT tiem in seconds
+     */
     @Override
     public void update(float deltaT)
     {
@@ -102,10 +118,18 @@ public class Hero extends Character implements HeroInfo {
         characterSpeed.y = newYSpeed;
     }
 
+    /**
+     *
+     * @return true if hero is jumping (either the upwards or downwards part)
+     */
     public boolean isJumping() {
         return jumping;
     }
 
+    /**
+     *
+     * @return true if hero if facing the right direction
+     */
     @Override
     public boolean isMovingRight() {
         return bMovingRight;
@@ -114,6 +138,11 @@ public class Hero extends Character implements HeroInfo {
     private static final double HERO_X_LEEWAY = 0.4;
     private static final double HERO_Y_LEEWAY = 0.2;
 
+    /**
+     * Check if the hero collides with entity en. The collisions arent checked at hero borders but a bit towards the center.
+     * @param en the object to test against for collisions.
+     * @return true if there is a collision, false otherwise
+     */
     @Override
     public boolean checkCollision(final Entity en) {
         final boolean heroXLeft = characterPosition.x + (1.0 - HERO_X_LEEWAY) * characterDimensions.x < en.characterPosition.x;
