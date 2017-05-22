@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.LIBGDXwrapper.MyGame;
 import com.mygdx.game.LIBGDXwrapper.PathConstants;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.HUD;
 import com.mygdx.game.gameLogic.Characters.CharacterInfo;
@@ -73,6 +74,9 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
 
     public void updateWorld(float deltaT){
         gameLogicWorld.update(deltaT); //updates all world characters
+        if(!gameLogicWorld.isGamePlayable()){
+            hud.getGame().SwicthToMenuScreen(MyGame.MenuInstr.ENDGAME);
+        }
     }
 
     protected static double floorDouble(final double numerator, final double divisor)
@@ -114,7 +118,7 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
 
     public void updateScreen(float deltaT) {
         Gdx.gl.glClearColor(103 / 255f, 69 / 255f, 117 / 255f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
         CharacterInfo hero = gameLogicWorld.getHeroInfo();
         updateCameraPos(hero, gameCamera);
         drawBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
