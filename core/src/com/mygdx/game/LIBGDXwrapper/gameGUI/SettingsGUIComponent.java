@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
@@ -87,24 +88,50 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
         loadInputlisteners();
     }
 
+    private void loadVolumeBar(Table scrollTable){
+        float screenWidth = DeviceConstants.MENU_VIEWPORT;
+        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
+
+        skin.add("knockOver", new Texture(Gdx.files.internal("volumeKnockOver.png")));
+        skin.add("knockDown", new Texture(Gdx.files.internal("volumeKnockDown.png")));
+        Slider.SliderStyle volumeSliderStyle = new Slider.SliderStyle(skin.getDrawable("knockOver"),skin.getDrawable("knockDown"));
+        skin.add("volumeSliderStyle",volumeSliderStyle);
+        Slider volumeSlider = new Slider(0,100,1,false,skin,"volumeSliderStyle");
+
+        scrollTable.add(volumeSlider)
+                    .center()
+                    .prefWidth(screenWidth/2)
+                    .height(screenHeight/8);
+
+    }
+
+
     private void loadSrollOptions(){
         table.row();
         String[] options = {" option1", " option2", " option3", " option4"};
 
         SettingsGUIWidgetsProperties settingsGUIWidgetsProperties = ((SettingsGUIWidgetsProperties)widgetsProperties);
         Table scrollTable = new Table();
+        table.setRound(false);
+
+        loadVolumeBar(scrollTable);
+        scrollTable.row();
+
+        loadVolumeBar(scrollTable);
 
         for(int i = 0; i < options.length; i++){
             scrollTable.row().height((float)viewportHeight/5f).expandX().fillX();
             settingsGUIWidgetsProperties.loadOptionLabel(scrollTable,skin,options[i]);
         }
+
+
         ScrollPane.ScrollPaneStyle scrollPaneStyle = new  ScrollPane.ScrollPaneStyle();
         skin.add("vScrollKnobSettings",new Texture(Gdx.files.internal("vScrollKnobSettings.png")));
 
         scrollPaneStyle.vScrollKnob = skin.getDrawable("vScrollKnobSettings");
         final ScrollPane scroll = new ScrollPane(scrollTable,scrollPaneStyle);
         scroll.setScrollingDisabled(true,false);
-        table.add(scroll).expand().fill();
+        table.add(scroll).grow().padBottom((float)height/20f);
     }
 
     protected void loadInputlisteners(){
@@ -140,9 +167,17 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
         float buttonSize = Math.min(((float)viewportWidth/7f),(float)viewportHeight/6f);
 
-        Container container = new Container(exitButton).fill();
-        container.setRound(false);
+        Container container = new Container(exitButton);
+
         container.setSize(buttonSize, buttonSize);
+        exitButton.setLayoutEnabled(true);
+        exitButton.layout();
+        exitButton.align(Align.center);
+        exitButton.center();
+        exitButton.setTransform(true);
+        exitButton.setFillParent(true);
+
+        container.align(Align.center);
 
         container.setPosition(
                 ((float)viewportWidth/7f) - (buttonSize/2f)
@@ -150,7 +185,6 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
         );
 
         container.setDebug(true);
-
         this.addActor(container);
 
         elements.put("exitButton",exitButton);

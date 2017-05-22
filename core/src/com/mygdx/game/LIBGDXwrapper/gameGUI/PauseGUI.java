@@ -8,11 +8,16 @@ import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PlayGUIWidgetsProperties;
 
 public class PauseGUI extends AbstractGUI{
 
+    public static enum pauseType {ENDGAME,PAUSE};
+
+    private pauseType thisPauseType;
+
     IGameWorldAdapter gameScreen;
 
-    public PauseGUI(MenuManager menuManager, IGameWorldAdapter gameScreen){
+    public PauseGUI(MenuManager menuManager, IGameWorldAdapter gameScreen, PauseGUI.pauseType pauseType){
         super(menuManager);
         this.gameScreen = gameScreen;
+        this.thisPauseType = pauseType;
         addComponents();
         addInputProcessors();
     }
@@ -23,7 +28,7 @@ public class PauseGUI extends AbstractGUI{
     }
 
     private void addComponents(){
-        this.addComponent(new PauseGUIComponent(menuManager, widgetsProperties, widgetsInput));
+        this.addComponent(new PauseGUIComponent(menuManager, widgetsProperties, widgetsInput, thisPauseType));
     }
 
     @Override

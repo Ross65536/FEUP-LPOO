@@ -38,11 +38,11 @@ public enum GameMenus {
         return menu;
     }
 
-    public AbstractGUI openPauseMenu(MenuManager menuManager, IGameWorldAdapter gameScreen){
+    public AbstractGUI openPauseMenu(MenuManager menuManager, IGameWorldAdapter gameScreen, PauseGUI.pauseType pauseType){
         if(!menuType.equals(PauseGUI.class))
             return null;
         try{
-            menu = ((Class<PauseGUI>) menuType).getDeclaredConstructor(MenuManager.class,IGameWorldAdapter.class).newInstance(menuManager,gameScreen);
+            menu = ((Class<PauseGUI>) menuType).getDeclaredConstructor(MenuManager.class,IGameWorldAdapter.class, PauseGUI.pauseType.class).newInstance(menuManager,gameScreen, pauseType);
         }catch (Exception e){
             System.out.println(e.toString());
             System.out.println("No constructor with MenuManager as only argument in class.");

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.LevelBuilder;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.PauseGUI;
 
 import static com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.LevelBuilder.createPlatformTestLevel;
 
@@ -18,7 +19,7 @@ public class MyGame extends Game {
     private GameSettings gameSettings;
 
     public static enum GameInstr{RESUME, RESTART, START_GAME_MODE1, START_GAME_MODE2};
-    public static enum MenuInstr{PAUSE, EXIT};
+    public static enum MenuInstr{PAUSE, EXIT, ENDGAME};
 
 
     @Override
@@ -30,6 +31,8 @@ public class MyGame extends Game {
         gameScreen = new GameScreen(this, gameSettings);//gameSettings não devia de ser parametro
         menuScreen = new MenuScreen(this);
 
+
+        Gdx.input.setCatchBackKey(true);
         setScreen(menuScreen);
 	}
 
@@ -51,8 +54,13 @@ public class MyGame extends Game {
             case PAUSE:
                 if(menuScreen==null)
                     menuScreen = new MenuScreen(this);
-                menuScreen.pauseGame(gameScreen.getCurrentLevel());
+                menuScreen.pauseGame(gameScreen.getCurrentLevel(), PauseGUI.pauseType.PAUSE);
                 break;
+            case ENDGAME:
+                if(menuScreen==null)
+                    menuScreen = new MenuScreen(this);
+                menuScreen.pauseGame(gameScreen.getCurrentLevel(), PauseGUI.pauseType.ENDGAME);
+                    break;
             case EXIT:
                 gameScreen.nullifyLevel(); //very important
                 menuScreen.backToMenu();

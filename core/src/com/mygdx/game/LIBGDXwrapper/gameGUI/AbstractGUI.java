@@ -57,6 +57,8 @@ public abstract class AbstractGUI extends InputMultiplexer{
         for(InputProcessor stage: menuComponets) {
             if (stage instanceof Stage) {
                 ((Stage) stage).getViewport().update(width, height, centerCamera);
+                ((Stage) stage).getViewport().getCamera().update();
+                ((Stage) stage).getViewport().apply();
             }
         }
     }

@@ -132,10 +132,8 @@ public class HUD extends Stage{
     public boolean touchDown (int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button);
 
-        System.out.println("\ntouchDown");
         if(((Button)elements.get("pauseButton")).isPressed())
             return true;
-        System.out.println("touchDown");
         return false;
     }
 
@@ -143,10 +141,8 @@ public class HUD extends Stage{
     public boolean touchUp (int screenX, int screenY, int pointer, int button) {
         super.touchUp(screenX, screenY, pointer, button);
 
-        System.out.println("\ntouchUp");
         if(((Button)elements.get("pauseButton")).isOver())
             return true;
-        System.out.println("touchUp");
         return false;
     }
 
@@ -156,6 +152,8 @@ public class HUD extends Stage{
         skin.dispose();
     }
 
-
+    public MyGame getGame(){
+        return game;
+    }
 
 }

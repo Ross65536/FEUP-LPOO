@@ -25,8 +25,8 @@ public class MenuManager {
         resize(Gdx.graphics.getWidth() ,Gdx.graphics.getHeight());
     }
 
-    public void pauseGame(IGameWorldAdapter gameScreen){
-        currentMenu = GameMenus.PauseGUI.openPauseMenu(this, gameScreen);
+    public void pauseGame(IGameWorldAdapter gameScreen, PauseGUI.pauseType pauseType){
+        currentMenu = GameMenus.PauseGUI.openPauseMenu(this, gameScreen, pauseType);
         this.setInputProcessor();
         resize(Gdx.graphics.getWidth() ,Gdx.graphics.getHeight());
     }
@@ -56,6 +56,6 @@ public class MenuManager {
 
     public void resize(int width, int height){
 
-        currentMenu.updateViewPorts(width, height,false);
+        currentMenu.updateViewPorts(width, height,true);
     }
 }

@@ -37,7 +37,7 @@ public class SettingsGUIWidgetsProperties extends WidgetsGeneric {
                 null)
                 .padTop(screenHeight/25)
                 .padBottom(screenHeight/25)
-                .expand().center().top()
+                .center().top()
                 .prefWidth(screenWidth / 3)
                 .prefHeight(screenHeight/10)
                 .getActor();

@@ -34,8 +34,10 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
     private double width = viewportWidth*8f/10f;
     private double height = viewportHeight*8f/10f;
 
+    private String pauseMessage;
+    private String pauseScoreMessage;
 
-    public PauseGUIComponent(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput){
+    public PauseGUIComponent(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput, PauseGUI.pauseType pauseType){
         super(menuManager, widgetsProperties, widgetsInput);
 
         table = new Table(skin);
@@ -59,7 +61,9 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
         ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)viewportWidth, (int)viewportHeight);
 
+        preLoadPauseTypeSpecificProperties(pauseType);
         loadWidgets();
+        postLoadPauseTypeSpecificProperties(pauseType);
     }
 
     private void loadLabels( PauseGUIWidgetsProperties pauseGUIWidgetsProperties){
@@ -67,11 +71,11 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
         table.row().padTop(screenHeight/25);
 
-        pauseGUIWidgetsProperties.loadPMLabel(table, skin,"Paused");
+        pauseGUIWidgetsProperties.loadPMLabel(table, skin,pauseMessage);
 
         table.row().padTop(screenHeight/25).padBottom(screenHeight/25);
 
-        pauseGUIWidgetsProperties.loadPMLabel(table, skin,"Score: ");
+        pauseGUIWidgetsProperties.loadPMLabel(table, skin,pauseScoreMessage);
 
     }
 
@@ -141,6 +145,34 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
     public boolean touchUp (int screenX, int screenY, int pointer, int button) {
         super.touchUp(screenX, screenY, pointer, button);
         return true;
+    }
+
+
+    private void preLoadPauseTypeSpecificProperties(PauseGUI.pauseType pauseType){
+        switch (pauseType){
+            case ENDGAME:
+                pauseMessage = "You lost!";
+                pauseScoreMessage = "Current Score:";
+                break;
+            case PAUSE:
+                pauseMessage = "Paused";
+                pauseScoreMessage = "Score:";
+                break;
+        }
+
+    }
+
+    private void postLoadPauseTypeSpecificProperties(PauseGUI.pauseType pauseType){
+        switch (pauseType){
+            case ENDGAME:
+                ((Button)elements.get("resume")).setDisabled(true);
+                //TODO: GREY BUTTON
+                break;
+            case PAUSE:
+
+                break;
+        }
+
     }
 
 }

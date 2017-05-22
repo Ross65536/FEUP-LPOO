@@ -42,6 +42,7 @@ public class MainGUIWidgetsInput extends WidgetsInput{
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                //TODO: CHANGE TO ABOUT
                 app.exit();
             }
         });
