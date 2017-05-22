@@ -102,8 +102,6 @@ public class Hero extends Character implements HeroInfo {
     private static final double HERO_X_LEEWAY = 0.4;
     private static final double HERO_Y_LEEWAY = 0.2;
 
-
-
     @Override
     public boolean checkCollision(final Entity en) {
         final boolean heroXLeft = characterPosition.x + (1.0 - HERO_X_LEEWAY) * characterDimensions.x < en.characterPosition.x;
