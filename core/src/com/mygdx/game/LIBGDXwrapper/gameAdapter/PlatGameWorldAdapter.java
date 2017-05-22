@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.LIBGDXwrapper.GameScreen;
 import com.mygdx.game.LIBGDXwrapper.PathConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.DummyEnemyVisualsHandler;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.FarAwayBackgroundVisualHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.HeroLifesVisualHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.LightRechargerVisualHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.ScreenLightsVisualHandler;
@@ -33,6 +34,11 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
 
     private HeroLifesVisualHandler heroLifesVisualHandler;
 
+    private float distanceToBackgroundX = 2f;
+    private float distanceToBackgroundY = 0.3f;
+    private FarAwayBackgroundVisualHandler farAwayBackgroundVisualHandler;
+
+
     public PlatGameWorldAdapter(final Vector2D cameraDims, final Vector2D worldDims, GameWorld gameLogicWorld)
     {
         super(worldDims,gameLogicWorld);
@@ -52,6 +58,9 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
         lightRechargerVisualHandler = new LightRechargerVisualHandler(gameLogicWorld,drawBatch);
 
         heroLifesVisualHandler = new HeroLifesVisualHandler(gameLogicWorld,drawBatch);
+
+        Texture backgroundTex = GameAssetHandler.getGameAssetHandler().getNightBackgroundTexture();
+        farAwayBackgroundVisualHandler = new FarAwayBackgroundVisualHandler(backgroundTex,this.distanceToBackgroundX, this.distanceToBackgroundY, gameLogicWorld.getHeroInfo(), drawBatch, worldDims, cameraDims);
 
         addLights();
     }
@@ -85,6 +94,7 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
         final float heroYPos = (float) hero.getYPos();
         final float heroYDim = (float) hero.getYDim();
         final float heroYCenter = heroYPos + heroYDim/2;
+        final float heroXCenter = heroXPos + heroXDim/2;
 
         float cameraYCenter;
         if (heroYCenter <= cameraHeight / 2f)
@@ -92,7 +102,14 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
         else
             cameraYCenter = heroYCenter;
 
-        gameCamera.position.set(heroXPos + heroXDim/2f, cameraYCenter, 0);
+        float cameraXCenter = heroXCenter;
+        if (heroXCenter <  cameraWidth / 2f)
+            cameraXCenter = (float) cameraWidth / 2f;
+          else
+            if(heroXCenter >=  (worldXDim-(cameraWidth / 2f)))
+                cameraXCenter = (float) (worldXDim-(cameraWidth / 2f));
+
+        gameCamera.position.set(cameraXCenter, cameraYCenter, 0);
         gameCamera.update();
     }
 
@@ -117,7 +134,6 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
 
         heroLifesVisualHandler.drawHeroLifes();
         drawBackground();
-        drawWorldEdges();
         dummyEnemyVisualsHandler.drawEnemies();
 
 
@@ -134,43 +150,27 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
     @Override
     protected void drawHero(){
         if((gameLogicWorld instanceof HeroLifesFeature) && ((HeroLifesFeature)gameLogicWorld).isImmune()){
-            drawBatch.setColor(Color.CYAN);
+            drawBatch.setColor(1,1,1,0.5f);
             super.drawHero();
             drawBatch.setColor(Color.WHITE);
         }else
             super.drawHero();
     }
 
+
+    @Override
+    protected void drawBackground(){
+        farAwayBackgroundVisualHandler.drawFarAwayBackground();
+    }
+
+
+
+
     @Override
     public void resize(int width, int height){
         super.resize(width,height);
         if(lightVisualHandler!=null)
             lightVisualHandler.resize( width, height);
-    }
-
-    private void drawWorldEdges(){
-
-        final Texture borderTex = GameAssetHandler.getGameAssetHandler().getBorderTexture();
-        final HeroInfo heroInfo = gameLogicWorld.getHeroInfo();
-
-        final float backgroundYDim = (float) (cameraHeight * PathConstants.BACKGROUND_PORTION_OF_CAMERA_Y);
-        final float backgroundXDim = (float) (backgroundYDim * PathConstants.BACKGROUND_ASPECT_RATIO);
-
-        final float drawYMin = (float) getBackgroundYStart(backgroundYDim);
-
-        final float maxY = (float) (drawYMin + 1.0 * (cameraHeight + backgroundYDim));
-
-        if((heroInfo.getXPos()-cameraWidth/1.5f)<=0) {
-            for (float drawY = drawYMin; drawY <= maxY; drawY += backgroundYDim) {
-                drawBatch.draw(borderTex, -backgroundXDim,drawY, backgroundXDim, backgroundYDim);
-            }
-        }
-
-        if((heroInfo.getXPos()+cameraWidth/1.5f)>=worldXDim) {
-            for (float drawY = drawYMin; drawY <= maxY; drawY += backgroundYDim) {
-                drawBatch.draw(borderTex, (float)worldXDim,drawY, backgroundXDim, backgroundYDim);
-            }
-        }
     }
 
     @Override

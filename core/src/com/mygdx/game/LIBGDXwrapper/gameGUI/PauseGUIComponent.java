@@ -60,14 +60,10 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
         ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)viewportWidth, (int)viewportHeight);
 
         loadWidgets();
-
-        table.setDebug(true);
     }
 
-
-    protected void loadWidgets(){
+    private void loadLabels( PauseGUIWidgetsProperties pauseGUIWidgetsProperties){
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
-        PauseGUIWidgetsProperties pauseGUIWidgetsProperties = ((PauseGUIWidgetsProperties)widgetsProperties);
 
         table.row().padTop(screenHeight/25);
 
@@ -77,6 +73,10 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
         pauseGUIWidgetsProperties.loadPMLabel(table, skin,"Score: ");
 
+    }
+
+    private void loadButtons( PauseGUIWidgetsProperties pauseGUIWidgetsProperties){
+        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
         table.row().padBottom(screenHeight/20);
 
         elements.put("resume",pauseGUIWidgetsProperties.loadPMButton( table, skin, "resumeButton"));
@@ -86,6 +86,18 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
         elements.put("settings",pauseGUIWidgetsProperties.loadPMButton( table, skin, "settingsPMButton"));
 
         elements.put("exit",pauseGUIWidgetsProperties.loadPMButton( table, skin, "exitPMButton"));
+
+    }
+
+
+
+    protected void loadWidgets(){
+
+        PauseGUIWidgetsProperties pauseGUIWidgetsProperties = ((PauseGUIWidgetsProperties)widgetsProperties);
+
+        loadLabels(pauseGUIWidgetsProperties);
+
+        loadButtons(pauseGUIWidgetsProperties);
 
         loadInputlisteners();
     }

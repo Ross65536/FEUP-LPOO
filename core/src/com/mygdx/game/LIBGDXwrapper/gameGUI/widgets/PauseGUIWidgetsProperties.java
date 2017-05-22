@@ -17,7 +17,7 @@ public class PauseGUIWidgetsProperties extends WidgetsGeneric{
                 ,nameButton + "Up.png"
                 ,nameButton + "Down.png")
                 //pos. and location
-                .width((screenWidth*8f/10f)/4.2f)
+                .width((screenWidth*8f/10.5f)/4.2f)
                 .height((screenHeight*8f/10f)/3.5f)
                 .growY()
                 .bottom()

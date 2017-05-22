@@ -186,6 +186,23 @@ public class GameAssetHandler { //dispose textures when swicth to menu
         assetManager.finishLoading();
     }
 
+    public void reloadNightBackground(){
+        if(assetManager.containsAsset(PathConstants.NIGHTBACKGROUND_IMAGE))
+            assetManager.unload(PathConstants.NIGHTBACKGROUND_IMAGE);
+        assetManager.load(PathConstants.NIGHTBACKGROUND_IMAGE, Texture.class);
+        assetManager.finishLoading();
+    }
+
+    public Texture getNightBackgroundTexture() {
+        try{
+            assetManager.get(PathConstants.NIGHTBACKGROUND_IMAGE);
+        }catch(Exception e){
+            assetManager.finishLoading();
+        }
+        return assetManager.get(PathConstants.NIGHTBACKGROUND_IMAGE);
+    }
+
+
     public Texture getBackgroundTexture() {
         return assetManager.get(PathConstants.BACKGROUND_IMAGE);
     }

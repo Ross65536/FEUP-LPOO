@@ -22,6 +22,11 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
     HeroLight light;
 
 
+    public float getDangerLevel(){
+        return 1-light.getRadiousPercentage();
+    }
+
+
     public GameWorld(final Vector2D worldDims, Hero hero)
     {
         worldDimensions = new Vector2D(worldDims);

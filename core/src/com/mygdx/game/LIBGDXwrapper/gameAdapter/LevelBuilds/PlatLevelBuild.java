@@ -2,15 +2,20 @@ package com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds;
 
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.PathConstants;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.Vector2D;
 import com.mygdx.game.gameLogic.Characters.HeroLifesWrapper;
+
+import java.util.Random;
 
 public class PlatLevelBuild{
     private static final double HERO_HEIGHT_BY_SCREEN_HEIGHT = 4;
     private static final double WORLD_X_DIM = 1000;
     private static double WORLD_Y_DIM;
     public static int numberOfLifes = 3;
+    private static Random random = null;
 
     public static final Vector2D createCameraDimsPlat ()
     {
@@ -36,6 +41,13 @@ public class PlatLevelBuild{
         final Vector2D heroDims = new Vector2D(heroHeight * heroConsts.aspectRatio, heroHeight);
 
         return new HeroLifesWrapper(heroPos, heroDims, heroConsts.speedMult, numberOfLifes);
+    }
+
+    public static void  reloadBackground(){
+        if(random == null)
+            random = new Random();
+        PathConstants.NIGHTBACKGROUND_IMAGE = PathConstants.SPRITE_PATH + "backgroundren" + random.nextInt(PathConstants.NUMBEROFBACKGROUNDS) +  ".png";
+        GameAssetHandler.getGameAssetHandler().reloadNightBackground();
     }
 
 }

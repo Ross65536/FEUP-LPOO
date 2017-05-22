@@ -3,6 +3,7 @@ package com.mygdx.game.LIBGDXwrapper.gameGUI.widgets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -68,6 +69,8 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
                 .expandX()
                 .top()
                 .padTop(screenHeight/30)
+                .padBottom(screenHeight/30)
+                .colspan(3)
                 .getActor();
 
         label.setFontScale(1f);
@@ -84,14 +87,13 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
 
         return loadButton(skin, table
                 //images
-                ,"playBackToMenuButtonDown.png"
-                ,"playBackToMenuButtonUp.png")
+                ,"playModeButtonUp.png"
+                ,"playModeButtonDown.png")
                 //pos. and location
                 .width(screenWidth / 3)
                 .height(screenHeight / 6)
                 .expandX()
                 .top()
-                .padTop(screenHeight/30)
                 .getActor();
     }
 
@@ -105,7 +107,9 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
                 backgroundImage)
                 .fill()
                 .expand()
-                .padBottom(screenHeight / 6)
+                .colspan(3)
+                .height(screenHeight - (screenHeight / 3) - (screenHeight / 8) - (screenHeight/15))
+                //.padBottom(screenHeight / 6)
                 //pos. and location
                 .getActor();
 
@@ -118,6 +122,36 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
         textArea.setScrollingDisabled(true,false);
 
         return textArea;
+    }
+
+    public Image loadTextbackImageTable(Table table, String backgroundImage, Skin skin){
+        float screenWidth = DeviceConstants.MENU_VIEWPORT;
+        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
+
+        Image image = loadImage(skin, table,
+                backgroundImage)
+                .grow()
+                .height(screenHeight / 6)
+                .colspan(3)
+                //pos. and location
+                .getActor();
+
+
+        return image;
+    }
+
+    public Image loadSwipeImageTable(Table table, String swipeImage, Skin skin){
+        float screenWidth = DeviceConstants.MENU_VIEWPORT;
+        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
+
+        Image image = loadImage(skin, table,
+                swipeImage)
+                .grow()
+                .width(screenWidth / 3)
+                .height(screenHeight / 6)
+                //pos. and location
+                .getActor();
+        return image;
     }
 
 }

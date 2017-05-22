@@ -44,8 +44,8 @@ public class Platforms implements PlatformFeature{
         platformHeight = fractionOfScreenHeightForPlatform*this.cameraHeight;
         platformWidth =  platformHeight* CommonConsts.getCharacterConstants(Platform.class).aspectRatio;
 
-        spacingBetweenPlatforms = new Vector2D(0,(int)hero.getYDim()*2.0/platformHeight);
-        freqPlatforms = 10;
+        spacingBetweenPlatforms = new Vector2D(0,(int)hero.getYDim()*1.5/platformHeight);
+        freqPlatforms = 5;
 
         createPlarforms();
         updatePlatformsInRange();
@@ -134,9 +134,9 @@ public class Platforms implements PlatformFeature{
 
         double platformHeight = fractionOfScreenHeightForPlatform * this.cameraHeight;
         double platformWidth = platformHeight * CommonConsts.getCharacterConstants(Platform.class).aspectRatio;
-        double topRightCornerX = hero.getXPos() + (cameraWidth / 2) + platformWidth;
+        double topRightCornerX = hero.getXPos() + (cameraWidth / 2) + platformWidth*2;
         double topRightCornerY = hero.getYPos() + (cameraHeight / 2) + platformHeight * 3;
-        double bottomLeftCornerX = hero.getXPos() - (cameraWidth / 2) - platformWidth;
+        double bottomLeftCornerX = hero.getXPos() - (cameraWidth / 2) - platformWidth*2;
         double bottomLeftCornerY = hero.getYPos() - (cameraHeight / 2) - platformHeight * 3;
 
         if(hero.getYPos() < cameraHeight/2f){

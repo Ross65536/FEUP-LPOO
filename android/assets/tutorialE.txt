@@ -1,9 +1,0 @@
-In this mode the player has to survive for as long as possible, the score is the time when the player lost the game.
-
-Tutorial:
-	The player has to evade the monsters showing up from the sides of the map, to do so the player has a flashlight to detect the monsters, the flashlight can run out to charge, to recharge the flashlight the player has to keep moving in any direction.
-
-Controls:
-	-Press the (up) button to jump
-	-Press the right button to go right
-	-Press the left button to go left

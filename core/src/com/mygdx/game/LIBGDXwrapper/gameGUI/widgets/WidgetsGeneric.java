@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 
 public class WidgetsGeneric{
 
@@ -64,17 +66,27 @@ public class WidgetsGeneric{
             loadToSkin(background, background, skin);
             labelStyle.background = skin.getDrawable(background);
         }
+        float screenWidth = DeviceConstants.MENU_VIEWPORT;
+        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
         Label label = new Label(text,labelStyle);
         label.setWrap(true);
+
         ScrollPane scrollPane = new ScrollPane(label);
         scrollPane.layout();
         scrollPane.setTouchable(Touchable.enabled);
         return table.add(scrollPane);
     }
 
+    public static Cell<Image> loadImage(Skin skin, Table table, String nameImage) {
+        loadToSkin(nameImage, nameImage, skin);
+        Image image = new Image(skin, nameImage);
+        return table.add(image);
+    }
+
     public static void loadToSkin(String name, String file, Skin skin){
-        skin.add(name, new Texture(Gdx.files.internal(file)));
+        if(!skin.has(name,Texture.class))
+            skin.add(name, new Texture(Gdx.files.internal(file)));
     }
 
 }

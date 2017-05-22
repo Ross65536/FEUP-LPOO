@@ -18,6 +18,7 @@ import com.mygdx.game.Vector2D;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Random;
 
 
 public class LevelBuilder {
@@ -73,7 +74,10 @@ public class LevelBuilder {
     private static final double GROUND_BOSS_CUTTOFF_PLAT = 0.8;
     private static final double FLYING_BOSS_CUTTOFF_PLAT = 1.0;
     public static PlatGameWorldAdapter createPlatformTestLevel() {
+
         loadAssets(Arrays.asList(PathConstants.platformTestLevelAssetNames));
+
+        PlatLevelBuild.reloadBackground();
 
         Vector2D cameraDims = PlatLevelBuild.createCameraDimsPlat();
         Vector2D worldDims = PlatLevelBuild.createWorldDimsPlat();

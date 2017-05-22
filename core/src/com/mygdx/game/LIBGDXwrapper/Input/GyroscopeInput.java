@@ -28,7 +28,7 @@ public class GyroscopeInput {
 
     private void handlePitch()
     {
-        float pitch = 2*Gdx.input.getPitch();
+        float pitch = Gdx.input.getPitch();
 
         if(Math.abs(pitch) > PITCH_CUTOFF_MIN)
         {

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.CommonConsts;
@@ -49,23 +50,41 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
 
         loadWidgets();
         loadInputlisteners();
-        table.setDebug(true);
     }
 
-    protected void loadWidgets(){
+    private void loadLabels(PlayGUIWidgetsProperties playGUIWidgetsProperties){
 
-        PlayGUIWidgetsProperties playGUIWidgetsProperties = ((PlayGUIWidgetsProperties)widgetsProperties);
-
-        table.center().top();
         elements.put("topLabelS",  playGUIWidgetsProperties.loadTopLabel(table, "Platforms",skin));
         elements.put("topLabelW",  playGUIWidgetsProperties.loadTopLabel(table, "Dodging",skin));
 
-        table.row();
+    }
+
+    private void loadPlayButton(PlayGUIWidgetsProperties playGUIWidgetsProperties){
+
+        elements.put("swipeLeft", playGUIWidgetsProperties.loadSwipeImageTable(table,
+                "swipeImageLeft.png",
+                skin));
+
         elements.put("playButtonS",  playGUIWidgetsProperties.loadPlayButton(table,skin));
+
+        elements.put("swipeRight", playGUIWidgetsProperties.loadSwipeImageTable(table,
+                "swipeImageRight.png",
+                skin));
+
+        elements.put("swipeLeft", playGUIWidgetsProperties.loadSwipeImageTable(table,
+                "swipeImageLeft.png",
+                skin));
+
         elements.put("playButtonW",  playGUIWidgetsProperties.loadPlayButton(table,skin));
 
+        elements.put("swipeRight", playGUIWidgetsProperties.loadSwipeImageTable(table,
+                "swipeImageRight.png",
+                skin));
 
-        table.row();
+
+    }
+
+    private void loadTutorials(PlayGUIWidgetsProperties playGUIWidgetsProperties){
         String tutorialS = Gdx.files.internal("tutorialS.txt").readString();
         elements.put("textAreaS", playGUIWidgetsProperties.loadTextAreaTutorial(table,
                 tutorialS,
@@ -75,6 +94,32 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
         elements.put("textAreaW", playGUIWidgetsProperties.loadTextAreaTutorial(table,
                 tutorialW,
                 "greenBackgroundTextArea.png",skin));
+
+        table.row();
+        elements.put("imageS", playGUIWidgetsProperties.loadTextbackImageTable(table,
+                "backGroundButtonImage.png",
+                skin));
+
+        elements.put("imageW", playGUIWidgetsProperties.loadTextbackImageTable(table,
+                "backGroundButtonImage.png",
+                skin));
+    }
+
+
+
+    protected void loadWidgets(){
+
+        PlayGUIWidgetsProperties playGUIWidgetsProperties = ((PlayGUIWidgetsProperties)widgetsProperties);
+
+        table.center().top();
+
+        loadLabels(playGUIWidgetsProperties);
+        table.row();
+
+        loadPlayButton(playGUIWidgetsProperties);
+        table.row();
+
+        loadTutorials(playGUIWidgetsProperties);
 
     }
 

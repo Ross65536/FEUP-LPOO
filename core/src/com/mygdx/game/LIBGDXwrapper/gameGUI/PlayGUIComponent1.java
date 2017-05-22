@@ -37,12 +37,12 @@ public class PlayGUIComponent1 extends AbstractSingleStageGUI {
         ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)(DeviceConstants.MENU_VIEWPORT), (int)(DeviceConstants.MENU_VIEWPORT *  DeviceConstants.INVERTED_SCREEN_RATIO));
         loadWidgets();
 
-        table.setDebug(true);
     }
 
     protected void loadWidgets(){
 
         PlayGUIWidgetsProperties playGUIWidgetsProperties = ((PlayGUIWidgetsProperties)widgetsProperties);
+
 
         elements.put("backToMenu", playGUIWidgetsProperties.loadBackToMenuButton(table,skin));
         elements.put("settings", playGUIWidgetsProperties.loadSettingsButton(table,skin));

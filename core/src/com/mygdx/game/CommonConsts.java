@@ -60,7 +60,7 @@ public class CommonConsts {
 
     //platform
     private static final CharacterConstants constantsPlatform =
-            new CharacterConstants(400 / (double) 50, 0, 0, 0, 0);
+            new CharacterConstants(400 / (double) 100, 0, 0, 0, 0);
 
     public static final List<CharacterConstants> enemyIndexToConstants;
     static

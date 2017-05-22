@@ -35,7 +35,7 @@ public class KeyboardInput extends InputAdapter {
         public boolean keyUp (int keycode) {
             switch (keycode){
                 case Input.Keys.UP://up
-                    gameScreen.sendHeroJump(0.0);
+                    gameScreen.sendHeroJump(1.0);
                     break;
                 case Input.Keys.LEFT://left
                 case Input.Keys.RIGHT://right

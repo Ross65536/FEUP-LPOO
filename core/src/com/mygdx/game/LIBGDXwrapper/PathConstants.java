@@ -10,13 +10,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static com.mygdx.game.LIBGDXwrapper.PathConstants.NIGHTBACKGROUND_IMAGE;
+import static com.mygdx.game.LIBGDXwrapper.PathConstants.NIGHTBACKGROUND_IMAGE;
+
 public final class PathConstants {
     //colors
     public static final Color BOSS_COLOR = new Color(1,0.3f,1,1);
     public static final Color DEFAULT_COLOR = new Color(1,1,1,1);
 
     //asset names
-    private static final String SPRITE_PATH = "Sprites/";
+    public static final String SPRITE_PATH = "Sprites/";
     public static final String ENEMY_GROUND_IMAGE_PATH = SPRITE_PATH + "gobby_moveR_strip6.png";
     public static final String ENEMY_FLYING_IMAGE_PATH = SPRITE_PATH + "flyingSpritesPixelated.png";
     public static final String PLATFORM_IMAGE_PATH = SPRITE_PATH + "platform2.png";
@@ -32,6 +35,8 @@ public final class PathConstants {
     public static final float HERO_FRAME_TIME = 1.0f / HERO_WALKING_FRAME_COLS / 2;
 
     //background
+    public static final int NUMBEROFBACKGROUNDS = 5;
+    public static String NIGHTBACKGROUND_IMAGE =  SPRITE_PATH + "backgroundren0.png";
     public static final String BACKGROUND_IMAGE = SPRITE_PATH + "Background3.png";
     public static final String BACKGROUND_BORDER = SPRITE_PATH + "border.png";
     public static final double BACKGROUND_ASPECT_RATIO = 1.0;
@@ -50,6 +55,11 @@ public final class PathConstants {
     static {
 
         mapPathToType = new TreeMap<>();
+        mapPathToType.put(SPRITE_PATH + "backgroundren0.png", Texture.class);
+        mapPathToType.put(SPRITE_PATH + "backgroundren1.png", Texture.class);
+        mapPathToType.put(SPRITE_PATH + "backgroundren2.png", Texture.class);
+        mapPathToType.put(SPRITE_PATH + "backgroundren3.png", Texture.class);
+        mapPathToType.put(SPRITE_PATH + "backgroundren4.png", Texture.class);
         mapPathToType.put(HERO_WALKING_IMAGE_PATH, Texture.class);
         mapPathToType.put(HERO_JUMPING_IMAGE_PATH, Texture.class);
         mapPathToType.put(ENEMY_GROUND_IMAGE_PATH, Texture.class);

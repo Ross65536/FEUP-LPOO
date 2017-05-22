@@ -70,6 +70,7 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
         loadWidgets();
 
+        table.setRound(false);
         table.setDebug(true);
     }
 
@@ -88,7 +89,7 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
     private void loadSrollOptions(){
         table.row();
-        String[] options = {"option1", "option2", "option3", "option4"};
+        String[] options = {" option1", " option2", " option3", " option4"};
 
         SettingsGUIWidgetsProperties settingsGUIWidgetsProperties = ((SettingsGUIWidgetsProperties)widgetsProperties);
         Table scrollTable = new Table();
@@ -139,12 +140,8 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
         float buttonSize = Math.min(((float)viewportWidth/7f),(float)viewportHeight/6f);
 
-        Container container = new Container(exitButton);
-
-        container.fill();
-
-        exitButton.setFillParent(true);
-
+        Container container = new Container(exitButton).fill();
+        container.setRound(false);
         container.setSize(buttonSize, buttonSize);
 
         container.setPosition(

@@ -65,10 +65,6 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
     }
 
 
-    public float getDangerLevel(){
-        return 1-light.getRadiousPercentage();
-    }
-
 
     //// abstract implementations ---------------
     @Override
@@ -150,8 +146,8 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
     protected void placeEnemyYPos(Enemy enemy) {
         if (enemy.isFlyingType())
         {
-            final double extraHeight = random.nextDouble() * (cameraHeight*2f);
-            double minHeight = hero.getYPos()-(cameraHeight);
+            final double extraHeight = random.nextDouble() * (cameraHeight*3f);
+            double minHeight = hero.getYPos()-(cameraHeight*1.5);
             if(minHeight<hero.getYDim()){
                 minHeight=hero.getYDim();
             }

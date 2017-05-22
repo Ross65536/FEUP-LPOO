@@ -4,7 +4,7 @@ import com.mygdx.game.Vector2D;
 
 public class Platform extends Entity{
 
-    public static double fractionOfScreenHeightForPlatform = 1.0/15.0;
+    public static double fractionOfScreenHeightForPlatform = 1.0/10.0;
 
     public Platform (final Vector2D position, final Vector2D dimensions){
         super(position, dimensions);
@@ -62,13 +62,15 @@ public class Platform extends Entity{
 
         return ((Character)ch).isFalling() &&
                isIntersecting((Character)ch) &&
-                ((ch.characterPosition.y>(characterPosition.y + PLATFORM_Y_LEEWAY * characterDimensions.y)) ||
-
+                ((ch.characterPosition.y>(characterPosition.y + PLATFORM_Y_LEEWAY * characterDimensions.y))
+/*                ||
                 //stairs effect
                         ((
                 (charPosX>(charPosX + charSizeX - (charSizeX*1.5))) ||
                 (charPosX<(charPosX + (charSizeX*1.5)))))
-                        && (characterPosition.y+(characterDimensions.y/2))<=(ch.characterPosition.y+0.25*ch.characterDimensions.y));
+                        && (characterPosition.y+(characterDimensions.y/2))<=(ch.characterPosition.y+0.25*ch.characterDimensions.y)
+                */
+            );
     }
 
     public boolean isCharacterOnThisPlatform(final Character ch){
