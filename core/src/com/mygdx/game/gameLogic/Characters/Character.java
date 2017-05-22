@@ -3,6 +3,9 @@ package com.mygdx.game.gameLogic.Characters;
 
 import com.mygdx.game.Vector2D;
 
+/**
+ * Class that represents world characters such as the player controlled hero and the enemies.
+ */
 public abstract class Character extends Entity implements CharacterInfo {
     protected Vector2D characterSpeed;
     protected Vector2D prevPosition;
@@ -44,7 +47,7 @@ public abstract class Character extends Entity implements CharacterInfo {
     public void update(float deltaT)
     {
         animationTime += deltaT;
-        if (animationTime > 1.0) //loop animation time
+        if (animationTime >= 1.0) //loop animation time
             animationTime -= 1.0;
 
         //added

@@ -2,6 +2,9 @@ package com.mygdx.game.gameLogic.Characters;
 
 import com.mygdx.game.Vector2D;
 
+/**
+ * Class that represents the player controlled character.
+ */
 public class Hero extends Character implements HeroInfo {
     private static final double JUMP_SPEED_MULTIPLIER = 5.0;
     private static final double JUMP_ACCELERATION_MULTIPLIER = 10.0;
@@ -22,6 +25,11 @@ public class Hero extends Character implements HeroInfo {
 
     }
 
+    /**
+     * Method that makes the hero move on the X axis.
+     * d is multiplied by the max speed of the hero to obtain the speed of the hero on the X axis.
+     * @param d goes form -1.0 to 1.0, with d < 0.0 menaing moving the hero left, d > 0.0 moving the hero right and d ==0.0 hero not moving
+     */
     public void setXMovement (double d) {
         if (d > 0.0)
             bMovingRight = true;
@@ -32,6 +40,10 @@ public class Hero extends Character implements HeroInfo {
         characterSpeed.x = heroMaxXSpeed * d;
     }
 
+    /**
+     *
+     * @return true if hero is moving on X axis or jumping (moving on Y axis)
+     */
     public boolean isMoving(){
         if((characterSpeed.x!=0) || (this.isJumping()))
             return true;

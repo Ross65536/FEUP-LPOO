@@ -25,7 +25,7 @@ public class CharactersTests
         }
     }
 
-    static final double DELTA_DOUBLE = 0.01;
+    static final double DELTA_DOUBLE = 0.001;
 
     @Test
     public void characterGetters()
@@ -120,7 +120,7 @@ public class CharactersTests
 
         character.setXSpeed(SPEED_X);
         character.update(DELTA_T);
-        assertEquals(character.getAnimationTime(), 2*DELTA_T, DELTA_DOUBLE);
+        assertEquals(character.getAnimationTime(), 2*DELTA_T - 1.0, DELTA_DOUBLE);
         assertTrue(character.isMovingX());
         prev = character.getPrevPosition();
         assertTrue(prev.x==0.0 && prev.y ==0.0);
@@ -134,7 +134,7 @@ public class CharactersTests
         assertEquals(character.getXPos(), 2*DELTA_T * SPEED_X, DELTA_DOUBLE);
 
         character.update(DELTA_T);
-        assertEquals(character.getAnimationTime(), (4*DELTA_T) - 1.0, DELTA_DOUBLE);
+        assertEquals(character.getAnimationTime(), (4*DELTA_T) - 2.0, DELTA_DOUBLE);
 
         character.update(DELTA_T);
         assertEquals(character.getAnimationTime(), (5*DELTA_T) - 2.0, DELTA_DOUBLE);
