@@ -25,8 +25,9 @@ public enum GameMenus {
 
     public AbstractGUI createInstance(MenuManager menuManager){
 
-        if(menu!=null)
+        if(menu!=null) {
             return menu;
+        }
         try {
             menu = menuType.getDeclaredConstructor(MenuManager.class).newInstance(menuManager);
         }catch (Exception e){

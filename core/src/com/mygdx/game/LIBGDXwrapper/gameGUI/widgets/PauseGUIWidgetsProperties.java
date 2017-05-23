@@ -31,19 +31,22 @@ public class PauseGUIWidgetsProperties extends WidgetsGeneric{
                 name,
                 "gameFont",
                 null)
-                /*
-                .padTop(screenHeight/25)
-                .padBottom(screenHeight/25)
-                .expand().center().top()
-                .prefWidth(screenWidth / 3)
-                .prefHeight(screenHeight/10)
-                */
                 .colspan(4)
                 .getActor();
         label.setFontScale(1f);
-        float xRatio = (screenWidth/3f)/label.getWidth();
-        float yRatio = (screenHeight/10f)/label.getHeight();
+
+        float xRatio = name.length()*((screenWidth/3f)/label.getWidth())/10;
+
+        float yRatio = (screenHeight/6f)/label.getHeight();
+
+        if(name.contains("\n"))
+            yRatio*=1.5;
+
         label.setFontScale(xRatio,yRatio);
+
+        if(label.getWidth()>((screenWidth*8f/10f))+screenWidth/20){
+            label.setWidth(((screenWidth*8f/10f))+screenWidth/20);
+        }
         return label;
     }
 

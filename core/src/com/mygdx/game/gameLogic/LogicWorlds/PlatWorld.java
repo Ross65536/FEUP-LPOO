@@ -84,12 +84,24 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
 
         updateRechargerItem(deltaT);
 
+        checkScore();
         checkLost();
 
         if (! CommonConsts.INPUT_DEBUG)
             tryGenerateEnemy();
     }
 
+    @Override
+    protected void checkScore(){
+        if(lightRecharger.wasRechargerCaught()){
+            score = lightRecharger.totalRechargersCaught();
+        }
+    }
+
+    @Override
+    public String getScore(){
+        return ((int)score)+"";
+    }
 
     private void checkLost(){
         if(this.checkEnemyCollisions() > 0)

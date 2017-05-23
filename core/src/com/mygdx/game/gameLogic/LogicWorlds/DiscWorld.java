@@ -1,6 +1,8 @@
 package com.mygdx.game.gameLogic.LogicWorlds;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
@@ -15,7 +17,6 @@ import com.mygdx.game.Vector2D;
 import java.util.List;
 
 public class DiscWorld extends GameWorld implements HeroLightFeature {
-
 
 
     public DiscWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
@@ -66,6 +67,8 @@ public class DiscWorld extends GameWorld implements HeroLightFeature {
 
         checkHeroAtWorldEdges();
 
+        checkScore();
+
         if(this.checkEnemyCollisions() > 0)
         {
             gamePlayable = false;
@@ -74,6 +77,19 @@ public class DiscWorld extends GameWorld implements HeroLightFeature {
 
         if (! CommonConsts.INPUT_DEBUG)
             tryGenerateEnemy();
+    }
+
+    @Override
+    protected void checkScore(){
+        score += Gdx.graphics.getDeltaTime();
+    }
+
+
+    public String getScore(){
+        String seconds = (((int)score) % 60)+"";
+        String minutes  = ((int)(score / 60f)%60)+"";
+        String hours = ((int)((int)(score / 60f)/60))+"";
+        return hours+":"+minutes+":"+seconds;
     }
 
     @Override

@@ -28,7 +28,7 @@ public class PauseGUI extends AbstractGUI{
     }
 
     private void addComponents(){
-        this.addComponent(new PauseGUIComponent(menuManager, widgetsProperties, widgetsInput, thisPauseType));
+        this.addComponent(new PauseGUIComponent(gameScreen, menuManager, widgetsProperties, widgetsInput, thisPauseType));
     }
 
     @Override

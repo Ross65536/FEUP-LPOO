@@ -8,7 +8,6 @@ import com.mygdx.game.gameLogic.LogicWorlds.IGameWorldHeroInputs;
 import com.mygdx.game.Vector2D;
 
 public interface IGameWorldAdapter {
-    double getCreationTime();
     void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera);
     Vector2D getCameraSetup ();
     void updateWorld(float delaT);
@@ -16,6 +15,7 @@ public interface IGameWorldAdapter {
     void setCamera(OrthographicCamera camera);
     IGameWorldHeroInputs getLogicWorldInputs();
     void resize(int width, int height);
-    void dispose();
     void setHUD(HUD hud);
+    String getScore();
+    void dispose();
 }

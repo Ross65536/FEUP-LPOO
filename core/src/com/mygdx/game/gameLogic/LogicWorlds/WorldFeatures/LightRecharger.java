@@ -28,8 +28,9 @@ public class LightRecharger implements LightRechargerFeature{
     private double lightRadious;
     //private double minDiameter;
 
+    private boolean newRechargerCaught = false;
     private int rechargersCaught = 0;
-    private int distanteLevel = 1;
+    private int distanteLevel = 0;
 
     public LightRecharger(HeroInfo hero, TreeMap<Double, TreeMap<Double,Platform>> allPlatforms, Light light, Vector2D cameraDim){
         this.cameraHeight = cameraDim.y;
@@ -52,9 +53,19 @@ public class LightRecharger implements LightRechargerFeature{
             distanteLevel++;
             heroLight.resetRadious();
             generateItem();
+            newRechargerCaught = true;
         }
         updateLight();
         itemLight.updateOscilation(deltaT);
+    }
+
+    public boolean wasRechargerCaught(){
+        if(newRechargerCaught == true)
+        {
+            newRechargerCaught = false;
+            return true;
+        }
+        return false;
     }
 
     public int totalRechargersCaught(){

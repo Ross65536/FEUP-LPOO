@@ -75,6 +75,7 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
     public void updateWorld(float deltaT){
         gameLogicWorld.update(deltaT); //updates all world characters
         if(!gameLogicWorld.isGamePlayable()){
+            //TODO: Save Game Score
             hud.getGame().SwicthToMenuScreen(MyGame.MenuInstr.ENDGAME);
         }
     }
@@ -139,6 +140,10 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
 
     public abstract void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera);
     public abstract Vector2D getCameraSetup ();
+
+    public String getScore(){
+        return gameLogicWorld.getScore();
+    }
 
     public void setHUD(HUD hud){
         this.hud = hud;

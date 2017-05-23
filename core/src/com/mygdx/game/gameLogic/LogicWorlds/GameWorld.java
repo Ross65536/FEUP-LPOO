@@ -20,7 +20,7 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
     protected static Random random = new Random();
     DummyEnemies dummyEnemies;
     HeroLight light;
-
+    protected double score = 0;
 
     public float getDangerLevel(){
         return 1-light.getRadiousPercentage();
@@ -71,7 +71,9 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
 
     abstract protected void checkHeroAtWorldEdges();
 
+    abstract protected void checkScore();
 
+    abstract public String getScore();
 
     //// hero inputs -------
     @Override

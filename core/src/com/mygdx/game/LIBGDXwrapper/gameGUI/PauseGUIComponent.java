@@ -8,8 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsProperties;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PauseGUIWidgetsInput;
@@ -19,6 +21,8 @@ import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsProperties
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsInput;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 public class PauseGUIComponent extends AbstractSingleStageGUI{
@@ -37,9 +41,11 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
     private String pauseMessage;
     private String pauseScoreMessage;
 
-    public PauseGUIComponent(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput, PauseGUI.pauseType pauseType){
-        super(menuManager, widgetsProperties, widgetsInput);
+    IGameWorldAdapter gameScreen;
 
+    public PauseGUIComponent(IGameWorldAdapter gameScreen , MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput, PauseGUI.pauseType pauseType){
+        super(menuManager, widgetsProperties, widgetsInput);
+        this.gameScreen = gameScreen;
         table = new Table(skin);
 
         elements = new HashMap<String, Object>();
@@ -75,8 +81,7 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
         table.row().padTop(screenHeight/25).padBottom(screenHeight/25);
 
-        pauseGUIWidgetsProperties.loadPMLabel(table, skin,pauseScoreMessage);
-
+        pauseGUIWidgetsProperties.loadPMLabel(table, skin, pauseScoreMessage + "\n" +  this.gameScreen.getScore()).setAlignment(Align.center);
     }
 
     private void loadButtons( PauseGUIWidgetsProperties pauseGUIWidgetsProperties){
@@ -152,11 +157,11 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
         switch (pauseType){
             case ENDGAME:
                 pauseMessage = "You lost!";
-                pauseScoreMessage = "Current Score:";
+                pauseScoreMessage = "Score:";
                 break;
             case PAUSE:
                 pauseMessage = "Paused";
-                pauseScoreMessage = "Score:";
+                pauseScoreMessage = "Current Score:";
                 break;
         }
 

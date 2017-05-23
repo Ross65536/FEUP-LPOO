@@ -55,7 +55,9 @@ public class MenuManager {
     }
 
     public void resize(int width, int height){
-
-        currentMenu.updateViewPorts(width, height,true);
+        if(currentMenu instanceof PlayGUI)
+            currentMenu.updateViewPorts(width, height,false);
+        else
+            currentMenu.updateViewPorts(width, height,true);
     }
 }

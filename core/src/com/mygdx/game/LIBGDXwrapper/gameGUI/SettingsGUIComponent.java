@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -16,6 +19,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -71,7 +76,6 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
         loadWidgets();
 
-        table.setRound(false);
         table.setDebug(true);
     }
 
@@ -83,53 +87,30 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
         addExitButton();
 
+        table.row();
+
         loadSrollOptions();
 
         loadInputlisteners();
     }
 
-    private void loadVolumeBar(Table scrollTable){
-        float screenWidth = DeviceConstants.MENU_VIEWPORT;
-        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
+    private void loadSrollOptions(){
 
-        skin.add("knockOver", new Texture(Gdx.files.internal("volumeKnockOver.png")));
-        skin.add("knockDown", new Texture(Gdx.files.internal("volumeKnockDown.png")));
-        Slider.SliderStyle volumeSliderStyle = new Slider.SliderStyle(skin.getDrawable("knockOver"),skin.getDrawable("knockDown"));
-        skin.add("volumeSliderStyle",volumeSliderStyle);
-        Slider volumeSlider = new Slider(0,100,1,false,skin,"volumeSliderStyle");
+        Table scrollTable = new Table();
 
-        scrollTable.add(volumeSlider)
-                    .center()
-                    .prefWidth(screenWidth/2)
-                    .height(screenHeight/8);
+        scrollTable.setRound(false);
 
+        loadVolumeBar(scrollTable);
+
+        addScrollMenuToTable(scrollTable);
     }
 
-
-    private void loadSrollOptions(){
-        table.row();
-        String[] options = {" option1", " option2", " option3", " option4"};
-
-        SettingsGUIWidgetsProperties settingsGUIWidgetsProperties = ((SettingsGUIWidgetsProperties)widgetsProperties);
-        Table scrollTable = new Table();
-        table.setRound(false);
-
-        loadVolumeBar(scrollTable);
-        scrollTable.row();
-
-        loadVolumeBar(scrollTable);
-
-        for(int i = 0; i < options.length; i++){
-            scrollTable.row().height((float)viewportHeight/5f).expandX().fillX();
-            settingsGUIWidgetsProperties.loadOptionLabel(scrollTable,skin,options[i]);
-        }
-
-
+    private void addScrollMenuToTable(Table scrollTable){
         ScrollPane.ScrollPaneStyle scrollPaneStyle = new  ScrollPane.ScrollPaneStyle();
         skin.add("vScrollKnobSettings",new Texture(Gdx.files.internal("vScrollKnobSettings.png")));
-
         scrollPaneStyle.vScrollKnob = skin.getDrawable("vScrollKnobSettings");
         final ScrollPane scroll = new ScrollPane(scrollTable,scrollPaneStyle);
+
         scroll.setScrollingDisabled(true,false);
         table.add(scroll).grow().padBottom((float)height/20f);
     }
@@ -170,24 +151,87 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
         Container container = new Container(exitButton);
 
         container.setSize(buttonSize, buttonSize);
-        exitButton.setLayoutEnabled(true);
-        exitButton.layout();
-        exitButton.align(Align.center);
-        exitButton.center();
-        exitButton.setTransform(true);
+        container.setRound(false);
         exitButton.setFillParent(true);
-
-        container.align(Align.center);
-
+        container.fill();
         container.setPosition(
                 ((float)viewportWidth/7f) - (buttonSize/2f)
                 ,((float)viewportHeight*5f/6f)  - (buttonSize/2f)
         );
 
+
+
         container.setDebug(true);
         this.addActor(container);
 
         elements.put("exitButton",exitButton);
+    }
+
+
+    private void loadVolumeBarInput(Slider volumeSlider){
+        volumeSlider.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        double volumeValue = ((Slider)actor).getValue();//0-100
+                        if(volumeValue>50) {
+                            Drawable oldVolumeKnockDown = skin.getDrawable("knockDown51_100");
+                            if(volumeSlider.getStyle().knobDown != oldVolumeKnockDown){
+                                volumeSlider.getStyle().knobDown = skin.getDrawable("knockDown51_100");
+                                volumeSlider.getStyle().knob = skin.getDrawable("knockDown51_100");
+                            }
+                        }else
+                            if(volumeValue>0){
+                                Drawable oldVolumeKnockDown = skin.getDrawable("knockDown1_50");
+                                if(volumeSlider.getStyle().knobDown != oldVolumeKnockDown){
+                                    volumeSlider.getStyle().knobDown = skin.getDrawable("knockDown1_50");
+                                    volumeSlider.getStyle().knob = skin.getDrawable("knockDown1_50");
+                                }
+                            }else
+                                {
+                                    Drawable oldVolumeKnockDown = skin.getDrawable("knockDown0");
+                                    if(volumeSlider.getStyle().knobDown != oldVolumeKnockDown){
+                                        volumeSlider.getStyle().knobDown = skin.getDrawable("knockDown0");
+                                        volumeSlider.getStyle().knob = skin.getDrawable("knockDown0");
+                                    }
+                                }
+                    }
+
+                }
+        );
+        volumeSlider.addListener(new InputListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                event.stop();
+                return false;
+        }});
+    }
+
+
+    private void loadVolumeBar(Table scrollTable){
+        float screenWidth = DeviceConstants.MENU_VIEWPORT;
+        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
+
+        skin.add("knockOver", new Texture(Gdx.files.internal("volumeKnockOver.png")));
+        skin.add("knockDown0", new Texture(Gdx.files.internal("volumeKnockDown0.png")));
+        skin.add("knockDown1_50", new Texture(Gdx.files.internal("volumeKnockDown1_50.png")));
+        skin.add("knockDown51_100", new Texture(Gdx.files.internal("volumeKnockDown51_100.png")));
+
+        Slider.SliderStyle volumeSliderStyle = new Slider.SliderStyle(skin.getDrawable("knockOver"),skin.getDrawable("knockDown51_100"));
+        skin.add("volumeSliderStyle",volumeSliderStyle);
+        Slider volumeSlider = new Slider(0,100,1,false,skin,"volumeSliderStyle");
+        volumeSlider.setValue(100);
+
+
+        loadVolumeBarInput(volumeSlider);
+
+
+        scrollTable.add(volumeSlider)
+                .grow()
+                .width(screenWidth/2)
+                .height(screenHeight/8)
+                .center();
+
+
     }
 
     @Override
