@@ -7,8 +7,6 @@ import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.LevelBuilder;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.PauseGUI;
 
-import static com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.LevelBuilder.createPlatformTestLevel;
-
 
 public class MyGame extends Game {
     private GameScreen gameScreen;
@@ -38,7 +36,7 @@ public class MyGame extends Game {
 
 	private void startGameTest()
 	{
-        gameScreen.LoadLevel(LevelBuilder.createTestLevel());
+        gameScreen.LoadLevel(LevelBuilder.createSurvivalLevel());
         finishDiscWorldAssets();
 	}
 

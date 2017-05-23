@@ -3,6 +3,9 @@ package com.mygdx.game.gameLogic.GameDirector.DifficultyCurve;
 
 import com.mygdx.game.gameLogic.GameDirector.StatisticsInfo;
 
+/**
+ * Should generate a  difficulty that increases with time, to a max value
+ */
 public class IncreasingDifficulty extends Curves
 {
     private double difficultyGenerationRange;
@@ -21,7 +24,7 @@ public class IncreasingDifficulty extends Curves
      * Turns time into a difficulty. At each time point a diffculty can have range difficultyGenerationRange and
      * timeRange indicates at what second half of the max difficulty is generated
      * @param statistics queried object
-     * @return
+     * @return difficulty generated or a special value indicated no enemy is to be generated
      */
     @Override
     public double generateDifficulty(StatisticsInfo statistics)

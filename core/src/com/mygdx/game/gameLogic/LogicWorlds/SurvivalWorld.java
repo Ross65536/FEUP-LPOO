@@ -16,10 +16,10 @@ import com.mygdx.game.Vector2D;
 
 import java.util.List;
 
-public class DiscWorld extends GameWorld implements HeroLightFeature {
+public class SurvivalWorld extends GameWorld implements HeroLightFeature {
 
 
-    public DiscWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
+    public SurvivalWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
         super(worldDims, hero);
 
