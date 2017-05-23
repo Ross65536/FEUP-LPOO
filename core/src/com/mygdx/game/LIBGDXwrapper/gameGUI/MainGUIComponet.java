@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsProperties;
@@ -36,7 +37,7 @@ public class MainGUIComponet extends AbstractSingleStageGUI {
         double viewportHeight = (DeviceConstants.MENU_VIEWPORT*DeviceConstants.INVERTED_SCREEN_RATIO);
 
         this.setViewport(
-                new FitViewport(
+                new StretchViewport(
                         (int)viewportWidth
                         ,(int)viewportHeight
                 )
@@ -59,7 +60,7 @@ public class MainGUIComponet extends AbstractSingleStageGUI {
         table.row();
         elements.put("settingsButton", mainGUIWidgetsProperties.loadPropertiesSettingsButton(table,skin));
         table.row();
-        elements.put("exitButton", mainGUIWidgetsProperties.loadPropertiesExitButton(table,skin));
+        elements.put("aboutButton", mainGUIWidgetsProperties.loadPropertiesAboutButton(table,skin));
 
         loadInputlisteners();
     }
@@ -83,8 +84,8 @@ public class MainGUIComponet extends AbstractSingleStageGUI {
                 menuManager
         );
 
-        mainGUIWidgetsInput.loadInputExitButton(
-                (Button)elements.get("exitButton"),
+        mainGUIWidgetsInput.loadInputAboutButton(
+                (Button)elements.get("aboutButton"),
                 menuManager
         );
     }

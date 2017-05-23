@@ -38,12 +38,11 @@ public class MainGUIWidgetsInput extends WidgetsInput{
         });
     }
 
-    public void loadInputExitButton(Button button,final MenuManager menuManager){
+    public void loadInputAboutButton(Button button,final MenuManager menuManager){
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO: CHANGE TO ABOUT
-                app.exit();
+                //TODO: COMPLETE ABOUT
             }
         });
     }

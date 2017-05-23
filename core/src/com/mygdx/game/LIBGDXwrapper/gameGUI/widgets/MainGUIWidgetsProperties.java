@@ -72,14 +72,14 @@ public class MainGUIWidgetsProperties extends WidgetsGeneric {
                 .getActor();
     }
 
-    public Button loadPropertiesExitButton(Table table,Skin skin){
+    public Button loadPropertiesAboutButton(Table table,Skin skin){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
         return loadButton(skin, table
                 //images
-                ,"exitButtonUp.png"
-                ,"exitButtonDown.png")
+                ,"aboutButtonUp.png"
+                ,"aboutButtonDown.png")
                 //pos. and location
                 .prefWidth(screenWidth / 2)
                 .minWidth(screenWidth / 10)

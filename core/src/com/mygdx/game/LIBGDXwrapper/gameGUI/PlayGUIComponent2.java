@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PlayGUIWidgetsInput;
@@ -30,16 +31,16 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
 
         elements = new  HashMap<String, Object>();
 
-        skin.add("playMenuBackground",new Texture(Gdx.files.internal("playMenuBackground.png")));
+        //skin.add("playMenuBackground",new Texture(Gdx.files.internal("playMenuBackground.png")));
 
-        table.setBackground("playMenuBackground");
+        //table.setBackground("playMenuBackground");
 
         this.addActor(table);
 
 
         table.setTouchable(Touchable.enabled);
         this.setViewport(
-                new FitViewport(
+                new StretchViewport(
                         (int)(DeviceConstants.MENU_VIEWPORT)
                         ,(int)(DeviceConstants.MENU_VIEWPORT*  DeviceConstants.INVERTED_SCREEN_RATIO)
                 )

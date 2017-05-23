@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsInput;
@@ -59,7 +60,7 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
         table.setSize((float)width,(float)height);
 
         this.setViewport(
-                new FitViewport(
+                new StretchViewport(
                         (int)viewportWidth
                         ,(int)viewportHeight
                 )

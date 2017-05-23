@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsProperties;
@@ -66,7 +67,7 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
         table.setSize((float)width,(float)height);
 
         this.setViewport(
-                new FitViewport(
+                new StretchViewport(
                         (int)viewportWidth
                         ,(int)viewportHeight
                 )
@@ -147,22 +148,12 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
         Button exitButton = getExitButton();
 
         float buttonSize = Math.min(((float)viewportWidth/7f),(float)viewportHeight/6f);
-
-        Container container = new Container(exitButton);
-
-        container.setSize(buttonSize, buttonSize);
-        container.setRound(false);
-        exitButton.setFillParent(true);
-        container.fill();
-        container.setPosition(
+        exitButton.setSize(buttonSize, buttonSize);
+        exitButton.setPosition(
                 ((float)viewportWidth/7f) - (buttonSize/2f)
                 ,((float)viewportHeight*5f/6f)  - (buttonSize/2f)
         );
-
-
-
-        container.setDebug(true);
-        this.addActor(container);
+        this.addActor(exitButton);
 
         elements.put("exitButton",exitButton);
     }
