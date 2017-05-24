@@ -52,7 +52,7 @@ public class Hero extends Character implements HeroInfo {
 
     /**
      * makes the hero character jump into the Y axis. Te movement along the Y axis follows a parabollic path (jump with gravity).
-     * The hero is shot into the Y axis with a speed and is then that speed is then subtracted on each update.
+     * The hero is shot into the Y axis with a speed and is then that speed is then subtracted on each pollOrientation.
      * @param gravityStrength strength of the gravity that determines how much the hero is slowed down. should go from aorund 0.5 to 1.0
      */
     public void jump(final double gravityStrength)
@@ -97,7 +97,7 @@ public class Hero extends Character implements HeroInfo {
     }
 
     /**
-     * Specific update method for Hero class. updates speed on Y axis when jumping or falling is in progress. and has specific animation time logic.
+     * Specific pollOrientation method for Hero class. updates speed on Y axis when jumping or falling is in progress. and has specific animation time logic.
      * @param deltaT tiem in seconds
      */
     @Override

@@ -70,7 +70,7 @@ public abstract class Character extends Entity implements CharacterInfo {
 
     /**
      *
-     * @return Vector2D containted the position of the character before the last update method call
+     * @return Vector2D containted the position of the character before the last pollOrientation method call
      */
     public Vector2D getPrevPosition(){
         return this.prevPosition;

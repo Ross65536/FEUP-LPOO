@@ -1,11 +1,11 @@
-package com.mygdx.game.gameLogic.GameDirector.DifficultyCurve;
+package com.mygdx.game.gameLogic.GameDirector.DifficultyCurves;
 
-import com.mygdx.game.gameLogic.GameDirector.StatisticsInfo;
+import com.mygdx.game.gameLogic.GameDirector.Statistic.StatisticsInfo;
 
 import java.util.Random;
 
 
-public abstract class Curves {
+public abstract class Curve {
     public static final double CURVES_NO_ENEMY_CREATED = -1.0;
     public static final double CURVES_MAX_DIFFICULTY = 100;
 

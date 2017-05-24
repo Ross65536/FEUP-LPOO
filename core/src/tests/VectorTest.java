@@ -1,4 +1,4 @@
-package test;
+package tests;
 
 
 import com.mygdx.game.Vector2D;

@@ -5,9 +5,8 @@ import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyGround;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
-import com.mygdx.game.gameLogic.GameDirector.StageDirectors.StageDirector;
-import com.mygdx.game.gameLogic.GameDirector.StatisticsInfo;
-import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
+import com.mygdx.game.gameLogic.GameDirector.StageDirector;
+import com.mygdx.game.gameLogic.GameDirector.Statistic.StatisticsInput;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
 import com.mygdx.game.Vector2D;
 

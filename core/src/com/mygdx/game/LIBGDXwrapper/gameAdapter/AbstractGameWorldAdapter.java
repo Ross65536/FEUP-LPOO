@@ -144,7 +144,7 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
      * updates the graphics
      * @param deltaT
      */
-    public void updateScreen(float deltaT) {
+    public void updateGraphics(float deltaT) {
         Gdx.gl.glClearColor(103 / 255f, 69 / 255f, 117 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
         CharacterInfo hero = gameLogicWorld.getHeroInfo();

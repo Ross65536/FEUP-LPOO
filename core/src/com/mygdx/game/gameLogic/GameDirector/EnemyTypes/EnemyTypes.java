@@ -1,4 +1,4 @@
-package com.mygdx.game.gameLogic.GameDirector.StageDirectors;
+package com.mygdx.game.gameLogic.GameDirector.EnemyTypes;
 
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.Vector2D;
@@ -56,5 +56,5 @@ public abstract class EnemyTypes {
      * @param difficulty
      * @return
      */
-    protected abstract Enemy get(final double difficulty);
+    public abstract Enemy chooseEnemyType(final double difficulty);
 }

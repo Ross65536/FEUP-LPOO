@@ -1,4 +1,4 @@
-package test.Characters;
+package tests.Characters;
 
 
 import com.mygdx.game.CommonConsts;

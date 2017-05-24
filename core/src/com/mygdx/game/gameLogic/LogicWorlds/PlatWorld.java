@@ -9,7 +9,7 @@ import com.mygdx.game.gameLogic.Characters.HeroLifesWrapper;
 import com.mygdx.game.gameLogic.Characters.Recharger;
 import com.mygdx.game.gameLogic.Characters.Light;
 import com.mygdx.game.gameLogic.Characters.Platform;
-import com.mygdx.game.gameLogic.GameDirector.StageDirectors.StageDirector;
+import com.mygdx.game.gameLogic.GameDirector.StageDirector;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLifesFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightRecharger;

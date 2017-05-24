@@ -1,4 +1,4 @@
-package com.mygdx.game.gameLogic.GameDirector;
+package com.mygdx.game.gameLogic.GameDirector.Statistic;
 
 /**
  * Provides an interface to acess various statistics
@@ -27,7 +27,7 @@ public interface StatisticsInfo
     double getCurrentPlayTime();
     /**
      *
-     * @return time since last enemy was created (update enemy bigger than 0)
+     * @return time since last enemy was created (pollOrientation enemy bigger than 0)
      */
     double getLastCreatedEnemyDeltaT();
 

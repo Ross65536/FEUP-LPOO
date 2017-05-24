@@ -5,13 +5,13 @@ import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.PlatGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.PathConstants;
 import com.mygdx.game.gameLogic.Characters.Hero;
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.BalancedCurve;
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.Curves;
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.IncreasingDifficulty;
-import com.mygdx.game.gameLogic.GameDirector.StageDirectors.EnemyTypes;
-import com.mygdx.game.gameLogic.GameDirector.StageDirectors.StageDirector;
-import com.mygdx.game.gameLogic.GameDirector.StageDirectors.EnemyTypesLinear;
-import com.mygdx.game.gameLogic.GameDirector.Statistics;
+import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.BalancedCurve;
+import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.Curve;
+import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.IncreasingDifficultyCurve;
+import com.mygdx.game.gameLogic.GameDirector.EnemyTypes.EnemyTypes;
+import com.mygdx.game.gameLogic.GameDirector.StageDirector;
+import com.mygdx.game.gameLogic.GameDirector.EnemyTypes.EnemyTypesLinear;
+import com.mygdx.game.gameLogic.GameDirector.Statistic.Statistics;
 import com.mygdx.game.gameLogic.LogicWorlds.SurvivalWorld;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
 import com.mygdx.game.gameLogic.LogicWorlds.PlatWorld;
@@ -39,10 +39,10 @@ public class LevelBuilder {
     private static final double TIME_MEMORY = 2.0; // in seconds
     private static final double STATISTICS_DEVICE_JUMP = 2.0;
     private static final double STATISTICS_DEVICE_MOV = 5.0;
-    private static final StageDirector createStageDirector (Curves generator, final EnemyTypes iEnemyTypes)
+    private static final StageDirector createStageDirector (Curve generator, final EnemyTypes iEnemyTypes)
     {
         final Statistics statistics = new Statistics(STATISTICS_DEVICE_JUMP, STATISTICS_DEVICE_MOV, TIME_MEMORY);
-        final Curves curve = generator;
+        final Curve curve = generator;
         return new StageDirector(curve, statistics, iEnemyTypes);
     }
 
@@ -66,7 +66,7 @@ public class LevelBuilder {
         Vector2D worldDims = SurvivalLevelBuild.createWorldDims();
         Hero hero = SurvivalLevelBuild.createHero(worldDims);
 
-        final Curves generator = new BalancedCurve(ENEMY_CREATION_DELTAT, MAX_NUM_ENEMIES);
+        final Curve generator = new BalancedCurve(ENEMY_CREATION_DELTAT, MAX_NUM_ENEMIES);
         final EnemyTypes enemyTypes = new EnemyTypesLinear(hero.getYDim(), GROUND_CUTTOFF_DISC, FLYING_CUTTOFF_DISC, GROUND_BOSS_CUTTOFF_DISC, FLYING_BOSS_CUTTOFF_DISC);
         StageDirector stageDirector = createStageDirector(generator, enemyTypes);
 
@@ -100,7 +100,7 @@ public class LevelBuilder {
         Vector2D worldDims = PlatLevelBuild.createWorldDimsPlat();
         Hero hero = PlatLevelBuild.createHero2(worldDims,cameraDims);
 
-        final Curves generator = new IncreasingDifficulty(DIFFICULTY_DELTA, HALF_TIME_RANGE, ENEMY_CREATION_DELTAT_PLAT, MAX_NUM_ENEMIES_PLAT);
+        final Curve generator = new IncreasingDifficultyCurve(DIFFICULTY_DELTA, HALF_TIME_RANGE, ENEMY_CREATION_DELTAT_PLAT, MAX_NUM_ENEMIES_PLAT);
         final EnemyTypes enemyTypes = new EnemyTypesLinear(hero.getYDim(), GROUND_CUTTOFF_PLAT, FLYING_CUTTOFF_PLAT, GROUND_BOSS_CUTTOFF_PLAT, FLYING_BOSS_CUTTOFF_PLAT);
         StageDirector stageDirector = createStageDirector(generator, enemyTypes);
 

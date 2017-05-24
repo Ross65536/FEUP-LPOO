@@ -31,7 +31,7 @@ public interface IGameWorldAdapter {
      * updates the graphics
      * @param deltaT
      */
-    void updateScreen(float deltaT);
+    void updateGraphics(float deltaT);
     /**
      * Obtains the camera
      * @param camera

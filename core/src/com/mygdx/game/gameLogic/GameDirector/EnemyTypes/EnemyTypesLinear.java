@@ -1,10 +1,10 @@
-package com.mygdx.game.gameLogic.GameDirector.StageDirectors;
+package com.mygdx.game.gameLogic.GameDirector.EnemyTypes;
 
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyGround;
 import com.mygdx.game.gameLogic.Characters.EnemyFlying;
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.Curves;
+import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.Curve;
 
 /**
  * turns difficulty into specific enemies
@@ -18,10 +18,10 @@ public class EnemyTypesLinear extends EnemyTypes {
     public EnemyTypesLinear(final double dimYScaler, final double groundCuttoff, final double flyingCuttoff, final double groundBossCuttoff, final double flyingBossCuttoff)
     {
         super(dimYScaler);
-        this.groundCuttoffDiff = Curves.CURVES_MAX_DIFFICULTY * groundCuttoff;
-        this.flyingCuttoffDiff = Curves.CURVES_MAX_DIFFICULTY * flyingCuttoff;
-        this.groundBossCuttoffDiff = Curves.CURVES_MAX_DIFFICULTY * groundBossCuttoff;
-        this.flyingBossCuttoffDiff = Curves.CURVES_MAX_DIFFICULTY * flyingBossCuttoff;
+        this.groundCuttoffDiff = Curve.CURVES_MAX_DIFFICULTY * groundCuttoff;
+        this.flyingCuttoffDiff = Curve.CURVES_MAX_DIFFICULTY * flyingCuttoff;
+        this.groundBossCuttoffDiff = Curve.CURVES_MAX_DIFFICULTY * groundBossCuttoff;
+        this.flyingBossCuttoffDiff = Curve.CURVES_MAX_DIFFICULTY * flyingBossCuttoff;
 
     }
 
@@ -31,7 +31,7 @@ public class EnemyTypesLinear extends EnemyTypes {
      * @param difficulty
      * @return
      */
-    public final Enemy get(final double difficulty)
+    public final Enemy chooseEnemyType(final double difficulty)
     {
         final int bossArrayPush = CommonConsts.ENEMY_ARRAY_SIZE;
 

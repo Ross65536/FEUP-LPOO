@@ -1,4 +1,4 @@
-package test.Characters;
+package tests.Characters;
 
 import com.mygdx.game.Vector2D;
 import com.mygdx.game.gameLogic.Characters.Hero;

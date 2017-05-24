@@ -1,7 +1,7 @@
-package com.mygdx.game.gameLogic.GameDirector;
+package com.mygdx.game.gameLogic.GameDirector.Statistic;
 
 /**
- * Provide the interface to input and update statistics
+ * Provide the interface to input and pollOrientation statistics
  */
 public interface StatisticsInput {
     /**
@@ -15,7 +15,7 @@ public interface StatisticsInput {
      */
     void updateNumberOfFlyingEnemies (final int deltaEnemies);
     /**
-     * specific update method for statistics. updates internal time and deletes movement and jumps that are too old
+     * specific pollOrientation method for statistics. updates internal time and deletes movement and jumps that are too old
      * @param deltaT tiem in seconds
      */
     void update(final float deltaT);
