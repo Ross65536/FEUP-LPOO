@@ -7,7 +7,7 @@ Rostyslav Khoptiy | ID: up201506219 | Email: up201506219@fe.up.pt
 João Carlos Oliveira Lago | ID: up201504374 | Email: up201504374@fe.up.pt
 
 ### Setup
-This project was developed in Android Studio with gradle support, so that's the easiest way to compile and run this project:
+This project was developed in Android Studio with gradle for the dependencies, so that's the easiest way to compile and run this project:
 
 1 - Download android studio.
 
