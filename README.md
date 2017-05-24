@@ -87,7 +87,7 @@ Throughout the project we tried to follow the SOLID principles, that is, mainly 
 * How to use LIBGDX to develop applications
 * Improved knoweledge of java features.
 
-## Test Design
+### Test Design
 
 This project uses an external library (LIBGDX) to make mobile application development easier, therefore this project is divided into 2 main parts to allow for unit testing: 
 * (Input and LIBGDXwrapper packages) Graphics and other library related stuff (camera, input, asset management, etc)
