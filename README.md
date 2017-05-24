@@ -6,6 +6,14 @@ Rostyslav Khoptiy | ID: up201506219 | Email: up201506219@fe.up.pt
 
 João Carlos Oliveira Lago | ID: up201504374 | Email: up201504374@fe.up.pt
 
+### Setup
+This project was developed in Android Studio with gradle support, so that's the easiest way to compile and run this project.
+1 - Download android studio.
+2 - follow this [guide](https://github.com/libgdx/libgdx/wiki/Setting-up-your-Development-Environment-(Eclipse,-Intellij-IDEA,-NetBeans)#setting-up-android-studio) to setup the project.
+3 - In andorid studio under Run -> Edit Configurations, select the '+' button and add Application (and DesktopLauncher as Main class) to build the project for desktop, the Android builder configuration should already be setup by the IDE.
+3.1 - To run tests select Run -> Edit Configurations, select the '+' button and add Android JUnit with the 'All in package' option and selecting the 'tests' package of the project.
+4 - To Run the Desktop simply Run the application in the IDE, for android you can run it in the provided Emulator, or connect an andorid device and you can run the apk there.
+
 ## Architecture Design
 
 ### Package and Class diagram
@@ -32,6 +40,26 @@ João Carlos Oliveira Lago | ID: up201504374 | Email: up201504374@fe.up.pt
 * Update method is used in the AbstractGUI since when calling the act and draw functions of the AbstractGUI class all components belonging to it get their respective act and draw functions called.
 * Object pool is used in the MenuManager class when setting up a new menu to display and allow input for, when setMenu method of the MenuManager is called a menu is only created if it hasn't been already created or if its usage has been too low and was deleted in consequence. When an initialized menu class hasn't been called for display for a certain number of setMenu calls the menu class is nullified and set up for the garbage collector to delete.
 * Singleton pattern is used on the static enum struct on the MenuManager class, each value of the enum is initialized with a menu class type which is used when calling createInstance which either returns an already created menu or creates the menu if it is not initialized.
+
+### Other Design Decisions
+On this project we decided to separate the logic from the specific android implementation, so the gameLogic package should contain all the classes necessary to run the application without it running specifically in android or any other LIBGDX supported machine.
+Throughout the project we tried to follow the SOLID principles, that is, mainly to achieve a low coupling between the different classes and to achieve a separation of interfaces in order to gain a code that is friendly to change and maintenance.
+
+### Major Difficulties
+* One major difficulty was finding the right level of abstraction and the right separation between the modules in order to achieve a low level of coupling between the classes. 
+* Creating Tests that tested Modules independently of others was difficult, since some classes depended on others, which we overcame by created simple mock classes (and using EasyMock)
+
+### Lessons Learned 
+* The value of low coupling in code
+* EasyMock for mocking classes
+* Developing applications for Android
+* How to use LIBGDX to develop applications
+* Improved knoweledge of java features.
+
+### Overall time spent and Distribution
+We overall spent 100 or more hours on this project.
+We consider that both team members had a 50/50 work distribution.
+
 
 ## GUI Design
 
