@@ -9,15 +9,17 @@ João Carlos Oliveira Lago | ID: up201504374 | Email: up201504374@fe.up.pt
 ### Setup
 This project was developed in Android Studio with gradle for the dependencies, so that's the easiest way to compile and run this project:
 
+0 - Clone the repo.
+
 1 - Download android studio.
 
-2 - follow this [guide](https://github.com/libgdx/libgdx/wiki/Setting-up-your-Development-Environment-(Eclipse,-Intellij-IDEA,-NetBeans)#setting-up-android-studio) to setup the project.
+2 - follow this [guide](https://github.com/libgdx/libgdx/wiki/Setting-up-your-Development-Environment-(Eclipse,-Intellij-IDEA,-NetBeans)#setting-up-android-studio) to load the project.
 
-3 - In andorid studio under Run -> Edit Configurations, select the '+' button and add Application (and DesktopLauncher as Main class) to build the project for desktop, the Android builder configuration should already be setup by the IDE.
+3 - In andorid studio under Run -> Edit Configurations, select the '+' button and add Application (and DesktopLauncher as Main class) to build the project for desktop. The Android builder configuration should already be setup by the IDE.
 
 3.1 - To run tests select Run -> Edit Configurations, select the '+' button and add Android JUnit with the 'All in package' option and selecting the 'tests' package of the project.
 
-4 - To Run the Desktop simply Run the application in the IDE, for android you can run it in the provided Emulator, or connect an andorid device and you can run the apk there.
+4 - To Run the Desktop simply Run the application in the IDE (from the dropdown), for android you can run it in the provided Emulator, or connect an android device and you can run the game there.
 
 
 ## Architecture Design
