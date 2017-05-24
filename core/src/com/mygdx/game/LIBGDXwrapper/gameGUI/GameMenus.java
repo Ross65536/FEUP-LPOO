@@ -21,12 +21,12 @@ public enum GameMenus {
 
     AbstractGUI menu = null;
 
-    private int usage = 0;
-
     public AbstractGUI createInstance(MenuManager menuManager){
-
         if(menu!=null) {
             return menu;
+        }
+        if(menuType == null || (menuType ==  SettingsGUI.class)||(menuType ==  PauseGUI.class)){
+            return null;
         }
         try {
             menu = menuType.getDeclaredConstructor(MenuManager.class).newInstance(menuManager);
@@ -35,13 +35,18 @@ public enum GameMenus {
             System.out.println("No constructor with MenuManager as only argument in class.");
             return null;
         }
-        updateUsages();
         return menu;
     }
 
     public AbstractGUI openPauseMenu(MenuManager menuManager, IGameWorldAdapter gameScreen, PauseGUI.pauseType pauseType){
         if(!menuType.equals(PauseGUI.class))
             return null;
+        if(menu!=null){
+            if((((PauseGUI)menu).getGameScreen() == gameScreen) && (((PauseGUI)menu).getPauseType() == pauseType)){
+                ((PauseGUI)menu).update();
+                return menu;
+            }
+        }
         try{
             menu = ((Class<PauseGUI>) menuType).getDeclaredConstructor(MenuManager.class,IGameWorldAdapter.class, PauseGUI.pauseType.class).newInstance(menuManager,gameScreen, pauseType);
         }catch (Exception e){
@@ -53,8 +58,13 @@ public enum GameMenus {
     }
 
     public AbstractGUI openSettings(MenuManager menuManager, AbstractGUI currentMenu){
-        if(!menuType.equals(SettingsGUI.class))
+        if(!menuType.equals(SettingsGUI.class) || currentMenu == null)
             return null;
+        if(menu!=null){
+            if(((SettingsGUI)menu).getBackgroundGUI() == currentMenu){
+                return menu;
+            }
+        }
         try {
             menu = ((Class<SettingsGUI>) menuType).getDeclaredConstructor(MenuManager.class,AbstractGUI.class).newInstance(menuManager,currentMenu);
         }catch (Exception e){
@@ -63,28 +73,5 @@ public enum GameMenus {
             return null;
         }
         return menu;
-    }
-
-    private void updateUsages(){
-        increaseUsage();
-        for(GameMenus ms: GameMenus.values()){
-            ms.decreasedUsage();
-        }
-    }
-
-    private void decreasedUsage() {
-        if (menu != null) {
-            if (usage <= 0) {
-                menu.dispose();
-                menu = null;
-                System.gc();
-                usage = 0;
-            }
-            usage -= 1 / (GameMenus.LASTVALUEMARKER.ordinal() * 2);
-        }
-    }
-
-    private void increaseUsage(){
-        usage= 1 + 1/(GameMenus.LASTVALUEMARKER.ordinal()*2);
     }
 };

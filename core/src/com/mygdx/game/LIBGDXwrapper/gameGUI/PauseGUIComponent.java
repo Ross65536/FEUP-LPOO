@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -53,9 +54,9 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
         this.addActor(table);
 
-        skin.add("pauseBackgroundImage",new Texture(Gdx.files.internal("pauseBackgroundImage.png")));
+        skin.add("pauseBackgroundImg",new Texture(Gdx.files.internal("pauseBackgroundImage.png")));
 
-        table.setBackground("pauseBackgroundImage");
+        table.setBackground("pauseBackgroundImg");
         table.setPosition((float)xPos,(float)yPos);
         table.setSize((float)width,(float)height);
 
@@ -82,19 +83,29 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
         table.row().padTop(screenHeight/25).padBottom(screenHeight/25);
 
-        pauseGUIWidgetsProperties.loadPMLabel(table, skin, pauseScoreMessage + "\n" +  this.gameScreen.getScore()).setAlignment(Align.center);
+        elements.put("scorelabel",pauseGUIWidgetsProperties.loadPMLabel(table, skin, pauseScoreMessage + "\n" +  this.gameScreen.getScore()));
+        ((Label)elements.get("scorelabel")).setAlignment(Align.center);
+
+    }
+
+    public void update(){
+        ((Label)elements.get("scorelabel")).setText(pauseScoreMessage + "\n" +  this.gameScreen.getScore());
     }
 
     private void loadButtons( PauseGUIWidgetsProperties pauseGUIWidgetsProperties){
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
         table.row().padBottom(screenHeight/20);
 
+        //resumePauseMenu
         elements.put("resume",pauseGUIWidgetsProperties.loadPMButton( table, skin, "resumeButton"));
 
+        //restartPauseMenu
         elements.put("restart",pauseGUIWidgetsProperties.loadPMButton( table, skin, "restartButton"));
 
+        //settingsPauseMenu
         elements.put("settings",pauseGUIWidgetsProperties.loadPMButton( table, skin, "settingsPMButton"));
 
+        //exitPauseMenu
         elements.put("exit",pauseGUIWidgetsProperties.loadPMButton( table, skin, "exitPMButton"));
 
     }

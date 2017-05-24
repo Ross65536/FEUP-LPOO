@@ -1,0 +1,73 @@
+{
+
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	
+	playButtonMainMenu: {
+		up: playButtonUp
+		down: playButtonDown
+	}
+	
+	highScoreButtonMainMenu: {
+		up: highScoreButtonUp
+		down: highScoreButtonDown
+	}
+	
+	settingsButtonMainMenu: {
+		up: settingsButtonUp
+		down: settingsButtonDown
+	}
+	
+	aboutButtonMainMenu: {
+		up: aboutButtonUp
+		down: aboutButtonDown
+	}
+	
+	resumeButton: {
+		up: resumeButtonUp
+		down: resumeButtonDown
+	}
+	
+	restartButton: {
+		up: restartButtonUp
+		down: restartButtonDown
+	}
+	
+	settingsPMButton: {
+		up: settingsPMButtonUp
+		down: settingsPMButtonDown
+	}
+	
+	exitPMButton: {
+		up: exitPMButtonUp
+		down: exitPMButtonDown
+	}
+	
+	playBackToMenuButton: {
+		up: playBackToMenuButtonUp
+		down: playBackToMenuButtonDown
+	}
+	
+	playSettingsButton: {
+		up: playSettingsButtonUp
+		down: playSettingsButtonDown
+	}
+	
+	playModeButton: {
+		up: playModeButtonUp
+		down: playModeButtonDown
+	}
+	
+	exitButtonSettings: {
+		up: settingsExitButtonUp
+		down: settingsExitButtonDown
+	}
+	
+	pauseButton: {
+		up: upPauseButton
+		down: downPauseButton
+	}
+
+	
+}
+
+}

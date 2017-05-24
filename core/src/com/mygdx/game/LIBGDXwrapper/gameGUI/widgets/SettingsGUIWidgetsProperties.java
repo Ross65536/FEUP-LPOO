@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 
 public class SettingsGUIWidgetsProperties extends WidgetsGeneric {
 
@@ -13,10 +14,11 @@ public class SettingsGUIWidgetsProperties extends WidgetsGeneric {
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
+        Button.ButtonStyle buttonStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("exitButtonSettings",Button.ButtonStyle.class);
+
         return loadButton(skin, table
                 //images
-                ,"exitButtonUp.png"
-                ,"exitButtonDown.png")
+                ,buttonStyle)
                 //pos. and location
                 .prefWidth(screenWidth / 2)
                 .minWidth(screenWidth / 10)

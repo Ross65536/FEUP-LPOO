@@ -7,10 +7,9 @@ import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 
 public class MenuManager {
 
-
     private MyGame game;
 
-    public AbstractGUI currentMenu;
+    public AbstractGUI currentMenu = null;
 
     public void setMenu(GameMenus menuTypeEnum){
         switch(menuTypeEnum){
@@ -38,6 +37,7 @@ public class MenuManager {
 
     public MenuManager(MyGame game){
         this.game = game;
+        loadAllMenus();
         this.setMenu(GameMenus.MainMenu);
     }
 
@@ -59,5 +59,12 @@ public class MenuManager {
             currentMenu.updateViewPorts(width, height,false);
         else
             currentMenu.updateViewPorts(width, height,true);
+    }
+
+
+    private void loadAllMenus(){
+        for (GameMenus menu : GameMenus.values()) {
+            menu.createInstance(this);
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 
 
 public class MainGUIWidgetsProperties extends WidgetsGeneric {
@@ -15,10 +16,12 @@ public class MainGUIWidgetsProperties extends WidgetsGeneric {
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float) DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
+        Button.ButtonStyle buttonStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("playButtonMainMenu",Button.ButtonStyle.class);
+
+        //playButtonMainMenu
         return loadButton(skin, table
                 //images
-                ,"playButtonUp.png"
-                ,"playButtonDown.png")
+                ,buttonStyle)
                 //pos. and location
                 .prefWidth(screenWidth / 2)
                 .padBottom(50)
@@ -36,10 +39,12 @@ public class MainGUIWidgetsProperties extends WidgetsGeneric {
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
+        Button.ButtonStyle buttonStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("highScoreButtonMainMenu",Button.ButtonStyle.class);
+
+        //highScoreButtonMainMenu
         return loadButton(skin, table
                 //images
-                ,"highScoreButtonUp.png"
-                ,"highScoreButtonDown.png")
+                ,buttonStyle)
                 //pos. and location
                 .prefWidth(screenWidth / 2)
                 .padBottom(50)
@@ -56,10 +61,12 @@ public class MainGUIWidgetsProperties extends WidgetsGeneric {
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
+        Button.ButtonStyle buttonStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("settingsButtonMainMenu",Button.ButtonStyle.class);
+
+        //settingsButtonMainMenu
         return loadButton(skin, table
                 //images
-                ,"settingsButtonUp.png"
-                ,"settingsButtonDown.png")
+                ,buttonStyle)
                 //pos. and location
                 .prefWidth(screenWidth / 2)
                 .padBottom(50)
@@ -76,10 +83,12 @@ public class MainGUIWidgetsProperties extends WidgetsGeneric {
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
+        Button.ButtonStyle buttonStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("aboutButtonMainMenu",Button.ButtonStyle.class);
+
+        //aboutButtonMainMenu
         return loadButton(skin, table
                 //images
-                ,"aboutButtonUp.png"
-                ,"aboutButtonDown.png")
+                ,buttonStyle)
                 //pos. and location
                 .prefWidth(screenWidth / 2)
                 .minWidth(screenWidth / 10)

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public abstract class AbstractGUI extends InputMultiplexer{
 
-    private ArrayList<InputProcessor> menuComponets;
+    protected ArrayList<InputProcessor> menuComponets;
 
     protected WidgetsGeneric widgetsProperties;
 

@@ -53,6 +53,45 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
         loadInputlisteners();
     }
 
+
+    protected void loadWidgets(){
+
+        PlayGUIWidgetsProperties playGUIWidgetsProperties = ((PlayGUIWidgetsProperties)widgetsProperties);
+
+        table.center().top();
+
+        loadLabels(playGUIWidgetsProperties);
+        table.row();
+
+        loadPlayButton(playGUIWidgetsProperties);
+        table.row();
+
+        loadTutorials(playGUIWidgetsProperties);
+
+    }
+
+    protected void loadInputlisteners(){
+        PlayGUIWidgetsInput playGUIWidgetsInput = ((PlayGUIWidgetsInput)widgetsInput);
+
+        playGUIWidgetsInput.loadPlayMode2Button(
+                (Button)elements.get("playButtonS"),
+                menuManager
+        );
+
+        playGUIWidgetsInput.loadPlayMode1Button(
+                (Button)elements.get("playButtonW"),
+                menuManager
+        );
+
+
+        playGUIWidgetsInput.loadSlideFunction(
+                table,
+                menuManager,
+                (OrthographicCamera)this.getCamera()
+        );
+
+    }
+
     private void loadLabels(PlayGUIWidgetsProperties playGUIWidgetsProperties){
 
         elements.put("topLabelS",  playGUIWidgetsProperties.loadTopLabel(table, "Platforms",skin));
@@ -107,44 +146,6 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
     }
 
 
-
-    protected void loadWidgets(){
-
-        PlayGUIWidgetsProperties playGUIWidgetsProperties = ((PlayGUIWidgetsProperties)widgetsProperties);
-
-        table.center().top();
-
-        loadLabels(playGUIWidgetsProperties);
-        table.row();
-
-        loadPlayButton(playGUIWidgetsProperties);
-        table.row();
-
-        loadTutorials(playGUIWidgetsProperties);
-
-    }
-
-    protected void loadInputlisteners(){
-        PlayGUIWidgetsInput playGUIWidgetsInput = ((PlayGUIWidgetsInput)widgetsInput);
-
-        playGUIWidgetsInput.loadPlayMode2Button(
-                (Button)elements.get("playButtonS"),
-                menuManager
-        );
-
-        playGUIWidgetsInput.loadPlayMode1Button(
-                (Button)elements.get("playButtonW"),
-                menuManager
-        );
-
-
-        playGUIWidgetsInput.loadSlideFunction(
-                table,
-                menuManager,
-                (OrthographicCamera)this.getCamera()
-        );
-
-    }
 
     @Override
     public String toString(){

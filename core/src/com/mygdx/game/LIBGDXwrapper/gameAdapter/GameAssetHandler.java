@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.PathConstants;
@@ -25,6 +26,7 @@ public class GameAssetHandler { //dispose textures when swicth to menu
 
     static private GameAssetHandler gameAssetHandler = null; //singelton instance
     private AssetManager assetManager;
+    private UISkinAssetHandler UIskin;
 
     private Animation<TextureRegion> heroWalkAnimations;
     private List<Animation<TextureRegion>> enemyAnimations;
@@ -34,13 +36,18 @@ public class GameAssetHandler { //dispose textures when swicth to menu
         assetManager = new AssetManager(new InternalFileHandleResolver());
         heroWalkAnimations = null;
         enemyAnimations = new ArrayList<>(CommonConsts.ENEMY_ARRAY_SIZE);
+
+        UIskin = new UISkinAssetHandler(assetManager);
     }
+
+    public UISkinAssetHandler getUISkinAssetHandler(){return UIskin;}
 
     public static GameAssetHandler getGameAssetHandler()
     {
-        if (gameAssetHandler == null)
+        if (gameAssetHandler == null) {
             gameAssetHandler = new GameAssetHandler();
 
+        }
         return gameAssetHandler;
     }
 
@@ -51,7 +58,7 @@ public class GameAssetHandler { //dispose textures when swicth to menu
         final Array<String> currentAssets = assetManager.getAssetNames(); //Array is from LIBGDX
         for (String currPath : currentAssets) //unloads uneeded assets
         {
-            if (! assetPaths.contains(currPath))
+            if (!assetPaths.contains(currPath) && currPath!=UISkinAssetHandler.getSkinName())
             {
                 assetManager.unload(currPath);
             }
@@ -215,6 +222,4 @@ public class GameAssetHandler { //dispose textures when swicth to menu
     {
         return assetManager.get(PathConstants.RECHARGER_IMAGE_PATH);
     }
-
-
 }

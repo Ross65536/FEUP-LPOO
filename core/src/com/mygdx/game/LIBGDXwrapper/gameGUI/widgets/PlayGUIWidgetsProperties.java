@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 
 public class PlayGUIWidgetsProperties extends WidgetsGeneric {
 
@@ -16,10 +17,11 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
+        Button.ButtonStyle buttonStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("playBackToMenuButton",Button.ButtonStyle.class);
+
         return loadButton(skin, table
                 //images
-                ,"playBackToMenuButtonUp.png"
-                ,"playBackToMenuButtonDown.png")
+                ,buttonStyle)
                 //pos. and location
                 .prefWidth(screenWidth / 4)
                 .minWidth(screenWidth / 10)
@@ -37,10 +39,11 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
+        Button.ButtonStyle buttonStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("playSettingsButton",Button.ButtonStyle.class);
+
         return loadButton(skin, table
                 //images
-                ,"playSettingsButtonDown.png"
-                ,"playSettingsButtonUp.png")
+                ,buttonStyle)
                 //pos. and location
                 .prefWidth(screenWidth / 4)
                 .minWidth(screenWidth / 10)
@@ -85,10 +88,11 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
+        Button.ButtonStyle buttonStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("playModeButton",Button.ButtonStyle.class);
+
         return loadButton(skin, table
                 //images
-                ,"playModeButtonUp.png"
-                ,"playModeButtonDown.png")
+                ,buttonStyle)
                 //pos. and location
                 .width(screenWidth / 3)
                 .height(screenHeight / 6)

@@ -70,7 +70,11 @@ public class HUD extends Stage{
     }
 
     private void loadWidgets(){
-        elements.put("pauseButton", WidgetsGeneric.getButton(skin,"upPauseButton.png", "downPauseButton.png"));
+
+        Button.ButtonStyle buttonStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("pauseButton",Button.ButtonStyle.class);
+
+
+        elements.put("pauseButton", WidgetsGeneric.getButton(skin,buttonStyle));
 
         table.add(((Button)elements.get("pauseButton")))
                 .grow()

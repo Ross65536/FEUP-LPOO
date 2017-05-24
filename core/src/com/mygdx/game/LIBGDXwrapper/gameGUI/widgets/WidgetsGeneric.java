@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 
 public class WidgetsGeneric{
 
@@ -35,19 +36,18 @@ public class WidgetsGeneric{
         return table.add(label);
     }
 
-    public static Button getButton(Skin skin, String upFileName, String downFileName){
-        loadToSkin(downFileName, downFileName, skin);
-        loadToSkin(upFileName, upFileName, skin);
-        Button.ButtonStyle button = new Button.ButtonStyle();
-        button.down = skin.getDrawable(downFileName);
-        button.up = skin.getDrawable(upFileName);
+    public static Button getButton(Skin skin, Button.ButtonStyle buttonStyle){
+
+        Button.ButtonStyle button = buttonStyle;
 
         return new Button(button);
     }
 
-    public static Cell<Button> loadButton(Skin skin, Table table, String upFileName, String downFileName) {
 
-        Button button = getButton(skin,upFileName,downFileName);
+
+    public static Cell<Button> loadButton(Skin skin, Table table, Button.ButtonStyle buttonStyle) {
+
+        Button button = getButton(skin,buttonStyle);
 
         return table.add(button);
     }
@@ -58,6 +58,7 @@ public class WidgetsGeneric{
         BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal(font+".fnt"),
                 Gdx.files.internal(font + ".png"), false);
         skin.add(font,bitmapFont);
+
         Label.LabelStyle labelStyle = new Label.LabelStyle();
 
         labelStyle.font = bitmapFont;

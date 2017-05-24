@@ -60,9 +60,9 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
         this.addActor(table);
 
-        skin.add("settingsBackgroundImage",new Texture(Gdx.files.internal("settingsBackgroundImage.png")));
+        skin.add("settingsBackgroundImg",new Texture(Gdx.files.internal("settingsBackgroundImage.png")));
 
-        table.setBackground("settingsBackgroundImage");
+        table.setBackground("settingsBackgroundImg");
         table.setPosition((float)xPos,(float)yPos);
         table.setSize((float)width,(float)height);
 
@@ -192,6 +192,7 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
         );
         volumeSlider.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+
                 event.stop();
                 return false;
         }});

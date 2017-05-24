@@ -1,5 +1,6 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PauseGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PauseGUIWidgetsProperties;
@@ -35,6 +36,18 @@ public class PauseGUI extends AbstractGUI{
     public void draw(){
         gameScreen.updateScreen(0f);
         super.draw();
+    }
+
+    public IGameWorldAdapter getGameScreen(){
+        return gameScreen;
+    }
+
+    public pauseType getPauseType(){
+        return thisPauseType;
+    }
+
+    public void update(){
+        ((PauseGUIComponent)menuComponets.get(0)).update();
     }
 
     public String toString(){

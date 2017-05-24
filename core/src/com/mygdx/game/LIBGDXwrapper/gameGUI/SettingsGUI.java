@@ -29,10 +29,13 @@ public class SettingsGUI extends AbstractGUI{
     private void addComponents(){
         this.addComponent(new SettingsGUIComponent(menuManager,this));
     }
+
     public AbstractGUI getBackgroundGUI(){
         return backgroundGUI;
     }
+
     public String toString(){
         return "SettingsGUI";
     }
+
 }
