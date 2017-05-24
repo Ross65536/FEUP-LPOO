@@ -1,11 +1,34 @@
 package com.mygdx.game.gameLogic.GameDirector;
 
+/**
+ * Provides an interface to acess various statistics
+ */
 public interface StatisticsInfo
 {
+    /**
+     *
+     * @return number of ground enemis
+     */
     int getNumGroundEnemies();
+    /**
+     *
+     * @return number of ground + flying enemies
+     */
     int getNumberOfEnemies();
+    /**
+     *
+     * @return numebr of flying enemies
+     */
     int getNumFlyingEnemies();
+    /**
+     *
+     * @return play time as stored in this object
+     */
     double getCurrentPlayTime();
+    /**
+     *
+     * @return time since last enemy was created (update enemy bigger than 0)
+     */
     double getLastCreatedEnemyDeltaT();
 
     /**
@@ -14,5 +37,4 @@ public interface StatisticsInfo
      */
     double getStressLevel();
 
-    void updateNumberOfFlyingEnemies(int i);
 }

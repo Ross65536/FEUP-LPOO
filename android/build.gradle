@@ -13,7 +13,7 @@ android {
             jniLibs.srcDirs = ['libs']
         }
 
-        instrumentTest.setRoot('tests')
+        instrumentTest.setRoot('baseClassTests')
     }
     packagingOptions {
         exclude 'META-INF/robovm/ios/robovm.xml'

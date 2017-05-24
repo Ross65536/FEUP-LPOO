@@ -1,6 +1,6 @@
 package com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds;
 
-import com.mygdx.game.LIBGDXwrapper.gameAdapter.DiscGameWorldAdapter;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.SurvivalGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.PlatGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.PathConstants;
@@ -20,7 +20,9 @@ import com.mygdx.game.Vector2D;
 import java.util.Arrays;
 import java.util.Collection;
 
-
+/**
+ * Class that facillitates the building of levels
+ */
 public class LevelBuilder {
 
 
@@ -53,18 +55,23 @@ public class LevelBuilder {
     private static final double FLYING_BOSS_CUTTOFF_DISC = 1.0;
     private static final double ENEMY_CREATION_DELTAT = 1.0; //seconds between each generate
     private static final int MAX_NUM_ENEMIES = 15;
-    public static DiscGameWorldAdapter createSurvivalLevel() {
+
+    /**
+     * Builds the survival level
+     * @return the level
+     */
+    public static SurvivalGameWorldAdapter createSurvivalLevel() {
         loadAssets(Arrays.asList(PathConstants.discLevelAssetNames));
 
-        Vector2D worldDims = DiscLevelBuild.createWorldDims();
-        Hero hero = DiscLevelBuild.createHero(worldDims);
+        Vector2D worldDims = SurvivalLevelBuild.createWorldDims();
+        Hero hero = SurvivalLevelBuild.createHero(worldDims);
 
         final Curves generator = new BalancedCurve(ENEMY_CREATION_DELTAT, MAX_NUM_ENEMIES);
         final EnemyTypes enemyTypes = new EnemyTypesLinear(hero.getYDim(), GROUND_CUTTOFF_DISC, FLYING_CUTTOFF_DISC, GROUND_BOSS_CUTTOFF_DISC, FLYING_BOSS_CUTTOFF_DISC);
         StageDirector stageDirector = createStageDirector(generator, enemyTypes);
 
         GameWorld gameLogicWorld = new SurvivalWorld(worldDims, hero, stageDirector);
-        DiscGameWorldAdapter ret = new DiscGameWorldAdapter(worldDims, gameLogicWorld);
+        SurvivalGameWorldAdapter ret = new SurvivalGameWorldAdapter(worldDims, gameLogicWorld);
 
         return ret;
     }
@@ -78,6 +85,11 @@ public class LevelBuilder {
     private static final double DIFFICULTY_DELTA = 0.2;
     private static final double ENEMY_CREATION_DELTAT_PLAT = 1.5; //seconds between each generate
     private static final int MAX_NUM_ENEMIES_PLAT = 25;
+
+    /**
+     * Buidls the platforms level
+     * @return the level
+     */
     public static PlatGameWorldAdapter createPlatformTestLevel() {
 
         loadAssets(Arrays.asList(PathConstants.platformTestLevelAssetNames));

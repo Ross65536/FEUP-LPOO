@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LIBGDXwrapper.Input.GyroscopeInput;
 import com.mygdx.game.LIBGDXwrapper.Input.KeyboardInput;
-import com.mygdx.game.LIBGDXwrapper.gameAdapter.DiscGameWorldAdapter;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.SurvivalGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.PlatGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.HUD;
@@ -28,6 +28,13 @@ public class GameScreen extends ScreenAdapter {
 
     final static double MIN_JUMP_GRAVITY_STRENGTH = 0.5;
 
+    /**
+     * Constrcutor for the class.
+     * creates a camera for the display.
+     * Registers an input handler for the screen
+     * @param myGame
+     * @param gameSettings
+     */
     public GameScreen(MyGame myGame, GameSettings gameSettings) {
         this.game = myGame;
 
@@ -41,6 +48,10 @@ public class GameScreen extends ScreenAdapter {
         registerInputHandler();
     }
 
+    /**
+     * Loads a gameworld
+     * @param currentLevel gameworld object
+     */
     public void LoadLevel(IGameWorldAdapter currentLevel)
     {
         this.currentLevel = currentLevel;
@@ -127,6 +138,9 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    /**
+     * Registers the input for the screen. For andorid should register sensor input, for desktop should only register keyboard and mouse
+     */
     public void registerInputHandler() {
         input = new InputMultiplexer();
         if (gameSettings.noMotionSensors()) //use keyboard if on desktop
@@ -175,7 +189,7 @@ public class GameScreen extends ScreenAdapter {
 
 
     public GameMode whatGameMode(){
-        if(currentLevel instanceof DiscGameWorldAdapter){
+        if(currentLevel instanceof SurvivalGameWorldAdapter){
             return GameMode.DODGING;
         }else
             if(currentLevel instanceof PlatGameWorldAdapter){

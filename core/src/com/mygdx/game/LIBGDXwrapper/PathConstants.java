@@ -13,6 +13,9 @@ import java.util.TreeMap;
 import static com.mygdx.game.LIBGDXwrapper.PathConstants.NIGHTBACKGROUND_IMAGE;
 import static com.mygdx.game.LIBGDXwrapper.PathConstants.NIGHTBACKGROUND_IMAGE;
 
+/**
+ * Class that works as a central hub for all information regarding images, and their types
+ */
 public final class PathConstants {
     //colors
     public static final Color BOSS_COLOR = new Color(1,0.3f,1,1);
@@ -49,8 +52,6 @@ public final class PathConstants {
     public static final String[] platformTestLevelAssetNames = {HERO_WALKING_IMAGE_PATH, HERO_JUMPING_IMAGE_PATH, ENEMY_GROUND_IMAGE_PATH, PLATFORM_IMAGE_PATH, LIGHT_IMAGE_PATH, BACKGROUND_IMAGE, ENEMY_FLYING_IMAGE_PATH,RECHARGER_IMAGE_PATH,BACKGROUND_BORDER};
 
 
-
-    //associations between names and assetmanager types
     public static final  Map<String, Object> mapPathToType; //associates paths to object types for AssetManager
     static {
 

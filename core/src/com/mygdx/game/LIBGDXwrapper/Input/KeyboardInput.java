@@ -4,6 +4,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.mygdx.game.LIBGDXwrapper.GameScreen;
 
+/**
+ * Class that receives keyboard and mouse input and sends it to the player controlled hero,
+ * arrow keys are used to move the hero left and right and to jump
+ * Mouse clicks or touch on smartphones make the hero jump
+ */
 public class KeyboardInput extends InputAdapter {
         private GameScreen gameScreen;
 
@@ -12,7 +17,12 @@ public class KeyboardInput extends InputAdapter {
             this.gameScreen=gameScreen;
         }
 
-        @Override
+    /**
+     * When key is pressed down
+     * @param keycode
+     * @return
+     */
+    @Override
         public boolean keyDown (int keycode) {
             switch (keycode){
                 case Input.Keys.UP://up
@@ -31,7 +41,12 @@ public class KeyboardInput extends InputAdapter {
             return true;
         }
 
-        @Override
+    /**
+     * When key is released
+     * @param keycode
+     * @return
+     */
+    @Override
         public boolean keyUp (int keycode) {
             switch (keycode){
                 case Input.Keys.UP://up
@@ -51,6 +66,14 @@ public class KeyboardInput extends InputAdapter {
         return false;
     }
 
+    /**
+     * Mouse click, or touch on smartphone, make the hero jump
+     * @param x
+     * @param y
+     * @param pointer
+     * @param button
+     * @return
+     */
     @Override
     public boolean touchDown (int x, int y, int pointer, int button) {
         gameScreen.sendHeroJump(1.0);

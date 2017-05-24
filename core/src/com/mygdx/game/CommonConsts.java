@@ -11,11 +11,9 @@ import java.util.List;
 
 /**
  * Contants common for gameLogic and Graphics.
- *
- * Aspect ratio == width / height
  */
 public class CommonConsts {
-
+    //Aspect ratio == width / height
     public final static int NUMBER_OF_GAMEMODES = 2;
     public static boolean INPUT_DEBUG = false;
 
@@ -31,7 +29,9 @@ public class CommonConsts {
         ENEMY_ARRAY_SIZE = i;
     }
 
-    //Class specific information
+    /**
+     * Class that contains information for each class
+     */
     public static class CharacterConstants
     {
         private CharacterConstants(final double aspectRatio, final double speedMult, final double speedXPadding, final double dimYMult, final double dimYPadding) { this.aspectRatio = aspectRatio; this.speedMult = speedMult; this.dimYMult = dimYMult; this.speedXPadding =speedXPadding; this.dimYPadding =dimYPadding;}

@@ -20,7 +20,6 @@ import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.PlatformFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Platforms;
 import com.mygdx.game.Vector2D;
 import java.util.List;
-import java.util.Random;
 
 public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFeature, LightRechargerFeature, HeroLifesFeature {
 
@@ -91,7 +90,6 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
             tryGenerateEnemy();
     }
 
-    @Override
     protected void checkScore(){
         if(lightRecharger.wasRechargerCaught()){
             score = lightRecharger.totalRechargersCaught();
