@@ -14,13 +14,18 @@ import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLightFeature;
  * Class that does the actual drawing of objects.
  * Sends input to Hero.
  */
-public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
+public class SurvivalGameWorldAdapter extends AbstractGameWorldAdapter{
 
     private DummyEnemyVisualsHandler dummyEnemyVisuals;
 
     private ScreenLightsVisualHandler /**/lightVisualHandler;
 
-    public DiscGameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
+    /**
+     * Constrcutor
+     * @param worldDims dimensison of hte world
+     * @param gameLogicWorld the world object
+     */
+    public SurvivalGameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
     {
         super(worldDims,gameLogicWorld);
 
@@ -41,6 +46,11 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
         }
     }
 
+    /**
+     * Updates the camera, which should display the action correctly
+     * @param hero hero informaiton
+     * @param gameCamera camera
+     */
     public void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera)
     {
         final float heroXPos = (float) hero.getXPos();
@@ -51,6 +61,10 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
 
     }
 
+    /**
+     *
+     * @return dimensiosn of the camera, which enable to setup the camera correctly
+     */
     public Vector2D getCameraSetup () {
         cameraWidth = worldYDim * DeviceConstants.SCREEN_RATIO;
         return new Vector2D(cameraWidth, worldYDim); //camera has maximum world height
@@ -75,6 +89,11 @@ public class DiscGameWorldAdapter extends AbstractGameWorldAdapter{
 
     }
 
+    /**
+     * Resizes the game
+     * @param width
+     * @param height
+     */
     @Override
     public void resize(int width, int height){
         super.resize(width,height);

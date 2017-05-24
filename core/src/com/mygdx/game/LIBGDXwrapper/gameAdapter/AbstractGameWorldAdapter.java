@@ -14,7 +14,9 @@ import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
 import com.mygdx.game.gameLogic.LogicWorlds.IGameWorldHeroInputs;
 import com.mygdx.game.Vector2D;
 
-
+/**
+ * Class that is the base to display graphics and soudns based on a level type, each level type has a wrapper class, that correctly displays the associated assets
+ */
 public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
 
 
@@ -28,7 +30,11 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
     protected HUD hud;
     private double currentTime;
 
-
+    /**
+     * Constrcutor
+     * @param worldDims dimensions of the world
+     * @param gameLogicWorld the world logic object to be wrapped around
+     */
     public AbstractGameWorldAdapter(final Vector2D worldDims, GameWorld gameLogicWorld)
     {
 
@@ -44,6 +50,10 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
         return currentTime;
     }
 
+    /**
+     *
+     * @return the coordinates which correspond to the center of the screen
+     */
     protected Vector2D getCenterScreen(){
         CharacterInfo hero = gameLogicWorld.getHeroInfo();
         double x = hero.getXPos()+hero.getXDim()/2.0;
@@ -51,6 +61,10 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
         return new Vector2D(x,y);
     }
 
+    /**
+     * Obtains the camera
+     * @param camera
+     */
     @Override
     public void setCamera(OrthographicCamera camera){
         gameCamera = camera;
@@ -67,11 +81,20 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
         drawBatch.draw(gameAssetHandler.getHeroTexture(hero), heroXPos, heroYPos, heroXDim , (float) hero.getYDim()); //draw hero
     }
 
+    /**
+     * Resizes the game graphics
+     * @param width
+     * @param height
+     */
     public void resize(int width, int height){
         if(drawBatch!=null)
             drawBatch.getProjectionMatrix().setToOrtho2D(0,0,width,height);
     }
 
+    /**
+     * Updates the world state
+     * @param deltaT
+     */
     public void updateWorld(float deltaT){
         gameLogicWorld.update(deltaT); //updates all world characters
         if(!gameLogicWorld.isGamePlayable()){
@@ -117,6 +140,10 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
 
     }
 
+    /**
+     * updates the graphics
+     * @param deltaT
+     */
     public void updateScreen(float deltaT) {
         Gdx.gl.glClearColor(103 / 255f, 69 / 255f, 117 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
@@ -125,6 +152,9 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
         drawBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
     }
 
+    /**
+     * Dispose the graphics in memory
+     */
     public void dispose(){
         if(drawBatch!=null)
             drawBatch.dispose();
@@ -141,10 +171,18 @@ public abstract class AbstractGameWorldAdapter implements IGameWorldAdapter{
     public abstract void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera);
     public abstract Vector2D getCameraSetup ();
 
+    /**
+     * Obtains the score
+     * @return
+     */
     public String getScore(){
         return gameLogicWorld.getScore();
     }
 
+    /**
+     * Copies the hud
+     * @param hud
+     */
     public void setHUD(HUD hud){
         this.hud = hud;
     }

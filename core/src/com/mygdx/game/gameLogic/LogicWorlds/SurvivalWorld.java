@@ -1,8 +1,6 @@
 package com.mygdx.game.gameLogic.LogicWorlds;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
@@ -15,10 +13,16 @@ import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLightFeature;
 import com.mygdx.game.Vector2D;
 
 import java.util.List;
+import java.util.Random;
 
 public class SurvivalWorld extends GameWorld implements HeroLightFeature {
 
-
+    /**
+     *
+     * @param worldDims
+     * @param hero
+     * @param stageDirector
+     */
     public SurvivalWorld(final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
         super(worldDims, hero);
@@ -31,6 +35,11 @@ public class SurvivalWorld extends GameWorld implements HeroLightFeature {
         if (CommonConsts.INPUT_DEBUG)
             createDummyEnemies();
     }
+
+    public SurvivalWorld(){
+        super();
+    }
+
 
 
     //// specific functions -------------
@@ -49,6 +58,11 @@ public class SurvivalWorld extends GameWorld implements HeroLightFeature {
 
 
     //// abstract implementations ---------------
+
+    /**
+     * Specific update implementation of this world type. Calls the updates methods of it's objects. and checks collisisons, etc.
+     * @param deltaT
+     */
     @Override
     public void update (float deltaT)
     {
@@ -56,6 +70,7 @@ public class SurvivalWorld extends GameWorld implements HeroLightFeature {
             return;
 
         updateEnemieStatistics(deltaT);
+
 
 
         updateHero(deltaT);
@@ -67,24 +82,17 @@ public class SurvivalWorld extends GameWorld implements HeroLightFeature {
 
         checkHeroAtWorldEdges();
 
-        checkScore();
+        score+=deltaT;
+        tryGenerateEnemy();
 
         if(this.checkEnemyCollisions() > 0)
-        {
             gamePlayable = false;
-            System.out.println("Game Lost");
-        }
-
-        if (! CommonConsts.INPUT_DEBUG)
-            tryGenerateEnemy();
     }
 
-    @Override
-    protected void checkScore(){
-        score += Gdx.graphics.getDeltaTime();
-    }
-
-
+    /**
+     *
+     * @return the score which is the time since level start
+     */
     public String getScore(){
         String seconds = (((int)score) % 60)+"";
         String minutes  = ((int)(score / 60f)%60)+"";
@@ -92,6 +100,9 @@ public class SurvivalWorld extends GameWorld implements HeroLightFeature {
         return hours+":"+minutes+":"+seconds;
     }
 
+    /**
+     * Checks if the hero has hit the ground after jumping, and if so, stops the hero's jump
+     */
     @Override
     protected void checkHeroJump()
     {
@@ -156,6 +167,10 @@ public class SurvivalWorld extends GameWorld implements HeroLightFeature {
             enemy.setYPos(0.0); //ground
     }
 
+    /**
+     * Places the enemy in the appropriate place, with X and Y coordinates which are appropriate
+     * @param enemy enemy to be placed
+     */
     public void placeEnemy(final Enemy enemy)
     {
         placeEnemyYPos(enemy);

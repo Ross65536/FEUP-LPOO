@@ -34,13 +34,13 @@ public class MyGame extends Game {
         setScreen(menuScreen);
 	}
 
-	private void startGameTest()
+	private void startSurvivalMode()
 	{
         gameScreen.LoadLevel(LevelBuilder.createSurvivalLevel());
         finishDiscWorldAssets();
 	}
 
-    private void startPlatGameTest()
+    private void startPlatMode()
     {
         gameScreen.LoadLevel(LevelBuilder.createPlatformTestLevel());
         finishDiscWorldAssets(); // ???????????
@@ -78,18 +78,18 @@ public class MyGame extends Game {
                     break;
                 switch (gameScreen.whatGameMode()){
                     case DODGING:
-                        startGameTest();
+                        startSurvivalMode();
                         break;
                     case PLATAFORMS:
-                        startPlatGameTest();
+                        startPlatMode();
                         break;
                 }
                 break;
             case START_GAME_MODE1:
-                startGameTest();
+                startSurvivalMode();
                 break;
             case START_GAME_MODE2:
-                startPlatGameTest();
+                startPlatMode();
                 break;
 
         }

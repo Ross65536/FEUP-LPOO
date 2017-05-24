@@ -13,4 +13,8 @@ eclipse.project {
 
 dependencies {
     compile 'junit:junit:4.12'
+
+    compile 'com.google.dexmaker:dexmaker:1.2'
+    compile 'org.objenesis:objenesis:2.2'
+    compile 'org.easymock:easymock:3.4'
 }

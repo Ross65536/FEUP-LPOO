@@ -31,7 +31,10 @@ public class GameAssetHandler { //dispose textures when swicth to menu
     private Animation<TextureRegion> heroWalkAnimations;
     private List<Animation<TextureRegion>> enemyAnimations;
 
-    public GameAssetHandler()
+    /**
+     * constructor
+     */
+    private GameAssetHandler()
     {
         assetManager = new AssetManager(new InternalFileHandleResolver());
         heroWalkAnimations = null;
@@ -42,6 +45,10 @@ public class GameAssetHandler { //dispose textures when swicth to menu
 
     public UISkinAssetHandler getUISkinAssetHandler(){return UIskin;}
 
+    /**
+     * singleton access point
+     * @return the class instance
+     */
     public static GameAssetHandler getGameAssetHandler()
     {
         if (gameAssetHandler == null) {
@@ -52,7 +59,10 @@ public class GameAssetHandler { //dispose textures when swicth to menu
     }
 
 
-
+    /**
+     * Unloads uneeded textures, sounds form memory
+     * @param assetPaths
+     */
     public void unloadUnneededLevelAssets(final Collection<String> assetPaths)
     {
         final Array<String> currentAssets = assetManager.getAssetNames(); //Array is from LIBGDX
@@ -72,6 +82,9 @@ public class GameAssetHandler { //dispose textures when swicth to menu
         enemyAnimations.clear();
     }
 
+    /**
+     * Sets up the hero's various assets
+     */
     public void setupHeroAssets()
     {
         if (heroWalkAnimations == null)
@@ -101,6 +114,10 @@ public class GameAssetHandler { //dispose textures when swicth to menu
         return new Animation<TextureRegion>(frameTime, frames);
     }
 
+    /**
+     * sets up the assets for the enemy which correponds to the index
+     * @param enemyArrayIndex indicates the enemy class
+     */
     public void setupEnemyAnimationsFlat(final int enemyArrayIndex)
     {
         final String enTexPath = PathConstants.enemyIndexToTexture.get(enemyArrayIndex);
@@ -116,8 +133,9 @@ public class GameAssetHandler { //dispose textures when swicth to menu
 
 
     /**
+     * Loads assets in the list
      * Doesnt load duplicates if they exist
-     * @param assetPaths
+     * @param assetPaths the asset names
      */
     public void loadLevelAssets (final Collection<String> assetPaths)
     {
@@ -128,6 +146,11 @@ public class GameAssetHandler { //dispose textures when swicth to menu
 
     }
 
+    /**
+     * Returns the appropriate hero texture
+     * @param heroInfo object containing information about the hero
+     * @return the texture
+     */
     public TextureRegion getHeroTexture(HeroInfo heroInfo)
     {
         TextureRegion tex = null;
@@ -188,6 +211,9 @@ public class GameAssetHandler { //dispose textures when swicth to menu
         return assetManager.get(PathConstants.LIGHT_IMAGE_PATH);
     }
 
+    /**
+     * Finishes loading assets, since assets are loaded asynchronously.
+     */
     public void finishLoading()
     {
         assetManager.finishLoading();
@@ -209,7 +235,10 @@ public class GameAssetHandler { //dispose textures when swicth to menu
         return assetManager.get(PathConstants.NIGHTBACKGROUND_IMAGE);
     }
 
-
+    /**
+     * returns the texture for the background
+     * @return
+     */
     public Texture getBackgroundTexture() {
         return assetManager.get(PathConstants.BACKGROUND_IMAGE);
     }

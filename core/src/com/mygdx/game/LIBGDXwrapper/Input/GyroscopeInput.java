@@ -4,6 +4,9 @@ package com.mygdx.game.LIBGDXwrapper.Input;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.LIBGDXwrapper.GameScreen;
 
+/**
+ * Class that recevies smartphone inputs, the orientatio of the phone, to allow the player controleld character to jump and move
+ */
 public class GyroscopeInput {
 
     private GameScreen gameScreen;
@@ -20,6 +23,10 @@ public class GyroscopeInput {
         this.moving=false;
     }
 
+    /**
+     * Method that sends player controlls to the hero, based on smartphone orientation (pitch and roll)
+     * @param delta
+     */
     public void update(float delta){
         handlePitch();
 
