@@ -97,4 +97,5 @@ All the classes in the gameLogic package have been tested (tests package) with u
 
 ### Overall time spent and Distribution
 We, overall, have spent 120 or more hours on this project.
+
 We consider that both team members had a 50/50 work distribution.
