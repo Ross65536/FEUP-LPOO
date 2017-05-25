@@ -1,13 +1,13 @@
-package test.GameDirector;
+package tests.GameDirector;
 
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyFlying;
 import com.mygdx.game.gameLogic.Characters.EnemyGround;
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.Curves;
-import com.mygdx.game.gameLogic.GameDirector.StageDirectors.EnemyTypes;
-import com.mygdx.game.gameLogic.GameDirector.StageDirectors.EnemyTypesLinear;
-import com.mygdx.game.gameLogic.GameDirector.StageDirectors.StageDirector;
-import com.mygdx.game.gameLogic.GameDirector.StatisticsInfo;
+import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.Curve;
+import com.mygdx.game.gameLogic.GameDirector.EnemyTypes.EnemyTypes;
+import com.mygdx.game.gameLogic.GameDirector.EnemyTypes.EnemyTypesLinear;
+import com.mygdx.game.gameLogic.GameDirector.StageDirector;
+import com.mygdx.game.gameLogic.GameDirector.Statistic.StatisticsInfo;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -22,12 +22,12 @@ public class StageDirectorTests {
         }
 
         @Override
-        public Enemy get(double difficulty) {
+        public Enemy chooseEnemyType(double difficulty) {
             return enemy;
         }
         public void setEnemy(Enemy enemy) { this.enemy=enemy;}
     }
-    class MockCurve extends Curves{
+    class MockCurve extends Curve {
         double difficulty;
         @Override
         public double generateDifficulty(StatisticsInfo statistics) {
@@ -74,17 +74,17 @@ public class StageDirectorTests {
         StageDirector stageDirector = new StageDirector(curve, statistics, mockTypes);
 
         //shoud return null
-        curve.setDifficulty(Curves.CURVES_NO_ENEMY_CREATED);
+        curve.setDifficulty(Curve.CURVES_NO_ENEMY_CREATED);
         assertTrue(stageDirector.tryGenerateEnemy() == null);
 
         //testing different enemies
-        curve.setDifficulty(Curves.CURVES_MAX_DIFFICULTY / 2);
+        curve.setDifficulty(Curve.CURVES_MAX_DIFFICULTY / 2);
         enemy.setisFlyingType(true);
         assertTrue(stageDirector.tryGenerateEnemy()== enemy);
         assertEquals(statistics.getFlyingUpdatedEnemies(), 1);
 
         statistics.resetUpdatesEnemies();
-        curve.setDifficulty(Curves.CURVES_MAX_DIFFICULTY / 2);
+        curve.setDifficulty(Curve.CURVES_MAX_DIFFICULTY / 2);
         enemy.setisFlyingType(false);
         assertTrue(stageDirector.tryGenerateEnemy()== enemy);
         assertEquals(statistics.getGroundUpdatedEnemies(), 1);
@@ -101,25 +101,25 @@ public class StageDirectorTests {
         Enemy enemy;
 
         //should return null
-        enemy =linearTypes.get(-1.0);
+        enemy =linearTypes.chooseEnemyType(-1.0);
         assertTrue(enemy == null);
 
-        enemy =linearTypes.get(Curves.CURVES_MAX_DIFFICULTY*1.1);
+        enemy =linearTypes.chooseEnemyType(Curve.CURVES_MAX_DIFFICULTY*1.1);
         assertTrue(enemy == null);
 
-        enemy =linearTypes.get(Curves.CURVES_MAX_DIFFICULTY*0.1);
+        enemy =linearTypes.chooseEnemyType(Curve.CURVES_MAX_DIFFICULTY*0.1);
         assertTrue(enemy instanceof EnemyGround);
         assertFalse(enemy.isBossType());
 
-        enemy =linearTypes.get(Curves.CURVES_MAX_DIFFICULTY*0.3);
+        enemy =linearTypes.chooseEnemyType(Curve.CURVES_MAX_DIFFICULTY*0.3);
         assertTrue(enemy instanceof EnemyFlying);
         assertFalse(enemy.isBossType());
 
-        enemy =linearTypes.get(Curves.CURVES_MAX_DIFFICULTY*0.6);
+        enemy =linearTypes.chooseEnemyType(Curve.CURVES_MAX_DIFFICULTY*0.6);
         assertTrue(enemy instanceof EnemyGround);
         assertTrue(enemy.isBossType());
 
-        enemy =linearTypes.get(Curves.CURVES_MAX_DIFFICULTY*0.9);
+        enemy =linearTypes.chooseEnemyType(Curve.CURVES_MAX_DIFFICULTY*0.9);
         assertTrue(enemy instanceof EnemyFlying);
         assertTrue(enemy.isBossType());
 

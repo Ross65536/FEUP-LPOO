@@ -3,7 +3,7 @@ package com.mygdx.game.gameLogic.LogicWorlds;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
-import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
+import com.mygdx.game.gameLogic.GameDirector.Statistic.StatisticsInput;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemyFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLight;
@@ -124,7 +124,7 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
 
     /**
      * Makes the hero jump
-     * Can be called on each update to create a longer or shorter jump depending on gravity strenght
+     * Can be called on each pollOrientation to create a longer or shorter jump depending on gravity strenght
      * @param gravityStrength sets the strength of the gravity. should go from 0.5 to 1.0
      */
     @Override

@@ -1,10 +1,10 @@
-package test.LogicWorlds;
+package tests.LogicWorlds;
 
 
 import com.mygdx.game.Vector2D;
 import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.Hero;
-import com.mygdx.game.gameLogic.GameDirector.StatisticsInput;
+import com.mygdx.game.gameLogic.GameDirector.Statistic.StatisticsInput;
 import com.mygdx.game.gameLogic.LogicWorlds.SurvivalWorld;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLight;
@@ -194,7 +194,7 @@ public class SurvivalWorldTests {
         EasyMock.expectLastCall().once();
         heroMock.setYPos(0.0);
         EasyMock.expectLastCall().once();
-        //on 2nd update hero shouldnt get grounded
+        //on 2nd pollOrientation hero shouldnt get grounded
         expect(heroMock.isJumping()).andReturn(false).once();
 
 
@@ -205,7 +205,7 @@ public class SurvivalWorldTests {
         lightMock.updateLight(DELTA_T);
         expectLastCall().once();
 
-        //1st time update should loop on left
+        //1st time pollOrientation should loop on left
         expect(heroMock.getXPos()).andReturn(- WORLD_X / 2).once();
         //2nd time on right
         expect(heroMock.getXPos()).andReturn(WORLD_X * 100).once();
@@ -242,7 +242,7 @@ public class SurvivalWorldTests {
     public void testGameLost()
     {
         dummyMock.updateEnemieStatistics(DELTA_T);
-        expectLastCall().once(); //if game is lost, second call to update shouldn't got this far in
+        expectLastCall().once(); //if game is lost, second call to pollOrientation shouldn't got this far in
         expect(lightMock.getRadiousPercentage()).andReturn((float) LIGHT_LEVEL);
         statisticsMock.setLightLevel((float) LIGHT_LEVEL);
         expectLastCall().once();

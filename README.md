@@ -6,6 +6,43 @@ Rostyslav Khoptiy | ID: up201506219 | Email: up201506219@fe.up.pt
 
 João Carlos Oliveira Lago | ID: up201504374 | Email: up201504374@fe.up.pt
 
+## Setup
+This project was developed in Android Studio with gradle for the dependencies, so that's the easiest way to compile and run this project:
+
+0 - Clone the repo.
+
+1 - Download android studio.
+
+2 - follow this [guide](https://github.com/libgdx/libgdx/wiki/Setting-up-your-Development-Environment-(Eclipse,-Intellij-IDEA,-NetBeans)#setting-up-android-studio) to load the project.
+
+3 - In andorid studio under Run -> Edit Configurations, select the '+' button and add Application (and DesktopLauncher as Main class) to build the project for desktop. The Android builder configuration should already be setup by the IDE.
+
+3.1 - To run tests select Run -> Edit Configurations, select the '+' button and add Android JUnit with the 'All in package' option and selecting the 'tests' package of the project.
+
+4 - To Run the Desktop simply Run the application in the IDE (from the dropdown), for android you can run it in the provided Emulator, or connect an android device and you can run the game there.
+
+## User Manual
+
+### Using the GUI
+
+// Screenshots and text here//
+
+### Playing the Survival Game Mode
+
+//screenshot here //
+
+This game mode is based on the player avoiding the enemies that are spawned (ground and flying based enemies).
+The player has only one life and the score is the time since the begging of the game mode.
+The player can move the character to the left and right and make him jump.
+
+On Desktop:
+* The left and right arrow keys make the character move left and right
+* The up arrow key or a left mouse click makes the hero jump. Pressing these for longer, makes the hero jump higher.
+
+On Android:
+* Tilting the phone to the left or right makes the character move left and right, with the degree of inclination setting the speed at which the character moves.
+* Touching the screen makes the character jump. Pressing it for longer, makes the hero jump higher.
+
 ## Architecture Design
 
 ### Package and Class diagram
@@ -16,9 +53,14 @@ João Carlos Oliveira Lago | ID: up201504374 | Email: up201504374@fe.up.pt
 
 ![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/UML/stateUML.png)
 
+### Overarching Design Decisions
+On this project we decided to separate the logic from the specific android implementation, so the gameLogic package should contain all the classes necessary to run the application without it running specifically in android or any other LIBGDX supported machine.
+
+Throughout the project we tried to follow the SOLID principles, that is, mainly to achieve a low coupling between the different classes and to achieve a separation of interfaces in order to gain a code that is friendly to change and maintenance.
+
 ### Design Patterns used
 
-* Singleton for LevelAssetManager class. This class uses the LIBGDX AssetManager class which is unique for all the levels that use it, and since the game does a lot of loading and unloading of levels a single universal acess point for the asset manager is useful, to load the correct assets for each level and to get those assets to be able to draw them and play them.
+* Singleton for GameAssetHandler class. This class uses the LIBGDX AssetManager class which is unique for all the levels that use it, and since the game does a lot of loading and unloading of levels a single universal acess point for the asset manager is useful, to load the correct assets for each level and to get those assets to be able to draw them and play them.
 * Observer for all classes in Input package. These classes extend the InputAdapter class from LIBGDX which implements this Pattern. It's used to notify Screen objects (such as GameScreen) when user input happens (touch, gyroscope) and to transmit it.
 * Factory in MyGame class. In this class there are methods to create specific levels (GameWorld instances) and giving them to GameLevel class to be manipulated.
 * State in LevelDirector. Different enemies for GameWorld class are generated based on this class's internal state (time since game start, numbers of present enemies, user input statistics which should "user stress", etc).
@@ -33,65 +75,27 @@ João Carlos Oliveira Lago | ID: up201504374 | Email: up201504374@fe.up.pt
 * Object pool is used in the MenuManager class when setting up a new menu to display and allow input for, when setMenu method of the MenuManager is called a menu is only created if it hasn't been already created or if its usage has been too low and was deleted in consequence. When an initialized menu class hasn't been called for display for a certain number of setMenu calls the menu class is nullified and set up for the garbage collector to delete.
 * Singleton pattern is used on the static enum struct on the MenuManager class, each value of the enum is initialized with a menu class type which is used when calling createInstance which either returns an already created menu or creates the menu if it is not initialized.
 
-## GUI Design
 
-### Main Menu
+### Major Difficulties
+* One major difficulty was finding the right level of abstraction and the right separation between the modules in order to achieve a low level of coupling between the classes. 
+* Creating Tests that tested Modules independently of others was difficult, since some classes depended on others, which we overcame by created simple mock classes (and using EasyMock)
 
-The main menu should have a simple design, buttons with their use written on them which lead the user to the menu they intends to view. The play button will lead the user to the play menu, the high score button will lead the user to the high score menu, the settings button will show the settings menu and the exit button will exit the application. The library provided by libgdx for lighting might be used for lighting effects on the background.
+### Lessons Learned 
+* The value of low coupling in code
+* EasyMock for mocking classes
+* Developing applications for Android
+* How to use LIBGDX to develop applications
+* Improved knoweledge of java features.
 
-![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUImock-up/Menu.png)
-
-
-### Play Menu
-
-The play menu will have all the modes for the game, the user must slide left to see the other modes. A play button will be in the screen to play the game mode. A text area will be bellow the play button to tell the user about the mode and maybe the controlls. There will be two buttons on the bottom of the screen, one to return to the main menu and another to view the settings menu.
-
-![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUImock-up/PlayMenu.png)
-
-
-### Hight Scores
-
-The high scores menu will have a listing of all the game modes and their respective highest scores. There will also be a button on the bottom that takes the user back to the main menu.
-
-![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUImock-up/High%20Scores.png)
-
-
-### Pause Menu
-
-The pause menu will be shown when the player is ingame and clicks the pause button on the edge of the screen. The pause menu will have the current score of the player. There will be a button to continue the game, restart, view the settings and to exit the game.
-
-![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUImock-up/Pause.png)
-
-
-### Settings
-
-The settings menu should be available from the main menu, the play menu and from the paused game. It should appear in the middle of the screen and display several settings options to select or deselect. There will be a big X button on the top left corner that exits the settings menu when clicked.
-
-#### From the main menu:
-![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUImock-up/SettingsMenu.png)
-#### From the play menu:
-![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUImock-up/SettingsPlayMenu.png)
-#### From ingame:
-![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUImock-up/InGameSettings.png)
-
-
-### HUD
-
-The HUD for now is just a pause button on the corner of the screen that will lead to the pause menu seen above.
-
-![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUImock-up/InGame.png)
-
-
-## Test Design
+### Test Design
 
 This project uses an external library (LIBGDX) to make mobile application development easier, therefore this project is divided into 2 main parts to allow for unit testing: 
 * (Input and LIBGDXwrapper packages) Graphics and other library related stuff (camera, input, asset management, etc)
 * (gameLogic package) Game Logic where all the objects such as the user character, enemies, platforms, etc are represented and interact.
 
-Unit test are only really applicable to the 2nd part, so all of the objects in gameLogic package should be tested.
+All the classes in the gameLogic package have been tested (tests package) with unit tests, where each class was tested individually and separately (with Mock classes) from the other classes they might depend on. 
 
-* Character class will be tested for correct movement and position, to ascertain that it moves correctly.
-* GameWorld will be tested for character collisions, to see if the hero can destroy enemies (by jumping on them) and if the hero can be killed (and the GameWorld correctly sets the game as lost)
-* LevelDirector class will be tested to see if it correctly generates enemies for GameWorld, with the appropriate difficulty given a time and user input and world statistics
-* Hero Lamp will be tested to see if it generates light apporpriatly given some hero actions
-* Also any other objects in this package that we might need would be tested appropriately.
+### Overall time spent and Distribution
+We, overall, have spent 120 or more hours on this project.
+
+We consider that both team members had a 50/50 work distribution.

@@ -78,8 +78,8 @@ public class SurvivalGameWorldAdapter extends AbstractGameWorldAdapter{
      * @param deltaT
      */
     @Override
-    public void updateScreen(float deltaT) {
-        super.updateScreen(deltaT );
+    public void updateGraphics(float deltaT) {
+        super.updateGraphics(deltaT );
 
         drawBatch.setProjectionMatrix(gameCamera.combined);
         drawBatch.begin();

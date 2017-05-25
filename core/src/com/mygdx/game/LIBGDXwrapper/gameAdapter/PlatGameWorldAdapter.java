@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.LIBGDXwrapper.GameScreen;
-import com.mygdx.game.LIBGDXwrapper.PathConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.DummyEnemyVisualsHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.FarAwayBackgroundVisualHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FeatureVisuals.HeroLifesVisualHandler;
@@ -17,7 +15,6 @@ import com.mygdx.game.gameLogic.Characters.CharacterInfo;
 import com.mygdx.game.gameLogic.Characters.HeroInfo;
 import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
 import com.mygdx.game.Vector2D;
-import com.mygdx.game.gameLogic.LogicWorlds.PlatWorld;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLifesFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightRechargerFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLightFeature;
@@ -162,8 +159,8 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
      * @param deltaT
      */
     @Override
-    public void updateScreen(float deltaT) {
-        super.updateScreen(deltaT);
+    public void updateGraphics(float deltaT) {
+        super.updateGraphics(deltaT);
 
 
         drawBatch.setProjectionMatrix(gameCamera.combined);

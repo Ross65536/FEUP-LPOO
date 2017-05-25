@@ -25,9 +25,8 @@ public class GyroscopeInput {
 
     /**
      * Method that sends player controlls to the hero, based on smartphone orientation (pitch and roll)
-     * @param delta
      */
-    public void update(float delta){
+    public void pollOrientation(){
         handlePitch();
 
         handleRoll();

@@ -37,13 +37,13 @@ public class MyGame extends Game {
 	private void startSurvivalMode()
 	{
         gameScreen.LoadLevel(LevelBuilder.createSurvivalLevel());
-        finishDiscWorldAssets();
+        finishWorldAssets();
 	}
 
     private void startPlatMode()
     {
         gameScreen.LoadLevel(LevelBuilder.createPlatformTestLevel());
-        finishDiscWorldAssets(); // ???????????
+        finishWorldAssets(); // ???????????
     }
 
     public void SwicthToMenuScreen(MenuInstr instruction)
@@ -52,12 +52,12 @@ public class MyGame extends Game {
             case PAUSE:
                 if(menuScreen==null)
                     menuScreen = new MenuScreen(this);
-                menuScreen.pauseGame(gameScreen.getCurrentLevel(), PauseGUI.pauseType.PAUSE);
+                menuScreen.pauseGame(gameScreen.getIGameWorldAdapter(), PauseGUI.pauseType.PAUSE);
                 break;
             case ENDGAME:
                 if(menuScreen==null)
                     menuScreen = new MenuScreen(this);
-                menuScreen.pauseGame(gameScreen.getCurrentLevel(), PauseGUI.pauseType.ENDGAME);
+                menuScreen.pauseGame(gameScreen.getIGameWorldAdapter(), PauseGUI.pauseType.ENDGAME);
                     break;
             case EXIT:
                 gameScreen.nullifyLevel(); //very important
@@ -98,7 +98,7 @@ public class MyGame extends Game {
         gameScreen.setAsInput();
     }
 
-    private void finishDiscWorldAssets() {
+    private void finishWorldAssets() {
         GameAssetHandler gameAssetHandler = GameAssetHandler.getGameAssetHandler();
         gameAssetHandler.finishLoading(); //finish loading textures here
         gameAssetHandler.setupHeroAssets();

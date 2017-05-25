@@ -1,9 +1,9 @@
-package test.GameDirector;
+package tests.GameDirector;
 
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.BalancedCurve;
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.Curves;
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.IncreasingDifficulty;
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurve.RandomCurve;
+import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.BalancedCurve;
+import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.Curve;
+import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.IncreasingDifficultyCurve;
+import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.RandomCurve;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,15 +19,15 @@ public class CurvesTests {
         RandomCurve randomCurve = new RandomCurve();
 
         double difficulty = randomCurve.generateDifficulty(statistics);
-        assertTrue(difficulty >=0.0 && difficulty <= Curves.CURVES_MAX_DIFFICULTY || difficulty == Curves.CURVES_NO_ENEMY_CREATED);
+        assertTrue(difficulty >=0.0 && difficulty <= Curve.CURVES_MAX_DIFFICULTY || difficulty == Curve.CURVES_NO_ENEMY_CREATED);
 
         //random curve should give half difficulty on average
         double diff = diminishRandomness(statistics, randomCurve);
 
-        assertEquals(0.5 * Curves.CURVES_MAX_DIFFICULTY, diff, 0.05 * Curves.CURVES_MAX_DIFFICULTY);
+        assertEquals(0.5 * Curve.CURVES_MAX_DIFFICULTY, diff, 0.05 * Curve.CURVES_MAX_DIFFICULTY);
     }
 
-    private final double diminishRandomness(MockStatistics statistics, Curves curve)
+    private final double diminishRandomness(MockStatistics statistics, Curve curve)
     {
         final int iterations = 100000;
         double sum=0;
@@ -35,7 +35,7 @@ public class CurvesTests {
         for (int i=0; i < iterations; i++)
         {
             double difficulty = curve.generateDifficulty(statistics);
-            if (difficulty != Curves.CURVES_NO_ENEMY_CREATED)
+            if (difficulty != Curve.CURVES_NO_ENEMY_CREATED)
             {
                 sum += difficulty;
                 n++;
@@ -57,27 +57,27 @@ public class CurvesTests {
         //should'nt make enemy, too soon
         statistics.setBalancedValues(0.0,0.0, 0);
         double diff = balancedCurve.generateDifficulty(statistics);
-        assertTrue(diff == Curves.CURVES_NO_ENEMY_CREATED );
+        assertTrue(diff == Curve.CURVES_NO_ENEMY_CREATED );
         statistics.setLastCreatedEnemyDeltaT(ENEMY_DELTA_T-0.1);
         diff = balancedCurve.generateDifficulty(statistics);
-        assertTrue(diff == Curves.CURVES_NO_ENEMY_CREATED );
+        assertTrue(diff == Curve.CURVES_NO_ENEMY_CREATED );
 
         //too many enemies
         statistics.setBalancedValues(ENEMY_DELTA_T * 3, 0.0, MAX_ENEMIES + 1 );
         diff = balancedCurve.generateDifficulty(statistics);
-        assertTrue(diff == Curves.CURVES_NO_ENEMY_CREATED );
+        assertTrue(diff == Curve.CURVES_NO_ENEMY_CREATED );
         statistics.setNumberOfEnemies(MAX_ENEMIES);
         diff = balancedCurve.generateDifficulty(statistics);
-        assertTrue(diff == Curves.CURVES_NO_ENEMY_CREATED );
+        assertTrue(diff == Curve.CURVES_NO_ENEMY_CREATED );
 
         //shoudl generate a high difficulty half or more
         statistics.setBalancedValues(ENEMY_DELTA_T * 3, 0.0, 0);
         diff = balancedCurve.generateDifficulty(statistics);
-        assertTrue(diff != Curves.CURVES_NO_ENEMY_CREATED && diff > (BALANCED_RANDOMNESS_PORTION - 0.05) * Curves.CURVES_MAX_DIFFICULTY);
+        assertTrue(diff != Curve.CURVES_NO_ENEMY_CREATED && diff > (BALANCED_RANDOMNESS_PORTION - 0.05) * Curve.CURVES_MAX_DIFFICULTY);
         //should be a low difficulty, less than half max difficulty
         statistics.setStressLevel(1.0);
         diff = balancedCurve.generateDifficulty(statistics);
-        assertTrue(diff != Curves.CURVES_NO_ENEMY_CREATED && diff < (BALANCED_RANDOMNESS_PORTION + 0.05) * Curves.CURVES_MAX_DIFFICULTY);
+        assertTrue(diff != Curve.CURVES_NO_ENEMY_CREATED && diff < (BALANCED_RANDOMNESS_PORTION + 0.05) * Curve.CURVES_MAX_DIFFICULTY);
 
         //values should be incremental
         statistics.setBalancedValues(ENEMY_DELTA_T*2, 0.0, 0);
@@ -100,23 +100,23 @@ public class CurvesTests {
         MockStatistics statistics = new MockStatistics();
         final double generationRange = 0.0;
         final double timeMidpoint = 10;
-        IncreasingDifficulty increasingCurve = new IncreasingDifficulty(generationRange, timeMidpoint, ENEMY_DELTA_T, MAX_ENEMIES);
+        IncreasingDifficultyCurve increasingCurve = new IncreasingDifficultyCurve(generationRange, timeMidpoint, ENEMY_DELTA_T, MAX_ENEMIES);
 
         //should'nt make enemy, too soon
         statistics.setIncreasingValues(0.0,0, 0);
         double diff = increasingCurve.generateDifficulty(statistics);
-        assertTrue(diff == Curves.CURVES_NO_ENEMY_CREATED );
+        assertTrue(diff == Curve.CURVES_NO_ENEMY_CREATED );
         statistics.setLastCreatedEnemyDeltaT(ENEMY_DELTA_T-0.1);
         diff = increasingCurve.generateDifficulty(statistics);
-        assertTrue(diff == Curves.CURVES_NO_ENEMY_CREATED );
+        assertTrue(diff == Curve.CURVES_NO_ENEMY_CREATED );
 
         //too many enemies
         statistics.setIncreasingValues(ENEMY_DELTA_T * 3, MAX_ENEMIES + 1, 0 );
         diff = increasingCurve.generateDifficulty(statistics);
-        assertTrue(diff == Curves.CURVES_NO_ENEMY_CREATED );
+        assertTrue(diff == Curve.CURVES_NO_ENEMY_CREATED );
         statistics.setNumberOfEnemies(MAX_ENEMIES);
         diff = increasingCurve.generateDifficulty(statistics);
-        assertTrue(diff == Curves.CURVES_NO_ENEMY_CREATED );
+        assertTrue(diff == Curve.CURVES_NO_ENEMY_CREATED );
 
         //testing that difficulties go up
         statistics.setIncreasingValues(ENEMY_DELTA_T * 3, 0, 0 );
@@ -129,7 +129,7 @@ public class CurvesTests {
         statistics.setCurrentPlayTime(timeMidpoint);
         higherDiff = increasingCurve.generateDifficulty(statistics);
         assertTrue(higherDiff > lesserDiff);
-        assertEquals(higherDiff, 0.5 * Curves.CURVES_MAX_DIFFICULTY, 0.05);
+        assertEquals(higherDiff, 0.5 * Curve.CURVES_MAX_DIFFICULTY, 0.05);
 
         lesserDiff = higherDiff;
         statistics.setCurrentPlayTime(2 * timeMidpoint);

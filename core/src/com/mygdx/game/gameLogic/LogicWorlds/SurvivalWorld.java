@@ -6,14 +6,13 @@ import com.mygdx.game.gameLogic.Characters.Enemy;
 import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 import com.mygdx.game.gameLogic.Characters.Hero;
 import com.mygdx.game.gameLogic.Characters.Light;
-import com.mygdx.game.gameLogic.GameDirector.StageDirectors.StageDirector;
+import com.mygdx.game.gameLogic.GameDirector.StageDirector;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLight;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLightFeature;
 import com.mygdx.game.Vector2D;
 
 import java.util.List;
-import java.util.Random;
 
 public class SurvivalWorld extends GameWorld implements HeroLightFeature {
 
@@ -60,7 +59,7 @@ public class SurvivalWorld extends GameWorld implements HeroLightFeature {
     //// abstract implementations ---------------
 
     /**
-     * Specific update implementation of this world type. Calls the updates methods of it's objects. and checks collisisons, etc.
+     * Specific pollOrientation implementation of this world type. Calls the updates methods of it's objects. and checks collisisons, etc.
      * @param deltaT
      */
     @Override

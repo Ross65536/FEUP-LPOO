@@ -89,12 +89,12 @@ public class GameScreen extends ScreenAdapter {
         currentLevel.updateWorld(deltaT);
 
         if(!gameSettings.noMotionSensors() && gyroscopeInput!=null){
-            gyroscopeInput.update(deltaT);
+            gyroscopeInput.pollOrientation();
         }
 
         super.render(deltaT);
 
-        currentLevel.updateScreen(deltaT);
+        currentLevel.updateGraphics(deltaT);
 
         ////////HUD////////
         hud.act(deltaT);
@@ -175,7 +175,7 @@ public class GameScreen extends ScreenAdapter {
         this.hud.getViewport().update(width,height,true);
     }
 
-    public IGameWorldAdapter getCurrentLevel(){
+    public IGameWorldAdapter getIGameWorldAdapter(){
         return currentLevel;
     }
 

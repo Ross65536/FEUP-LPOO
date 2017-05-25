@@ -1,4 +1,4 @@
-package com.mygdx.game.gameLogic.GameDirector;
+package com.mygdx.game.gameLogic.GameDirector.Statistic;
 
 
 import java.util.ArrayDeque;
@@ -65,7 +65,7 @@ public class Statistics implements StatisticsInfo, StatisticsInput
     }
 
     /**
-     * specific update method for statistics. updates internal time and deletes movement and jumps that are too old
+     * specific pollOrientation method for statistics. updates internal time and deletes movement and jumps that are too old
      * @param deltaT tiem in seconds
      */
     @Override
@@ -155,7 +155,7 @@ public class Statistics implements StatisticsInfo, StatisticsInput
 
     /**
      *
-     * @return time since last enemy was created (update enemy bigger than 0)
+     * @return time since last enemy was created (pollOrientation enemy bigger than 0)
      */
     @Override
     public double getLastCreatedEnemyDeltaT() {

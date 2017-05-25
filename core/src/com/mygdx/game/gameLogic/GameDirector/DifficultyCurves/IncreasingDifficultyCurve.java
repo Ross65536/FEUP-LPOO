@@ -1,18 +1,18 @@
-package com.mygdx.game.gameLogic.GameDirector.DifficultyCurve;
+package com.mygdx.game.gameLogic.GameDirector.DifficultyCurves;
 
 
-import com.mygdx.game.gameLogic.GameDirector.StatisticsInfo;
+import com.mygdx.game.gameLogic.GameDirector.Statistic.StatisticsInfo;
 
 /**
  * Should generate a  difficulty that increases with time, to a max value
  */
-public class IncreasingDifficulty extends Curves
+public class IncreasingDifficultyCurve extends Curve
 {
     private double difficultyGenerationRange;
     private double timeHalftime;
     private double enemyGenerationPeriod;
     private int maxNumEnemies;
-    public IncreasingDifficulty (double difficultyGenerationRange, double timeRange, double enemyCreateDeltaTCutoff, int maxNumEnemies)
+    public IncreasingDifficultyCurve(double difficultyGenerationRange, double timeRange, double enemyCreateDeltaTCutoff, int maxNumEnemies)
     {
         this.difficultyGenerationRange = difficultyGenerationRange;
         this.timeHalftime = timeRange;
@@ -37,7 +37,7 @@ public class IncreasingDifficulty extends Curves
             final double currTime = statistics.getCurrentPlayTime();
             final double basePortion = Math.atan(currTime / timeHalftime) * 2 / Math.PI * (1.0 - difficultyGenerationRange);
             final double generatedPortion = random.nextDouble() * difficultyGenerationRange;
-            final double difficulty = (generatedPortion + basePortion) * Curves.CURVES_MAX_DIFFICULTY;
+            final double difficulty = (generatedPortion + basePortion) * Curve.CURVES_MAX_DIFFICULTY;
             return difficulty;
         }
         else

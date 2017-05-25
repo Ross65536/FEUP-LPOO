@@ -1,12 +1,12 @@
-package com.mygdx.game.gameLogic.GameDirector.DifficultyCurve;
+package com.mygdx.game.gameLogic.GameDirector.DifficultyCurves;
 
 
-import com.mygdx.game.gameLogic.GameDirector.StatisticsInfo;
+import com.mygdx.game.gameLogic.GameDirector.Statistic.StatisticsInfo;
 
 /**
  * Generates difficulty randomly
  */
-public class RandomCurve extends Curves
+public class RandomCurve extends Curve
 {
     static private final int CREATE_ENEMY_ODDS_RANDOM = 120;
 
