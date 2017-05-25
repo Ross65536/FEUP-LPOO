@@ -1,5 +1,37 @@
 {
 
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	volumeSliderStyle0 : {
+			background: volumeKnockOver
+			knob: volumeKnockDown0
+			knobDown: volumeKnockDown0
+	}
+	
+	volumeSliderStyle1_50 : {
+			background: volumeKnockOver
+			knob: volumeKnockDown1_50
+			knobDown: volumeKnockDown1_50
+	}
+	
+	volumeSliderStyle51_100 : {
+			background: volumeKnockOver
+			knob: volumeKnockDown51_100
+			knobDown: volumeKnockDown51_100
+	}
+}
+
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	vScrollKnobForSettings: {
+		vScrollKnob: vScrollKnobSettings
+	}
+	
+	vScrollKnobPlayMenu: {
+		vScrollKnob : vScrollKnobSettings
+		background : redBackgroundTextArea
+	}
+
+}
+
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	
 	playButtonMainMenu: {
@@ -69,5 +101,18 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 
 	
 }
+
+com.badlogic.gdx.scenes.scene2d.utils.Drawable: {
+	settingsBackgroundImg: settingsBackgroundImage
+	
+	pauseBackgroundImg: pauseBackgroundImage
+	
+	backGroundButtonImg: backGroundButtonImage
+	
+	swipeLeft: swipeImageLeft
+	
+	swipeRight: swipeImageRight
+}
+
 
 }

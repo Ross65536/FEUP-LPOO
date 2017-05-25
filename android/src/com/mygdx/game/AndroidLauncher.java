@@ -15,9 +15,10 @@ public class AndroidLauncher extends AndroidApplication {
 
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		config.numSamples = 2;
+		config.numSamples = 3;
 		config.useCompass = true;
 		config.useWakelock=true;
+		config.useImmersiveMode = true;
 		initialize(new MyGame(), config);
 	}
 

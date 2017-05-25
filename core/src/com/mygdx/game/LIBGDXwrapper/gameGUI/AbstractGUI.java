@@ -8,7 +8,9 @@ import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsInput;
 
 import java.util.ArrayList;
 
-
+/**
+ * Main class for every menu. Can contain multiple stages.
+ */
 public abstract class AbstractGUI extends InputMultiplexer{
 
     protected ArrayList<InputProcessor> menuComponets;

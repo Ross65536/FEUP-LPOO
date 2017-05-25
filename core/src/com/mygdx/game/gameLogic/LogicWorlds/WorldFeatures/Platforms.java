@@ -14,6 +14,10 @@ import java.util.TreeMap;
 
 import static com.mygdx.game.gameLogic.Characters.Platform.fractionOfScreenHeightForPlatform;
 
+/**
+ * Class that implements the logic behind platforms.
+ * Used as a component the the gameWorlds.
+ */
 public class Platforms implements PlatformFeature{
 
     //platforms properties
@@ -25,13 +29,21 @@ public class Platforms implements PlatformFeature{
     private Platform currentPlarform; //platform where hero is on
 
     private Hero hero;
+
     private Vector2D worldDimensions;
+
     private double cameraHeight;
     private double cameraWidth;
 
     private double platformHeight;
     private double platformWidth;
 
+    /**
+     * Constructor.
+     * @param hero The hero.
+     * @param worldDimensions The world dimensions.
+     * @param cameraSizes The camera dimensions
+     */
     public Platforms(Hero hero,Vector2D worldDimensions,Vector2D cameraSizes){
         currentPlarform = null;
         platformsT = new TreeMap<Double, TreeMap<Double,Platform>>();
@@ -52,19 +64,34 @@ public class Platforms implements PlatformFeature{
     }
 
 
+    /**
+     * Returns all the platforms that can be seen on screen.
+     * @return platforms that can be seen on screen.
+     */
     public List<Platform> getPlatforms(){
         List<Platform> unmList = Collections.unmodifiableList(platformsInRange);
         return unmList;
     }
 
+    /**
+     * Returns all platforms.
+     * @return all platforms.
+     */
     public TreeMap<Double, TreeMap<Double,Platform>> getAllPlatforms(){
         return platformsT;
     }
 
+    /**
+     * Calculates the plarforms that can be seen on screen.
+     */
     public void updatePlatformsInRange(){
         platformsInRange = getPlatformsInRange();
     }
 
+    /**
+     * Returns the minimum Y position of the hero, until the hero falls of the platform or jumps.
+     * @return
+     */
     public double getLandingYValue() {
         if (currentPlarform == null)
             return 0;
@@ -72,6 +99,9 @@ public class Platforms implements PlatformFeature{
             return currentPlarform.getTopY();
     }
 
+    /**
+     * Checks for collisions on any of the platforms in range.
+     */
     public void checkPlatformCollisions(){
         if(currentPlarform!= null && currentPlarform.isCharacterOnThisPlatform(hero)){
             return;
@@ -86,7 +116,9 @@ public class Platforms implements PlatformFeature{
         checkDropFromPlatform();
     }
 
-
+    /**
+     * Checks if the hero is droping of a platform.
+     */
     private void checkDropFromPlatform(){
         if(!hero.isMovingY()&& (currentPlarform!=null)) {
             hero.fall(1.0);
@@ -94,6 +126,13 @@ public class Platforms implements PlatformFeature{
         currentPlarform = null;
     }
 
+    /**
+     * Creates a platform.
+     * @param xPos X Position where the platform will be created.
+     * @param yPos Y Position where the platform will be created.
+     * @param xWidth width of the platform to be created.
+     * @param yHeight height of the platform to be created.
+     */
     private void createPlatformHere(double xPos,double yPos, double xWidth, double yHeight){
         if(platformsT.containsKey(yPos)){
             platformsT.get(yPos).put(new Double(xPos),new Platform(new Vector2D(xPos, yPos),new Vector2D(xWidth,yHeight)));
@@ -105,6 +144,9 @@ public class Platforms implements PlatformFeature{
 
     }
 
+    /**
+     * Creates world all platforms.
+     */
     private void createPlarforms(){
 
         int xSize = (int)(worldDimensions.x / platformWidth);
@@ -127,7 +169,10 @@ public class Platforms implements PlatformFeature{
         }
     }
 
-
+    /**
+     * Calculates all platforms in range.
+     * @return all platforms in range.
+     */
     private ArrayList<Platform> getPlatformsInRange(){
 
         ArrayList<Platform> res = new ArrayList<Platform>();
@@ -160,7 +205,15 @@ public class Platforms implements PlatformFeature{
         return res;
     }
 
-
+    /**
+     * Assures spacing between platforms based of the padding set in the spacingBetweenPlatforms field of this class,
+     * and assures the frequency at which the platforms show up based on the set freqPlatforms field of this class.
+     * @param platformAuxiliarMatrix Auxiliar matrix to know where the platforms are and where there can or can't be a platform.
+     * @param i x position of platform to pad
+     * @param e y position of platform to pad
+     * @param spacing the spacing
+     * @param matrixSize the matrix size
+     */
     private void padPlatform(int platformAuxiliarMatrix[][], int i, int e, Vector2D spacing, Vector2D matrixSize){
         double startingI;
         double startingE;

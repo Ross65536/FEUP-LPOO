@@ -17,6 +17,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Enemy feature implemented has default for all worlds.
+ */
 public class DummyEnemies implements DummyEnemyFeature {
 
 
@@ -32,7 +35,11 @@ public class DummyEnemies implements DummyEnemyFeature {
     private GameWorld gameWorld;
 
 
-
+    /**
+     * updates all enemies with delta time
+     * @param deltaT delta time
+     * @param statisticsInput statistics input
+     */
     private void updateEnemies(float deltaT, StatisticsInput statisticsInput) {
         final double enemyDeletionRange = ENEMY_DELETION_RANGE_MULT * worldDimensions.y;
         int numGroundDeletions=0;
@@ -63,6 +70,13 @@ public class DummyEnemies implements DummyEnemyFeature {
         return;
     }
 
+    /**
+     * Constructor
+     * @param hero the hero
+     * @param worldDims world dimensions
+     * @param stageDirector the stage director to manage dificulty
+     * @param gameWorld the current game mode/world
+     */
     public DummyEnemies(Hero hero, Vector2D worldDims, StageDirector stageDirector, GameWorld gameWorld){
         enemies = new ArrayList<Enemy>();
         this.hero = hero;
@@ -72,6 +86,10 @@ public class DummyEnemies implements DummyEnemyFeature {
         this.gameWorld = gameWorld;
     }
 
+    /**
+     * Creates all enemies.
+     * For debug.
+     */
     public void createDummyEnemies () //testing function
     {
         final double heroX = hero.getXPos();
@@ -92,6 +110,9 @@ public class DummyEnemies implements DummyEnemyFeature {
 
     }
 
+    /**
+     * tries generating an enemy.
+     */
     public void tryGenerateEnemy()
     {
         final Enemy enemy = stageDirector.tryGenerateEnemy();
@@ -103,7 +124,10 @@ public class DummyEnemies implements DummyEnemyFeature {
     }
 
 
-
+    /**
+     * Updtes the enemy statistics.
+     * @param deltaT
+     */
     public void updateEnemieStatistics(float deltaT)
     {
 
@@ -114,6 +138,10 @@ public class DummyEnemies implements DummyEnemyFeature {
         updateEnemies(deltaT, statisticsInput);
     }
 
+    /**
+     * Returns the stage director.
+     * @return the stage director.
+     */
     public StageDirector getStageDirector()
     {
         return stageDirector;

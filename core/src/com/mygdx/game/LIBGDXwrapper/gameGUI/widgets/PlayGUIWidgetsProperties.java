@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 
@@ -74,13 +76,15 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
                 .padTop(screenHeight/30)
                 .padBottom(screenHeight/30)
                 .colspan(3)
+                .center()
                 .getActor();
-
+        label.setAlignment(Align.center);
+/*
         label.setFontScale(1f);
         float xRatio = (screenWidth/3.5f)/label.getWidth();
         float yRatio = (screenHeight/8f)/label.getHeight();
         label.setFontScale(xRatio,yRatio);
-
+*/
         return label;
     }
 
@@ -101,26 +105,21 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
                 .getActor();
     }
 
-    public ScrollPane loadTextAreaTutorial(Table table, String text, String backgroundImage, Skin skin){
+    public ScrollPane loadTextAreaTutorial(Table table, String text){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        ScrollPane textArea = loadTextArea(skin, table,
+        ScrollPane textArea = loadTextArea(table,
                 text,
-                "tutorial",
-                backgroundImage)
+                "tutorial"
+                )
                 .fill()
                 .expand()
                 .colspan(3)
                 .height(screenHeight - (screenHeight / 3) - (screenHeight / 8) - (screenHeight/15))
-                //.padBottom(screenHeight / 6)
-                //pos. and location
                 .getActor();
 
-        skin.add("vScrollKnobPlayMenu",new Texture(Gdx.files.internal("vScrollKnobSettings.png")));
-
-        ScrollPane.ScrollPaneStyle styleScroll = new ScrollPane.ScrollPaneStyle();
-        styleScroll.vScrollKnob = skin.getDrawable("vScrollKnobPlayMenu");
+        ScrollPane.ScrollPaneStyle styleScroll = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("vScrollKnobPlayMenu",ScrollPane.ScrollPaneStyle.class);
 
         textArea.setStyle(styleScroll);
         textArea.setScrollingDisabled(true,false);
@@ -128,12 +127,12 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
         return textArea;
     }
 
-    public Image loadTextbackImageTable(Table table, String backgroundImage, Skin skin){
+    public Image loadTextbackImageTable(Table table, Drawable background){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        Image image = loadImage(skin, table,
-                backgroundImage)
+        Image image = loadImage(table,
+                background)
                 .grow()
                 .height(screenHeight / 6)
                 .colspan(3)
@@ -144,12 +143,12 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
         return image;
     }
 
-    public Image loadSwipeImageTable(Table table, String swipeImage, Skin skin){
+    public Image loadSwipeImageTable(Table table, Drawable background){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        Image image = loadImage(skin, table,
-                swipeImage)
+        Image image = loadImage(table,
+                background)
                 .grow()
                 .width(screenWidth / 3)
                 .height(screenHeight / 6)

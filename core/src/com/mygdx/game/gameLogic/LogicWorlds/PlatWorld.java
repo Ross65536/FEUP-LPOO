@@ -21,15 +21,31 @@ import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Platforms;
 import com.mygdx.game.Vector2D;
 import java.util.List;
 
+/**
+ * This class manages the game's logic for the platforms mode of the game.
+ */
 public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFeature, LightRechargerFeature, HeroLifesFeature {
 
-    Platforms platforms;
+    /**
+     * Platforms Component, manages the logic regarding the platforms on the game.
+     */
+    private Platforms platforms;
 
-    LightRecharger lightRecharger;
+    /**
+     * Platforms Component, manages the logic regarding the light rechargers on the game.
+     */
+    private LightRecharger lightRecharger;
 
     private double cameraWidth;
     private double cameraHeight;
 
+    /**
+     * Constructor.
+     * @param cameraDim Dimensions of the camera
+     * @param worldDims Dimensions of the world
+     * @param hero the hero
+     * @param stageDirector
+     */
     public PlatWorld(final Vector2D cameraDim, final Vector2D worldDims, Hero hero, StageDirector stageDirector)
     {
         super(worldDims, hero);
@@ -52,7 +68,9 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
 
     }
 
-
+    /**
+     * Keeps the hero from going over the edges.
+     */
     protected void checkHeroAtWorldEdges() {
         final double heroXPos = hero.getXPos();
         final double heroXDim = hero.getXDim();
@@ -64,8 +82,10 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
     }
 
 
-
-    //// abstract implementations ---------------
+    /**
+     * Update method for the game's logic.
+     * @param deltaT time between updates
+     */
     @Override
     public void update (float deltaT)
     {
@@ -90,17 +110,27 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
             tryGenerateEnemy();
     }
 
+    /**
+     * Checks to see if the score changed.
+     */
     protected void checkScore(){
         if(lightRecharger.wasRechargerCaught()){
             score = lightRecharger.totalRechargersCaught();
         }
     }
 
+    /**
+     * Returs the score of the game.
+     * @return
+     */
     @Override
     public String getScore(){
         return ((int)score)+"";
     }
 
+    /**
+     * Checks if the game was lost. Hit by enemy or ran out of light.
+     */
     private void checkLost(){
         if(this.checkEnemyCollisions() > 0)
         {
@@ -119,6 +149,9 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
         }
     }
 
+    /**
+     * Method used for the heros jump.
+     */
     @Override
     protected void checkHeroJump()
     {
@@ -131,6 +164,10 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
         }
     }
 
+    /**
+     * Places enemy
+     * @param enemy enemy to be placed
+     */
     @Override
     public void placeEnemy(final Enemy enemy){
         placeEnemyYPos(enemy);
@@ -152,6 +189,10 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
         }
     }
 
+    /**
+     * Places an enemy.
+     * @param enemy
+     */
     @Override
     protected void placeEnemyYPos(Enemy enemy) {
         if (enemy.isFlyingType())

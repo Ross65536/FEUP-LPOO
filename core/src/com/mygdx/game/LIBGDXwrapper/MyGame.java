@@ -2,6 +2,7 @@ package com.mygdx.game.LIBGDXwrapper;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.LevelBuilder;
@@ -23,14 +24,13 @@ public class MyGame extends Game {
     @Override
 	public void create ()
     {
+
         gameSettings = new GameSettings();
         gameSettings.setApplicationPlatform(Gdx.app.getType());
 
         gameScreen = new GameScreen(this, gameSettings);//gameSettings não devia de ser parametro
         menuScreen = new MenuScreen(this);
 
-
-        Gdx.input.setCatchBackKey(true);
         setScreen(menuScreen);
 	}
 
@@ -109,5 +109,11 @@ public class MyGame extends Game {
 
     public GameSettings getGameSettings(){
         return this.gameSettings;
+    }
+
+    @Override
+    public void dispose(){
+        GameAssetHandler.getGameAssetHandler().dispose();
+        gameScreen.dispose();
     }
 }

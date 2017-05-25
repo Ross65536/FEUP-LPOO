@@ -22,23 +22,50 @@ import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLifesFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightRechargerFeature;
 import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLightFeature;
 
+/**
+ * Class that draws the mode from the gameLogic class: platWorld
+ */
 public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
 
+    /**
+     * Component used to print the enemies.
+     */
     private DummyEnemyVisualsHandler dummyEnemyVisualsHandler;
 
+    /**
+     * Component used to draw all lights in the world.
+     */
     private ScreenLightsVisualHandler lightVisualHandler;
 
+    /**
+     * Component used to display the platforms in the game.
+     */
     private PlatformVisualHandler platformVisualHandler;
 
+    /**
+     * Component used to draw the recharger item in the game.
+     */
     private LightRechargerVisualHandler lightRechargerVisualHandler;
 
+    /**
+     * Component used to draw the lifes left the player has.
+     */
     private HeroLifesVisualHandler heroLifesVisualHandler;
+
 
     private float distanceToBackgroundX = 2f;
     private float distanceToBackgroundY = 0.3f;
+    /**
+     * Component used to draw the background and emulate distance from the player to the background.
+     */
     private FarAwayBackgroundVisualHandler farAwayBackgroundVisualHandler;
 
-
+    /**
+     * Constructor
+     * @param cameraDims Dimensions of the camera
+     * @param worldDims Dimensions of the world
+     * @param gameLogicWorld The gameWorld holding the logic for this mode(plarforms mode).
+     */
     public PlatGameWorldAdapter(final Vector2D cameraDims, final Vector2D worldDims, GameWorld gameLogicWorld)
     {
         super(worldDims,gameLogicWorld);
@@ -71,7 +98,9 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
         heroLifesVisualHandler.setHUD(hud);
     }
 
-
+    /**
+     * Function that add all the lights, to display in the world, to the light handler.
+     */
     private void addLights(){
         if(!(gameLogicWorld instanceof HeroLightFeature)){
             System.out.println("this world does not support the hero light feature");
@@ -85,7 +114,11 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
             lightVisualHandler.addNewLight(((LightRechargerFeature)gameLogicWorld).getItemLight());
     }
 
-
+    /**
+     * Function that updates the cameras position acording to the hero's position, in this mode the camera is centered on the hero.
+     * @param hero The player.
+     * @param gameCamera The Camera
+     */
     @Override
     public void updateCameraPos(CharacterInfo hero, OrthographicCamera gameCamera)
     {
@@ -113,6 +146,10 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
         gameCamera.update();
     }
 
+    /**
+     * Get the camera dimensions.
+     * @return camera dimensions.
+     */
     @Override
     public Vector2D getCameraSetup () {
         return new Vector2D(cameraWidth, cameraHeight); //camera has maximum world height
@@ -147,6 +184,11 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
 
     }
 
+    /**
+     * Function used to draw the hero.
+     * In this mode, when the hero gets hit by an enemy he loses a life and becumes immune to all damage for a few seconds.
+     * To show when the hero is immune the hero's sprite is drawn with a a lesser alpha.
+     */
     @Override
     protected void drawHero(){
         if((gameLogicWorld instanceof HeroLifesFeature) && ((HeroLifesFeature)gameLogicWorld).isImmune()){
@@ -158,14 +200,20 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
     }
 
 
+    /**
+     * Draws the background using the 'far away background' component.
+     */
     @Override
     protected void drawBackground(){
         farAwayBackgroundVisualHandler.drawFarAwayBackground();
     }
 
 
-
-
+    /**
+     * Called when the screen is resized.
+     * @param width width of the scree
+     * @param height heigh of the screen
+     */
     @Override
     public void resize(int width, int height){
         super.resize(width,height);
@@ -187,6 +235,9 @@ public class PlatGameWorldAdapter extends AbstractGameWorldAdapter{
         }
     }
 
+    /**
+     * Disposes the frame buffer in the lights handler component
+     */
     @Override
     public void dispose(){
         super.dispose();

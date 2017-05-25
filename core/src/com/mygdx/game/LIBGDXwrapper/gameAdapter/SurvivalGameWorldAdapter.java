@@ -38,6 +38,9 @@ public class SurvivalGameWorldAdapter extends AbstractGameWorldAdapter{
         addLights();
     }
 
+    /**
+     * Function that add all the lights, to display in the world, to the light handler.
+     */
     private void addLights(){
         if(!(gameLogicWorld instanceof HeroLightFeature)){
             System.out.println("this world does not support the hero light feature");

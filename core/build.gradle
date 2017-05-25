@@ -17,4 +17,5 @@ dependencies {
     compile 'com.google.dexmaker:dexmaker:1.2'
     compile 'org.objenesis:objenesis:2.2'
     compile 'org.easymock:easymock:3.4'
+    compile 'com.badlogicgames.gdx:gdx-freetype:1.9.6'
 }

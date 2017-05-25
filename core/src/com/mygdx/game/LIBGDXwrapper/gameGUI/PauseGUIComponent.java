@@ -9,10 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsProperties;
@@ -54,9 +56,9 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
         this.addActor(table);
 
-        skin.add("pauseBackgroundImg",new Texture(Gdx.files.internal("pauseBackgroundImage.png")));
+        Drawable background = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("pauseBackgroundImg",Drawable.class);
 
-        table.setBackground("pauseBackgroundImg");
+        table.setBackground(background);
         table.setPosition((float)xPos,(float)yPos);
         table.setSize((float)width,(float)height);
 
@@ -83,13 +85,20 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
         table.row().padTop(screenHeight/25).padBottom(screenHeight/25);
 
-        elements.put("scorelabel",pauseGUIWidgetsProperties.loadPMLabel(table, skin, pauseScoreMessage + "\n" +  this.gameScreen.getScore()));
+        elements.put("scorelabel",pauseGUIWidgetsProperties.loadPMLabel(table, skin, pauseScoreMessage + "\n" +  ((gameScreen!=null)?this.gameScreen.getScore():0)));
         ((Label)elements.get("scorelabel")).setAlignment(Align.center);
 
     }
 
-    public void update(){
+    public void update(IGameWorldAdapter gameScreen){
+        this.gameScreen = gameScreen;
         ((Label)elements.get("scorelabel")).setText(pauseScoreMessage + "\n" +  this.gameScreen.getScore());
+    }
+
+    public void remakeLabels(PauseGUI.pauseType pauseType){
+        preLoadPauseTypeSpecificProperties(pauseType);
+        ((Label)elements.get("scorelabel")).setText(pauseScoreMessage + "\n" +  this.gameScreen.getScore());
+        postLoadPauseTypeSpecificProperties(pauseType);
     }
 
     private void loadButtons( PauseGUIWidgetsProperties pauseGUIWidgetsProperties){

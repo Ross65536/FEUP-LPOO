@@ -38,6 +38,15 @@ public class PauseGUI extends AbstractGUI{
         super.draw();
     }
 
+    public void reciclePauseGUI( IGameWorldAdapter gameScreen, PauseGUI.pauseType pauseType){
+        this.gameScreen = gameScreen;
+        if(pauseType != thisPauseType){
+            ((PauseGUIComponent)menuComponets.get(0)).remakeLabels(pauseType);
+        }else
+            updateScore();
+    }
+
+
     public IGameWorldAdapter getGameScreen(){
         return gameScreen;
     }
@@ -46,8 +55,8 @@ public class PauseGUI extends AbstractGUI{
         return thisPauseType;
     }
 
-    public void update(){
-        ((PauseGUIComponent)menuComponets.get(0)).update();
+    public void updateScore(){
+        ((PauseGUIComponent)menuComponets.get(0)).update(gameScreen);
     }
 
     public String toString(){

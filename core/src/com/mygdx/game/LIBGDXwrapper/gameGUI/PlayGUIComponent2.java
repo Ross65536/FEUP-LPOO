@@ -7,10 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.CommonConsts;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PlayGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PlayGUIWidgetsProperties;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
@@ -101,25 +103,25 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
 
     private void loadPlayButton(PlayGUIWidgetsProperties playGUIWidgetsProperties){
 
+        Drawable swipeLeft = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("swipeLeft",Drawable.class);
+
+        Drawable swipeRight = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("swipeRight",Drawable.class);
+
         elements.put("swipeLeft", playGUIWidgetsProperties.loadSwipeImageTable(table,
-                "swipeImageLeft.png",
-                skin));
+                swipeLeft));
 
         elements.put("playButtonS",  playGUIWidgetsProperties.loadPlayButton(table,skin));
 
         elements.put("swipeRight", playGUIWidgetsProperties.loadSwipeImageTable(table,
-                "swipeImageRight.png",
-                skin));
+                swipeRight));
 
         elements.put("swipeLeft", playGUIWidgetsProperties.loadSwipeImageTable(table,
-                "swipeImageLeft.png",
-                skin));
+                               swipeLeft));
 
         elements.put("playButtonW",  playGUIWidgetsProperties.loadPlayButton(table,skin));
 
         elements.put("swipeRight", playGUIWidgetsProperties.loadSwipeImageTable(table,
-                "swipeImageRight.png",
-                skin));
+                swipeRight));
 
 
     }
@@ -127,22 +129,23 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
     private void loadTutorials(PlayGUIWidgetsProperties playGUIWidgetsProperties){
         String tutorialS = Gdx.files.internal("tutorialS.txt").readString();
         elements.put("textAreaS", playGUIWidgetsProperties.loadTextAreaTutorial(table,
-                tutorialS,
-                "blueBackgroundTextArea.png",skin));
+                tutorialS
+                ));
 
         String tutorialW = new String(Gdx.files.internal("tutorialW.txt").readString());
         elements.put("textAreaW", playGUIWidgetsProperties.loadTextAreaTutorial(table,
-                tutorialW,
-                "greenBackgroundTextArea.png",skin));
+                tutorialW
+                ));
 
         table.row();
+
+        Drawable background = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("backGroundButtonImg",Drawable.class);
+
         elements.put("imageS", playGUIWidgetsProperties.loadTextbackImageTable(table,
-                "backGroundButtonImage.png",
-                skin));
+                background));
 
         elements.put("imageW", playGUIWidgetsProperties.loadTextbackImageTable(table,
-                "backGroundButtonImage.png",
-                skin));
+                background));
     }
 
 

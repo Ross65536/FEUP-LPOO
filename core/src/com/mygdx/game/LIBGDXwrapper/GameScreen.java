@@ -197,4 +197,10 @@ public class GameScreen extends ScreenAdapter {
             }
         return null;
     }
+
+    @Override
+    public void dispose(){
+        if(currentLevel!=null)
+            currentLevel.dispose();
+    }
 }

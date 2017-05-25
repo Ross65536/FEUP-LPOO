@@ -2,6 +2,9 @@ package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 
+/**
+ * Enum with the listed menus, has methods for theirs creation and other methods.
+ */
 public enum GameMenus {
 
     MainMenu(MainGUI.class),
@@ -14,7 +17,7 @@ public enum GameMenus {
 
     LASTVALUEMARKER(null);
 
-    private Class<? extends AbstractGUI> menuType;
+    final private Class<? extends AbstractGUI> menuType;
     GameMenus(Class<? extends AbstractGUI> menuType){
         this.menuType = menuType;
     }
@@ -25,14 +28,22 @@ public enum GameMenus {
         if(menu!=null) {
             return menu;
         }
-        if(menuType == null || (menuType ==  SettingsGUI.class)||(menuType ==  PauseGUI.class)){
+        if(menuType ==  SettingsGUI.class){
+            this.openSettings(menuManager, null);
             return null;
-        }
+        }else
+            if(menuType ==  PauseGUI.class){
+                this.openPauseMenu(menuManager,null, com.mygdx.game.LIBGDXwrapper.gameGUI.PauseGUI.pauseType.PAUSE);
+                return null;
+            }else
+                if(menuType == null){
+                    return null;
+                }
         try {
             menu = menuType.getDeclaredConstructor(MenuManager.class).newInstance(menuManager);
         }catch (Exception e){
             System.out.println(e.toString());
-            System.out.println("No constructor with MenuManager as only argument in class.");
+            System.out.println("No constructor like the requested.");
             return null;
         }
         return menu;
@@ -43,7 +54,10 @@ public enum GameMenus {
             return null;
         if(menu!=null){
             if((((PauseGUI)menu).getGameScreen() == gameScreen) && (((PauseGUI)menu).getPauseType() == pauseType)){
-                ((PauseGUI)menu).update();
+                ((PauseGUI)menu).updateScore();
+                return menu;
+            }else{
+                ((PauseGUI)menu).reciclePauseGUI(gameScreen,pauseType);
                 return menu;
             }
         }
@@ -51,7 +65,7 @@ public enum GameMenus {
             menu = ((Class<PauseGUI>) menuType).getDeclaredConstructor(MenuManager.class,IGameWorldAdapter.class, PauseGUI.pauseType.class).newInstance(menuManager,gameScreen, pauseType);
         }catch (Exception e){
             System.out.println(e.toString());
-            System.out.println("No constructor with MenuManager as only argument in class.");
+            System.out.println("No constructor like the requested.");
             return null;
         }
         return menu;
@@ -64,12 +78,17 @@ public enum GameMenus {
             if(((SettingsGUI)menu).getBackgroundGUI() == currentMenu){
                 return menu;
             }
+            else
+            {
+                ((SettingsGUI)menu).setBackgroundGUI(currentMenu);
+                return menu;
+            }
         }
         try {
             menu = ((Class<SettingsGUI>) menuType).getDeclaredConstructor(MenuManager.class,AbstractGUI.class).newInstance(menuManager,currentMenu);
         }catch (Exception e){
             System.out.println(e.toString());
-            System.out.println("No constructor with MenuManager as only argument in class.");
+            System.out.println("No constructor like the requested.");
             return null;
         }
         return menu;

@@ -5,6 +5,9 @@ import com.mygdx.game.LIBGDXwrapper.GameScreen;
 import com.mygdx.game.LIBGDXwrapper.MyGame;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
 
+/**
+ * Manages all menus. Opens any menu.
+ */
 public class MenuManager {
 
     private MyGame game;

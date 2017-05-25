@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 
+/**
+ * Class that implements the light recharger item feature that can be used in all gameWorlds.
+ */
 public class LightRecharger implements LightRechargerFeature{
 
     private Recharger item = null;
@@ -32,10 +35,17 @@ public class LightRecharger implements LightRechargerFeature{
     private int rechargersCaught = 0;
     private int distanteLevel = 0;
 
-    public LightRecharger(HeroInfo hero, TreeMap<Double, TreeMap<Double,Platform>> allPlatforms, Light light, Vector2D cameraDim){
+    /**
+     * Construxtor.
+     * @param hero the hero
+     * @param allPlatforms all platforms
+     * @param heroLight the hero's light
+     * @param cameraDim the camera dimensions
+     */
+    public LightRecharger(HeroInfo hero, TreeMap<Double, TreeMap<Double,Platform>> allPlatforms, Light heroLight, Vector2D cameraDim){
         this.cameraHeight = cameraDim.y;
         this.heroInfo = hero;
-        this.heroLight = light;
+        this.heroLight = heroLight;
         this.allPlatforms = allPlatforms;
         //this.minDiameter = Math.sqrt(cameraDim.x*cameraDim.x + cameraDim.y*cameraDim.y)/2f;
 
@@ -43,10 +53,18 @@ public class LightRecharger implements LightRechargerFeature{
         generateItem();
     }
 
+    /**
+     * Checks if the generated item was found.
+     * @return
+     */
     private boolean checkFound(){
         return item.checkCollision((Entity) heroInfo);
     }
 
+    /**
+     * Updates the lights properies and checks if it was found.
+     * @param deltaT
+     */
     public void updateRechargerItem(float deltaT){
         if(checkFound()){
             rechargersCaught++;
@@ -59,6 +77,10 @@ public class LightRecharger implements LightRechargerFeature{
         itemLight.updateOscilation(deltaT);
     }
 
+    /**
+     * Returns wheter or not the item was found.
+     * @return wheter or not the item was found.
+     */
     public boolean wasRechargerCaught(){
         if(newRechargerCaught == true)
         {
@@ -68,18 +90,33 @@ public class LightRecharger implements LightRechargerFeature{
         return false;
     }
 
+    /**
+     * Returns the number of recharges caught.
+     * @return
+     */
     public int totalRechargersCaught(){
         return rechargersCaught;
     }
 
+    /**
+     * Returns information regarding the recharger item.
+     * @return
+     */
     public Recharger getItemInfo(){
         return item;
     }
 
+    /**
+     * Returns information regarding the recharger item's light.
+     * @return
+     */
     public Light getItemLight(){
         return itemLight;
     }
 
+    /**
+     * Generates a new recharger.
+     */
     private void generateItem(){
         Random randomPercentage = new Random();
 
@@ -110,6 +147,9 @@ public class LightRecharger implements LightRechargerFeature{
 
     }
 
+    /**
+     * Updates the recharger's light.
+     */
     private void updateLight(){
 
         double lightRadious;
@@ -133,6 +173,7 @@ public class LightRecharger implements LightRechargerFeature{
         }
     }
 
+
     private Platform getRandomPlatform(){
         Platform minPlatform = null;
         for(Map.Entry<Double,TreeMap<Double,Platform>> platformsY: allPlatforms.entrySet()){
@@ -145,6 +186,10 @@ public class LightRecharger implements LightRechargerFeature{
         return minPlatform;
     }
 
+    /**
+     * Returns the platform where the next item should spawn based of distances and current dificulty.
+     * @return
+     */
     private Platform getPlatformForItem(){
         Platform minPlatform = null;
         for(Map.Entry<Double,TreeMap<Double,Platform>> platformsY: allPlatforms.entrySet()){
@@ -157,85 +202,6 @@ public class LightRecharger implements LightRechargerFeature{
         return minPlatform;
     }
 
-
-    /*
-    private void generateItem(){
-
-        final double diameterStep = heroInfo.getYDim();
-        final double maxDiameterSearch = getMaxCircunference();
-
-        for(double i = minDiameter; i < maxDiameterSearch; i+=diameterStep){
-
-            double searchDiameter = i + diameterStep;
-            final double maxY = heroInfo.getYPos() + searchDiameter;
-            final double minY = heroInfo.getYPos() - searchDiameter;
-
-            Double topYKey = allPlatforms.floorKey(maxY);
-            Double bottomYKey = allPlatforms.ceilingKey(minY);
-
-            if(topYKey == null || topYKey<minY )
-                continue;
-
-            Platform platformToContainItem = null;
-            for(Map.Entry<Double,TreeMap<Double,Platform>> xTree: allPlatforms.subMap(bottomYKey,true,topYKey,true).entrySet()){
-
-                double rightX = calculateXfromY(xTree.getKey(), searchDiameter);
-                double leftX = calculateXfromY(-xTree.getKey(), searchDiameter);
-
-                Double leftXKey = xTree.getValue().ceilingKey(leftX);
-                Double rightXKey = xTree.getValue().floorKey(rightX );
-
-                double centerRightX = 0;
-                double centerLeftX;
-
-                boolean skip = false;
-                if(xTree.getKey()>(heroInfo.getYPos()+i) || xTree.getKey()<(heroInfo.getYPos()-i)){
-                    centerLeftX = rightXKey;
-                    skip = true;
-                }else{
-                    centerRightX = calculateXfromY(xTree.getKey(), searchDiameter - diameterStep);
-                    centerLeftX = calculateXfromY(-xTree.getKey(), searchDiameter - diameterStep);
-                }
-
-                if(leftXKey<centerLeftX){
-                    Double rightleftXKey = xTree.getValue().floorKey(centerLeftX );
-
-                    for(Map.Entry<Double,Platform> platforms : xTree.getValue().subMap(leftXKey,true,rightleftXKey,true).entrySet()){
-                        if(platformToContainItem==null || (dist(platformToContainItem)>dist(platforms.getValue()))){
-                            platformToContainItem = platforms.getValue();
-                        }
-                    }
-                }
-                if(!skip && rightXKey>centerRightX){
-                    Double leftrightXKey = xTree.getValue().ceilingKey(centerRightX );
-
-                    for(Map.Entry<Double,Platform> platforms : xTree.getValue().subMap(leftrightXKey,true,rightXKey,true).entrySet()){
-                        if(platformToContainItem==null || (dist(platformToContainItem)>dist(platforms.getValue()))){
-                            platformToContainItem = platforms.getValue();
-                        }
-                    }
-                }
-
-                if(platformToContainItem!=null)
-                    break;
-            }
-        }
-    }
-
-
-    private double getMaxCircunference(){
-
-    }
-
-    private double calculateXfromY(double y, double diam){
-        y = y- heroInfo.getYPos();
-        double x = Math.sqrt(diam*diam - y*y);
-        if(y>0)
-            return heroInfo.getXPos()+x;
-        else
-            return heroInfo.getXPos()-x;
-    }
-*/
 
     private double dist(Platform platform){
         return Math.sqrt((heroInfo.getXPos()-platform.getXPos())*(heroInfo.getXPos()-platform.getXPos()) +

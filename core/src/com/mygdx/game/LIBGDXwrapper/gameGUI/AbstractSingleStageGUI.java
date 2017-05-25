@@ -7,6 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsInput;
 
+/**
+ * A component of the AbstractGUI.
+ * Extends a stage.
+ */
 public abstract class AbstractSingleStageGUI extends Stage{
     protected Skin skin;
 

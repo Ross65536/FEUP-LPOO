@@ -21,11 +21,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsProperties;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
@@ -54,15 +56,15 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
     public SettingsGUIComponent(MenuManager menuManager, SettingsGUI settingsGUI){
         super(menuManager, settingsGUI.widgetsProperties, settingsGUI.widgetsInput);
 
-        table = new Table(skin);
+        table = new Table();
         this.settingsGUI = settingsGUI;
         elements = new HashMap<String, Object>();
 
         this.addActor(table);
 
-        skin.add("settingsBackgroundImg",new Texture(Gdx.files.internal("settingsBackgroundImage.png")));
+        Drawable backgroundImg = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("settingsBackgroundImg",Drawable.class);
 
-        table.setBackground("settingsBackgroundImg");
+        table.setBackground(backgroundImg);
         table.setPosition((float)xPos,(float)yPos);
         table.setSize((float)width,(float)height);
 
@@ -77,7 +79,6 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
         loadWidgets();
 
-        table.setDebug(true);
     }
 
 
@@ -107,9 +108,10 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
     }
 
     private void addScrollMenuToTable(Table scrollTable){
-        ScrollPane.ScrollPaneStyle scrollPaneStyle = new  ScrollPane.ScrollPaneStyle();
-        skin.add("vScrollKnobSettings",new Texture(Gdx.files.internal("vScrollKnobSettings.png")));
-        scrollPaneStyle.vScrollKnob = skin.getDrawable("vScrollKnobSettings");
+
+        ScrollPane.ScrollPaneStyle scrollPaneStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("vScrollKnobForSettings",ScrollPane.ScrollPaneStyle.class);
+
+
         final ScrollPane scroll = new ScrollPane(scrollTable,scrollPaneStyle);
 
         scroll.setScrollingDisabled(true,false);
@@ -129,15 +131,8 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
 
     private Button getExitButton(){
-        String downImage = "settingsExitButtonDown.png";
-        String upImage = "settingsExitButtonUp.png";
 
-        WidgetsGeneric.loadToSkin(downImage,downImage, skin);
-        WidgetsGeneric.loadToSkin(upImage,upImage, skin);
-
-        Button.ButtonStyle buttonStyle = new Button.ButtonStyle();
-        buttonStyle.down = skin.getDrawable(downImage);
-        buttonStyle.up = skin.getDrawable(upImage);
+        Button.ButtonStyle buttonStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("exitButtonSettings",Button.ButtonStyle.class);
 
         return new Button(buttonStyle);
     }
@@ -166,25 +161,19 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
                     public void changed(ChangeEvent event, Actor actor) {
                         double volumeValue = ((Slider)actor).getValue();//0-100
                         if(volumeValue>50) {
-                            Drawable oldVolumeKnockDown = skin.getDrawable("knockDown51_100");
-                            if(volumeSlider.getStyle().knobDown != oldVolumeKnockDown){
-                                volumeSlider.getStyle().knobDown = skin.getDrawable("knockDown51_100");
-                                volumeSlider.getStyle().knob = skin.getDrawable("knockDown51_100");
-                            }
+
+                            Slider.SliderStyle sliderStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("volumeSliderStyle51_100",Slider.SliderStyle.class);
+                            volumeSlider.setStyle(sliderStyle);
                         }else
                             if(volumeValue>0){
-                                Drawable oldVolumeKnockDown = skin.getDrawable("knockDown1_50");
-                                if(volumeSlider.getStyle().knobDown != oldVolumeKnockDown){
-                                    volumeSlider.getStyle().knobDown = skin.getDrawable("knockDown1_50");
-                                    volumeSlider.getStyle().knob = skin.getDrawable("knockDown1_50");
-                                }
+
+                                Slider.SliderStyle sliderStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("volumeSliderStyle1_50",Slider.SliderStyle.class);
+                                volumeSlider.setStyle(sliderStyle);
                             }else
                                 {
-                                    Drawable oldVolumeKnockDown = skin.getDrawable("knockDown0");
-                                    if(volumeSlider.getStyle().knobDown != oldVolumeKnockDown){
-                                        volumeSlider.getStyle().knobDown = skin.getDrawable("knockDown0");
-                                        volumeSlider.getStyle().knob = skin.getDrawable("knockDown0");
-                                    }
+
+                                    Slider.SliderStyle sliderStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("volumeSliderStyle0",Slider.SliderStyle.class);
+                                    volumeSlider.setStyle(sliderStyle);
                                 }
                     }
 
@@ -203,14 +192,9 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        skin.add("knockOver", new Texture(Gdx.files.internal("volumeKnockOver.png")));
-        skin.add("knockDown0", new Texture(Gdx.files.internal("volumeKnockDown0.png")));
-        skin.add("knockDown1_50", new Texture(Gdx.files.internal("volumeKnockDown1_50.png")));
-        skin.add("knockDown51_100", new Texture(Gdx.files.internal("volumeKnockDown51_100.png")));
+        Slider.SliderStyle sliderStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("volumeSliderStyle51_100",Slider.SliderStyle.class);
 
-        Slider.SliderStyle volumeSliderStyle = new Slider.SliderStyle(skin.getDrawable("knockOver"),skin.getDrawable("knockDown51_100"));
-        skin.add("volumeSliderStyle",volumeSliderStyle);
-        Slider volumeSlider = new Slider(0,100,1,false,skin,"volumeSliderStyle");
+        Slider volumeSlider = new Slider(0,100,1,false,sliderStyle);
         volumeSlider.setValue(100);
 
 
@@ -224,6 +208,16 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
                 .center();
 
 
+    }
+
+    public void reloadSettings(){
+        SettingsGUIWidgetsInput settingsGUIWidgetsInput = ((SettingsGUIWidgetsInput)widgetsInput);
+
+        settingsGUIWidgetsInput.loadInputExitButton(
+                (Button)elements.get("exitButton"),
+                menuManager,
+                settingsGUI.getBackgroundGUI().getClass()
+        );
     }
 
     @Override

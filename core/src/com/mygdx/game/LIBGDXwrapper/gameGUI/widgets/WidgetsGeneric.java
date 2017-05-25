@@ -11,22 +11,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 
 public class WidgetsGeneric{
 
     public static Label getLabel(Skin skin, String text, String font, String backgroundImage){
-        BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal(font+".fnt"),
-                Gdx.files.internal(font + ".png"), false);
+
+        BitmapFont bitmapFont = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("coastershadowfont.ttf",BitmapFont.class);
+
         Label.LabelStyle labelStyle = new Label.LabelStyle();
 
         labelStyle.font = bitmapFont;
-
-        if(backgroundImage!=null) {
-            loadToSkin(backgroundImage, backgroundImage, skin);
-            labelStyle.background = skin.getDrawable(backgroundImage);
-        }
 
        return new Label(text,labelStyle);
     }
@@ -54,21 +51,13 @@ public class WidgetsGeneric{
 
 
 
-    public static Cell<ScrollPane> loadTextArea(Skin skin, Table table, String text, String font, String background) {
+    public static Cell<ScrollPane> loadTextArea(Table table, String text, String font) {
         BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal(font+".fnt"),
                 Gdx.files.internal(font + ".png"), false);
-        skin.add(font,bitmapFont);
 
         Label.LabelStyle labelStyle = new Label.LabelStyle();
 
         labelStyle.font = bitmapFont;
-
-        if(background!=null) {
-            loadToSkin(background, background, skin);
-            labelStyle.background = skin.getDrawable(background);
-        }
-        float screenWidth = DeviceConstants.MENU_VIEWPORT;
-        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
         Label label = new Label(text,labelStyle);
         label.setWrap(true);
@@ -79,9 +68,8 @@ public class WidgetsGeneric{
         return table.add(scrollPane);
     }
 
-    public static Cell<Image> loadImage(Skin skin, Table table, String nameImage) {
-        loadToSkin(nameImage, nameImage, skin);
-        Image image = new Image(skin, nameImage);
+    public static Cell<Image> loadImage(Table table, Drawable background) {
+        Image image = new Image(background);
         return table.add(image);
     }
 

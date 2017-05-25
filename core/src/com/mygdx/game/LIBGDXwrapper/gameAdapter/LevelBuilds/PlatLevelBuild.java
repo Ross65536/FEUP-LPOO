@@ -17,6 +17,10 @@ public class PlatLevelBuild{
     public static int numberOfLifes = 3;
     private static Random random = null;
 
+    /**
+     * Creates the camera dimensions for this mode.
+     * @return
+     */
     public static final Vector2D createCameraDimsPlat ()
     {
         final double cameraXDim = WORLD_X_DIM/10f;
@@ -25,6 +29,10 @@ public class PlatLevelBuild{
         return new Vector2D(cameraXDim, cameraYDim);
     }
 
+    /**
+     * Creates the world dimensions for this mode.
+     * @return
+     */
     public static final Vector2D createWorldDimsPlat ()
     {
         final double worldXDim = WORLD_X_DIM;
@@ -32,6 +40,12 @@ public class PlatLevelBuild{
         return new Vector2D(worldXDim, worldYDim);
     }
 
+    /**
+     * Creates the hero for this world.
+     * @param worldDims world dimensions
+     * @param cameraDims camera dimensions
+     * @return the created hero
+     */
     public static final Hero createHero2(final Vector2D worldDims, final Vector2D cameraDims)
     {
         final double heroHeight = cameraDims.y/(HERO_HEIGHT_BY_SCREEN_HEIGHT);
@@ -43,6 +57,9 @@ public class PlatLevelBuild{
         return new HeroLifesWrapper(heroPos, heroDims, heroConsts.speedMult, numberOfLifes);
     }
 
+    /**
+     * Generates a random background for the game.
+     */
     public static void  reloadBackground(){
         if(random == null)
             random = new Random();

@@ -5,7 +5,7 @@ import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsProperties
 
 public class SettingsGUI extends AbstractGUI{
 
-    AbstractGUI backgroundGUI;
+    private AbstractGUI backgroundGUI = null;
 
     public SettingsGUI(MenuManager menuManager, AbstractGUI backgroundGUI){
         super(menuManager);
@@ -32,6 +32,11 @@ public class SettingsGUI extends AbstractGUI{
 
     public AbstractGUI getBackgroundGUI(){
         return backgroundGUI;
+    }
+
+    public void setBackgroundGUI(AbstractGUI abstractGUI){
+        this.backgroundGUI = abstractGUI;
+        ((SettingsGUIComponent)menuComponets.get(0)).reloadSettings();
     }
 
     public String toString(){

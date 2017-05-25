@@ -43,10 +43,10 @@ public class SettingsGUIWidgetsProperties extends WidgetsGeneric {
                 .prefWidth(screenWidth / 3)
                 .prefHeight(screenHeight/10)
                 .getActor();
-        label.setFontScale(1f);
+        /*label.setFontScale(1f);
         float xRatio = (screenWidth/3f)/label.getWidth();
         float yRatio = (screenHeight/10f)/label.getHeight();
-        label.setFontScale(xRatio,yRatio);
+        label.setFontScale(xRatio,yRatio);*/
         return label;
     }
 

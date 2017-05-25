@@ -65,7 +65,6 @@ public class HUD extends Stage{
 
         this.getViewport().setCamera(this.getCamera());
         table.setRound(false);
-        table.setDebug(true);
         loadWidgets();
     }
 

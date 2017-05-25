@@ -68,8 +68,9 @@ public class GameAssetHandler { //dispose textures when swicth to menu
         final Array<String> currentAssets = assetManager.getAssetNames(); //Array is from LIBGDX
         for (String currPath : currentAssets) //unloads uneeded assets
         {
-            if (!assetPaths.contains(currPath) && currPath!=UISkinAssetHandler.getSkinName())
+            if (!assetPaths.contains(currPath) && !currPath.contains(UISkinAssetHandler.UIAssetsPath) && !currPath.contains(".ttf"))
             {
+                System.out.println(currPath);
                 assetManager.unload(currPath);
             }
         }
@@ -250,5 +251,10 @@ public class GameAssetHandler { //dispose textures when swicth to menu
     public Texture getLightRechargerTexture()
     {
         return assetManager.get(PathConstants.RECHARGER_IMAGE_PATH);
+    }
+
+    public void dispose(){
+        UIskin.dispose();
+        assetManager.clear();
     }
 }
