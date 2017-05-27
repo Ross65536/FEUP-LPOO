@@ -35,7 +35,7 @@ public class SurvivalWorld extends GameWorld implements HeroLightFeature {
             createDummyEnemies();
     }
 
-    public SurvivalWorld(){
+    protected SurvivalWorld(){
         super();
     }
 

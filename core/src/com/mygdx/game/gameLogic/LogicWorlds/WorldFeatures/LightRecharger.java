@@ -18,15 +18,15 @@ public class LightRecharger implements LightRechargerFeature{
 
     private Recharger item = null;
 
-    private HeroInfo heroInfo;
+    protected HeroInfo heroInfo;
 
-    private Light heroLight;
+    protected Light heroLight;
 
     private Light itemLight = null;
 
-    private TreeMap<Double, TreeMap<Double,Platform>> allPlatforms;
+    protected TreeMap<Double, TreeMap<Double,Platform>> allPlatforms;
 
-    private double cameraHeight;
+    protected double cameraHeight;
 
     private double lightRadious;
     //private double minDiameter;
@@ -35,8 +35,10 @@ public class LightRecharger implements LightRechargerFeature{
     private int rechargersCaught = 0;
     private int distanteLevel = 0;
 
+    protected Platform platWhereRechargerIs;
+
     /**
-     * Construxtor.
+     * Constructor.
      * @param hero the hero
      * @param allPlatforms all platforms
      * @param heroLight the hero's light
@@ -54,6 +56,12 @@ public class LightRecharger implements LightRechargerFeature{
     }
 
     /**
+     * Empty constructor.
+     */
+    protected LightRecharger(){
+    }
+
+    /**
      * Checks if the generated item was found.
      * @return
      */
@@ -68,13 +76,20 @@ public class LightRecharger implements LightRechargerFeature{
     public void updateRechargerItem(float deltaT){
         if(checkFound()){
             rechargersCaught++;
-            distanteLevel++;
+            increaseLevel();
             heroLight.resetRadious();
             generateItem();
             newRechargerCaught = true;
         }
         updateLight();
         itemLight.updateOscilation(deltaT);
+    }
+
+    /**
+     * Increase the distance level.
+     */
+    public void increaseLevel(){
+        distanteLevel++;
     }
 
     /**
@@ -88,6 +103,14 @@ public class LightRecharger implements LightRechargerFeature{
             return true;
         }
         return false;
+    }
+
+    /**
+     * Returns the current level of distance between the player and the recharger.
+     * @return the current level of distance between the player and the recharger.
+     */
+    public int getLevel(){
+        return distanteLevel;
     }
 
     /**
@@ -117,20 +140,20 @@ public class LightRecharger implements LightRechargerFeature{
     /**
      * Generates a new recharger.
      */
-    private void generateItem(){
+    protected void generateItem(){
         Random randomPercentage = new Random();
 
-        Platform plat = null;
-        while(plat==null){
-            plat = getPlatformForItem();
-            if(plat == null)
+        platWhereRechargerIs = null;
+        while(platWhereRechargerIs==null){
+            platWhereRechargerIs = getPlatformForItem();
+            if(platWhereRechargerIs == null)
                 distanteLevel--;
         }
 
         Vector2D posItem = new Vector2D();
 
-        posItem.x = plat.getXPos() + randomPercentage.nextFloat()*plat.getXDim();
-        posItem.y = plat.getYPos() + plat.getYDim();
+        posItem.x = platWhereRechargerIs.getXPos() + randomPercentage.nextFloat()*platWhereRechargerIs.getXDim();
+        posItem.y = platWhereRechargerIs.getYPos() + platWhereRechargerIs.getYDim();
 
         double itemSize = Recharger.fractionOfScreenHeightForPlatform*this.cameraHeight;
 
@@ -173,29 +196,19 @@ public class LightRecharger implements LightRechargerFeature{
         }
     }
 
-
-    private Platform getRandomPlatform(){
-        Platform minPlatform = null;
-        for(Map.Entry<Double,TreeMap<Double,Platform>> platformsY: allPlatforms.entrySet()){
-            for(Map.Entry<Double,Platform> platformsX: platformsY.getValue().entrySet()){
-                if((minPlatform == null || dist(platformsX.getValue()) < dist(minPlatform)) && (dist(platformsX.getValue())>calculateMinDistance())){
-                    minPlatform = platformsX.getValue();
-                }
-            }
-        }
-        return minPlatform;
-    }
-
     /**
      * Returns the platform where the next item should spawn based of distances and current dificulty.
      * @return
      */
     private Platform getPlatformForItem(){
         Platform minPlatform = null;
+        double minDistance = calculateMinDistance();
+        double minDistancePlat = 0;
         for(Map.Entry<Double,TreeMap<Double,Platform>> platformsY: allPlatforms.entrySet()){
             for(Map.Entry<Double,Platform> platformsX: platformsY.getValue().entrySet()){
-                if((minPlatform == null || dist(platformsX.getValue()) < dist(minPlatform)) && (dist(platformsX.getValue())>calculateMinDistance())){
+                if((minPlatform == null || dist(platformsX.getValue()) < minDistancePlat) && (dist(platformsX.getValue())>minDistance)){
                     minPlatform = platformsX.getValue();
+                    minDistancePlat = dist(minPlatform);
                 }
             }
         }
@@ -203,7 +216,7 @@ public class LightRecharger implements LightRechargerFeature{
     }
 
 
-    private double dist(Platform platform){
+    protected double dist(Platform platform){
         return Math.sqrt((heroInfo.getXPos()-platform.getXPos())*(heroInfo.getXPos()-platform.getXPos()) +
                 (heroInfo.getYPos()-platform.getYPos())*(heroInfo.getYPos()-platform.getYPos()));
     }
@@ -214,7 +227,7 @@ public class LightRecharger implements LightRechargerFeature{
      * Linear.
      * @return Minimum distance to item.
      */
-    private double calculateMinDistance(){
+    protected double calculateMinDistance(){
         return (heroInfo.getYDim()*distanteLevel)+heroInfo.getYDim()*3;
     }
 

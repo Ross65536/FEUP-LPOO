@@ -27,7 +27,7 @@ public abstract class GameWorld implements IGameWorld, IGameWorldHeroInputs, Dum
     /**
      * Empty constructor
      */
-    public GameWorld() {
+    protected GameWorld() {
 
     }
 

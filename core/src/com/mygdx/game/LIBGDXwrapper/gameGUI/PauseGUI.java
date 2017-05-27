@@ -38,10 +38,13 @@ public class PauseGUI extends AbstractGUI{
 
     public void reciclePauseGUI( IGameWorldAdapter gameScreen, PauseGUI.pauseType pauseType){
         this.gameScreen = gameScreen;
+
         if(pauseType != thisPauseType){
-            ((PauseGUIComponent)menuComponets.get(0)).remakeLabels(pauseType);
-        }else
+            ((PauseGUIComponent)menuComponets.get(0)).remakeLabels(pauseType, gameScreen);
+            thisPauseType = pauseType;
+        }else {
             updateScore();
+        }
     }
 
 

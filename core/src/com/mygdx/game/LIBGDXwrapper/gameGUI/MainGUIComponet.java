@@ -1,14 +1,8 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsInput;
@@ -18,11 +12,15 @@ import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsInput;
 
 import java.util.HashMap;
 
+import static com.mygdx.game.LIBGDXwrapper.gameGUI.MainGUIComponet.ComponentsNames.*;
+
 public class MainGUIComponet extends AbstractSingleStageGUI {
 
     Table table;
 
     HashMap<String, Object> elements;
+
+    protected enum ComponentsNames {PLAYBUTTON,HIGHSCOREBUTTON,SETTINGSBUTTON,ABOUTBUTTON};
 
     public MainGUIComponet(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput){
         super(menuManager, widgetsProperties, widgetsInput);
@@ -54,13 +52,13 @@ public class MainGUIComponet extends AbstractSingleStageGUI {
 
         MainGUIWidgetsProperties mainGUIWidgetsProperties = ((MainGUIWidgetsProperties)widgetsProperties);
 
-        elements.put("playButton", mainGUIWidgetsProperties.loadPropertiesPlayButton(table,skin));
+        elements.put(PLAYBUTTON.toString(), mainGUIWidgetsProperties.loadPropertiesPlayButton(table,skin));
         table.row();
-        elements.put("hightScoreButton", mainGUIWidgetsProperties.loadPropertiesHighScoreButton(table,skin));
+        elements.put(HIGHSCOREBUTTON.toString(), mainGUIWidgetsProperties.loadPropertiesHighScoreButton(table,skin));
         table.row();
-        elements.put("settingsButton", mainGUIWidgetsProperties.loadPropertiesSettingsButton(table,skin));
+        elements.put(SETTINGSBUTTON.toString(), mainGUIWidgetsProperties.loadPropertiesSettingsButton(table,skin));
         table.row();
-        elements.put("aboutButton", mainGUIWidgetsProperties.loadPropertiesAboutButton(table,skin));
+        elements.put(ABOUTBUTTON.toString(), mainGUIWidgetsProperties.loadPropertiesAboutButton(table,skin));
 
         loadInputlisteners();
     }
@@ -70,22 +68,22 @@ public class MainGUIComponet extends AbstractSingleStageGUI {
         MainGUIWidgetsInput mainGUIWidgetsInput = ((MainGUIWidgetsInput)widgetsInput);
 
         mainGUIWidgetsInput.loadInputPlayButton(
-                (Button)elements.get("playButton"),
+                (Button)elements.get(PLAYBUTTON.toString()),
                 menuManager
         );
 
         mainGUIWidgetsInput.loadInputHighScoreButton(
-                (Button)elements.get("hightScoreButton"),
+                (Button)elements.get(HIGHSCOREBUTTON.toString()),
                 menuManager
         );
 
         mainGUIWidgetsInput.loadInputSettingsButton(
-                (Button)elements.get("settingsButton"),
+                (Button)elements.get(SETTINGSBUTTON.toString()),
                 menuManager
         );
 
         mainGUIWidgetsInput.loadInputAboutButton(
-                (Button)elements.get("aboutButton"),
+                (Button)elements.get(ABOUTBUTTON.toString()),
                 menuManager
         );
     }

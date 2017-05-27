@@ -56,11 +56,6 @@ public final class PathConstants {
     static {
 
         mapPathToType = new TreeMap<>();
-        mapPathToType.put(SPRITE_PATH + "backgroundren0.png", Texture.class);
-        mapPathToType.put(SPRITE_PATH + "backgroundren1.png", Texture.class);
-        mapPathToType.put(SPRITE_PATH + "backgroundren2.png", Texture.class);
-        mapPathToType.put(SPRITE_PATH + "backgroundren3.png", Texture.class);
-        mapPathToType.put(SPRITE_PATH + "backgroundren4.png", Texture.class);
         mapPathToType.put(HERO_WALKING_IMAGE_PATH, Texture.class);
         mapPathToType.put(HERO_JUMPING_IMAGE_PATH, Texture.class);
         mapPathToType.put(ENEMY_GROUND_IMAGE_PATH, Texture.class);

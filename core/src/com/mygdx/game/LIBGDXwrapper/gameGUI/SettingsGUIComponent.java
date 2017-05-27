@@ -1,40 +1,24 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsProperties;
-import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
 
 import java.util.HashMap;
 
-import static java.lang.Float.min;
+import static com.mygdx.game.LIBGDXwrapper.gameGUI.SettingsGUIComponent.ComponentsNames.*;
 
 public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
@@ -51,6 +35,8 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
     private double yPos = viewportHeight/6f;
     private double width = viewportWidth*5f/7f;
     private double height = viewportHeight*4f/6f;
+
+    protected enum ComponentsNames {EXIT};
 
 
     public SettingsGUIComponent(MenuManager menuManager, SettingsGUI settingsGUI){
@@ -123,7 +109,7 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
         SettingsGUIWidgetsInput settingsGUIWidgetsInput = ((SettingsGUIWidgetsInput)widgetsInput);
 
         settingsGUIWidgetsInput.loadInputExitButton(
-                (Button)elements.get("exitButton"),
+                (Button)elements.get(EXIT.toString()),
                 menuManager,
                 settingsGUI.getBackgroundGUI().getClass()
         );
@@ -150,7 +136,7 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
         );
         this.addActor(exitButton);
 
-        elements.put("exitButton",exitButton);
+        elements.put(EXIT.toString(),exitButton);
     }
 
 
@@ -214,7 +200,7 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
         SettingsGUIWidgetsInput settingsGUIWidgetsInput = ((SettingsGUIWidgetsInput)widgetsInput);
 
         settingsGUIWidgetsInput.loadInputExitButton(
-                (Button)elements.get("exitButton"),
+                (Button)elements.get(EXIT.toString()),
                 menuManager,
                 settingsGUI.getBackgroundGUI().getClass()
         );

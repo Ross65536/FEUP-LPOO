@@ -255,6 +255,6 @@ public class GameAssetHandler { //dispose textures when swicth to menu
 
     public void dispose(){
         UIskin.dispose();
-        assetManager.clear();
+        //assetManager.clear();
     }
 }

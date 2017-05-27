@@ -11,14 +11,17 @@ public class Platform extends Entity{
 
     }
 
-    private static final double PLATFORM_HERO_X_LEEWAY = 0.3;
-    private static final double PLATFORM_Y_LEEWAY = 0.5;
+    public static final double PLATFORM_HERO_X_LEEWAY = 0.3;
+    public static final double PLATFORM_Y_LEEWAY = 0.5;
 
 
     private boolean isIntersecting(final Character ch){
 
         double charPosX = ch.getXPos();
         double charSizeX = ch.getXDim();
+        double charPosY = ch.getYPos();
+        double charSizeY = ch.getYDim();
+
         if(ch instanceof Hero){
             charPosX = ch.getXPos()+PLATFORM_HERO_X_LEEWAY*ch.getXDim();
             charSizeX = (1-2*PLATFORM_HERO_X_LEEWAY)*ch.getXDim();
@@ -26,19 +29,22 @@ public class Platform extends Entity{
 
         final boolean charXLeft = (characterPosition.x + characterDimensions.x) < charPosX;
         final boolean charXRight = characterPosition.x > (charPosX + charSizeX);
-        final boolean charYDown = (characterPosition.y + characterDimensions.y) < ch.characterPosition.y;
-        final boolean charYUp = characterPosition.y > (ch.characterPosition.y + ch.characterDimensions.y);
+        final boolean charYDown = (characterPosition.y + characterDimensions.y) < charPosY;
+        final boolean charYUp = characterPosition.y > (charPosY + charSizeY);
         return !(charXLeft || charXRight || charYUp || charYDown);
     }
 
 
     private boolean checkWentTrough(Entity ch){
+
+        double charPosY = ch.getYPos();
+
         Vector2D prevPosition = ((Character)ch).getPrevPosition();
         if(prevPosition == null)
             return false;
-        if(prevPosition.y - ch.characterPosition.y >= (characterDimensions.y*(1-PLATFORM_Y_LEEWAY))){
+        if(prevPosition.y - charPosY >= (characterDimensions.y*(1-PLATFORM_Y_LEEWAY))){
             if((prevPosition.x <= (characterPosition.x + characterDimensions.x))&&(prevPosition.x >= characterPosition.x)){
-                if(prevPosition.y>(characterPosition.y+characterDimensions.y) && ch.characterPosition.y<(characterPosition.y + (characterDimensions.y*PLATFORM_Y_LEEWAY))){
+                if(prevPosition.y>(characterPosition.y+characterDimensions.y) && charPosY<(characterPosition.y + (characterDimensions.y*PLATFORM_Y_LEEWAY))){
                     return true;
                 }
             }
@@ -53,23 +59,11 @@ public class Platform extends Entity{
             return true;
         }
 
-        double charPosX = ch.getXPos();
-        double charSizeX = ch.getXDim();
-        if(ch instanceof Hero){
-            charPosX = ch.getXPos()+PLATFORM_HERO_X_LEEWAY*ch.getXDim();
-            charSizeX = (1-2*PLATFORM_HERO_X_LEEWAY)*ch.getXDim();
-        }
+        double charPosY = ch.getYPos();
 
         return ((Character)ch).isFalling() &&
                isIntersecting((Character)ch) &&
-                ((ch.characterPosition.y>(characterPosition.y + PLATFORM_Y_LEEWAY * characterDimensions.y))
-/*                ||
-                //stairs effect
-                        ((
-                (charPosX>(charPosX + charSizeX - (charSizeX*1.5))) ||
-                (charPosX<(charPosX + (charSizeX*1.5)))))
-                        && (characterPosition.y+(characterDimensions.y/2))<=(ch.characterPosition.y+0.25*ch.characterDimensions.y)
-                */
+                ((charPosY>=(characterPosition.y + PLATFORM_Y_LEEWAY * characterDimensions.y))
             );
     }
 

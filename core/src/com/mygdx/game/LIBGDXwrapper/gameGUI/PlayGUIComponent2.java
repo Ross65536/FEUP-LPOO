@@ -20,22 +20,21 @@ import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsInput;
 
 import java.util.HashMap;
 
+import static com.mygdx.game.LIBGDXwrapper.gameGUI.PlayGUIComponent2.ComponentsNames.*;
+
 public class PlayGUIComponent2 extends AbstractSingleStageGUI {
 
     HashMap<String, Object> elements;
 
-
     Table table;
+
+    protected enum ComponentsNames {playButtonS, playButtonW, topLabelS, topLabelW, textAreaS, textAreaW, imageS, imageW};
 
     public PlayGUIComponent2(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput){
         super(menuManager, widgetsProperties, widgetsInput);
         table = new Table(skin);
 
         elements = new  HashMap<String, Object>();
-
-        //skin.add("playMenuBackground",new Texture(Gdx.files.internal("playMenuBackground.png")));
-
-        //table.setBackground("playMenuBackground");
 
         this.addActor(table);
 
@@ -76,12 +75,12 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
         PlayGUIWidgetsInput playGUIWidgetsInput = ((PlayGUIWidgetsInput)widgetsInput);
 
         playGUIWidgetsInput.loadPlayMode2Button(
-                (Button)elements.get("playButtonS"),
+                (Button)elements.get(playButtonS.toString()),
                 menuManager
         );
 
         playGUIWidgetsInput.loadPlayMode1Button(
-                (Button)elements.get("playButtonW"),
+                (Button)elements.get(playButtonW.toString()),
                 menuManager
         );
 
@@ -96,8 +95,8 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
 
     private void loadLabels(PlayGUIWidgetsProperties playGUIWidgetsProperties){
 
-        elements.put("topLabelS",  playGUIWidgetsProperties.loadTopLabel(table, "Platforms",skin));
-        elements.put("topLabelW",  playGUIWidgetsProperties.loadTopLabel(table, "Dodging",skin));
+        elements.put(topLabelS.toString(),  playGUIWidgetsProperties.loadTopLabel(table, "Platforms",skin));
+        elements.put(topLabelW.toString(),  playGUIWidgetsProperties.loadTopLabel(table, "Dodging",skin));
 
     }
 
@@ -107,20 +106,20 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
 
         Drawable swipeRight = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("swipeRight",Drawable.class);
 
-        elements.put("swipeLeft", playGUIWidgetsProperties.loadSwipeImageTable(table,
+        elements.put(swipeLeft.toString(), playGUIWidgetsProperties.loadSwipeImageTable(table,
                 swipeLeft));
 
-        elements.put("playButtonS",  playGUIWidgetsProperties.loadPlayButton(table,skin));
+        elements.put(playButtonS.toString(),  playGUIWidgetsProperties.loadPlayButton(table,skin));
 
-        elements.put("swipeRight", playGUIWidgetsProperties.loadSwipeImageTable(table,
+        elements.put(swipeRight.toString(), playGUIWidgetsProperties.loadSwipeImageTable(table,
                 swipeRight));
 
-        elements.put("swipeLeft", playGUIWidgetsProperties.loadSwipeImageTable(table,
+        elements.put(swipeLeft.toString(), playGUIWidgetsProperties.loadSwipeImageTable(table,
                                swipeLeft));
 
-        elements.put("playButtonW",  playGUIWidgetsProperties.loadPlayButton(table,skin));
+        elements.put(playButtonW.toString(),  playGUIWidgetsProperties.loadPlayButton(table,skin));
 
-        elements.put("swipeRight", playGUIWidgetsProperties.loadSwipeImageTable(table,
+        elements.put(swipeRight.toString(), playGUIWidgetsProperties.loadSwipeImageTable(table,
                 swipeRight));
 
 
@@ -128,12 +127,12 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
 
     private void loadTutorials(PlayGUIWidgetsProperties playGUIWidgetsProperties){
         String tutorialS = Gdx.files.internal("tutorialS.txt").readString();
-        elements.put("textAreaS", playGUIWidgetsProperties.loadTextAreaTutorial(table,
+        elements.put(textAreaS.toString(), playGUIWidgetsProperties.loadTextAreaTutorial(table,
                 tutorialS
                 ));
 
         String tutorialW = new String(Gdx.files.internal("tutorialW.txt").readString());
-        elements.put("textAreaW", playGUIWidgetsProperties.loadTextAreaTutorial(table,
+        elements.put(textAreaW.toString(), playGUIWidgetsProperties.loadTextAreaTutorial(table,
                 tutorialW
                 ));
 
@@ -141,10 +140,10 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
 
         Drawable background = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("backGroundButtonImg",Drawable.class);
 
-        elements.put("imageS", playGUIWidgetsProperties.loadTextbackImageTable(table,
+        elements.put(imageS.toString(), playGUIWidgetsProperties.loadTextbackImageTable(table,
                 background));
 
-        elements.put("imageW", playGUIWidgetsProperties.loadTextbackImageTable(table,
+        elements.put(imageW.toString(), playGUIWidgetsProperties.loadTextbackImageTable(table,
                 background));
     }
 

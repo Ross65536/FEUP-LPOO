@@ -9,11 +9,11 @@ import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 
 public class PauseGUIWidgetsProperties extends WidgetsGeneric{
 
-    public Button loadPMButton(Table table, Skin skin, String nameButton){
+    public Button loadPMButton(Table table, Skin skin, String nameImageButton){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        Button.ButtonStyle buttonStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset(nameButton,Button.ButtonStyle.class);
+        Button.ButtonStyle buttonStyle = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset(nameImageButton,Button.ButtonStyle.class);
 
         return loadButton(skin, table
                 //images

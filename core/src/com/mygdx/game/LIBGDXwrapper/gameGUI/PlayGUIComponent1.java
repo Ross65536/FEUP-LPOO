@@ -14,11 +14,17 @@ import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsInput;
 
 import java.util.HashMap;
 
+import static com.mygdx.game.LIBGDXwrapper.gameGUI.PlayGUIComponent1.ComponentsNames.backToMenu;
+import static com.mygdx.game.LIBGDXwrapper.gameGUI.PlayGUIComponent1.ComponentsNames.settings;
+
 public class PlayGUIComponent1 extends AbstractSingleStageGUI {
 
     HashMap<String, Object> elements;
 
     Table table;
+
+    protected enum ComponentsNames {backToMenu, settings};
+
 
     public PlayGUIComponent1(MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput){
         super(menuManager, widgetsProperties, widgetsInput);
@@ -45,8 +51,8 @@ public class PlayGUIComponent1 extends AbstractSingleStageGUI {
         PlayGUIWidgetsProperties playGUIWidgetsProperties = ((PlayGUIWidgetsProperties)widgetsProperties);
 
 
-        elements.put("backToMenu", playGUIWidgetsProperties.loadBackToMenuButton(table,skin));
-        elements.put("settings", playGUIWidgetsProperties.loadSettingsButton(table,skin));
+        elements.put(backToMenu.toString(), playGUIWidgetsProperties.loadBackToMenuButton(table,skin));
+        elements.put(settings.toString(), playGUIWidgetsProperties.loadSettingsButton(table,skin));
 
         loadInputlisteners();
     }
@@ -56,12 +62,12 @@ public class PlayGUIComponent1 extends AbstractSingleStageGUI {
         PlayGUIWidgetsInput playGUIWidgetsInput = ((PlayGUIWidgetsInput)widgetsInput);
 
         playGUIWidgetsInput.loadSettingsButton(
-            (Button)elements.get("settings"),
+            (Button)elements.get(settings.toString()),
             menuManager
         );
 
         playGUIWidgetsInput.loadBackToMenuButton(
-            (Button)elements.get("backToMenu"),
+            (Button)elements.get(backToMenu.toString()),
             menuManager
         );
 

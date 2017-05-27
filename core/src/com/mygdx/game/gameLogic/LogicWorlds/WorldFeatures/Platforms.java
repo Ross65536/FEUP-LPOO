@@ -21,19 +21,19 @@ import static com.mygdx.game.gameLogic.Characters.Platform.fractionOfScreenHeigh
 public class Platforms implements PlatformFeature{
 
     //platforms properties
-    private static int freqPlatforms;
-    private static Vector2D spacingBetweenPlatforms;
+    private int freqPlatforms;
+    private Vector2D spacingBetweenPlatforms;
 
     private TreeMap<Double, TreeMap<Double,Platform>> platformsT;
     private ArrayList<Platform> platformsInRange;
     private Platform currentPlarform; //platform where hero is on
 
-    private Hero hero;
+    protected Hero hero;
 
-    private Vector2D worldDimensions;
+    protected Vector2D worldDimensions;
 
-    private double cameraHeight;
-    private double cameraWidth;
+    protected double cameraHeight;
+    protected double cameraWidth;
 
     private double platformHeight;
     private double platformWidth;
@@ -45,24 +45,47 @@ public class Platforms implements PlatformFeature{
      * @param cameraSizes The camera dimensions
      */
     public Platforms(Hero hero,Vector2D worldDimensions,Vector2D cameraSizes){
-        currentPlarform = null;
-        platformsT = new TreeMap<Double, TreeMap<Double,Platform>>();
+
+
         this.hero = hero;
         this.worldDimensions = worldDimensions;
         this.cameraHeight = cameraSizes.y;
         this.cameraWidth = cameraSizes.x;
 
-
-        platformHeight = fractionOfScreenHeightForPlatform*this.cameraHeight;
-        platformWidth =  platformHeight* CommonConsts.getCharacterConstants(Platform.class).aspectRatio;
-
-        spacingBetweenPlatforms = new Vector2D(0,(int)hero.getYDim()*1.5/platformHeight);
-        freqPlatforms = 5;
-
+        initConstants();
         createPlarforms();
         updatePlatformsInRange();
     }
 
+    /**
+     * Sets the padding of the platforms and the frequency at which they show up.
+     * @param padding The x and y padding
+     * @param freq The frequency at which the platforms show up.
+     */
+    protected void setPadingANDFrequecy(Vector2D padding, int freq){
+
+        spacingBetweenPlatforms = padding;
+        freqPlatforms = freq;
+    }
+
+    /**
+     * Initializes constants.
+     */
+    protected void initConstants(){
+        currentPlarform = null;
+        platformsT = new TreeMap<Double, TreeMap<Double,Platform>>();
+
+        platformHeight = fractionOfScreenHeightForPlatform*this.cameraHeight;
+        platformWidth =  platformHeight* CommonConsts.getCharacterConstants(Platform.class).aspectRatio;
+
+        setPadingANDFrequecy(new Vector2D(0,(int)hero.getYDim()*1.5/platformHeight),5);
+    }
+
+    /**
+     * Empty constructor.
+     */
+    public Platforms(){
+    }
 
     /**
      * Returns all the platforms that can be seen on screen.
@@ -103,6 +126,7 @@ public class Platforms implements PlatformFeature{
      * Checks for collisions on any of the platforms in range.
      */
     public void checkPlatformCollisions(){
+        updatePlatformsInRange();
         if(currentPlarform!= null && currentPlarform.isCharacterOnThisPlatform(hero)){
             return;
         }
@@ -147,7 +171,7 @@ public class Platforms implements PlatformFeature{
     /**
      * Creates world all platforms.
      */
-    private void createPlarforms(){
+    protected void createPlarforms(){
 
         int xSize = (int)(worldDimensions.x / platformWidth);
         int ySize = (int)(worldDimensions.y / platformHeight);

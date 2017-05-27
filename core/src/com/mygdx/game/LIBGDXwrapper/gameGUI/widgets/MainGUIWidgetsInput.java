@@ -15,7 +15,7 @@ public class MainGUIWidgetsInput extends WidgetsInput{
         button.addListener(new ChangeListener() {
              @Override
              public void changed(ChangeEvent event, Actor actor) {
-                 menuManager.getGame().SwicthToGameScreen(MyGame.GameInstr.START_GAME_MODE1);
+                 menuManager.setMenu(GameMenus.PlayGUI);
              }
          });
     }
@@ -24,7 +24,7 @@ public class MainGUIWidgetsInput extends WidgetsInput{
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                menuManager.setMenu(GameMenus.PlayGUI);
+
             }
         });
     }

@@ -29,15 +29,20 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
     /**
      * Platforms Component, manages the logic regarding the platforms on the game.
      */
-    private Platforms platforms;
+    protected Platforms platforms;
 
     /**
      * Platforms Component, manages the logic regarding the light rechargers on the game.
      */
-    private LightRecharger lightRecharger;
+    protected LightRecharger lightRecharger;
 
     private double cameraWidth;
     private double cameraHeight;
+
+    /**
+     * Minimun light the hero can have.
+     */
+    float leastLightPercentage = 0.1f;
 
     /**
      * Constructor.
@@ -56,7 +61,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
         dummyEnemies = new DummyEnemies(hero,worldDims,stageDirector, this);
 
         light = new HeroLight(hero);
-        light.getLightInfo().setVelocityDisappearance(1.0/100.0);
+        light.getLightInfo().setVelocityDisappearance(1.0/120.0); //2 minutes to disapear
 
         platforms = new Platforms(hero, worldDims, new Vector2D(this.cameraWidth,this.cameraHeight));
 
@@ -66,6 +71,13 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
         if (CommonConsts.INPUT_DEBUG)
             createDummyEnemies();
 
+    }
+
+    /**
+     * Empty constructor.
+     */
+    protected PlatWorld(){
+        super();
     }
 
     /**
@@ -94,7 +106,6 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
 
         updateEnemieStatistics(deltaT);
 
-        updatePlatformsInRange();
         checkPlatformCollisions();
 
         updateHero(deltaT);
@@ -131,7 +142,7 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
     /**
      * Checks if the game was lost. Hit by enemy or ran out of light.
      */
-    private void checkLost(){
+    protected void checkLost(){
         if(this.checkEnemyCollisions() > 0)
         {
             if(takeLife()==0) {
@@ -140,7 +151,6 @@ public class PlatWorld extends GameWorld implements PlatformFeature, HeroLightFe
             }
         }
 
-        float leastLightPercentage = 0.1f;
         if(light.getRadiousPercentage()<=leastLightPercentage){
 
             gamePlayable = false;

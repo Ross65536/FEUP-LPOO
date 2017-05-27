@@ -39,7 +39,7 @@ public class DummyEnemies implements DummyEnemyFeature {
      * @param deltaT delta time
      * @param statisticsInput statistics input
      */
-    private void updateEnemies(float deltaT, StatisticsInput statisticsInput) {
+    protected void updateEnemies(float deltaT, StatisticsInput statisticsInput) {
         final double enemyDeletionRange = ENEMY_DELETION_RANGE_MULT * worldDimensions.y;
         int numGroundDeletions=0;
         int numFlyingDeletions=0;
@@ -62,6 +62,7 @@ public class DummyEnemies implements DummyEnemyFeature {
 
             }
         }
+
 
         statisticsInput.updateNumberOfGroundEnemies(- numGroundDeletions);
         statisticsInput.updateNumberOfFlyingEnemies(- numFlyingDeletions);
@@ -129,7 +130,6 @@ public class DummyEnemies implements DummyEnemyFeature {
      */
     public void updateEnemieStatistics(float deltaT)
     {
-
 
         StatisticsInput statisticsInput = stageDirector.getStatsticsInput();
         statisticsInput.update(deltaT);

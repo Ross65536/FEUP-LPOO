@@ -1,36 +1,26 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.IGameWorldAdapter;
-import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsInput;
-import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.MainGUIWidgetsProperties;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PauseGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.PauseGUIWidgetsProperties;
-import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsInput;
-import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsProperties;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsGeneric;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.WidgetsInput;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 
+import static com.mygdx.game.LIBGDXwrapper.gameGUI.PauseGUIComponent.ComponentsNames.*;
+
 public class PauseGUIComponent extends AbstractSingleStageGUI{
-    HashMap<String, Object> elements;
+    HashMap<Integer, Object> elements;
 
     Table table;
 
@@ -47,12 +37,14 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
     IGameWorldAdapter gameScreen;
 
+    protected enum ComponentsNames {HEADERLABEL, SCORELABEL, RESUME, RESTART, SETTINGS, EXIT};
+
     public PauseGUIComponent(IGameWorldAdapter gameScreen , MenuManager menuManager, WidgetsGeneric widgetsProperties, WidgetsInput widgetsInput, PauseGUI.pauseType pauseType){
         super(menuManager, widgetsProperties, widgetsInput);
         this.gameScreen = gameScreen;
         table = new Table(skin);
 
-        elements = new HashMap<String, Object>();
+        elements = new HashMap<Integer, Object>();
 
         this.addActor(table);
 
@@ -81,23 +73,25 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
         table.row().padTop(screenHeight/25);
 
-        pauseGUIWidgetsProperties.loadPMLabel(table, skin,pauseMessage);
+        elements.put(HEADERLABEL.ordinal(),pauseGUIWidgetsProperties.loadPMLabel(table, skin,pauseMessage));
 
         table.row().padTop(screenHeight/25).padBottom(screenHeight/25);
 
-        elements.put("scorelabel",pauseGUIWidgetsProperties.loadPMLabel(table, skin, pauseScoreMessage + "\n" +  ((gameScreen!=null)?this.gameScreen.getScore():0)));
-        ((Label)elements.get("scorelabel")).setAlignment(Align.center);
+        elements.put(SCORELABEL.ordinal(),pauseGUIWidgetsProperties.loadPMLabel(table, skin, pauseScoreMessage + "\n" +  ((gameScreen!=null)?this.gameScreen.getScore():0)));
+        ((Label)elements.get(SCORELABEL.ordinal())).setAlignment(Align.center);
 
     }
 
     public void update(IGameWorldAdapter gameScreen){
         this.gameScreen = gameScreen;
-        ((Label)elements.get("scorelabel")).setText(pauseScoreMessage + "\n" +  this.gameScreen.getScore());
+        ((Label)elements.get(SCORELABEL.ordinal())).setText(pauseScoreMessage + "\n" +  this.gameScreen.getScore());
     }
 
-    public void remakeLabels(PauseGUI.pauseType pauseType){
+    public void remakeLabels(PauseGUI.pauseType pauseType, IGameWorldAdapter gameScreen){
+        this.gameScreen = gameScreen;
         preLoadPauseTypeSpecificProperties(pauseType);
-        ((Label)elements.get("scorelabel")).setText(pauseScoreMessage + "\n" +  this.gameScreen.getScore());
+        ((Label)elements.get(SCORELABEL.ordinal())).setText(pauseScoreMessage + "\n" + this.gameScreen.getScore());
+        ((Label)elements.get(HEADERLABEL.ordinal())).setText(pauseMessage);
         postLoadPauseTypeSpecificProperties(pauseType);
     }
 
@@ -106,16 +100,16 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
         table.row().padBottom(screenHeight/20);
 
         //resumePauseMenu
-        elements.put("resume",pauseGUIWidgetsProperties.loadPMButton( table, skin, "resumeButton"));
+        elements.put(RESUME.ordinal(),pauseGUIWidgetsProperties.loadPMButton( table, skin, "resumeButton"));
 
         //restartPauseMenu
-        elements.put("restart",pauseGUIWidgetsProperties.loadPMButton( table, skin, "restartButton"));
+        elements.put(RESTART.ordinal(),pauseGUIWidgetsProperties.loadPMButton( table, skin, "restartButton"));
 
         //settingsPauseMenu
-        elements.put("settings",pauseGUIWidgetsProperties.loadPMButton( table, skin, "settingsPMButton"));
+        elements.put(SETTINGS.ordinal(),pauseGUIWidgetsProperties.loadPMButton( table, skin, "settingsPMButton"));
 
         //exitPauseMenu
-        elements.put("exit",pauseGUIWidgetsProperties.loadPMButton( table, skin, "exitPMButton"));
+        elements.put(EXIT.ordinal(),pauseGUIWidgetsProperties.loadPMButton( table, skin, "exitPMButton"));
 
     }
 
@@ -138,24 +132,24 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
         PauseGUIWidgetsInput pauseGUIWidgetsInput = ((PauseGUIWidgetsInput)widgetsInput);
 
         pauseGUIWidgetsInput.loadInputResumeButton(
-                (Button)elements.get("resume"),
+                (Button)elements.get(RESUME.ordinal()),
                 menuManager
         );
 
         pauseGUIWidgetsInput.loadInputRestartButton(
-                (Button)elements.get("restart"),
+                (Button)elements.get(RESTART.ordinal()),
                 menuManager
         );
 
 
         pauseGUIWidgetsInput.loadInputSettingsButton(
-                (Button)elements.get("settings"),
+                (Button)elements.get(SETTINGS.ordinal()),
                 menuManager
         );
 
 
         pauseGUIWidgetsInput.loadInputExitButton(
-                (Button)elements.get("exit"),
+                (Button)elements.get(EXIT.ordinal()),
                 menuManager
         );
 
@@ -191,11 +185,11 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
     private void postLoadPauseTypeSpecificProperties(PauseGUI.pauseType pauseType){
         switch (pauseType){
             case ENDGAME:
-                ((Button)elements.get("resume")).setDisabled(true);
+                ((Button)elements.get(RESUME.ordinal())).setDisabled(true);
                 //TODO: GREY BUTTON
                 break;
             case PAUSE:
-
+                ((Button)elements.get(RESUME.ordinal())).setDisabled(false);
                 break;
         }
 

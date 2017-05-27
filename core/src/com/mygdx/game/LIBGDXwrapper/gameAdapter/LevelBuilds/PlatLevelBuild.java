@@ -11,7 +11,7 @@ import com.mygdx.game.gameLogic.Characters.HeroLifesWrapper;
 import java.util.Random;
 
 public class PlatLevelBuild{
-    private static final double HERO_HEIGHT_BY_SCREEN_HEIGHT = 4;
+    public static final double HERO_HEIGHT_BY_SCREEN_HEIGHT = 4;
     private static final double WORLD_X_DIM = 1000;
     private static double WORLD_Y_DIM;
     public static int numberOfLifes = 3;

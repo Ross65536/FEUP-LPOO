@@ -6,22 +6,25 @@ import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLifesFeature;
 
 import java.util.Random;
 
+/**
+ * Wrapper used on hero to use the lifes and immunity features.
+ */
 public class HeroLifesWrapper extends Hero implements HeroLifesFeature {
     private int numberOfLifes;
 
-    private double nockbackSpeed = 0;
+    protected double nockbackSpeed = 0;
 
     private double prevSpeed = 0;
 
-    final private double nockbackRecoverySpeed = 800;
+    final protected double nockbackRecoverySpeed = 800;
 
-    private boolean isBeingNockedbacked = false;
+    protected boolean isBeingNockedbacked = false;
 
     private boolean immunity = false;
 
-    final private double fullImminityTime = 4;//s
+    private double fullImminityTime = 4;//s
 
-    final private double startingNockbackSpeed = 350;
+    final protected double startingNockbackSpeed = 350; //accelaraion
 
     private double immunityTime = 0;
 
@@ -30,6 +33,7 @@ public class HeroLifesWrapper extends Hero implements HeroLifesFeature {
     public HeroLifesWrapper(final Vector2D position, final Vector2D dimensions, double heroMaxSpeedXMult, int numberOfLifes){
         super(position, dimensions, heroMaxSpeedXMult);
         random = new Random();
+
         this.numberOfLifes = numberOfLifes;
     }
 
@@ -90,12 +94,16 @@ public class HeroLifesWrapper extends Hero implements HeroLifesFeature {
         }
     }
 
-    private void setImmunity(){
+    protected void setImmunity(){
         immunity = true;
         immunityTime = fullImminityTime;
     }
 
-    private  void nockback(boolean direction){
+    public void setImmunityTime(double time){
+        fullImminityTime = time;
+    }
+
+    protected void nockback(boolean direction){
         this.jump(3);
         if(direction) {
             this.nockbackSpeed = -startingNockbackSpeed;
@@ -106,5 +114,9 @@ public class HeroLifesWrapper extends Hero implements HeroLifesFeature {
             this.nockbackSpeed = startingNockbackSpeed;
         }
         isBeingNockedbacked = true;
+    }
+
+    public boolean isBeingNockedbacked(){
+        return isBeingNockedbacked;
     }
 }

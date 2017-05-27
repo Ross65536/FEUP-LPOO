@@ -2,7 +2,7 @@ package com.mygdx.game.gameLogic.Characters;
 
 import com.mygdx.game.Vector2D;
 
-public class Entity {
+public abstract class Entity {
 
     protected Vector2D characterPosition;
     protected Vector2D characterDimensions;
