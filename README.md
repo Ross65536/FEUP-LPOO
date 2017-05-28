@@ -128,7 +128,7 @@ Throughout the project we tried to follow the SOLID principles, that is, mainly 
 * Singleton pattern is used on the static enum struct on the MenuManager class, each value of the enum is initialized with a menu class type which is used when calling createInstance which either returns an already created menu or creates the menu if it is not initialized.
 * Decorator pattern is used with the HeroLifesWrapper class that encapsulated the regular Hero class and adds the new functionality of getting hit and being nocked back, losing lifes and being immune for a few seconds.
 * Facade pattern is very used for the game worlds, each game world can implement different actions since each gameworld can have diferent game features. The game worlds are simplified classes that call the update methods for each gamefeature.
-* Delegation pattern for the gameworld features, each gameworld holds diferent features (delagates) that are used to delagate their methods.
+* Delegation pattern for the gameworld, each gameworld holds diferent features (delagates) that are used to delagate their methods.
 
 ### Major Difficulties
 * One major difficulty was finding the right level of abstraction and the right separation between the modules in order to achieve a low level of coupling between the classes. 
