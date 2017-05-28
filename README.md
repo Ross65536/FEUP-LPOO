@@ -70,14 +70,6 @@ This game mode is based on the player avoiding the enemies that are spawned (gro
 The player has only one life and the score is the time since the begging of the game mode.
 The player can move the character to the left and right and make him jump.
 
-On Desktop:
-* The left and right arrow keys make the character move left and right
-* The up arrow key or a left mouse click makes the hero jump. Pressing these for longer, makes the hero jump higher.
-
-On Android:
-* Tilting the phone to the left or right makes the character move left and right, with the degree of inclination setting the speed at which the character moves.
-* Touching the screen makes the character jump. Pressing it for longer, makes the hero jump higher.
-
 #### Playing the Platforms Game Mode
 
 ![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUI_MANUAL/platforms.png)
@@ -85,6 +77,8 @@ On Android:
 This game mode has the player searching for recharger items so that the players light does not run out, if the player's light runs out the game will end.
 There are also enemies that the player has to avoid, the player is given three lifes, each time an enemy hits the player he jumps back and a life is lost.
 The objective of the game is to catch as many rechargers as possible, the score is the number of rechargers caught.
+
+##### Controls
 
 On Desktop:
 * The left and right arrow keys make the character move left and right
