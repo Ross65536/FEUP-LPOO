@@ -11,12 +11,20 @@ android {
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
             jniLibs.srcDirs = ['libs']
+
+        }
+
+        androidTest {
+            java {
+                exclude '**/*'
+            }
         }
 
         instrumentTest.setRoot('baseClassTests')
     }
     packagingOptions {
         exclude 'META-INF/robovm/ios/robovm.xml'
+        exclude 'META-INF/LICENSE'
     }
 
 
