@@ -69,6 +69,7 @@ This project was developed in Android Studio with gradle for the dependencies, s
 This game mode is based on the player avoiding the enemies that are spawned (ground and flying based enemies).
 The player has only one life and the score is the time since the begging of the game mode.
 The player can move the character to the left and right and make him jump.
+To pause the game the user has to press the pause button on the top right corner of the screen.
 
 #### Playing the Platforms Game Mode
 
@@ -77,6 +78,7 @@ The player can move the character to the left and right and make him jump.
 This game mode has the player searching for recharger items so that the players light does not run out, if the player's light runs out the game will end.
 There are also enemies that the player has to avoid, the player is given three lifes, each time an enemy hits the player he jumps back and a life is lost.
 The objective of the game is to catch as many rechargers as possible, the score is the number of rechargers caught.
+To pause the game the user has to press the pause button on the top right corner of the screen.
 
 #### Controls:
 
