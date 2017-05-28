@@ -78,7 +78,7 @@ This game mode has the player searching for recharger items so that the players 
 There are also enemies that the player has to avoid, the player is given three lifes, each time an enemy hits the player he jumps back and a life is lost.
 The objective of the game is to catch as many rechargers as possible, the score is the number of rechargers caught.
 
-##### Controls
+#### Controls:
 
 On Desktop:
 * The left and right arrow keys make the character move left and right
