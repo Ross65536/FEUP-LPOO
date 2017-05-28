@@ -32,7 +32,7 @@ This project was developed in Android Studio with gradle for the dependencies, s
 * **Play Button** - The play button takes the user to the game mode choice menu where the user has to pick the mode to play.
 * **High Score** - The high score button menu shows the max user score of both game modes.(Not Yet Implemented)
 * **Settings** - The settings opens a settings window, it allows the user to change the game settings.
-* **about** - This button shows meta information regarding the application, should contain credits and mention image creators for copyright reasons. (Not Yet Implemented)
+* **About** - This button shows meta information regarding the application, should contain credits and mention art creators for copyright reasons. (Not Yet Implemented)
 
 #### Play Menu
 
@@ -60,7 +60,7 @@ This project was developed in Android Studio with gradle for the dependencies, s
 * **Sound Bar** - The user can slide the sound bar to increase or decrease the sound.
 
 
-### GameplayPlaying
+### Gameplay
 
 #### Playing the Survival Game Mode
 
@@ -83,7 +83,7 @@ On Android:
 ![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUI_MANUAL/platforms.png)
 
 This game mode has the player searching for recharger items so that the players light does not run out, if the player's light runs out the game will end.
-There are also enemies that the player has to avoid, the player is given three lifes each time an enemy hits the player he jumps back and a life is lost.
+There are also enemies that the player has to avoid, the player is given three lifes, each time an enemy hits the player he jumps back and a life is lost.
 The objective of the game is to catch as many rechargers as possible, the score is the number of rechargers caught.
 
 On Desktop:
@@ -127,8 +127,8 @@ Throughout the project we tried to follow the SOLID principles, that is, mainly 
 * Object pool is used in the MenuManager class. Each menu is initialized in the begining of the game and laid in a pool on menus and each time a menu is needed the already created menu is used. When a certain menu needs just a few changes a function is called for this.
 * Singleton pattern is used on the static enum struct on the MenuManager class, each value of the enum is initialized with a menu class type which is used when calling createInstance which either returns an already created menu or creates the menu if it is not initialized.
 * Decorator pattern is used with the HeroLifesWrapper class that encapsulated the regular Hero class and adds the new functionality of getting hit and being nocked back, losing lifes and being immune for a few seconds.
-* Facade pattern is very used for the gameWorlds, each gameWorld can implement different actions since each gameworld can have diferent game features. The gameworlds are simplified interfaces that call the update methods for each gamefeature.
-* Delegation pattern for the gameworld features, each gameworld holds diferent features objects(delagates) that it used to delagate update methods.
+* Facade pattern is very used for the game worlds, each game world can implement different actions since each gameworld can have diferent game features. The game worlds are simplified classes that call the update methods for each gamefeature.
+* Delegation pattern for the gameworld features, each gameworld holds diferent features (delagates) that are used to delagate their methods.
 
 ### Major Difficulties
 * One major difficulty was finding the right level of abstraction and the right separation between the modules in order to achieve a low level of coupling between the classes. 
