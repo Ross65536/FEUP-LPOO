@@ -1,0 +1,12 @@
+com.mygdx.game.LIBGDXwrapper
+com.mygdx.game.LIBGDXwrapper.gameAdapter
+com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds
+com.mygdx.game.LIBGDXwrapper.gameGUI
+com.mygdx.game.LIBGDXwrapper.gameGUI.widgets
+com.mygdx.game.gameLogic.Characters
+com.mygdx.game.gameLogic.GameDirector
+com.mygdx.game.gameLogic.GameDirector.DifficultyCurves
+com.mygdx.game.gameLogic.GameDirector.EnemyTypes
+com.mygdx.game.gameLogic.GameDirector.Statistic
+com.mygdx.game.gameLogic.LogicWorlds
+com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures

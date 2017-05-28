@@ -10,6 +10,9 @@ import com.mygdx.game.gameLogic.Characters.HeroLifesWrapper;
 
 import java.util.Random;
 
+/**
+ * Class that helps build the Platform level type.
+ */
 public class PlatLevelBuild{
     public static final double HERO_HEIGHT_BY_SCREEN_HEIGHT = 4;
     private static final double WORLD_X_DIM = 1000;

@@ -14,6 +14,10 @@ import com.mygdx.game.LIBGDXwrapper.gameAdapter.PlatGameWorldAdapter;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.HUD;
 import com.mygdx.game.Vector2D;
 
+
+/**
+ * The screenAdapter for the game.
+ */
 public class GameScreen extends ScreenAdapter {
     private MyGame game;
     private OrthographicCamera gameCamera;
@@ -24,6 +28,9 @@ public class GameScreen extends ScreenAdapter {
     private HUD hud;
     private InputMultiplexer input;
 
+    /**
+     * All game modes.
+     */
     public static enum GameMode{PLATAFORMS, DODGING};
 
     final static double MIN_JUMP_GRAVITY_STRENGTH = 0.5;
@@ -65,13 +72,20 @@ public class GameScreen extends ScreenAdapter {
         gameCamera.setToOrtho(false, (float) camDims.x, (float) camDims.y); //camera has maximum world height
     }
 
-
+    /**
+     * Creates the HUD.
+     * @param camDims Camera dimensions
+     */
     private void createHUD(Vector2D camDims){
         hud = new HUD(camDims,game);
         registerHUDInput(hud);
         currentLevel.setHUD(hud);
     }
 
+    /**
+     * Registers the HUD as input.
+     * @param hud
+     */
     private void registerHUDInput(HUD hud){
         if(input.size()>1)
             input.removeProcessor(0);

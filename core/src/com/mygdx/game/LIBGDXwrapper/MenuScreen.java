@@ -10,6 +10,9 @@ import com.mygdx.game.LIBGDXwrapper.gameGUI.PauseGUI;
 import static com.mygdx.game.LIBGDXwrapper.DeviceConstants.INVERTED_SCREEN_RATIO;
 import static com.mygdx.game.LIBGDXwrapper.DeviceConstants.SCREEN_RATIO;
 
+/**
+ * Screen Adapter for the menu.
+ */
 public class MenuScreen extends ScreenAdapter {
 
     private MyGame game;
@@ -19,6 +22,8 @@ public class MenuScreen extends ScreenAdapter {
     public MenuScreen(MyGame game){
         this.game = game;
         this.menuManager = new MenuManager(game);
+        render(0.1f);
+        this.menuManager.loadAllMenus();
     }
 
     @Override

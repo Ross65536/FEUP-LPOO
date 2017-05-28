@@ -43,7 +43,7 @@ public enum GameMenus {
             menu = menuType.getDeclaredConstructor(MenuManager.class).newInstance(menuManager);
         }catch (Exception e){
             System.out.println(e.toString());
-            System.out.println("No constructor like the requested.");
+            System.out.println("No constructor like the requested. ");
             return null;
         }
         return menu;

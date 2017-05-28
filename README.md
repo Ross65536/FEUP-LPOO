@@ -25,11 +25,46 @@ This project was developed in Android Studio with gradle for the dependencies, s
 
 ### Using the GUI
 
-// Screenshots and text here//
+#### Main Menu
 
-### Playing the Survival Game Mode
+![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUI_MANUAL/mainmenu.png)
 
-//screenshot here //
+* **Play Button** - The play button takes the user to the game mode choice menu where the user has to pick the mode to play.
+* **High Score** - The high score button menu shows the max user score of both game modes.(Not Yet Implemented)
+* **Settings** - The settings opens a settings window, it allows the user to change the game settings.
+* **about** - This button shows meta information regarding the application, should contain credits and mention image creators for copyright reasons. (Not Yet Implemented)
+
+#### Play Menu
+
+![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUI_MANUAL/playmenu.png)
+
+* **Start Button** - The start button takes the user to the game corresponding to the game mode.
+* **Back** - The back button takes the user back to the main menu.
+* **Settings** - The settings opens a settings window, it allows the user to change the game settings.
+* **Changing mode** - To change the mode slide your finger to the left on the area where it says "SWIPE".
+
+#### Pause Menu
+
+![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUI_MANUAL/pausemenu.png)
+
+* **Resume Button** - The resume button resumes the game. 
+* **Restart Button** - The restart button restarts the game.
+* **Settings** - The settings opens a settings window, it allows the user to change the game settings.
+* **Exit button** - The exit button returns the screen to the play menu.
+
+#### Settings Menu
+
+![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUI_MANUAL/settingsmenu.png)
+
+* **Exit Button** - The exit button exits the settings menu.
+* **Sound Bar** - The user can slide the sound bar to increase or decrease the sound.
+
+
+### GameplayPlaying
+
+#### Playing the Survival Game Mode
+
+![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUI_MANUAL/survival.png)
 
 This game mode is based on the player avoiding the enemies that are spawned (ground and flying based enemies).
 The player has only one life and the score is the time since the begging of the game mode.
@@ -42,6 +77,23 @@ On Desktop:
 On Android:
 * Tilting the phone to the left or right makes the character move left and right, with the degree of inclination setting the speed at which the character moves.
 * Touching the screen makes the character jump. Pressing it for longer, makes the hero jump higher.
+
+#### Playing the Platforms Game Mode
+
+![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUI_MANUAL/platforms.png)
+
+This game mode has the player searching for recharger items so that the players light does not run out, if the player's light runs out the game will end.
+There are also enemies that the player has to avoid, the player is given three lifes each time an enemy hits the player he jumps back and a life is lost.
+The objective of the game is to catch as many rechargers as possible, the score is the number of rechargers caught.
+
+On Desktop:
+* The left and right arrow keys make the character move left and right
+* The up arrow key or a left mouse click makes the hero jump. Pressing these for longer, makes the hero jump higher.
+
+On Android:
+* Tilting the phone to the left or right makes the character move left and right, with the degree of inclination setting the speed at which the character moves.
+* Touching the screen makes the character jump. Pressing it for longer, makes the hero jump higher.
+
 
 ## Architecture Design
 
@@ -67,14 +119,16 @@ Throughout the project we tried to follow the SOLID principles, that is, mainly 
 * State in GameLevel. This class usually updates GameWorld which is attached to it and draws the objects present in it, but if the hero dies it shouldn't this anymore and the screen should be changeed to show a menu.
 * GameLoop is used in GameScreen. This class extends Screen which implements this. A method is called peridically to update the game state (update game World, draws objects) and it receives input to control the game World state.
 * Template pattern is used extensively, on the gui alone there are four abstractions: AbstractGUI, AbstractSingleStageGUI, WidgetsInput and WidgetsGeneric. On the game logic there is abstraction for the game level so as to create diferent levels based on the abstraction.
-* State pattern is used in the MenuManager class when changing between menus, the class holds a field named currentMenu which is initialized as the abstract class that all menus extends from(AbstractGUI), when changing between menus the MenuManager's setMenu method is called to replace the currentMenu field of MenuManager to the menu specified in the only argument of the method.
+* State pattern is used in the MenuManager class when changing between menus, the class holds a field named currentMenu which is initialized as the abstract class that all menus extend from(AbstractGUI), when changing between menus the MenuManager's setMenu method is called to replace the currentMenu field of MenuManager to the menu specified in the only argument of the method.
 * Component pattern is used for multi stage menus, the abstract class AbstractGUI holds a list of Stage components for menus that use more then one Stage, AbstractGUI has a functions 'act' and 'draw' which call the 'act' and 'draw' of all Stage components.
 * Abstract factory is used on the GUI, the AbstractGUI class holds two fields that are declared as abstract classes, the subclasses of AbstractGUI decide what concrete class those two field are going to be initialized as. In the case of the subclass MainGui those two fields are initialized as MainGUIWidgetsInput and MainGUIWidgetsProperties.
-* Observer pattern is used on the AbstractGUI class because when adding new components they get automatically included in the update functions (act and draw) of the class.
+* Observer pattern is used on the AbstractGUI class because when adding new components they get automatically included in the update functions (act and draw) of the AbstractGUI class.
 * Update method is used in the AbstractGUI since when calling the act and draw functions of the AbstractGUI class all components belonging to it get their respective act and draw functions called.
-* Object pool is used in the MenuManager class when setting up a new menu to display and allow input for, when setMenu method of the MenuManager is called a menu is only created if it hasn't been already created or if its usage has been too low and was deleted in consequence. When an initialized menu class hasn't been called for display for a certain number of setMenu calls the menu class is nullified and set up for the garbage collector to delete.
+* Object pool is used in the MenuManager class. Each menu is initialized in the begining of the game and laid in a pool on menus and each time a menu is needed the already created menu is used. When a certain menu needs just a few changes a function is called for this.
 * Singleton pattern is used on the static enum struct on the MenuManager class, each value of the enum is initialized with a menu class type which is used when calling createInstance which either returns an already created menu or creates the menu if it is not initialized.
-
+* Decorator pattern is used with the HeroLifesWrapper class that encapsulated the regular Hero class and adds the new functionality of getting hit and being nocked back, losing lifes and being immune for a few seconds.
+* Facade pattern is very used for the gameWorlds, each gameWorld can implement different actions since each gameworld can have diferent game features. The gameworlds are simplified interfaces that call the update methods for each gamefeature.
+* Delegation pattern for the gameworld features, each gameworld holds diferent features objects(delagates) that it used to delagate update methods.
 
 ### Major Difficulties
 * One major difficulty was finding the right level of abstraction and the right separation between the modules in order to achieve a low level of coupling between the classes. 
@@ -86,6 +140,7 @@ Throughout the project we tried to follow the SOLID principles, that is, mainly 
 * Developing applications for Android
 * How to use LIBGDX to develop applications
 * Improved knoweledge of java features.
+* Using JSON files and sprite sheets to implement a GUI.
 
 ### Test Design
 

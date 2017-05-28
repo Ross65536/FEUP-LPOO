@@ -2,6 +2,9 @@ package com.mygdx.game.gameLogic.Characters;
 
 import com.mygdx.game.Vector2D;
 
+/**
+ * Class that implements a platform.
+ */
 public class Platform extends Entity{
 
     public static double fractionOfScreenHeightForPlatform = 1.0/10.0;

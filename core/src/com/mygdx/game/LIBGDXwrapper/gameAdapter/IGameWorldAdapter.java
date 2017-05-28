@@ -26,7 +26,7 @@ public interface IGameWorldAdapter {
      * Updates the world state
      * @param deltaT
      */
-    void updateWorld(float delaT);
+    void updateWorld(float deltaT);
     /**
      * updates the graphics
      * @param deltaT

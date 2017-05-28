@@ -4,6 +4,9 @@ import com.mygdx.game.gameLogic.Characters.Platform;
 
 import java.util.List;
 
+/**
+ * Interface for the world platforms feature.
+ */
 public interface PlatformFeature {
     /**
      * Returns all the platforms seen of screen.
@@ -12,7 +15,6 @@ public interface PlatformFeature {
     List<Platform> getPlatforms();
     /**
      * Determins the platforms seen on screen.
-     * @return the platforms seen on screen.
      */
     void updatePlatformsInRange();
 

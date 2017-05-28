@@ -2,6 +2,9 @@ package com.mygdx.game.LIBGDXwrapper;
 
 import com.badlogic.gdx.Application;
 
+/**
+ * The game settings.
+ */
 public class GameSettings implements Settings {
     private boolean isSensorControlled;
     float volume;

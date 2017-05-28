@@ -2,6 +2,10 @@ package com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures;
 
 import com.mygdx.game.gameLogic.Characters.Light;
 
+
+/**
+ * Interface for the hero's light world feature.
+ */
 public interface HeroLightFeature {
     /**
      * Updates the hero's light with delta time.

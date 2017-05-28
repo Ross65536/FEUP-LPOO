@@ -9,7 +9,6 @@ public class SettingsGUI extends AbstractGUI{
 
     public SettingsGUI(MenuManager menuManager, AbstractGUI backgroundGUI){
         super(menuManager);
-
         this.backgroundGUI = backgroundGUI;
         addComponents();
         addInputProcessors();

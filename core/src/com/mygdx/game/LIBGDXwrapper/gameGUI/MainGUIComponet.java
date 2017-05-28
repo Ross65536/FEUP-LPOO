@@ -45,7 +45,6 @@ public class MainGUIComponet extends AbstractSingleStageGUI {
 
         loadWidgets();
 
-        table.setDebug(true);
     }
 
     protected void loadWidgets(){

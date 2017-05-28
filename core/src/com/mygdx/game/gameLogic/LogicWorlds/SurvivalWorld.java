@@ -14,6 +14,9 @@ import com.mygdx.game.Vector2D;
 
 import java.util.List;
 
+/**
+ * This class manages the games's logic for the survivel mode of the game.
+ */
 public class SurvivalWorld extends GameWorld implements HeroLightFeature {
 
     /**

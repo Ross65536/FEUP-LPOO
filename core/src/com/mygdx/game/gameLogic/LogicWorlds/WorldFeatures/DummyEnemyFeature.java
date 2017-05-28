@@ -4,7 +4,9 @@ import com.mygdx.game.gameLogic.Characters.EnemyInfo;
 
 import java.util.List;
 
-
+/**
+ * Interface for the dummy enemy world feature.
+ */
 public interface DummyEnemyFeature {
     /**
      * Creates the enemies

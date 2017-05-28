@@ -3,6 +3,10 @@ package com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures;
 import com.mygdx.game.gameLogic.Characters.Light;
 import com.mygdx.game.gameLogic.Characters.Recharger;
 
+
+/**
+ * Interface for the light recharger item world feature.
+ */
 public interface LightRechargerFeature {
     /**
      * Returns the recharger item's info.

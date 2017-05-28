@@ -2,6 +2,9 @@ package com.mygdx.game.gameLogic.Characters;
 
 import com.mygdx.game.Vector2D;
 
+/**
+ * Class that represents the recharger item.
+ */
 public class Recharger extends Entity{
 
 

@@ -1,41 +1,27 @@
 UIAssets.png
-size: 3753, 2625
+size: 3260, 2663
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 aboutButtonDown
   rotate: false
-  xy: 52, 436
+  xy: 907, 435
   size: 816, 153
   orig: 816, 153
   offset: 0, 0
   index: -1
 aboutButtonUp
   rotate: false
-  xy: 907, 436
+  xy: 907, 627
   size: 816, 153
   orig: 816, 153
   offset: 0, 0
   index: -1
 backGroundButtonImage
   rotate: false
-  xy: 2617, 628
+  xy: 52, 1011
   size: 712, 163
   orig: 712, 163
-  offset: 0, 0
-  index: -1
-badlogic
-  rotate: false
-  xy: 1969, 1110
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-blueBackgroundTextArea
-  rotate: false
-  xy: 52, 1519
-  size: 712, 370
-  orig: 712, 370
   offset: 0, 0
   index: -1
 downPauseButton
@@ -47,70 +33,63 @@ downPauseButton
   index: -1
 exitPMButtonDown
   rotate: false
-  xy: 2817, 837
+  xy: 2499, 1011
   size: 600, 234
   orig: 600, 234
   offset: 0, 0
   index: -1
 exitPMButtonUp
   rotate: false
-  xy: 900, 837
+  xy: 1221, 1011
   size: 600, 234
   orig: 600, 234
   offset: 0, 0
   index: -1
-greenBackgroundTextArea
-  rotate: false
-  xy: 803, 1519
-  size: 712, 370
-  orig: 712, 370
-  offset: 0, 0
-  index: -1
 highScoreButtonDown
   rotate: false
-  xy: 1762, 436
+  xy: 1762, 627
   size: 816, 153
   orig: 816, 153
   offset: 0, 0
   index: -1
 highScoreButtonUp
   rotate: false
-  xy: 2617, 436
+  xy: 52, 627
   size: 816, 153
   orig: 816, 153
   offset: 0, 0
   index: -1
 pauseBackgroundImage
   rotate: false
-  xy: 2647, 1519
+  xy: 936, 1557
   size: 1054, 1054
   orig: 1054, 1054
   offset: 0, 0
   index: -1
 playBackToMenuButtonDown
   rotate: false
-  xy: 907, 628
+  xy: 1762, 435
   size: 816, 153
   orig: 816, 153
   offset: 0, 0
   index: -1
 playBackToMenuButtonUp
   rotate: false
-  xy: 1762, 628
+  xy: 907, 819
   size: 816, 153
   orig: 816, 153
   offset: 0, 0
   index: -1
 playButtonDown
   rotate: false
-  xy: 52, 628
+  xy: 1762, 819
   size: 816, 153
   orig: 816, 153
   offset: 0, 0
   index: -1
 playButtonUp
   rotate: false
-  xy: 2873, 52
+  xy: 52, 819
   size: 816, 153
   orig: 816, 153
   offset: 0, 0
@@ -131,105 +110,98 @@ playModeButtonUp
   index: -1
 playSettingsButtonDown
   rotate: false
-  xy: 52, 244
+  xy: 52, 435
   size: 816, 153
   orig: 816, 153
   offset: 0, 0
   index: -1
 playSettingsButtonUp
   rotate: false
-  xy: 2617, 244
+  xy: 1762, 243
   size: 816, 153
   orig: 816, 153
   offset: 0, 0
   index: -1
 redBackgroundTextArea
   rotate: false
-  xy: 2692, 1110
+  xy: 185, 1557
   size: 712, 370
   orig: 712, 370
   offset: 0, 0
   index: -1
 restartButtonDown
   rotate: false
-  xy: 2178, 837
+  xy: 1330, 1284
   size: 600, 234
   orig: 600, 234
   offset: 0, 0
   index: -1
 restartButtonUp
   rotate: false
-  xy: 691, 1110
+  xy: 1860, 1011
   size: 600, 234
   orig: 600, 234
   offset: 0, 0
   index: -1
 resumeButtonDown
   rotate: false
-  xy: 1330, 1110
+  xy: 2608, 1284
   size: 600, 234
   orig: 600, 234
   offset: 0, 0
   index: -1
 resumeButtonUp
   rotate: false
-  xy: 52, 1110
+  xy: 691, 1284
   size: 600, 234
   orig: 600, 234
   offset: 0, 0
   index: -1
 settingsBackgroundImage
   rotate: false
-  xy: 2264, 1110
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-settingsBackgroundImage
-  rotate: false
-  xy: 1554, 1519
+  xy: 2029, 1557
   size: 1054, 1054
   orig: 1054, 1054
   offset: 0, 0
   index: -1
 settingsButtonDown
   rotate: false
-  xy: 907, 244
+  xy: 52, 243
   size: 816, 153
   orig: 816, 153
   offset: 0, 0
   index: -1
 settingsButtonUp
   rotate: false
-  xy: 1762, 244
+  xy: 907, 243
   size: 816, 153
   orig: 816, 153
   offset: 0, 0
   index: -1
 settingsExitButtonDown
   rotate: false
-  xy: 3368, 628
+  xy: 803, 1011
   size: 170, 170
   orig: 170, 170
   offset: 0, 0
   index: -1
 settingsExitButtonUp
   rotate: false
-  xy: 52, 837
+  xy: 1012, 1011
   size: 170, 170
   orig: 170, 170
   offset: 0, 0
   index: -1
 settingsPMButtonDown
   rotate: false
-  xy: 261, 837
+  xy: 1969, 1284
   size: 600, 234
   orig: 600, 234
   offset: 0, 0
   index: -1
 settingsPMButtonUp
   rotate: false
-  xy: 1539, 837
+  xy: 52, 1284
   size: 600, 234
   orig: 600, 234
   offset: 0, 0
@@ -285,7 +257,7 @@ volumeKnockOver
   index: -1
 vScrollKnobSettings
   rotate: false
-  xy: 2559, 1110
+  xy: 52, 1557
   size: 94, 278
   orig: 94, 278
   offset: 0, 0
