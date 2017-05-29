@@ -62,6 +62,7 @@ public class UISkinAssetHandler {
         FileHandleResolver resolver = new InternalFileHandleResolver();
         assetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
         assetManager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
+
         FreetypeFontLoader.FreeTypeFontLoaderParameter params = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         params.fontFileName = "fonts/coastershadow.ttf";
         params.fontParameters.size = 75;
@@ -75,6 +76,25 @@ public class UISkinAssetHandler {
             System.out.println(exception.toString());
         }
         skin.add("coastershadowfont.ttf", assetManager.get("coastershadowfont.ttf", BitmapFont.class));
+
+
+
+        FreetypeFontLoader.FreeTypeFontLoaderParameter params2 = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        params2.fontFileName = "fonts/coastershadow.ttf";
+        params2.fontParameters.size = 75;
+
+        assetManager.load("coastershadowfont.ttf", BitmapFont.class, params2);
+
+        try {
+            assetManager.finishLoadingAsset("coastershadowfont.ttf");
+        }catch (Exception exception){
+
+            System.out.println(exception.toString());
+        }
+        skin.add("coastershadowfont.ttf", assetManager.get("coastershadowfont.ttf", BitmapFont.class));
+
+
+
     }
 
     /**

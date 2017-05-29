@@ -30,7 +30,7 @@ android {
 
     defaultConfig {
         applicationId "com.mygdx.game"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 25
 
         jackOptions {
