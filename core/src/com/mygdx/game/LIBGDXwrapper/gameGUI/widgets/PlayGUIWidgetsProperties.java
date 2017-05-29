@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.FontLoader;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 
 public class PlayGUIWidgetsProperties extends WidgetsGeneric {
@@ -59,15 +60,15 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
                 .getActor();
     }
 
-    public Label loadTopLabel(Table table, String modeName, Skin skin){
+    public Label loadTopLabel(Table table, String modeName){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
 
-        Label label = loadLabel(skin, table
+        Label label = loadLabel(table
                 //images
                 ,modeName
-                ,"gameFont"
-                ,null)
+                ,FontLoader.FONTS.COASTERSHADOW
+                ,0)
                 //pos. and location
                 .width(screenWidth / 3.5f)
                 .height(screenHeight / 8)
@@ -111,8 +112,8 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
 
         ScrollPane textArea = loadTextArea(table,
                 text,
-                "tutorial"
-                )
+                FontLoader.FONTS.COASTERSHADOW,
+                0)
                 .fill()
                 .expand()
                 .colspan(3)

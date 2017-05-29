@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.FontLoader;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 
 public class PauseGUIWidgetsProperties extends WidgetsGeneric{
@@ -26,13 +27,13 @@ public class PauseGUIWidgetsProperties extends WidgetsGeneric{
                 .getActor();
     }
 
-    public Label loadPMLabel(Table table, Skin skin, String name){
+    public Label loadPMLabel(Table table, String name){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
-        Label label = loadLabel(skin, table,
+        Label label = loadLabel(table,
                 name,
-                "gameFont",
-                null)
+                FontLoader.FONTS.COASTERSHADOW,
+                0)
                 .colspan(4)
                 .getActor();
         label.setFontScale(1f);

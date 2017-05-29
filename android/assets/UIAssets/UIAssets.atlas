@@ -1,7 +1,7 @@
 UIAssets.png
 size: 3260, 2663
 format: RGBA8888
-filter: Linear,Linear
+filter: MipMap, MipMap  
 repeat: none
 aboutButtonDown
   rotate: false

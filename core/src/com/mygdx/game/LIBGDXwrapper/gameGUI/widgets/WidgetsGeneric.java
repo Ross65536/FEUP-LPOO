@@ -13,26 +13,31 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.FontLoader;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
+
+import static com.mygdx.game.LIBGDXwrapper.gameAdapter.FontLoader.FONTS.*;
 
 /**
  * This class holds static fucntions with generic funcions called for all menus.
  */
 public class WidgetsGeneric{
 
-    public static Label getLabel(Skin skin, String text, String font, String backgroundImage){
+    public static Label getLabel(String text, FontLoader.FONTS font, int sizeIndex){
 
-        BitmapFont bitmapFont = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("coastershadowfont.ttf",BitmapFont.class);
+        String fontName = FontLoader.getFontName(font.fontName, FontLoader.getSize(font,sizeIndex));
+
+        BitmapFont bitmapFont = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset(fontName, BitmapFont.class);
 
         Label.LabelStyle labelStyle = new Label.LabelStyle();
 
         labelStyle.font = bitmapFont;
 
-       return new Label(text,labelStyle);
+        return new Label(text,labelStyle);
     }
 
-    public static Cell<Label> loadLabel(Skin skin, Table table, String text, String font, String backgroundImage) {
-        Label label = getLabel(skin, text, font, backgroundImage);
+    public static Cell<Label> loadLabel(Table table, String text, FontLoader.FONTS font, int sizeIndex) {
+        Label label = getLabel(text, font, sizeIndex);
         return table.add(label);
     }
 
@@ -54,9 +59,12 @@ public class WidgetsGeneric{
 
 
 
-    public static Cell<ScrollPane> loadTextArea(Table table, String text, String font) {
-        BitmapFont bitmapFont = new BitmapFont(Gdx.files.internal(font+".fnt"),
-                Gdx.files.internal(font + ".png"), false);
+    public static Cell<ScrollPane> loadTextArea(Table table, String text, FontLoader.FONTS font, int sizeIndex) {
+
+
+        String fontName = FontLoader.getFontName(font.fontName, FontLoader.getSize(font,sizeIndex));
+
+        BitmapFont bitmapFont = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset(fontName, BitmapFont.class);
 
         Label.LabelStyle labelStyle = new Label.LabelStyle();
 

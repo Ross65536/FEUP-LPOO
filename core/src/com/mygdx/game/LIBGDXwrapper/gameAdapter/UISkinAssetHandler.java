@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -63,22 +64,7 @@ public class UISkinAssetHandler {
         assetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
         assetManager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
 
-        FreetypeFontLoader.FreeTypeFontLoaderParameter params = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
-        params.fontFileName = "fonts/coastershadow.ttf";
-        params.fontParameters.size = 75;
-
-        assetManager.load("coastershadowfont.ttf", BitmapFont.class, params);
-
-        try {
-            assetManager.finishLoadingAsset("coastershadowfont.ttf");
-        }catch (Exception exception){
-
-            System.out.println(exception.toString());
-        }
-        skin.add("coastershadowfont.ttf", assetManager.get("coastershadowfont.ttf", BitmapFont.class));
-
-
-
+        FontLoader.loadFonts(assetManager, skin);
     }
 
     /**

@@ -63,6 +63,7 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
         ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)viewportWidth, (int)viewportHeight);
 
+        table.setDebug(true);
         loadWidgets();
 
     }
@@ -71,7 +72,7 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
     protected void loadWidgets(){
         SettingsGUIWidgetsProperties settingsGUIWidgetsProperties = ((SettingsGUIWidgetsProperties)widgetsProperties);
 
-        settingsGUIWidgetsProperties.loadHeaderLabel(table,skin);
+        settingsGUIWidgetsProperties.loadHeaderLabel(table);
 
         addExitButton();
 

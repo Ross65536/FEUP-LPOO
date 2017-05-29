@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
+import com.mygdx.game.LIBGDXwrapper.gameAdapter.FontLoader;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
 
 public class SettingsGUIWidgetsProperties extends WidgetsGeneric {
@@ -30,41 +31,20 @@ public class SettingsGUIWidgetsProperties extends WidgetsGeneric {
                 .getActor();
     }
 
-    public Label loadHeaderLabel(Table table, Skin skin){
+    public Label loadHeaderLabel(Table table){
         float screenWidth = DeviceConstants.MENU_VIEWPORT;
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
-        Label label = loadLabel(skin, table,
+        Label label = loadLabel(table,
                 "Settings",
-                "gameFont",
-                null)
+                FontLoader.FONTS.COASTERSHADOW,
+                0)
                 .padTop(screenHeight/25)
                 .padBottom(screenHeight/25)
                 .center().top()
                 .prefWidth(screenWidth / 3)
                 .prefHeight(screenHeight/10)
                 .getActor();
-        /*label.setFontScale(1f);
-        float xRatio = (screenWidth/3f)/label.getWidth();
-        float yRatio = (screenHeight/10f)/label.getHeight();
-        label.setFontScale(xRatio,yRatio);*/
-        return label;
-    }
-
-    public Label loadOptionLabel(Table table, Skin skin, String option){
-        float screenWidth = DeviceConstants.MENU_VIEWPORT;
-        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
-        Label label = loadLabel(skin, table,
-                option,
-                "gameFont",
-                null)
-                .center()
-                .prefWidth(screenWidth/3)
-                .prefHeight(screenHeight/8)
-                .getActor();
-        label.setFontScale(1f);
-        float xRatio = (screenWidth/3f)/label.getWidth();
-        float yRatio = (screenHeight/8f)/label.getHeight();
-        label.setFontScale(xRatio,yRatio);
+        label.setAlignment(Align.center);
         return label;
     }
 

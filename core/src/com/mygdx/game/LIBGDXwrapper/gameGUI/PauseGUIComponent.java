@@ -73,11 +73,11 @@ public class PauseGUIComponent extends AbstractSingleStageGUI{
 
         table.row().padTop(screenHeight/25);
 
-        elements.put(HEADERLABEL.ordinal(),pauseGUIWidgetsProperties.loadPMLabel(table, skin,pauseMessage));
+        elements.put(HEADERLABEL.ordinal(),pauseGUIWidgetsProperties.loadPMLabel(table,pauseMessage));
 
         table.row().padTop(screenHeight/25).padBottom(screenHeight/25);
 
-        elements.put(SCORELABEL.ordinal(),pauseGUIWidgetsProperties.loadPMLabel(table, skin, pauseScoreMessage + "\n" +  ((gameScreen!=null)?this.gameScreen.getScore():0)));
+        elements.put(SCORELABEL.ordinal(),pauseGUIWidgetsProperties.loadPMLabel(table, pauseScoreMessage + "\n" +  ((gameScreen!=null)?this.gameScreen.getScore():0)));
         ((Label)elements.get(SCORELABEL.ordinal())).setAlignment(Align.center);
 
     }

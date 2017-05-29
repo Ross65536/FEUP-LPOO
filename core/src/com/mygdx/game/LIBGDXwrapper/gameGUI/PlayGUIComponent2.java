@@ -95,8 +95,8 @@ public class PlayGUIComponent2 extends AbstractSingleStageGUI {
 
     private void loadLabels(PlayGUIWidgetsProperties playGUIWidgetsProperties){
 
-        elements.put(topLabelS.toString(),  playGUIWidgetsProperties.loadTopLabel(table, "Platforms",skin));
-        elements.put(topLabelW.toString(),  playGUIWidgetsProperties.loadTopLabel(table, "Dodging",skin));
+        elements.put(topLabelS.toString(),  playGUIWidgetsProperties.loadTopLabel(table, "Platforms"));
+        elements.put(topLabelW.toString(),  playGUIWidgetsProperties.loadTopLabel(table, "Dodging"));
 
     }
 
