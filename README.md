@@ -111,6 +111,7 @@ Throughout the project we tried to follow the SOLID principles, that is, mainly 
 ### Design Patterns used
 
 * Singleton for GameAssetHandler class. This class uses the LIBGDX AssetManager class which is unique for all the levels that use it, and since the game does a lot of loading and unloading of levels a single universal acess point for the asset manager is useful, to load the correct assets for each level and to get those assets to be able to draw them and play them.
+* Strategy used in StageDirector class. This class has a Curve object (abstract class, with on abstract method) which has different behaviours depending on which specific Curve object it takes.
 * Observer for all classes in Input package. These classes extend the InputAdapter class from LIBGDX which implements this Pattern. It's used to notify Screen objects (such as GameScreen) when user input happens (touch, gyroscope) and to transmit it.
 * Factory in MyGame class. In this class there are methods to create specific levels (GameWorld instances) and giving them to GameLevel class to be manipulated.
 * State in LevelDirector. Different enemies for GameWorld class are generated based on this class's internal state (time since game start, numbers of present enemies, user input statistics which should "user stress", etc).
