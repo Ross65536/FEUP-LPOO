@@ -66,8 +66,8 @@ This project was developed in Android Studio with gradle for the dependencies, s
 
 ![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/GUI_MANUAL/survival.png)
 
-This game mode is based on the player avoiding the enemies that are spawned (ground and flying based enemies).
-The player has only one life and the score is the time since the begging of the game mode.
+This game mode is based on the player avoiding the enemies that are spawned (ground and flying based enemies) for as long as possible.
+The player has only one life and the score is the time since the beggining of the game mode.
 The player can move the character to the left and right and make him jump.
 To pause the game the user has to press the pause button on the top right corner of the screen.
 
