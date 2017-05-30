@@ -102,7 +102,9 @@ On Android:
 ![alt tag](https://github.com/joaolago1996/LPOO1617_T4G10/blob/master/UML/stateUML.png)
 
 ### Overarching Design Decisions
-On this project we decided to separate the logic from the specific android implementation, so the gameLogic package should contain all the classes necessary to run the application without it running specifically in android or any other LIBGDX supported machine.
+On this project we decided to separate the logic from the specific android implementation, so the gameLogic package should contain all the classes necessary to run the application without it running specifically in android or any other LIBGDX supported machine. 
+
+As a result we implemented a MVC (Model-View-Controller) architectural design pattern throughout the project, where the model is all the classes in gameLogic package, with the main GameWorld class joining and coordinating all of the other classes in this package (that contain all the information to run the game), the view is most of the classes in LIBGDXwrapper with the AbstractGameWorldAdapter class serving as the main class that glues all the graphical and sound stuff that the user sees (polling the gameLogic package for information on what to display), and as the Controller we have the classes in the Input package which listen to the user for controlls (and are polled periodically) and then send them to the model (GameWorld class) to change the state of the model.
 
 Throughout the project we tried to follow the SOLID principles, that is, mainly to achieve a low coupling between the different classes and to achieve a separation of interfaces in order to gain a code that is friendly to change and maintenance.
 
