@@ -1,14 +1,10 @@
 package tests.Objects;
 
-import com.mygdx.game.Vector2D;
-import com.mygdx.game.gameLogic.Characters.Entity;
-import com.mygdx.game.gameLogic.Characters.HeroLifesWrapper;
-import com.mygdx.game.gameLogic.Characters.Light;
+import ros.joao.rjtorcher.Vector2D;
+import ros.joao.rjtorcher.gameLogic.Characters.Light;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import tests.Characters.HeroLifesWrapperTests;
 
 import static org.junit.Assert.*;
 

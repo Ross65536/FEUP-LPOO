@@ -1,7 +1,7 @@
 package tests;
 
 
-import com.mygdx.game.Vector2D;
+import ros.joao.rjtorcher.Vector2D;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

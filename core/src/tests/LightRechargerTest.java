@@ -1,12 +1,12 @@
 package tests;
 
-import com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.PlatLevelBuild;
-import com.mygdx.game.Vector2D;
-import com.mygdx.game.gameLogic.Characters.Hero;
-import com.mygdx.game.gameLogic.Characters.Light;
-import com.mygdx.game.gameLogic.Characters.Platform;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightRecharger;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Platforms;
+import ros.joao.rjtorcher.LIBGDXwrapper.gameAdapter.LevelBuilds.PlatLevelBuild;
+import ros.joao.rjtorcher.Vector2D;
+import ros.joao.rjtorcher.gameLogic.Characters.Hero;
+import ros.joao.rjtorcher.gameLogic.Characters.Light;
+import ros.joao.rjtorcher.gameLogic.Characters.Platform;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.WorldFeatures.LightRecharger;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.WorldFeatures.Platforms;
 
 import org.junit.Before;
 import org.junit.Test;

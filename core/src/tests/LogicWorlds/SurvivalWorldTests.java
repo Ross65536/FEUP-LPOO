@@ -1,13 +1,13 @@
 package tests.LogicWorlds;
 
 
-import com.mygdx.game.Vector2D;
-import com.mygdx.game.gameLogic.Characters.Enemy;
-import com.mygdx.game.gameLogic.Characters.Hero;
-import com.mygdx.game.gameLogic.GameDirector.Statistic.StatisticsInput;
-import com.mygdx.game.gameLogic.LogicWorlds.SurvivalWorld;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLight;
+import ros.joao.rjtorcher.Vector2D;
+import ros.joao.rjtorcher.gameLogic.Characters.Enemy;
+import ros.joao.rjtorcher.gameLogic.Characters.Hero;
+import ros.joao.rjtorcher.gameLogic.GameDirector.Statistic.StatisticsInput;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.SurvivalWorld;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.WorldFeatures.HeroLight;
 
 import org.easymock.EasyMock;
 import org.junit.Before;

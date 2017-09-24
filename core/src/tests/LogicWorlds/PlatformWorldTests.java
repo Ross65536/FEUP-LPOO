@@ -1,18 +1,18 @@
 package tests.LogicWorlds;
 
-import com.mygdx.game.CommonConsts;
-import com.mygdx.game.LIBGDXwrapper.PathConstants;
-import com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.PlatLevelBuild;
-import com.mygdx.game.Vector2D;
-import com.mygdx.game.gameLogic.Characters.Enemy;
-import com.mygdx.game.gameLogic.Characters.Hero;
-import com.mygdx.game.gameLogic.GameDirector.StageDirector;
-import com.mygdx.game.gameLogic.GameDirector.Statistic.StatisticsInput;
-import com.mygdx.game.gameLogic.LogicWorlds.PlatWorld;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLight;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.LightRecharger;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Platforms;
+import ros.joao.rjtorcher.CommonConsts;
+import ros.joao.rjtorcher.LIBGDXwrapper.PathConstants;
+import ros.joao.rjtorcher.LIBGDXwrapper.gameAdapter.LevelBuilds.PlatLevelBuild;
+import ros.joao.rjtorcher.Vector2D;
+import ros.joao.rjtorcher.gameLogic.Characters.Enemy;
+import ros.joao.rjtorcher.gameLogic.Characters.Hero;
+import ros.joao.rjtorcher.gameLogic.GameDirector.StageDirector;
+import ros.joao.rjtorcher.gameLogic.GameDirector.Statistic.StatisticsInput;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.PlatWorld;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.WorldFeatures.HeroLight;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.WorldFeatures.LightRecharger;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.WorldFeatures.Platforms;
 
 import org.junit.Before;
 import org.junit.Test;

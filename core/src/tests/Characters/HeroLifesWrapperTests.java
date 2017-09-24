@@ -1,8 +1,7 @@
 package tests.Characters;
 
-import com.mygdx.game.Vector2D;
-import com.mygdx.game.gameLogic.Characters.Entity;
-import com.mygdx.game.gameLogic.Characters.HeroLifesWrapper;
+import ros.joao.rjtorcher.Vector2D;
+import ros.joao.rjtorcher.gameLogic.Characters.HeroLifesWrapper;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,7 +1,7 @@
 package tests.Characters;
 
-import com.mygdx.game.Vector2D;
-import com.mygdx.game.gameLogic.Characters.Hero;
+import ros.joao.rjtorcher.Vector2D;
+import ros.joao.rjtorcher.gameLogic.Characters.Hero;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

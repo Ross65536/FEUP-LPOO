@@ -1,6 +1,6 @@
 package tests.GameDirector;
 
-import com.mygdx.game.gameLogic.GameDirector.Statistic.Statistics;
+import ros.joao.rjtorcher.gameLogic.GameDirector.Statistic.Statistics;
 
 
 public class MockStatistics extends Statistics

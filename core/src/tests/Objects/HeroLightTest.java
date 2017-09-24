@@ -1,8 +1,8 @@
 package tests.Objects;
 
 
-import com.mygdx.game.gameLogic.Characters.Hero;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.HeroLight;
+import ros.joao.rjtorcher.gameLogic.Characters.Hero;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.WorldFeatures.HeroLight;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;

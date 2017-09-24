@@ -1,12 +1,12 @@
 package tests;
 
 
-import com.mygdx.game.Vector2D;
-import com.mygdx.game.gameLogic.Characters.Hero;
-import com.mygdx.game.gameLogic.GameDirector.StageDirector;
-import com.mygdx.game.gameLogic.GameDirector.Statistic.StatisticsInput;
-import com.mygdx.game.gameLogic.LogicWorlds.GameWorld;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
+import ros.joao.rjtorcher.Vector2D;
+import ros.joao.rjtorcher.gameLogic.Characters.Hero;
+import ros.joao.rjtorcher.gameLogic.GameDirector.StageDirector;
+import ros.joao.rjtorcher.gameLogic.GameDirector.Statistic.StatisticsInput;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.GameWorld;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.WorldFeatures.DummyEnemies;
 
 import static org.easymock.EasyMock.*;
 import static org.easymock.EasyMock.expect;

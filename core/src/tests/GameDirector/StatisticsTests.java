@@ -1,7 +1,7 @@
 package tests.GameDirector;
 
 
-import com.mygdx.game.gameLogic.GameDirector.Statistic.Statistics;
+import ros.joao.rjtorcher.gameLogic.GameDirector.Statistic.Statistics;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

@@ -1,9 +1,9 @@
 package tests.GameDirector;
 
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.BalancedCurve;
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.Curve;
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.IncreasingDifficultyCurve;
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.RandomCurve;
+import ros.joao.rjtorcher.gameLogic.GameDirector.DifficultyCurves.BalancedCurve;
+import ros.joao.rjtorcher.gameLogic.GameDirector.DifficultyCurves.Curve;
+import ros.joao.rjtorcher.gameLogic.GameDirector.DifficultyCurves.IncreasingDifficultyCurve;
+import ros.joao.rjtorcher.gameLogic.GameDirector.DifficultyCurves.RandomCurve;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

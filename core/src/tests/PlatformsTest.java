@@ -1,13 +1,11 @@
 package tests;
 
-import com.mygdx.game.CommonConsts;
-import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
-import com.mygdx.game.LIBGDXwrapper.gameAdapter.LevelBuilds.PlatLevelBuild;
-import com.mygdx.game.Vector2D;
-import com.mygdx.game.gameLogic.Characters.Character;
-import com.mygdx.game.gameLogic.Characters.Hero;
-import com.mygdx.game.gameLogic.Characters.Platform;
-import com.mygdx.game.gameLogic.LogicWorlds.WorldFeatures.Platforms;
+import ros.joao.rjtorcher.CommonConsts;
+import ros.joao.rjtorcher.LIBGDXwrapper.gameAdapter.LevelBuilds.PlatLevelBuild;
+import ros.joao.rjtorcher.Vector2D;
+import ros.joao.rjtorcher.gameLogic.Characters.Hero;
+import ros.joao.rjtorcher.gameLogic.Characters.Platform;
+import ros.joao.rjtorcher.gameLogic.LogicWorlds.WorldFeatures.Platforms;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,13 +13,11 @@ import org.junit.Test;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static com.mygdx.game.gameLogic.Characters.Platform.fractionOfScreenHeightForPlatform;
+import static ros.joao.rjtorcher.gameLogic.Characters.Platform.fractionOfScreenHeightForPlatform;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expectLastCall;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.reset;
-import static org.easymock.EasyMock.resetToDefault;
 import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.*;
 

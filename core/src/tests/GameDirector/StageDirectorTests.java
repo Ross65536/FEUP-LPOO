@@ -1,13 +1,13 @@
 package tests.GameDirector;
 
-import com.mygdx.game.gameLogic.Characters.Enemy;
-import com.mygdx.game.gameLogic.Characters.EnemyFlying;
-import com.mygdx.game.gameLogic.Characters.EnemyGround;
-import com.mygdx.game.gameLogic.GameDirector.DifficultyCurves.Curve;
-import com.mygdx.game.gameLogic.GameDirector.EnemyTypes.EnemyTypes;
-import com.mygdx.game.gameLogic.GameDirector.EnemyTypes.EnemyTypesLinear;
-import com.mygdx.game.gameLogic.GameDirector.StageDirector;
-import com.mygdx.game.gameLogic.GameDirector.Statistic.StatisticsInfo;
+import ros.joao.rjtorcher.gameLogic.Characters.Enemy;
+import ros.joao.rjtorcher.gameLogic.Characters.EnemyFlying;
+import ros.joao.rjtorcher.gameLogic.Characters.EnemyGround;
+import ros.joao.rjtorcher.gameLogic.GameDirector.DifficultyCurves.Curve;
+import ros.joao.rjtorcher.gameLogic.GameDirector.EnemyTypes.EnemyTypes;
+import ros.joao.rjtorcher.gameLogic.GameDirector.EnemyTypes.EnemyTypesLinear;
+import ros.joao.rjtorcher.gameLogic.GameDirector.StageDirector;
+import ros.joao.rjtorcher.gameLogic.GameDirector.Statistic.StatisticsInfo;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

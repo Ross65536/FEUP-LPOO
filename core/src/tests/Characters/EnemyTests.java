@@ -1,12 +1,11 @@
 package tests.Characters;
 
 
-import com.mygdx.game.CommonConsts;
-import com.mygdx.game.CommonConsts;
-import com.mygdx.game.Vector2D;
-import com.mygdx.game.gameLogic.Characters.Enemy;
-import com.mygdx.game.gameLogic.Characters.EnemyFlying;
-import com.mygdx.game.gameLogic.Characters.EnemyGround;
+import ros.joao.rjtorcher.CommonConsts;
+import ros.joao.rjtorcher.Vector2D;
+import ros.joao.rjtorcher.gameLogic.Characters.Enemy;
+import ros.joao.rjtorcher.gameLogic.Characters.EnemyFlying;
+import ros.joao.rjtorcher.gameLogic.Characters.EnemyGround;
 
 
 import org.junit.Test;
