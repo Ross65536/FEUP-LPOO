@@ -31,10 +31,13 @@ public class AboutGUIComponent extends AbstractSingleStageGUI {
     private double viewportWidth = (DeviceConstants.MENU_VIEWPORT);
     private double viewportHeight = (DeviceConstants.MENU_VIEWPORT*DeviceConstants.INVERTED_SCREEN_RATIO);
 
-    private double xPos = viewportWidth/7f;
-    private double yPos = viewportHeight/6f;
-    private double width = viewportWidth*5f/7f;
-    private double height = viewportHeight*4f/6f;
+    private double xPos = 0;//viewportWidth/20f;
+    private double yPos = 0.0;//viewportHeight/6f;
+    private double exitButtonxPos = 0;//viewportWidth * 0.05;
+    private double exitButtonyPos = viewportHeight * 0.85;
+    private double width = viewportWidth;//*5f/7f;
+    private double height = viewportHeight;//*4f/6f;
+
 
     protected enum ComponentsNames {EXIT};
 
@@ -111,8 +114,8 @@ public class AboutGUIComponent extends AbstractSingleStageGUI {
         float buttonSize = Math.min(((float)viewportWidth/7f),(float)viewportHeight/6f);
         exitButton.setSize(buttonSize, buttonSize);
         exitButton.setPosition(
-                ((float)viewportWidth/7f) - (buttonSize/2f)
-                ,((float)viewportHeight*5f/6f)  - (buttonSize/2f)
+                ((float) exitButtonxPos) //+ (buttonSize/2f)
+                ,((float)exitButtonyPos)  //+ (buttonSize/2f)
         );
         this.addActor(exitButton);
 

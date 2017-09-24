@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.mygdx.game.MagicNumbers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class FontLoader {
 
     private static TreeMap<FONTS, int[]> fonts;
 
-    public enum FONTS {COASTERSHADOW("coastershadow",Color.ORANGE, Color.BLACK, 5), WINTERLAND("winterland",Color.ORANGE, Color.BLACK, 5);
+    public enum FONTS {COASTERSHADOW("coastershadow",Color.ORANGE, Color.BLACK, 5),COASTERSHADOW_BLACK("coastershadow",Color.BLACK, Color.BLACK, MagicNumbers.COASTERSHADOW_BLACK_BORDER_SIZE), WINTERLAND("winterland",Color.BLACK, Color.BLACK, 0);
 
         public String fontName;
 
@@ -46,7 +47,7 @@ public class FontLoader {
         fonts.put(WINTERLAND, new int[] {
                 (int)(screenWidth/10.0),
                 (int)(screenWidth/20.0),
-                (int)(screenWidth/5.0)}
+                (int)(screenWidth/40.0)}
         );
 
 
@@ -55,6 +56,15 @@ public class FontLoader {
                 (int)(screenWidth/10.0),
                 (int)(screenWidth/20.0)}
         );
+
+        fonts.put(COASTERSHADOW_BLACK, new int[] {
+                (int)(screenWidth/10.0),
+                (int)(screenWidth/20.0),
+                (int)(screenWidth/30.0),
+                (int)(screenWidth/40.0),}
+        );
+
+
     }
 
     public static Integer getSize(FONTS font , int index){

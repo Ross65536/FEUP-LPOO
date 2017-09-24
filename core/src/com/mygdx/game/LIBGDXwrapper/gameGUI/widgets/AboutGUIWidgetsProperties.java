@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FontLoader;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
+import com.mygdx.game.MagicNumbers;
 
 import static com.mygdx.game.CommonConsts.ABOUT_MENU_TEXT;
 
@@ -19,16 +20,15 @@ public class AboutGUIWidgetsProperties extends WidgetsGeneric {
         float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
         Label label = loadLabel(table,
                 ABOUT_MENU_TEXT,
-                FontLoader.FONTS.COASTERSHADOW,
-                1)
-                .padTop(screenHeight/25)
-                .padBottom(screenHeight/25)
-                //.center()
+                FontLoader.FONTS.COASTERSHADOW_BLACK,
+                MagicNumbers.ABOUT_MENU_FONT_SIZE_INDEX)
+                .padTop(screenHeight/MagicNumbers.ABOUT_MENU_LABEL_PADDING_DIV)
+                .padBottom(screenHeight/MagicNumbers.ABOUT_MENU_LABEL_PADDING_DIV)
                 .top()
-                .prefWidth(screenWidth)
-                .prefHeight(screenHeight)
+                .prefWidth(screenWidth*MagicNumbers.ABOUT_MENU_LABEL_PREF_SIZE)
+                .prefHeight(screenHeight*MagicNumbers.ABOUT_MENU_LABEL_PREF_SIZE)
                 .getActor();
-        label.setAlignment(Align.center);
+        label.setAlignment(Align.left);
 
         label.setWrap(true);
 
@@ -42,23 +42,4 @@ public class AboutGUIWidgetsProperties extends WidgetsGeneric {
 
         return label;
     }
-
-    int FACTOR_PAD = 4;
-    public Label loadCreditsText(Table table){
-        float screenWidth = DeviceConstants.MENU_VIEWPORT;
-        float screenHeight = (float)DeviceConstants.INVERTED_SCREEN_RATIO * DeviceConstants.MENU_VIEWPORT;
-        Label label = loadLabel(table,
-                "Hiiiiiiiiiiiiii",
-                FontLoader.FONTS.COASTERSHADOW,
-                1)
-                .padTop(screenHeight/25 / FACTOR_PAD)
-                .padBottom(screenHeight/25 / FACTOR_PAD)
-                .center().top()
-                .prefWidth(screenWidth / 3 )
-                .prefHeight(screenHeight/10 * 2)
-                .getActor();
-        label.setAlignment(Align.center);
-        return label;
-    }
-
 }
