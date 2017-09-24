@@ -15,6 +15,8 @@ public enum GameMenus {
 
     PauseGUI(PauseGUI.class)/*TODO*/,
 
+    AboutGUI(AboutGUI.class),
+
     LASTVALUEMARKER(null);
 
     final private Class<? extends AbstractGUI> menuType;
@@ -28,10 +30,17 @@ public enum GameMenus {
         if(menu!=null) {
             return menu;
         }
-        if(menuType ==  SettingsGUI.class){
+        if(menuType ==  SettingsGUI.class ) {
             this.openSettings(menuManager, null);
             return null;
-        }else
+        }
+        else if(menuType ==  AboutGUI.class)
+        {
+            this.openAbout(menuManager, null);
+            return null;
+        }
+
+        else
             if(menuType ==  PauseGUI.class){
                 this.openPauseMenu(menuManager,null, com.mygdx.game.LIBGDXwrapper.gameGUI.PauseGUI.pauseType.PAUSE);
                 return null;
@@ -72,10 +81,12 @@ public enum GameMenus {
     }
 
     public AbstractGUI openSettings(MenuManager menuManager, AbstractGUI currentMenu){
-        if(!menuType.equals(SettingsGUI.class) || currentMenu == null)
+        if(! menuType.equals(SettingsGUI.class))
+            return null;
+        else if (currentMenu == null)
             return null;
         if(menu!=null){
-            if(((SettingsGUI)menu).getBackgroundGUI() == currentMenu){
+            if(((SettingsGUI)menu).getBackgroundGUI() == currentMenu || ((AboutGUI)menu).getBackgroundGUI() == currentMenu){
                 return menu;
             }
             else
@@ -86,6 +97,33 @@ public enum GameMenus {
         }
         try {
             menu = ((Class<SettingsGUI>) menuType).getDeclaredConstructor(MenuManager.class,AbstractGUI.class).newInstance(menuManager,currentMenu);
+        }catch (Exception e){
+            System.out.println(e.toString());
+            System.out.println("No constructor like the requested.");
+            return null;
+        }
+        return menu;
+    }
+
+
+    public AbstractGUI openAbout(MenuManager menuManager, AbstractGUI currentMenu){
+        if(! menuType.equals(AboutGUI.class))
+            return null;
+        else if (currentMenu == null)
+            return null;
+        if(menu!=null){
+            if(((AboutGUI)menu).getBackgroundGUI() == currentMenu || ((AboutGUI)menu).getBackgroundGUI() == currentMenu){
+                return menu;
+            }
+            else
+            {
+                ((AboutGUI)menu).setBackgroundGUI(currentMenu);
+                return menu;
+            }
+        }
+        try {
+            menu = ((Class<AboutGUI>) menuType).getDeclaredConstructor(MenuManager.class,AbstractGUI.class).newInstance(menuManager,currentMenu);
+           // menu = new AboutGUI(menuManager, currentMenu);
         }catch (Exception e){
             System.out.println(e.toString());
             System.out.println("No constructor like the requested.");

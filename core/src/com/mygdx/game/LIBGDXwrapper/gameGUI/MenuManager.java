@@ -24,6 +24,9 @@ public class MenuManager {
     public void setMenu(GameMenus menuTypeEnum){
         waitForMenu(menuTypeEnum);
         switch(menuTypeEnum){
+            case AboutGUI:
+                currentMenu = menuTypeEnum.openAbout(this, currentMenu);
+                break;
             case SettingsGUI:
                 currentMenu = menuTypeEnum.openSettings(this, currentMenu);
                 break;

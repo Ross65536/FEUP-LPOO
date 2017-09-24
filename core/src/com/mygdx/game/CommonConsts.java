@@ -21,6 +21,7 @@ public class CommonConsts {
     public static final int ENEMY_GROUND_ARRAY_INDEX;
     public static final int ENEMY_FLYING_ARRAY_INDEX;
     public static final int ENEMY_ARRAY_SIZE;
+    public static final String ABOUT_MENU_TEXT = "gobblins: backyardninja@dumbmanex.com | brickbackground:KIIRA@https://opengameart.org | ";
     static
     {
         int i=0;

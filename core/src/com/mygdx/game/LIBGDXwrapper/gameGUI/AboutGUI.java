@@ -1,21 +1,30 @@
 package com.mygdx.game.LIBGDXwrapper.gameGUI;
 
+import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.AboutGUIWidgetsInput;
+import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.AboutGUIWidgetsProperties;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsInput;
 import com.mygdx.game.LIBGDXwrapper.gameGUI.widgets.SettingsGUIWidgetsProperties;
 
-public class SettingsGUI extends AbstractGUI{
+public class AboutGUI extends AbstractGUI{
 
     private AbstractGUI backgroundGUI = null;
 
-    public SettingsGUI(MenuManager menuManager, AbstractGUI backgroundGUI){
+    public AboutGUI(MenuManager menuManager, AbstractGUI backgroundGUI){
         super(menuManager);
         this.backgroundGUI = backgroundGUI;
         addComponents();
         addInputProcessors();
     }
 
-    protected SettingsGUI(MenuManager menuManager){
-        super(menuManager);
+    @Override
+    protected void createWidgets(){
+        widgetsProperties = new AboutGUIWidgetsProperties();
+        widgetsInput = new AboutGUIWidgetsInput();
+    }
+
+    private void addComponents(){
+        this.addComponent(new AboutGUIComponent(menuManager,this));
+
     }
 
     @Override
@@ -24,26 +33,17 @@ public class SettingsGUI extends AbstractGUI{
         super.draw();
     }
 
-    protected void createWidgets(){
-        widgetsProperties = new SettingsGUIWidgetsProperties();
-        widgetsInput = new SettingsGUIWidgetsInput();
-    }
-
-    private void addComponents(){
-        this.addComponent(new SettingsGUIComponent(menuManager,this));
-    }
-
     public AbstractGUI getBackgroundGUI(){
         return backgroundGUI;
     }
 
     public void setBackgroundGUI(AbstractGUI abstractGUI){
         this.backgroundGUI = abstractGUI;
-        ((SettingsGUIComponent)menuComponets.get(0)).reloadSettings();
+        ((AboutGUIComponent)menuComponets.get(0)).reloadSettings();
     }
 
     public String toString(){
-        return "SettingsGUI";
+        return "AboutGUI";
     }
 
 }

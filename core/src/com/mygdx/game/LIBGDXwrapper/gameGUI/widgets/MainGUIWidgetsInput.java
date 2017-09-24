@@ -42,7 +42,7 @@ public class MainGUIWidgetsInput extends WidgetsInput{
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO: COMPLETE ABOUT
+                menuManager.setMenu(GameMenus.AboutGUI);
             }
         });
     }
