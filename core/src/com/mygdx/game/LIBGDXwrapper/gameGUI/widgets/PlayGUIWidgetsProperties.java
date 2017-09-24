@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.LIBGDXwrapper.DeviceConstants;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.FontLoader;
 import com.mygdx.game.LIBGDXwrapper.gameAdapter.GameAssetHandler;
+import com.mygdx.game.MagicNumbers;
 
 public class PlayGUIWidgetsProperties extends WidgetsGeneric {
 
@@ -113,11 +114,12 @@ public class PlayGUIWidgetsProperties extends WidgetsGeneric {
         ScrollPane textArea = loadTextArea(table,
                 text,
                 FontLoader.FONTS.COASTERSHADOW,
-                0)
+                1)
                 .fill()
                 .expand()
                 .colspan(3)
                 .height(screenHeight - (screenHeight / 3) - (screenHeight / 8) - (screenHeight/15))
+
                 .getActor();
 
         ScrollPane.ScrollPaneStyle styleScroll = GameAssetHandler.getGameAssetHandler().getUISkinAssetHandler().getUIAsset("vScrollKnobPlayMenu",ScrollPane.ScrollPaneStyle.class);

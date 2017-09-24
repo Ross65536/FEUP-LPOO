@@ -9,4 +9,6 @@ public final class MagicNumbers {
     public static final int ABOUT_MENU_LABEL_PADDING_DIV = 25;
     public static final float ABOUT_MENU_LABEL_PREF_SIZE = 0.95f;
     public static final int COASTERSHADOW_BLACK_BORDER_SIZE = 1;
+    public static final float PLAY_MENU_PPREFFERED_BORDER = 0.90f;
+
 }

@@ -27,6 +27,7 @@ public class AboutGUIWidgetsProperties extends WidgetsGeneric {
                 .top()
                 .prefWidth(screenWidth*MagicNumbers.ABOUT_MENU_LABEL_PREF_SIZE)
                 .prefHeight(screenHeight*MagicNumbers.ABOUT_MENU_LABEL_PREF_SIZE)
+
                 .getActor();
         label.setAlignment(Align.left);
 

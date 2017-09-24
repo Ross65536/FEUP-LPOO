@@ -19,7 +19,7 @@ public class FontLoader {
 
     private static TreeMap<FONTS, int[]> fonts;
 
-    public enum FONTS {COASTERSHADOW("coastershadow",Color.ORANGE, Color.BLACK, 5),COASTERSHADOW_BLACK("coastershadow",Color.BLACK, Color.BLACK, MagicNumbers.COASTERSHADOW_BLACK_BORDER_SIZE), WINTERLAND("winterland",Color.BLACK, Color.BLACK, 0);
+    public enum FONTS {COASTERSHADOW("coastershadow",Color.ORANGE, Color.BLACK, 5),COASTERSHADOW_BLACK("coastershadow",Color.BLACK, Color.BLACK, MagicNumbers.COASTERSHADOW_BLACK_BORDER_SIZE);
 
         public String fontName;
 
@@ -43,18 +43,14 @@ public class FontLoader {
 
         fonts = new TreeMap<FONTS, int[]>();
 
-        //Winterland font
-        fonts.put(WINTERLAND, new int[] {
-                (int)(screenWidth/10.0),
-                (int)(screenWidth/20.0),
-                (int)(screenWidth/40.0)}
-        );
 
 
         //Coastershadow font
         fonts.put(COASTERSHADOW, new int[] {
                 (int)(screenWidth/10.0),
-                (int)(screenWidth/20.0)}
+                (int)(screenWidth/20.0),
+                (int)(screenWidth/30.0),
+                (int)(screenWidth/40.0)}
         );
 
         fonts.put(COASTERSHADOW_BLACK, new int[] {
