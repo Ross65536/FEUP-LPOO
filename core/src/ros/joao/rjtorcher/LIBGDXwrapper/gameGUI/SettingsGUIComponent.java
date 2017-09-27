@@ -59,7 +59,7 @@ public class SettingsGUIComponent extends AbstractSingleStageGUI {
 
         ((OrthographicCamera)this.getCamera()).setToOrtho(false, (int)viewportWidth, (int)viewportHeight);
 
-        table.setDebug(true);
+        
         loadWidgets();
 
     }
